@@ -30,7 +30,6 @@ class App extends Component {
 
     _createNavigatorItem(route,icon)
     {
-
         var component=Home;
         switch (route) {
             case '首页':

@@ -22,6 +22,7 @@ import ViewPager from 'react-native-viewpager';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Coach from '../components/Coach';
+import Mall from './mall/Home';
 
 var IMGS = [
     require('../../img/banner1.jpeg'),
@@ -32,6 +33,19 @@ var IMGS = [
 
 
 class Home extends Component {
+
+    navigate2Mall(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'mall',
+                component: Mall,
+                params: {
+
+                }
+            })
+        }
+    }
 
     navigate2Coach()
     {
@@ -148,7 +162,7 @@ class Home extends Component {
 
                                         <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
                                           onPress={ ()=>{
-
+                                            this.navigate2Mall();
                                           }}>
 
                                             <Icon name="shopping-cart" size={35} style={{justifyContent:'center',alignItems:'center'}} color="#EEAD0E" />
