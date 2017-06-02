@@ -12,6 +12,8 @@ import {
   View
 } from 'react-native';
 
+import App from './App/index';
+
 export default class sportsApp extends Component {
   render() {
     return (
@@ -52,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('sportsApp', () => sportsApp);
+AppRegistry.registerComponent('sportsApp', () => App);
