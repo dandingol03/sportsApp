@@ -4,7 +4,9 @@
 import { combineReducers } from 'redux';
 
 import tabReducer from './TabReducer';
+import userReducer from './UserReducer';
 
 export default rootReducer = combineReducers({
     tab:tabReducer,
+    user:userReducer
 })

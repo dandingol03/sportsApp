@@ -18,6 +18,8 @@ import {
 } from 'react-native';
 
 var {height, width} = Dimensions.get('window');
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 
