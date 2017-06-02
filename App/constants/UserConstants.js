@@ -1,0 +1,8 @@
+/**
+ * Created by danding on 17/6/2.
+ */
+module.exports={
+    ACCESS_TOKEN_ACK:'ACCESS_TOKEN_ACK',
+    UPDATE_PERSON_INFO:'UPDATE_PERSON_INFO',
+    UPDATE_CERTIFICATE:'UPDATE_CERTIFICATE'
+}

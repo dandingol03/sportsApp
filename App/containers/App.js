@@ -21,6 +21,7 @@ import Home from './Home';
 import My from './My';
 import Found from './Found';
 import News from './News';
+import Login from './Login';
 
 import {
     updateRootTab
@@ -96,15 +97,23 @@ class App extends Component {
 
     render() {
 
-        return (
 
-            <TabNavigator  tabBarStyle={{backgroundColor:'#eeecf3',paddingBottom:5,paddingTop:5,height:55}}>
-                {this._createNavigatorItem('首页','home')}
-                {this._createNavigatorItem('消息','comment-o')}
-                {this._createNavigatorItem('发现','search')}
-                {this._createNavigatorItem('我的','user-o')}
-            </TabNavigator>
-        );
+        let auth=this.props.auth;
+        if(auth==true)
+        {
+
+            return (
+
+                <TabNavigator  tabBarStyle={{backgroundColor:'#eeecf3',paddingBottom:5,paddingTop:5,height:55}}>
+                    {this._createNavigatorItem('首页','home')}
+                    {this._createNavigatorItem('消息','comment-o')}
+                    {this._createNavigatorItem('发现','search')}
+                    {this._createNavigatorItem('我的','user-o')}
+                </TabNavigator>
+            );
+        }else{
+            return (<Login/>);
+        }
     }
 
     componentDidMount()
@@ -123,5 +132,6 @@ const styles = StyleSheet.create({
 export default connect(
     (state) => ({
         tab:state.tab,
+        auth:state.user.auth
     })
 )(App);
