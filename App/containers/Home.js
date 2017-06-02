@@ -23,6 +23,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Coach from '../components/Coach';
 import Mall from './mall/Home';
+import Activity from './groupActivity/Activity';
+import Register from './Register';
+
 
 var IMGS = [
     require('../../img/banner1.jpeg'),
@@ -33,6 +36,32 @@ var IMGS = [
 
 
 class Home extends Component {
+
+    navigate2Register(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'register',
+                component: Register,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    navigate2Activity(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'activity',
+                component: Activity,
+                params: {
+
+                }
+            })
+        }
+    }
 
     navigate2Mall(){
         const { navigator } = this.props;
@@ -148,97 +177,67 @@ class Home extends Component {
                             {/*内容区*/}
                             <View style={{flex:5,justifyContent:'center',backgroundColor:'#eee'}}>
 
-                                <View style={{flex:3,backgroundColor:'#fff',padding:0,marginBottom:10}}>
-                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                        <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
-                                          onPress={ ()=>{
-                                             this.navigate2Coach();
-                                           }}>
-                                            <Icon name="shopping-basket" size={30} style={{justifyContent:'center',alignItems:'center'}} color="#66CD00" />
-                                            <View style={{marginTop:0,padding:5,paddingTop:10}}>
-                                                <Text style={{fontSize:13,color:'#343434'}}>找教练</Text>
-                                            </View>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
-                                          onPress={ ()=>{
-                                            this.navigate2Mall();
-                                          }}>
-
-                                            <Icon name="shopping-cart" size={35} style={{justifyContent:'center',alignItems:'center'}} color="#EEAD0E" />
-                                            <View style={{marginTop:0,padding:5}}>
-                                                <Text style={{fontSize:13,color:'#343434'}}>健康商城</Text>
-                                            </View>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
-                                          onPress={ ()=>{
-
-                                          }}>
-                                            <Icon name="medkit" size={30} style={{justifyContent:'center',alignItems:'center'}} color="#EE6363" />
-                                            <View style={{marginTop:0,padding:5,paddingTop:10}}>
-                                                <Text style={{fontSize:13,color:'#343434'}}>运动馆</Text>
-                                            </View>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
-                                          onPress={ ()=>{
-
-                                          }}>
-                                            <Icon name="plane" size={35} style={{justifyContent:'center',alignItems:'center'}} color="#66CDAA" />
-                                            <View style={{marginTop:0,padding:5}}>
-                                                <Text style={{fontSize:13,color:'#343434'}}>健康定制</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-
+                                <View style={{flex:2,backgroundColor:'#fff',padding:0,marginBottom:10}}>
                                      <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
                                       onPress={ ()=>{
-
+                                          this.navigate2Register();
                                        }}>
-                                        <Icon name="shopping-basket" size={30} style={{justifyContent:'center',alignItems:'center'}} color="#48D1CC" />
-                                        <View style={{marginTop:0,padding:5,paddingTop:10}}>
+                                        <Icon name="newspaper-o" size={30} color="#66CD00" />
+                                        <View style={{marginTop:0,paddingTop:10}}>
+                                            <Text style={{fontSize:13,color:'#343434'}}>资讯</Text>
+                                        </View>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                      onPress={ ()=>{
+                                          this.navigate2Mall();
+                                          console.log('健康商城');
+                                      }}>
+
+                                        <Icon name="shopping-cart" size={30} color="#EEAD0E" />
+                                        <View style={{marginTop:0,paddingTop:10}}>
+                                            <Text style={{fontSize:13,color:'#343434'}}>商城</Text>
+                                        </View>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                      onPress={ ()=>{
+                                         this.navigate2Coach();
+                                      }}>
+                                        <Icon name="flag" size={30} color="#EE6363" />
+                                        <View style={{marginTop:0,paddingTop:10}}>
                                             <Text style={{fontSize:13,color:'#343434'}}>找教练</Text>
                                         </View>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
                                       onPress={ ()=>{
-
+                                        this.navigate2Activity();
                                       }}>
-
-                                        <Icon name="shopping-cart" size={35} style={{justifyContent:'center',alignItems:'center'}} color="#00B2EE" />
-                                        <View style={{marginTop:0,padding:5,paddingTop:10}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>健康商城</Text>
+                                        <Icon name="group" size={30} color="#66CDAA" />
+                                        <View style={{marginTop:0,paddingTop:10}}>
+                                            <Text style={{fontSize:13,color:'#343434'}}>群活动</Text>
                                         </View>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
                                       onPress={ ()=>{
-
-                                      }}>
-                                        <Icon name="medkit" size={32} style={{justifyContent:'center',alignItems:'center'}} color="#8968CD" />
-                                        <View style={{marginTop:0,padding:5,paddingTop:10}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>运动馆</Text>
-                                        </View>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
-                                      onPress={ ()=>{
-
-                                      }}>
-                                        <Icon name="plane" size={35} style={{justifyContent:'center',alignItems:'center'}} color="#FFD700" />
-                                        <View style={{marginTop:0,padding:5,paddingTop:7}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>健康定制</Text>
+                                         this.navigate2Market(vegetable);
+                                         console.log('找教练');
+                                       }}>
+                                        <Icon name="video-camera" size={30} color="#8968CD" />
+                                        <View style={{marginTop:0,paddingTop:10}}>
+                                            <Text style={{fontSize:13,color:'#343434'}}>直播间</Text>
                                         </View>
                                     </TouchableOpacity>
                                     </View>
 
+
                                 </View>
 
 
-                                <View style={{flex:4,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',marginBottom:10}}>
+                                <View style={{flex:5,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',marginBottom:10}}>
                                      <Text>发现</Text>
                                 </View>
 

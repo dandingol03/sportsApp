@@ -92,7 +92,8 @@ class Home extends Component{
 
         return (
             <View style={{flex:1,backgroundColor:'#eee'}}>
-                <View style={{height:55*height/736,width:width,paddingTop:10,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#008B00'}}>
+
+                <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#008B00'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                     onPress={()=>{this.goBack();}}>
                         <Icon name={'angle-left'} size={30} color="#fff"/>
@@ -121,11 +122,11 @@ class Home extends Component{
                     <View style={{position:'absolute',top:30*height/736,width:width,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
 
                         <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#rgba(255, 255, 255, 0.6)',borderRadius:50,}}>
-                            <View style={{backgroundColor:'transparent',marginLeft:10}}>
-                                <Icon name={'search'} size={23} color="#eee"/>
+                            <View style={{backgroundColor:'transparent',marginLeft:10,padding:4}}>
+                                <Icon name={'search'} size={20} color="#eee"/>
                             </View>
                             <TextInput
-                                style={{height:30*height/736,width:width*0.7,paddingLeft:10,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:15}}
+                                style={{height:35*height/736,width:width*0.7,paddingLeft:10,paddingRight:10,paddingTop:5,paddingBottom:2,fontSize:14}}
                                 onChangeText={(goodName) => {
                                       this.state.goodName=goodName;
                                       this.setState({goodName:this.state.goodName});
@@ -149,7 +150,7 @@ class Home extends Component{
                                          this.navigate2ProductsList();
                                          console.log('找教练');
                                        }}>
-                                <Icon name="shopping-basket" size={30} color="#66CD00" />
+                                <Icon name="shopping-basket" size={25} color="#66CD00" />
                                 <View style={{marginTop:0,paddingTop:10}}>
                                     <Text style={{fontSize:13,color:'#343434'}}>运动数码</Text>
                                 </View>
@@ -161,7 +162,7 @@ class Home extends Component{
                                           console.log('健康商城');
                                       }}>
 
-                                <Icon name="shopping-cart" size={30} color="#EEAD0E" />
+                                <Icon name="shopping-cart" size={25} color="#EEAD0E" />
                                 <View style={{marginTop:0,paddingTop:10}}>
                                     <Text style={{fontSize:13,color:'#343434'}}>健身装备</Text>
                                 </View>
@@ -172,7 +173,7 @@ class Home extends Component{
                                          this.setState({tab:2});
                                          console.log('运动馆');
                                       }}>
-                                <Icon name="medkit" size={30} color="#EE6363" />
+                                <Icon name="medkit" size={25} color="#EE6363" />
                                 <View style={{marginTop:0,paddingTop:10}}>
                                     <Text style={{fontSize:13,color:'#343434'}}>器械球类</Text>
                                 </View>
@@ -183,7 +184,7 @@ class Home extends Component{
                                          this.setState({tab:3});
                                          console.log('健康定制');
                                       }}>
-                                <Icon name="plane" size={30} color="#66CDAA" />
+                                <Icon name="plane" size={25} color="#66CDAA" />
                                 <View style={{marginTop:0,paddingTop:10}}>
                                     <Text style={{fontSize:13,color:'#343434'}}>营养保健</Text>
                                 </View>
