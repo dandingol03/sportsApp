@@ -6,9 +6,6 @@ import {
     UPDATE_CERTIFICATE
 } from '../constants/UserConstants';
 
-
-
-
 const initialState = {
     accessToken: null,
     auth:false,

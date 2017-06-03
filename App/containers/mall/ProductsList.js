@@ -159,7 +159,7 @@ class ProductsList extends Component{
                             onChangeText={(goodName) => {
                                       this.state.goodName=goodName;
                                       this.setState({goodName:this.state.goodName});
-                                      if( this.state.goodName==''){
+                                      if( goodName==''){
                                          Animated.timing(          // Uses easing functions
                                             this.state.fadeAnim1,    // The value to drive
                                             {toValue: 0},           // Configuration

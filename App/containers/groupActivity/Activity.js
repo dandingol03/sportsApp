@@ -63,13 +63,13 @@ class Activity extends Component {
                     parallaxHeaderHeight={height}
                     renderStickyHeader={() => (
                         <View key="sticky-header" style={{height:55,width:width,paddingTop:20,flexDirection:'row',
-                                alignItems: 'center',backgroundColor:'#aaa'}}>
+                                alignItems: 'center',backgroundColor:'#66CDAA'}}>
                             <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{this.goBack();}}>
-                                <Icon name={'angle-left'} size={30} color="#343434"/>
+                                <Icon name={'angle-left'} size={30} color="#fff"/>
                             </TouchableOpacity>
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:20}}>
-                                <Text style={{color:'#343434',fontSize:18}}>群活动</Text>
+                                <Text style={{color:'#fff',fontSize:18}}>群活动</Text>
                             </View>
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center',paddingRight:20}}>
 
@@ -92,11 +92,8 @@ class Activity extends Component {
                                 <Text style={{color:'#fff',fontSize:18}}>群活动</Text>
                             </View>
                             <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'flex-end',paddingRight:20,
-                                alignItems: 'center',}}
-                                onPress={()=>{
-                                    alert('hi')
-                                }}>
-                                <Ionicons name='md-more' size={26} color="#fff"/>
+                                alignItems: 'center',}}>
+
                             </TouchableOpacity>
                         </View>
                     )}
@@ -120,14 +117,14 @@ class Activity extends Component {
 
                 <View style={{flex:5,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',position:'absolute',bottom:5}}>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
-                        <Text style={{color:'rgba(130, 222, 88, 0.88)',}}>我的邀约</Text>
+                        <Text style={{color:'#66CDAA',}}>我的邀约</Text>
                     </View>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}
                     onPress={()=>{this.navigate2AddActivity();}}>
-                        <Icon name={'plus-circle'} size={35} color='rgba(130, 222, 88, 0.88)'/>
+                        <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
-                        <Text style={{color:'rgba(130, 222, 88, 0.88)',}}>我的报名</Text>
+                        <Text style={{color:'#66CDAA',}}>我的报名</Text>
                     </View>
                 </View>
 
