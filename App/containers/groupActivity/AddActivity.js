@@ -68,27 +68,7 @@ class AddActivity extends Component{
                             <Icon name={'angle-right'} size={30} color="#fff"/>
                         </View>
                     </View>
-                    <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
-                        <View style={{flex:1}}>
-                            <Text>活动名称：</Text>
-                        </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10}}>
-                            <TextInput
-                                style={{height:35*height/736,justifyContent:'center',alignItems: 'center',width:width*0.6,
-                                paddingLeft:10,paddingRight:10,paddingTop:4,paddingBottom:4,fontSize:13}}
-                                onChangeText={(eventName) => {
-                                      this.setState({eventName:this.state.eventName});
-                                    }}
-                                value={this.state.goodName}
-                                placeholder=' 请输入活动名称'
-                                placeholderTextColor="#aaa"
-                                underlineColorAndroid="transparent"
-                                autoCapitalize="characters"
-                            />
 
-                        </View>
-                    </View>
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>活动时间：</Text>
@@ -112,11 +92,22 @@ class AddActivity extends Component{
 
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
-                            <Text>项目人数：</Text>
+                            <Text>活动人数：</Text>
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
                         borderRadius:10}}>
-                            <Text style={{color:'#aaa',marginRight:30}}>请选择项目类型：</Text>
+                            <Text style={{color:'#aaa',marginRight:30}}>请选择活动人数：</Text>
+                            <Icon name={'angle-right'} size={30} color="#fff"/>
+                        </View>
+                    </View>
+
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                        <View style={{flex:1}}>
+                            <Text>对象水平：</Text>
+                        </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
+                        borderRadius:10}}>
+                            <Text style={{color:'#aaa',marginRight:30}}>请选择对象水平：</Text>
                             <Icon name={'angle-right'} size={30} color="#fff"/>
                         </View>
                     </View>
@@ -127,7 +118,7 @@ class AddActivity extends Component{
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
                         borderRadius:10}}>
-                            <Text style={{color:'#aaa',marginRight:30}}>请选择项目类型：</Text>
+                            <Text style={{color:'#aaa',marginRight:30}}>是否邀请教练：</Text>
                             <Icon name={'angle-right'} size={30} color="#fff"/>
                         </View>
                     </View>

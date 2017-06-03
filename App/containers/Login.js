@@ -22,10 +22,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 var Proxy = require('../utils/Proxy');
 import {
     doLogin,
-} from '../action/userAction';
+} from '../action/UserActions';
 
 import PreferenceStore from '../utils/PreferenceStore';
-
+import {
+    PAGE_REGISTER,
+} from '../constants/PageStateConstants';
+import {
+    updatePageState
+} from '../action/PageStateActions';
 
 
 var  Login =React.createClass({
@@ -58,9 +63,26 @@ var  Login =React.createClass({
 
                 //make a test
 
-                dispatch(loginAction(user.username,user.password)).then(()=>{
+                dispatch(loginAction(user.username,user.password,(errorMsg)=> {
+                    this.setState({showProgress: false,user:{}});
+
+                    if(errorMsg!==undefined&&errorMsg!==null){
+                        var string = errorMsg;
+                        setTimeout(()=>{
+                            Alert.alert(
+                                '错误',
+                                string,
+                                [
+                                    {text: 'OK', onPress: () => {
+                                    }},
+                                ]
+                            );
+                        },900)
+                    }
+                })).then(()=>{
 
                     this.setState({showProgress: false,user:{}});
+
                 }).catch((e)=>{
                     alert(e);
                 })
@@ -101,7 +123,7 @@ var  Login =React.createClass({
         }
 
         return (
-            <View style={[styles.container,{backgroundColor:'#ddd'}]}>
+            <View style={[styles.container,{backgroundColor:'#eee'}]}>
 
 
                     <View style={{justifyContent:'center',flexDirection:'row',padding:0,marginTop:40,}}>
@@ -120,7 +142,7 @@ var  Login =React.createClass({
 
                     </View>
 
-                    <View style={{paddingVertical:2,backgroundColor:'#ddd',flex:1}}>
+                    <View style={{paddingVertical:2,backgroundColor:'#eee',flex:1}}>
 
                         {/*输入用户名*/}
                         <View style={[styles.row,{borderBottomWidth:0,height:42,marginBottom:1,backgroundColor:'#fff'}]}>
@@ -131,7 +153,7 @@ var  Login =React.createClass({
 
                                     <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center',padding:4
                                         ,marginLeft:0,paddingHorizontal:2}}>
-                                        <Icon size={23} name="user" color="#444"></Icon>
+                                        <Icon size={18} name="user-o" color="#66CDAA"></Icon>
                                     </View>
 
 
@@ -155,8 +177,6 @@ var  Login =React.createClass({
 
                         </View>
 
-
-
                         {/*输入密码*/}
                         <View style={[styles.row,{borderBottomWidth:0,height:42,marginBottom:0,backgroundColor:'#fff'}]}>
 
@@ -166,7 +186,7 @@ var  Login =React.createClass({
 
                                     <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center',padding:4,
                                         paddingHorizontal:2,marginLeft:0}}>
-                                        <Icon size={24} name="lock" color="#444"></Icon>
+                                        <Icon size={20} name="lock" color="#66CDAA"></Icon>
                                     </View>
 
                                     <View style={{flex:6,flexDirection:'row',alignItems:'center',justifyContent:'flex-start'}}>
@@ -194,9 +214,9 @@ var  Login =React.createClass({
 
                                 <View style={{flexDirection:'row',width:width*5/6,alignItems:'center',}}>
                                     <TouchableOpacity style={{justifyContent:'center',flexDirection:'row',width:width/3
-                                    ,backgroundColor:'rgba(24, 234, 124, 0.97)',padding:8,borderRadius:4}}
+                                    ,backgroundColor:'#66CDAA',padding:8,borderRadius:4}}
                                                       onPress={()=>{
-                                        //this.navigate2Register();
+                                        this.navigate2Register();
                                     }}>
                                         <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>注册</Text>
                                     </TouchableOpacity>
@@ -204,37 +224,29 @@ var  Login =React.createClass({
                                     <View style={{flex:1}}></View>
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'center',flexDirection:'row',width:width/3,
-                                     borderColor:'rgba(19, 95, 55, 0.97)',padding:8,paddingHorizontal:16,borderRadius:4,borderWidth:1,}}
+                                     borderColor:'#66CDAA',padding:8,paddingHorizontal:16,borderRadius:4,borderWidth:1,}}
                                       onPress={()=>{
                                           if(this.state.user&&
                                           this.state.user.username&&this.state.user.username!=''&&
                                           this.state.user.password&&this.state.user.password!='')
                                           {
+                                              this.setState({showProgress: true});
                                               this.props.dispatch(doLogin(this.state.user.username,this.state.user.password))
+                                              .then(()=>{
+                                                  this.setState({showProgress: false,user:{}});
+                                              })
+                                              .catch((e)=>{
+                                                        alert(e);
+                                               })
                                           }
 
 
                                     }}>
-                                        <Text style={{color:'rgba(19, 95, 55, 0.97)',fontSize:16,fontWeight:'bold'}}>登录</Text>
+                                        <Text style={{color:'#66CDAA',fontSize:16,fontWeight:'bold'}}>登录</Text>
                                     </TouchableOpacity>
                                 </View>
 
                         </View>
-
-                        {/*登录*/}
-                        {/*<View style={{flexDirection:'row',justifyContent:'center'}}>*/}
-                            {/*<View style={[styles.row,{borderBottomWidth:0,marginTop:20,width:width*3/5}]}>*/}
-
-                                {/*<TouchableOpacity style={{flex:1,backgroundColor:'rgba(66, 162, 136, 0.97)',padding:12,borderRadius:20,flexDirection:'row',*/}
-                                {/*justifyContent:'center',}} onPress={()=>{*/}
-                                             {/*this.onLoginPressed()*/}
-                                          {/*}}>*/}
-                                    {/*<Text style={{color:'#fff',fontSize:18}}>登录</Text>*/}
-                                {/*</TouchableOpacity>*/}
-                            {/*</View>*/}
-                        {/*</View>*/}
-
-
 
                         {/*loading模态框*/}
                         <Modal animationType={"fade"} transparent={true} visible={this.state.showProgress}>
@@ -264,9 +276,6 @@ var  Login =React.createClass({
                         </Modal>
 
                     </View>
-
-
-
 
 
             </View>

@@ -181,7 +181,7 @@ class Home extends Component {
                                      <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
                                       onPress={ ()=>{
-                                          this.navigate2Register();
+
                                        }}>
                                         <Icon name="newspaper-o" size={30} color="#66CD00" />
                                         <View style={{marginTop:0,paddingTop:10}}>
