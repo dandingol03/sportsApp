@@ -17,11 +17,19 @@ import { Navigator } from 'react-native-deprecated-custom-components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TabNavigator from 'react-native-tab-navigator';
 
+import {
+    PAGE_LOGIN,
+    PAGE_REGISTER,
+    PAGE_PASSWORDFORGET,
+
+} from '../constants/PageStateConstants';
+
 import Home from './Home';
 import My from './My';
 import Found from './Found';
 import News from './News';
 import Login from './Login';
+import Register from './Register';
 
 import {
     updateRootTab
@@ -97,7 +105,7 @@ class App extends Component {
 
     render() {
 
-
+        var props=this.props;
         let auth=this.props.auth;
         if(auth==true)
         {
@@ -112,7 +120,20 @@ class App extends Component {
                 </TabNavigator>
             );
         }else{
-            return (<Login/>);
+
+            switch(props.page.state)
+            {
+                case PAGE_LOGIN:
+                    return (<Login/>);
+                    break;
+                case PAGE_REGISTER:
+                    return (<Register/>);
+                    break;
+                case PAGE_PASSWORDFORGET:
+                    return (<PasswordForget/>);
+                    break;
+            }
+
         }
     }
 
@@ -132,6 +153,7 @@ const styles = StyleSheet.create({
 export default connect(
     (state) => ({
         tab:state.tab,
-        auth:state.user.auth
+        auth:state.user.auth,
+        page:state.page,
     })
 )(App);

@@ -93,7 +93,7 @@ class ProductDetail extends Component{
 
         return (
             <View style={{flex:1,backgroundColor:'#eee'}}>
-                <View style={{height:55*height/736,width:width,paddingTop:10,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#008B00'}}>
+                <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#008B00'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{this.goBack();}}>
                         <Icon name={'angle-left'} size={30} color="#fff"/>
@@ -210,16 +210,26 @@ class ProductDetail extends Component{
 
                 <View style={{flexDirection:'row',borderWidth:1,borderColor:'#ddd',position:'absolute',bottom:5}}>
 
-                    <View style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'}}>
-                        <Icon name="star-o" size={16} color="#EEAD0E" />
-                        <Text style={{color:'#343434',fontSize:15}}>收藏</Text>
+                    <View style={{flexDirection:'row',flex:2,backgroundColor:'#fff'}}>
+
+                        <View style={{marginRight:5,marginLeft:10}}>
+                            <Icon name="star-o" size={23} color="#EEAD0E" />
+                            <Text style={{color:'#343434',fontSize:11}}>收藏</Text>
+                        </View>
+                        <View style={{marginRight:5,marginLeft:10}}>
+                            <Icon name="shopping-cart" size={23} color="#aaa" />
+                            <Text style={{color:'#343434',fontSize:11}}>购物车</Text>
+                            <View style={{backgroundColor:'red',position:'absolute',top:0,right:5,padding:3,borderRadius:10}}>
+                                <Text style={{color:'#fff',fontSize:8}}>2</Text>
+                            </View>
+                        </View>
                     </View>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',backgroundColor:'#476bec',padding:10,}}
                     onPress={()=>{this.navigate2ShopCart();}}>
-                        <Text style={{color:'#fff',fontSize:15}}>加入购物车</Text>
+                        <Text style={{color:'#fff',fontSize:13}}>加入购物车</Text>
                     </TouchableOpacity>
                     <View style={{flex:1,justifyContent:'center',alignItems: 'center',backgroundColor:'red',padding:10,}}>
-                        <Text style={{color:'#fff',fontSize:15}}>立即购买</Text>
+                        <Text style={{color:'#fff',fontSize:13}}>立即购买</Text>
                     </View>
 
                 </View>

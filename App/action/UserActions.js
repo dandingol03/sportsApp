@@ -40,9 +40,32 @@ let getAccessToken= (accessToken)=>{
 }
 
 //用户注册
-export let register= function () {
+export let registerUser=(payload)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var {username,password,genderCode,mobilePhone,nickName}=payload;
 
+            Proxy.postes({
+                url: Config.server + '/register?'+'username='+username+'&&password='+password+
+                '&&mobilePhone='+mobilePhone+'&&genderCode='+genderCode+'&&nickName='+nickName,
+                headers: {
+                    'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+
+        });
+    }
 }
+
 
 //用户登录
 export let doLogin=function(username,password){

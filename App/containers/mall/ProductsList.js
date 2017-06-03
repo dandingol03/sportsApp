@@ -21,6 +21,7 @@ var {height, width} = Dimensions.get('window');
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ProductDetail from './ProductDetail';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class ProductsList extends Component{
 
@@ -29,6 +30,24 @@ class ProductsList extends Component{
         if(navigator) {
             navigator.pop();
         }
+    }
+
+    _onRefresh() {
+        this.setState({ isRefreshing: true, fadeAnim: new Animated.Value(0) });
+        setTimeout(function () {
+            this.setState({
+                isRefreshing: false,
+            });
+            Animated.timing(          // Uses easing functions
+                this.state.fadeAnim,    // The value to drive
+                {
+                    toValue: 1,
+                    duration: 600,
+                    easing: Easing.bounce
+                },           // Configuration
+            ).start();
+        }.bind(this), 500);
+
     }
 
     navigate2ProductDetail(productInfo){
@@ -82,7 +101,9 @@ class ProductsList extends Component{
     constructor(props) {
         super(props);
         this.state={
-
+            isRefreshing: false,
+            fadeAnim: new Animated.Value(1),
+            fadeAnim1: new Animated.Value(0),
         }
     }
 
@@ -104,19 +125,17 @@ class ProductsList extends Component{
         if(products!==undefined&&products!==null&&products.length>0)
         {
             productsListView=(
-                <ScrollView>
                     <ListView
                         automaticallyAdjustContentInsets={false}
                         dataSource={ds.cloneWithRows(products)}
                         renderRow={this.renderRow.bind(this)}
-                    />
-                </ScrollView>);
+                    />);
         }
 
 
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
-                <View style={{height:55*height/736,width:width,paddingTop:10,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#008B00'}}>
+                <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#008B00'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{this.goBack();}}>
                         <Icon name={'angle-left'} size={30} color="#fff"/>
@@ -132,14 +151,26 @@ class ProductsList extends Component{
                 {/*//搜索框*/}
                 <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',padding:8}}>
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',borderRadius:8}}>
-                        <View style={{backgroundColor:'transparent',marginLeft:10}}>
+                        <View style={{backgroundColor:'transparent',marginLeft:10,padding:4}}>
                             <Icon name={'search'} size={18} color="#aaa"/>
                         </View>
                         <TextInput
-                            style={{height:30*height/736,width:width*0.8,paddingLeft:10,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:15}}
+                            style={{height:35*height/736,justifyContent:'center',alignItems: 'center',width:width*0.8,paddingLeft:10,paddingRight:10,paddingTop:4,paddingBottom:4,fontSize:15}}
                             onChangeText={(goodName) => {
                                       this.state.goodName=goodName;
                                       this.setState({goodName:this.state.goodName});
+                                      if( this.state.goodName==''){
+                                         Animated.timing(          // Uses easing functions
+                                            this.state.fadeAnim1,    // The value to drive
+                                            {toValue: 0},           // Configuration
+                                         ).start();
+                                      }else{
+                                         Animated.timing(          // Uses easing functions
+                                            this.state.fadeAnim1,    // The value to drive
+                                            {toValue: 1},           // Configuration
+                                        ).start();
+                                      }
+
                                     }}
                             value={this.state.goodName}
                             placeholder=' 搜索商品'
@@ -147,28 +178,61 @@ class ProductsList extends Component{
                             underlineColorAndroid="transparent"
                             autoCapitalize="characters"
                         />
+                        <Animated.View style={{opacity: this.state.fadeAnim1,backgroundColor:'transparent',padding:4,marginRight:8}}>
+                            <TouchableOpacity onPress={()=>{ this.setState({goodName:''});}}>
+                                <Ionicons name='md-close-circle' size={18} color="red"/>
+                            </TouchableOpacity>
+                        </Animated.View>
                     </View>
+
                 </View>
 
-                <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',padding:8,borderTopWidth:1,borderBottomWidth:1,borderColor:'#ddd'}}>
+                <View style={{height:45*height/736,flexDirection:'row',justifyContent:'center',alignItems: 'center',padding:8,borderTopWidth:1,borderBottomWidth:1,borderColor:'#ddd'}}>
                     <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
                         <Text>默认</Text>
                     </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                    <View style={{flexDirection:'row',flex:1,justifyContent:'center',alignItems: 'center',}}>
                         <Text>价格</Text>
+                        <View style={{marginLeft:5}}>
+                            <Icon name={'caret-up'} size={15} color="#aaa"/>
+                            <Icon name={'caret-down'} size={15} color="#aaa"/>
+                        </View>
                     </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                    <View style={{flexDirection:'row',flex:1,justifyContent:'center',alignItems: 'center',}}>
                         <Text>销量</Text>
+                        <View style={{marginLeft:5}}>
+                            <Icon name={'caret-up'} size={15} color="#aaa"/>
+                            <Icon name={'caret-down'} size={15} color="#aaa"/>
+                        </View>
                     </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                    <View style={{flexDirection:'row',flex:1,justifyContent:'center',alignItems: 'center',}}>
                         <Text>评价数</Text>
+                        <View style={{marginLeft:5}}>
+                            <Icon name={'caret-up'} size={15} color="#aaa"/>
+                            <Icon name={'caret-down'} size={15} color="#aaa"/>
+                        </View>
                     </View>
                 </View>
 
 
-                <View>
-                    {productsListView}
-                </View>
+                <Animated.View style={{opacity: this.state.fadeAnim,paddingBottom:10,height:height-250*height/736,borderTopWidth:1,borderColor:'#ddd'}}>
+
+                    <ScrollView
+                        refreshControl={
+                                     <RefreshControl
+                                         refreshing={this.state.isRefreshing}
+                                         onRefresh={this._onRefresh.bind(this)}
+                                         tintColor="#9c0c13"
+                                         title="刷新..."
+                                         titleColor="#9c0c13"
+                                         colors={['#ff0000', '#00ff00', '#0000ff']}
+                                         progressBackgroundColor="#ffff00"
+                                     />
+                                    }
+                    >
+                        {productsListView}
+                    </ScrollView>
+                </Animated.View>
 
             </View>
         );
