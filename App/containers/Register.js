@@ -15,13 +15,15 @@ import {
     TouchableOpacity,
     RefreshControl,
     Animated,
-    Easing
+    Easing,
+    Modal
 } from 'react-native';
 
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
     PAGE_LOGIN,
 } from '../constants/PageStateConstants';
@@ -33,6 +35,8 @@ import PreferenceStore from '../utils/PreferenceStore';
 import {
     registerUser
 } from '../action/UserActions';
+
+import Camera from 'react-native-camera'
 
 class Register extends Component{
 
@@ -85,8 +89,25 @@ class Register extends Component{
     constructor(props) {
         super(props);
         this.state={
-            info:{mobilePhone:'',nickName:'',username:'',password:'',userType:'0'},//userType:0:学员，1：教练
-            genderCode:'1',
+            info:{
+                mobilePhone:'',
+                username:'',
+                password:'',
+                userType:0,
+                genderCode:1
+            },
+            fadeCancel: new Animated.Value(0),
+            fadeNickNameCancel:new Animated.Value(0),
+            fadePasswordCancel:new Animated.Value(0),
+            cameraModalVisible:false,
+            camera: {
+                aspect: Camera.constants.Aspect.fill,
+                captureTarget: Camera.constants.CaptureTarget.disk,
+                type: Camera.constants.Type.back,
+                orientation: Camera.constants.Orientation.auto,
+                flashMode: Camera.constants.FlashMode.auto,
+            },
+            videoPath:null
         }
     }
 
@@ -95,7 +116,7 @@ class Register extends Component{
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                backgroundColor:'#008B00',borderBottomWidth:1,borderColor:'#ddd'}}>
+                        backgroundColor:'#008B00',borderBottomWidth:1,borderColor:'#ddd'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{this.navigate2Login();}}>
                         <Icon name={'angle-left'} size={30} color="#fff"/>
@@ -120,14 +141,50 @@ class Register extends Component{
                                 style={{height:35*height/736,justifyContent:'center',alignItems: 'center',width:width*0.8,
                                 paddingLeft:10,paddingRight:10,paddingTop:4,paddingBottom:4,fontSize:13}}
                                 onChangeText={(phoneNum) => {
-                                      this.setState({info:Object.assign(this.state.info,{mobilePhone:phoneNum,username:phoneNum})});
+                                       if( phoneNum&&phoneNum!='')//不为空
+                                       {
+                                             Animated.timing(
+                                            this.state.fadeCancel,
+                                            {toValue: 1},
+                                        ).start();
+                                      }else{
+                                             Animated.timing(
+                                            this.state.fadeCancel,
+                                            {toValue: 0},
+                                         ).start();
+
+                                      }
+                                      this.setState({info:Object.assign(this.state.info,{mobilePhone:phoneNum})});
                                     }}
+                                onBlur={()=>{
+                                   if(this.state.fadeCancel==0)
+                                   {}
+                                   else{
+                                             Animated.timing(
+                                            this.state.fadeCancel,
+                                            {toValue: 0},
+                                         ).start();
+                                   }
+                                }}
                                 value={this.state.info.mobilePhone}
                                 placeholder=' 请输入手机号码'
                                 placeholderTextColor="#aaa"
                                 underlineColorAndroid="transparent"
-                                autoCapitalize="characters"
+                                keyboardType="numeric"
                             />
+
+                            <Animated.View style={{opacity: this.state.fadeCancel,backgroundColor:'transparent',padding:4,marginRight:8}}>
+                                <TouchableOpacity onPress={()=>{
+
+                                    this.setState({info:Object.assign(this.state.info,{mobilePhone:''})});
+                                     Animated.timing(
+                                            this.state.fadeCancel,
+                                            {toValue: 0},
+                                         ).start();
+                                }}>
+                                    <Ionicons name='md-close-circle' size={18} color="red"/>
+                                </TouchableOpacity>
+                            </Animated.View>
 
                         </View>
                     </View>
@@ -150,63 +207,207 @@ class Register extends Component{
                     <View  style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',
                     backgroundColor:'#fff',marginTop:15}}>
 
-                        <View style={{flex:1,backgroundColor:'#ddd',justifyContent:'center',alignItems: 'center',margin:5,paddingTop:15,paddingBottom:15}}>
-                            <Icon size={33} name="camera-retro" color="#fff"></Icon>
-                        </View>
+                        {/*照相*/}
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#ddd',justifyContent:'center',alignItems: 'center',
+                            margin:5,paddingTop:15,paddingBottom:15}}
+                            onPress={
+                                ()=>{
+                                     this.setState({cameraModalVisible:true});
+                                }
+                            }
+                        >
+                            <Icon size={40} name="camera-retro" color="#fff"></Icon>
+                        </TouchableOpacity>
                         <View style={{flex:3,padding:5,}}>
-                            <View style={{borderBottomWidth:1,borderColor:'#eee'}}>
+                            <View style={{borderBottomWidth:1,borderColor:'#eee',flexDirection:'row'}}>
                                 <TextInput
-                                    style={{height:35*height/736,justifyContent:'center',alignItems: 'center',width:width*0.8,
-                                paddingLeft:10,paddingRight:10,paddingTop:4,paddingBottom:4,fontSize:13}}
-                                    onChangeText={(nickName) => {
-                                         this.setState({info:Object.assign(this.state.info,{nickName:nickName})});
+                                    style={{height:35*height/736,justifyContent:'center',alignItems: 'center',flex:1,
+                                        paddingLeft:10,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:13}}
+                                    onChangeText={(username) => {
+
+                                       if( username&&username!='')//不为空
+                                       {
+                                             Animated.timing(
+                                            this.state.fadeNickNameCancel,
+                                            {toValue: 1},
+                                        ).start();
+                                      }else{
+                                             Animated.timing(
+                                            this.state.fadeNickNameCancel,
+                                            {toValue: 0},
+                                         ).start();
+
+                                      }
+
+                                      this.setState({info:Object.assign(this.state.info,{username:username})});
                                     }}
-                                    value={this.state.info.nickName}
-                                    placeholder=' 请输入昵称'
+                                    onBlur={()=>{
+                                       if(this.state.fadeNickNameCancel==0)
+                                       {}
+                                       else{
+                                                 Animated.timing(
+                                                this.state.fadeNickNameCancel,
+                                                {toValue: 0},
+                                             ).start();
+                                       }
+                                    }}
+                                    value={this.state.info.username}
+                                    placeholder=' 请输入用户名'
                                     placeholderTextColor="#aaa"
                                     underlineColorAndroid="transparent"
                                 />
+                                <Animated.View style={{opacity: this.state.fadeNickNameCancel,backgroundColor:'transparent',
+                                        padding:4,marginRight:8,width:30}}>
+                                    <TouchableOpacity onPress={()=>{
+
+                                    this.setState({info:Object.assign(this.state.info,{nickName:''})});
+                                     Animated.timing(
+                                            this.state.fadeNickNameCancel,
+                                            {toValue: 0},
+                                         ).start();
+                                }}>
+                                        <Ionicons name='md-close-circle' size={18} color="red"/>
+                                    </TouchableOpacity>
+                                </Animated.View>
                             </View>
-                            <View>
+                            <View style={{flexDirection:'row',borderBottomWidth:1,borderColor:'#eee',}}>
                                 <TextInput
-                                    style={{height:35*height/736,justifyContent:'center',alignItems: 'center',width:width*0.8,
-                                paddingLeft:10,paddingRight:10,paddingTop:4,paddingBottom:4,fontSize:13}}
-                                    onChangeText={(password) => {
-                                        this.setState({info:Object.assign(this.state.info,{password:password})});
-                                    }}
-                                    secureTextEntry={true}
-                                    value={this.state.password}
-                                    placeholder=' 密码（6-16位字母和数字）'
-                                    placeholderTextColor="#aaa"
-                                    underlineColorAndroid="transparent"
+                                    style={{height:35*height/736,justifyContent:'center',alignItems: 'center',flex:1,
+                                    paddingLeft:10,paddingRight:10,paddingTop:4,paddingBottom:4,fontSize:13}}
+                                        onChangeText={(password) => {
+
+                                          if( password&&password!='')//不为空
+                                          {
+                                                 Animated.timing(
+                                                this.state.fadePasswordCancel,
+                                                {toValue: 1},
+                                            ).start();
+                                          }else{
+                                                 Animated.timing(
+                                                this.state.fadePasswordCancel,
+                                                {toValue: 0},
+                                             ).start();
+
+                                          }
+
+
+                                            this.setState({info:Object.assign(this.state.info,{password:password})});
+                                        }}
+                                        onBlur={()=>{
+                                           if(this.state.fadePasswordCancel==0)
+                                           {}
+                                           else{
+                                                     Animated.timing(
+                                                    this.state.fadePasswordCancel,
+                                                    {toValue: 0},
+                                                 ).start();
+                                           }
+                                        }}
+                                        secureTextEntry={true}
+                                        value={this.state.password}
+                                        placeholder=' 密码（6-16位字母和数字）'
+                                        placeholderTextColor="#aaa"
+                                        underlineColorAndroid="transparent"
                                 />
+
+                                <Animated.View style={{opacity: this.state.fadePasswordCancel,backgroundColor:'transparent',
+                                        padding:4,marginRight:8,width:30}}>
+                                    <TouchableOpacity onPress={()=>{
+
+                                    this.setState({info:Object.assign(this.state.info,{nickName:''})});
+                                     Animated.timing(
+                                            this.state.fadePasswordCancel,
+                                            {toValue: 0},
+                                         ).start();
+                                }}>
+                                        <Ionicons name='md-close-circle' size={18} color="red"/>
+                                    </TouchableOpacity>
+                                </Animated.View>
+                            </View>
+
+                            <View style={{flexDirection:'row'}}>
+                                <View style={{height:35*height/736,flexDirection:'row',flex:1,paddingLeft:15,paddingRight:10,
+                                    paddingTop:4,paddingBottom:4}}>
+
+                                    <View style={{flexDirection:'row',alignItems:'center',flex:3}}>
+                                        <Text style={{color:'#999',fontSize:13}}>
+                                            作为教练注册
+                                        </Text>
+                                    </View>
+
+                                    <View style={{flexDirection:'row',flex:2,justifyContent:'center'}}>
+
+                                        <TouchableOpacity style={{flexDirection:'row',alignItems:'center',flex:1}}
+                                            onPress={()=>{
+                                                if(this.state.info.userType!=1)
+                                                    this.setState({info:Object.assign(this.state.info,{userType:1})})
+                                            }}
+                                        >
+                                            {
+                                                this.state.info.userType==1?
+                                                    <Text style={{fontSize:13,color:'green'}}>是</Text>:
+                                                    <Text style={{fontSize:13,color:'gray'}}>是</Text>
+                                            }
+                                            {
+                                                this.state.info.userType==1?
+                                                    <Ionicons name='md-radio-button-on' size={16} color="green" style={{marginLeft:4,paddingTop:2}}/>:
+                                                    <Ionicons name='md-radio-button-off' size={16} color="gray" style={{marginLeft:4,paddingTop:2}}/>
+                                            }
+
+
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity style={{flexDirection:'row',alignItems:'center',flex:1}}
+                                            onPress={()=>{
+                                                if(this.state.info.userType==1)
+                                                     this.setState({info:Object.assign(this.state.info,{userType:0})})
+                                            }}
+                                        >
+                                            {
+                                                this.state.info.userType!=1?
+                                                    <Text style={{fontSize:13,color:'green'}}>否</Text>:
+                                                    <Text style={{fontSize:13,color:'gray'}}>否</Text>
+
+                                            }
+                                            {
+                                                this.state.info.userType!=1?
+                                                    <Ionicons name='md-radio-button-on' size={16} color="green" style={{marginLeft:4,paddingTop:2}}/>:
+                                                    <Ionicons name='md-radio-button-off' size={16} color="gray" style={{marginLeft:4,paddingTop:2}}/>
+                                            }
+
+
+                                        </TouchableOpacity>
+
+                                    </View>
+
+                                </View>
+
                             </View>
                         </View>
                     </View>
 
 
                     {
-                        this.state.genderCode=='1'?
+                        this.state.info.genderCode==1?
                             <View  style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                    backgroundColor:'#fff',marginTop:15}}>
+                                    backgroundColor:'#fff',marginTop:15}}>
                                 <View style={{flex:1,padding:8,justifyContent:'center',alignItems: 'center',borderRightWidth:1,borderColor:'#eee'}}>
                                     <Text style={{color:'#008B00'}}>男</Text>
                                 </View>
                                 <TouchableOpacity style={{flex:1,padding:8,justifyContent:'center',alignItems: 'center',}}
                                 onPress={()=>{
-                                    this.setState({genderCode:'2'});
-                                    this.setState({info:Object.assign(this.state.info,{genderCode:'2'})});
+                                    this.setState({info:Object.assign(this.state.info,{genderCode:2})});
                                 }
                                 }>
                                     <Text style={{color:'#aaa'}}>女</Text>
                                 </TouchableOpacity>
                             </View>:
                             <View  style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                    backgroundColor:'#fff',marginTop:15}}>
-                                <TouchableOpacity style={{flex:1,padding:8,justifyContent:'center',alignItems: 'center',borderRightWidth:1,borderColor:'#eee'}}
+                                   backgroundColor:'#fff',marginTop:15}}>
+                                <TouchableOpacity style={{flex:1,padding:8,justifyContent:'center',alignItems: 'center',
+                                    borderRightWidth:1,borderColor:'#eee'}}
                                                   onPress={()=>{
-                                    this.setState({genderCode:'1'});
-                                    this.setState({info:Object.assign(this.state.info,{genderCode:'1'})});
+                                    this.setState({info:Object.assign(this.state.info,{genderCode:1})});
                                 }
                                 }>
                                     <Text style={{color:'#aaa'}}>男</Text>
@@ -239,6 +440,83 @@ class Register extends Component{
                     {/*</View>*/}
 
                 </View>
+
+
+                <Modal
+                    animationType={"slide"}
+                    transparent={false}
+                    visible={this.state.cameraModalVisible}
+                >
+                    <Camera
+                        ref={(cam) => {
+                            this.camera = cam;
+                          }}
+                        style={styles.preview}
+
+                        captureTarget={this.state.camera.captureTarget}
+                        type={this.state.camera.type}
+                        flashMode={this.state.camera.flashMode}
+                        defaultTouchToFocus
+                        mirrorImage={false}
+                    />
+                    <View style={[styles.overlay, styles.topOverlay]}>
+                        <TouchableOpacity
+                            style={styles.typeButton}
+                            onPress={this.switchType}
+                        >
+                            <Image
+                                source={this.typeIcon}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.flashButton}
+                            onPress={this.switchFlash}
+                        >
+                            <Image
+                                source={this.flashIcon}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[styles.overlay, styles.bottomOverlay]}>
+                        {
+                            !this.state.isRecording
+                            &&
+                            <TouchableOpacity
+                                style={styles.captureButton}
+                                onPress={this.takePicture}
+                            >
+                                <Image
+                                    source={require('../../img/ic_photo_camera_36pt.png')}
+                                />
+                            </TouchableOpacity>
+                            ||
+                            null
+                        }
+                        <View style={styles.buttonsSpace} />
+                        {
+                            !this.state.isRecording
+                            &&
+                            <TouchableOpacity
+                                style={styles.captureButton}
+                                onPress={this.startVideoCapture}
+                            >
+                                <Image
+                                    source={require('../../img/ic_videocam_36pt.png')}
+                                />
+                            </TouchableOpacity>
+                            ||
+                            <TouchableOpacity
+                                style={styles.captureButton}
+                                onPress={this.stopVideoCapture}
+                            >
+                                <Image
+                                    source={require('../../img/ic_stop_36pt.png')}
+                                />
+                            </TouchableOpacity>
+                        }
+                    </View>
+
+                </Modal>
             </View>
         );
     }
@@ -247,7 +525,52 @@ class Register extends Component{
 
 var styles = StyleSheet.create({
 
-
+    preview: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    overlay: {
+        position: 'absolute',
+        padding: 16,
+        right: 0,
+        left: 0,
+        alignItems: 'center',
+    },
+    topOverlay: {
+        top: 0,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    bottomOverlay: {
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    captureButton: {
+        padding: 15,
+        backgroundColor: 'white',
+        borderRadius: 40,
+    },
+    typeButton: {
+        padding: 5,
+    },
+    flashButton: {
+        padding: 5,
+    },
+    buttonsSpace: {
+        width: 10,
+    },
+    imageStyle: {
+        width: 70,
+        height: 70,
+        marginTop: 10,
+        borderWidth:2,
+    },
 });
 
 const mapStateToProps = (state, ownProps) => {
