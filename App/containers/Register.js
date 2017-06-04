@@ -38,6 +38,8 @@ import {
 
 import Camera from 'react-native-camera'
 
+import ActionSheet from 'react-native-actionsheet'
+
 class Register extends Component{
 
     register()
@@ -94,7 +96,8 @@ class Register extends Component{
                 username:'',
                 password:'',
                 userType:0,
-                genderCode:1
+                genderCode:1,
+                sportLevel:null
             },
             fadeCancel: new Animated.Value(0),
             fadeNickNameCancel:new Animated.Value(0),
@@ -111,18 +114,27 @@ class Register extends Component{
         }
     }
 
+    showActionSheet() {
+        this.ActionSheet.show()
+    }
+
     render() {
+
+
+        var  options = [ '取消','无','体育本科', '国家一级运动员', '国家二级运动员', '国家三级运动员' ]
+        const CANCEL_INDEX = 0
+        const DESTRUCTIVE_INDEX=1
 
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                        backgroundColor:'#008B00',borderBottomWidth:1,borderColor:'#ddd'}}>
+                        backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#ddd'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{this.navigate2Login();}}>
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>手机号码注册</Text>
+                        <Text style={{color:'#fff',fontSize:18}}>注册</Text>
                     </View>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
                         {/*<Text style={{color:'#fff',fontSize:15}}>下一步</Text>*/}
@@ -132,7 +144,7 @@ class Register extends Component{
                 <View style={{flex:4,backgroundColor:'#eee',paddingTop:15,paddingBottom:10}}>
 
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',padding:5,
-                    backgroundColor:'#fff',borderBottomWidth:1,borderColor:'#ddd'}}>
+                        backgroundColor:'#fff',borderBottomWidth:1,borderColor:'#ddd'}}>
                         <View style={{flex:1,paddingLeft:5}}>
                             <Text style={{color:'#aaa'}}>+86：</Text>
                         </View>
@@ -205,7 +217,7 @@ class Register extends Component{
                     {/*</View>*/}
 
                     <View  style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                    backgroundColor:'#fff',marginTop:15}}>
+                        backgroundColor:'#fff',marginTop:15}}>
 
                         {/*照相*/}
                         <TouchableOpacity style={{flex:1,backgroundColor:'#ddd',justifyContent:'center',alignItems: 'center',
@@ -325,7 +337,7 @@ class Register extends Component{
                                 </Animated.View>
                             </View>
 
-                            <View style={{flexDirection:'row'}}>
+                            <View style={{flexDirection:'row',borderBottomWidth:1,borderColor:'#eee'}}>
                                 <View style={{height:35*height/736,flexDirection:'row',flex:1,paddingLeft:15,paddingRight:10,
                                     paddingTop:4,paddingBottom:4}}>
 
@@ -383,8 +395,48 @@ class Register extends Component{
                                 </View>
 
                             </View>
+
+
+                            <View style={{flexDirection:'row'}}>
+                                <View style={{flexDirection:'row',flex:1,paddingLeft:15,paddingRight:10,
+                                    paddingVertical:3}}>
+
+                                    <View style={{flexDirection:'row',alignItems:'center',flex:2}}>
+                                        <Text style={{color:'#999',fontSize:13}}>
+                                            选择运动水平
+                                        </Text>
+                                    </View>
+
+                                    <TouchableOpacity style={{flexDirection:'row',flex:2,justifyContent:'center'}}
+                                                      onPress={()=>{
+                                              this.showActionSheet()
+                                            }}>
+
+
+                                            {
+                                                this.state.info.sportLevel?
+                                                    <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
+                                                            paddingHorizontal:6,}}>
+                                                        <Text style={{fontSize:12,color:'#333'}}>
+                                                            {this.state.info.sportLevel}
+                                                        </Text>
+                                                    </View>:
+                                                    <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
+                                                            paddingHorizontal:20,}}>
+                                                        <Text style={{fontSize:12,color:'#333'}}>无</Text>
+                                                    </View>
+                                            }
+
+                                    </TouchableOpacity>
+
+                                </View>
+
+                            </View>
+
+
                         </View>
                     </View>
+
 
 
                     {
@@ -420,7 +472,7 @@ class Register extends Component{
                     }
 
                     <TouchableOpacity style={{height:30,width:width*0.4,marginLeft:width*0.3,marginTop:20,justifyContent:'center',alignItems: 'center',
-                    borderRadius:10,backgroundColor:'#66CDAA'}}
+                        borderRadius:10,backgroundColor:'#66CDAA'}}
                     onPress={()=>{
                          this.register();
                     }}>
@@ -517,6 +569,26 @@ class Register extends Component{
                     </View>
 
                 </Modal>
+
+
+
+                <ActionSheet
+                    ref={o => this.ActionSheet = o}
+                    title={'选择运动水平'}
+                    options={options}
+                    cancelButtonIndex={CANCEL_INDEX}
+                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                    onPress={(i)=>{
+                        if(i!=0&&i!=1)
+                        {
+                            this.setState({info:Object.assign(this.state.info,{sportLevel:options[i]})})
+                        }else if(i==1)
+                        {
+                            this.setState({info:Object.assign(this.state.info,{sportLevel:null})})
+                        }else{
+                        }
+                    }}
+                />
             </View>
         );
     }
