@@ -124,7 +124,7 @@ class Home extends Component {
                     parallaxHeaderHeight={height}
                     renderStickyHeader={() => (
                         <View key="sticky-header" style={{height:55,width:width,paddingTop:20,flexDirection:'row',
-                                alignItems: 'center',backgroundColor:'rgba(130, 222, 88, 0.88)'}}>
+                                alignItems: 'center',backgroundColor:'#66CDAA'}}>
 
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
