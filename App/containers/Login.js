@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-
-
 import {
     Image,
     View,
@@ -13,12 +11,12 @@ import {
     TouchableOpacity,
     Dimensions,
     Modal,
-    Platform
+    Platform,
+    Animated
 } from 'react-native';
 
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
-import Icon from 'react-native-vector-icons/FontAwesome';
 var Proxy = require('../utils/Proxy');
 import {
     doLogin,
@@ -31,6 +29,10 @@ import {
 import {
     updatePageState
 } from '../action/PageStateActions';
+
+import Markdown from 'react-native-simple-markdown'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 
 var  Login =React.createClass({
@@ -104,7 +106,9 @@ var  Login =React.createClass({
             user:{},
             modalVisible:false,
             showProgress:false,
-            loginDot:'.'
+            loginDot:'.',
+            fadeCancel: new Animated.Value(0),
+            fadePassword:new Animated.Value(0)
         });
     },
 
@@ -161,16 +165,54 @@ var  Login =React.createClass({
                                         <TextInput
                                             style={{height: 42,flex:1,paddingLeft:0,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:16,
                                                         }}
+
+
                                             onChangeText={(username) => {
 
-                                            this.state.user.username=username;
-                                            this.setState({user:this.state.user});
+                                              if( username&&username!='')//不为空
+                                              {
+                                                     Animated.timing(
+                                                    this.state.fadeCancel,
+                                                    {toValue: 1},
+                                                ).start();
+                                              }else{
+                                                     Animated.timing(
+                                                    this.state.fadeCancel,
+                                                    {toValue: 0},
+                                                 ).start();
+
+                                              }
+
+                                                this.state.user.username=username;
+                                                this.setState({user:this.state.user});
+                                            }}
+                                            onBlur={()=>{
+                                               if(this.state.fadeCancel==0)
+                                               {}
+                                               else{
+                                                         Animated.timing(
+                                                        this.state.fadeCancel,
+                                                        {toValue: 0},
+                                                     ).start();
+                                               }
                                             }}
                                             value={this.state.user.username}
                                             placeholder="帐号/手机号"
                                             placeholderTextColor="#aaa"
                                             underlineColorAndroid="transparent"
                                         />
+                                        <Animated.View style={{opacity: this.state.fadeCancel,backgroundColor:'transparent',padding:4,marginRight:8}}>
+                                            <TouchableOpacity onPress={()=>{
+
+                                                this.setState({user:Object.assign(this.state.user,{username:''})});
+                                                 Animated.timing(
+                                                        this.state.fadeCancel,
+                                                        {toValue: 0},
+                                                     ).start();
+                                            }}>
+                                                <Ionicons name='md-close-circle' size={18} color="red"/>
+                                            </TouchableOpacity>
+                                        </Animated.View>
                                     </View>
                                 </View>
                             </View>
@@ -193,15 +235,53 @@ var  Login =React.createClass({
                                         <TextInput
                                             style={{height: 42,flex:1,paddingLeft:0,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:16}}
                                             onChangeText={(password) => {
-                                            this.state.user.password=password;
-                                            this.setState({user:this.state.user});
-                                        }}
+
+                                              if( password&&password!='')//不为空
+                                              {
+                                                Animated.timing(
+                                                    this.state.fadePassword,
+                                                    {toValue: 1},
+                                                ).start();
+                                              }else{
+                                                     Animated.timing(
+                                                    this.state.fadePassword,
+                                                    {toValue: 0},
+                                                 ).start();
+
+                                              }
+                                                this.state.user.password=password;
+                                                this.setState({user:this.state.user});
+                                            }}
+
+                                            onBlur={()=>{
+                                               if(this.state.fadePassword==0)
+                                               {}
+                                               else{
+                                                         Animated.timing(
+                                                        this.state.fadePassword,
+                                                        {toValue: 0},
+                                                     ).start();
+                                               }
+                                            }}
                                             secureTextEntry={true}
                                             value={this.state.user.password}
                                             placeholder='请输入密码'
                                             placeholderTextColor="#aaa"
                                             underlineColorAndroid="transparent"
                                         />
+
+                                        <Animated.View style={{opacity: this.state.fadePassword,backgroundColor:'transparent',padding:4,marginRight:8}}>
+                                            <TouchableOpacity onPress={()=>{
+
+                                                this.setState({user:Object.assign(this.state.user,{password:''})});
+                                                 Animated.timing(
+                                                        this.state.fadePassword,
+                                                        {toValue: 0},
+                                                     ).start();
+                                            }}>
+                                                <Ionicons name='md-close-circle' size={18} color="red"/>
+                                            </TouchableOpacity>
+                                        </Animated.View>
                                     </View>
 
                                 </View>
@@ -248,6 +328,13 @@ var  Login =React.createClass({
 
                         </View>
 
+                        {/*<View style={{flexDirection:'row',height:400}}>*/}
+                            {/*<Markdown styles={markdownStyles}>*/}
+                                {/*下面是一个发布*/}
+                                 {/*![Some GIF](https://media.giphy.com/media/dkGhBWE3SyzXW/giphy.gif){'\n'}*/}
+                            {/*</Markdown>*/}
+
+                        {/*</View>*/}
                         {/*loading模态框*/}
                         <Modal animationType={"fade"} transparent={true} visible={this.state.showProgress}>
 
@@ -334,7 +421,21 @@ export default connect(
 )(Login);
 
 
-
+const markdownStyles = {
+    heading1: {
+        fontSize: 24,
+        color: 'purple',
+    },
+    link: {
+        color: 'pink',
+    },
+    mailTo: {
+        color: 'orange',
+    },
+    text: {
+        color: '#555555',
+    },
+}
 
 var styles = StyleSheet.create({
     container: {

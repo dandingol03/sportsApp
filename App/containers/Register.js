@@ -137,6 +137,7 @@ class Register extends Component{
             fadeCancel: new Animated.Value(0),
             fadeNickNameCancel:new Animated.Value(0),
             fadePasswordCancel:new Animated.Value(0),
+
         }
     }
 
@@ -462,7 +463,7 @@ class Register extends Component{
                                                     <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
                                                             paddingHorizontal:6,}}>
                                                         <Text style={{fontSize:12,color:'#333'}}>
-                                                            {this.state.info.sportLevel}
+                                                            {this.state.sportLevelStr}
                                                         </Text>
                                                     </View>:
                                                     <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
@@ -546,10 +547,10 @@ class Register extends Component{
                     onPress={(i)=>{
                         if(i!=0&&i!=1)
                         {
-                            this.setState({info:Object.assign(this.state.info,{sportLevel:options[i]})})
+                            this.setState({sportLevelStr:options[i],info:Object.assign(this.state.info,{sportLevel:i-1})})
                         }else if(i==1)
                         {
-                            this.setState({info:Object.assign(this.state.info,{sportLevel:null})})
+                            this.setState({sportLevelStr:null,info:Object.assign(this.state.info,{sportLevel:null,})})
                         }else{
                         }
                     }}
