@@ -323,38 +323,44 @@ class AddActivity extends Component{
                             <Text>邀请教练：</Text>
                         </View>
 
-                        {
-                            this.state.event.hasCoach==0?
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10,padding:5}}>
-                            <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                <Icon name={'dot-circle-o'} size={20} color="#008B00"/>
-                                <Text style={{color:'#aaa',marginRight:30,fontSize:13,marginLeft:5}}>是：</Text>
-                            </View>
-                            <TouchableOpacity style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',}}
-                            onPress={()=>{
-                                  this.setState({event:Object.assign(this.state.event,{hasCoach:1})});
-                            }}>
-                                <Icon name={'circle-o'} size={20} color="#aaa"/>
-                                <Text style={{color:'#aaa',marginRight:30,fontSize:13,marginLeft:5}}>否：</Text>
-                            </TouchableOpacity>
-                        </View>:
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10,padding:5}}>
-                            <TouchableOpacity style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',}}
-                                              onPress={()=>{
-                                  this.setState({event:Object.assign(this.state.event,{hasCoach:0})});
-                            }}>
-                                <Icon name={'circle-o'} size={20} color="#aaa"/>
-                                <Text style={{color:'#aaa',marginRight:30,fontSize:13,marginLeft:5}}>是：</Text>
-                            </TouchableOpacity>
-                            <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                <Icon name={'dot-circle-o'} size={20} color="#008B00"/>
-                                <Text style={{color:'#aaa',marginRight:30,fontSize:13,marginLeft:5}}>否：</Text>
-                            </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                                }}>
+
+                            {
+                                this.state.event.hasCoach==1?
+                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5
+                                        ,borderWidth:1,borderColor:'#66CDAA'}}>
+                                        <Text style={{color:'#fff'}}>是</Text>
+                                    </View>:
+                                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                        }}
+                                        onPress={()=>{
+                                            this.setState({event:Object.assign(this.state.event,{hasCoach:1})})
+                                        }}
+                                    >
+                                        <Text style={{color:'#666'}}>是</Text>
+                                    </TouchableOpacity>
+                            }
+
+                            {
+                                this.state.event.hasCoach==0?
+                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',padding:5
+                                        ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
+                                        <Text style={{color:'#fff'}}>否</Text>
+                                    </View>:
+                                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#eee',padding:5,
+                                        marginRight:1}}
+                                          onPress={()=>{
+                                              this.setState({event:Object.assign(this.state.event,{hasCoach:0})})
+                                          }}
+                                    >
+                                        <Text style={{color:'#888'}}>否</Text>
+                                    </TouchableOpacity>
+
+                            }
+
                         </View>
 
-                        }
 
                     </View>
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
@@ -362,38 +368,42 @@ class AddActivity extends Component{
                             <Text>邀请陪练：</Text>
                         </View>
 
-                        {
-                            this.state.event.hasSparring==0?
-                                <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10,padding:5}}>
-                                    <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                        <Icon name={'dot-circle-o'} size={20} color="#008B00"/>
-                                        <Text style={{color:'#aaa',marginRight:30,fontSize:13,marginLeft:5}}>是：</Text>
-                                    </View>
-                                    <TouchableOpacity style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',}}
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                                }}>
+                            {
+                                this.state.event.hasSparring==1?
+                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5
+                                        ,borderWidth:1,borderColor:'#66CDAA'}}>
+                                        <Text style={{color:'#fff'}}>是</Text>
+                                    </View>:
+                                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                        }}
                                                       onPress={()=>{
-                                  this.setState({event:Object.assign(this.state.event,{hasSparring:1})});
-                            }}>
-                                        <Icon name={'circle-o'} size={20} color="#aaa"/>
-                                        <Text style={{color:'#aaa',marginRight:30,fontSize:13,marginLeft:5}}>否：</Text>
+                                            this.setState({event:Object.assign(this.state.event,{hasSparring:1})})
+                                        }}
+                                    >
+                                        <Text style={{color:'#666'}}>是</Text>
                                     </TouchableOpacity>
-                                </View>:
-                                <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10,padding:5}}>
-                                    <TouchableOpacity style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',}}
-                                                      onPress={()=>{
-                                  this.setState({event:Object.assign(this.state.event,{hasSparring:0})});
-                            }}>
-                                        <Icon name={'circle-o'} size={20} color="#aaa"/>
-                                        <Text style={{color:'#aaa',marginRight:30,fontSize:13,marginLeft:5}}>是：</Text>
-                                    </TouchableOpacity>
-                                    <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                        <Icon name={'dot-circle-o'} size={20} color="#008B00"/>
-                                        <Text style={{color:'#aaa',marginRight:30,fontSize:13,marginLeft:5}}>否：</Text>
-                                    </View>
-                                </View>
+                            }
 
-                        }
+                            {
+                                this.state.event.hasSparring==0?
+                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',padding:5
+                                        ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
+                                        <Text style={{color:'#fff'}}>否</Text>
+                                    </View>:
+                                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#eee',padding:5,
+                                        marginRight:1}}
+                                                      onPress={()=>{
+                                              this.setState({event:Object.assign(this.state.event,{hasSparring:0})})
+                                          }}
+                                    >
+                                        <Text style={{color:'#888'}}>否</Text>
+                                    </TouchableOpacity>
+
+                            }
+                        </View>
+
 
                     </View>
 
