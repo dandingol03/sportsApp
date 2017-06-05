@@ -33,7 +33,7 @@ import {
 import Markdown from 'react-native-simple-markdown'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import TextInputWrapper from '../encrypt/TextInputWrapper';
 
 var  Login =React.createClass({
 
@@ -162,57 +162,64 @@ var  Login =React.createClass({
 
 
                                     <View style={{flex:6,flexDirection:'row',alignItems:'center',justifyContent:'flex-start'}}>
-                                        <TextInput
-                                            style={{height: 42,flex:1,paddingLeft:0,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:16,
-                                                        }}
-
-
-                                            onChangeText={(username) => {
-
-                                              if( username&&username!='')//不为空
-                                              {
-                                                     Animated.timing(
-                                                    this.state.fadeCancel,
-                                                    {toValue: 1},
-                                                ).start();
-                                              }else{
-                                                     Animated.timing(
-                                                    this.state.fadeCancel,
-                                                    {toValue: 0},
-                                                 ).start();
-
-                                              }
-
-                                                this.state.user.username=username;
-                                                this.setState({user:this.state.user});
-                                            }}
-                                            onBlur={()=>{
-                                               if(this.state.fadeCancel==0)
-                                               {}
-                                               else{
-                                                         Animated.timing(
-                                                        this.state.fadeCancel,
-                                                        {toValue: 0},
-                                                     ).start();
-                                               }
-                                            }}
-                                            value={this.state.user.username}
+                                        <TextInputWrapper
                                             placeholder="帐号/手机号"
-                                            placeholderTextColor="#aaa"
-                                            underlineColorAndroid="transparent"
+                                            val={this.state.user.username}
+                                            onChangeText={(value)=>{
+                                                this.setState({user:Object.assign(this.state.user,{username:value})})
+                                            }}
                                         />
-                                        <Animated.View style={{opacity: this.state.fadeCancel,backgroundColor:'transparent',padding:4,marginRight:8}}>
-                                            <TouchableOpacity onPress={()=>{
+                                        {/*<TextInput*/}
+                                            {/*style={{height: 42,flex:1,paddingLeft:0,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:16,*/}
+                                                        {/*}}*/}
 
-                                                this.setState({user:Object.assign(this.state.user,{username:''})});
-                                                 Animated.timing(
-                                                        this.state.fadeCancel,
-                                                        {toValue: 0},
-                                                     ).start();
-                                            }}>
-                                                <Ionicons name='md-close-circle' size={18} color="red"/>
-                                            </TouchableOpacity>
-                                        </Animated.View>
+
+                                            {/*onChangeText={(username) => {*/}
+
+                                              {/*if( username&&username!='')//不为空*/}
+                                              {/*{*/}
+                                                     {/*Animated.timing(*/}
+                                                    {/*this.state.fadeCancel,*/}
+                                                    {/*{toValue: 1},*/}
+                                                {/*).start();*/}
+                                              {/*}else{*/}
+                                                     {/*Animated.timing(*/}
+                                                    {/*this.state.fadeCancel,*/}
+                                                    {/*{toValue: 0},*/}
+                                                 {/*).start();*/}
+
+                                              {/*}*/}
+
+                                                {/*this.state.user.username=username;*/}
+                                                {/*this.setState({user:this.state.user});*/}
+                                            {/*}}*/}
+                                            {/*onBlur={()=>{*/}
+                                               {/*if(this.state.fadeCancel==0)*/}
+                                               {/*{}*/}
+                                               {/*else{*/}
+                                                         {/*Animated.timing(*/}
+                                                        {/*this.state.fadeCancel,*/}
+                                                        {/*{toValue: 0},*/}
+                                                     {/*).start();*/}
+                                               {/*}*/}
+                                            {/*}}*/}
+                                            {/*value={this.state.user.username}*/}
+                                            {/*placeholder="帐号/手机号"*/}
+                                            {/*placeholderTextColor="#aaa"*/}
+                                            {/*underlineColorAndroid="transparent"*/}
+                                        {/*/>*/}
+                                        {/*<Animated.View style={{opacity: this.state.fadeCancel,backgroundColor:'transparent',padding:4,marginRight:8}}>*/}
+                                            {/*<TouchableOpacity onPress={()=>{*/}
+
+                                                {/*this.setState({user:Object.assign(this.state.user,{username:''})});*/}
+                                                 {/*Animated.timing(*/}
+                                                        {/*this.state.fadeCancel,*/}
+                                                        {/*{toValue: 0},*/}
+                                                     {/*).start();*/}
+                                            {/*}}>*/}
+                                                {/*<Ionicons name='md-close-circle' size={18} color="red"/>*/}
+                                            {/*</TouchableOpacity>*/}
+                                        {/*</Animated.View>*/}
                                     </View>
                                 </View>
                             </View>
