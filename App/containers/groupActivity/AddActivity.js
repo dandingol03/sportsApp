@@ -29,6 +29,7 @@ import {
     releaseActivity
 } from '../../action/ActivityActions';
 
+import TextInputWrapper from '../../encrypt/TextInputWrapper';
 
 class AddActivity extends Component{
 
@@ -121,8 +122,8 @@ class AddActivity extends Component{
 
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
-                <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
+                <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',
+                    backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{this.goBack();}}>
                         <Icon name={'angle-left'} size={30} color="#fff"/>
@@ -136,24 +137,26 @@ class AddActivity extends Component{
                 </View>
 
                 <View style={{flex:8,backgroundColor:'#fff',padding:5}}>
+
+                    {/*活动类型*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>活动类型：</Text>
                         </View>
                         <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10}}
+                            borderRadius:10}}
                                           onPress={()=>{ this.show('actionSheet2'); }}>
                             {
                                 this.state.event.type==null?
-                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',}}>
-                                        <Text style={{color:'#aaa',fontSize:13}}>请选择活动类型：</Text>
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#888',fontSize:13}}>请选择活动类型：</Text>
                                     </View> :
-                                <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',}}>
-                                    <Text style={{color:'#aaa',fontSize:13}}>{this.state.event.type}</Text>
-                                </View>
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#444',fontSize:13}}>{this.state.event.type}</Text>
+                                    </View>
 
                             }
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                            <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',marginLeft:20}}>
                                 <Icon name={'angle-right'} size={30} color="#fff"/>
                             </View>
                             <ActionSheet
@@ -171,29 +174,30 @@ class AddActivity extends Component{
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                    {/*活动时间*/}
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>活动时间：</Text>
                         </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10}}>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                            backgroundColor:'#eee',borderRadius:10}}>
                             {
                                 this.state.event.eventTime==null?
-                                    <View style={{flex:6,marginLeft:20,justifyContent:'center',alignItems: 'center',}}>
-                                        <Text style={{color:'#aaa',fontSize:13}}>请选择活动时间：</Text>
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#888',fontSize:13}}>请选择活动时间：</Text>
                                     </View> :
-                            <View style={{flex:6,marginLeft:20,justifyContent:'center',alignItems: 'center',}}>
-                                <Text style={{color:'#aaa',fontSize:13}}>{this.state.eventTime}</Text>
-                            </View>
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#444',fontSize:13}}>{this.state.eventTime}</Text>
+                                    </View>
                             }
 
-                            <View  style={{flex:1,height:30,marginLeft:40,justifyContent:'center',alignItems: 'center',}}>
+                            <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
                                 <DatePicker
-                                    style={{width:50,marginLeft:0,borderWidth:0}}
+                                    style={{width:60,marginLeft:0,borderWidth:0}}
                                     customStyles={{
                                         placeholderText:{color:'transparent',fontSize:12},
                                         dateInput:{height:30,borderWidth:0},
-                                        dateTouchBody:{marginRight:35,height:22,borderWidth:0},
+                                        dateTouchBody:{marginRight:25,height:22,borderWidth:0},
                                     }}
                                     mode="datetime"
                                     placeholder="选择"
@@ -225,38 +229,57 @@ class AddActivity extends Component{
 
                     </View>
 
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+
+                    {/*活动地点*/}
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>活动地点：</Text>
                         </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10}}>
-                            <View style={{flex:3,marginLeft:20,justifyContent:'center',alignItems: 'center',}}>
-                                <Text style={{color:'#aaa',fontSize:13}}>请选择活动地点：</Text>
+
+                        <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                            <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>
                             </View>
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                            <View style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20}}>
                                 <Icon name={'angle-right'} size={30} color="#fff"/>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
+
+
+
+                    {/*活动人数*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>活动人数：</Text>
                         </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10}}>
-                            <TextInput
-                                style={{height:35*height/736,justifyContent:'center',alignItems: 'center',width:width*0.4,
-                           paddingTop:4,paddingBottom:4,fontSize:13,color:'#aaa'}}
-                                onChangeText={(eventMaxMemNum) => {
-                                         this.setState({event:Object.assign(this.state.event,{eventMaxMemNum:eventMaxMemNum})});
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+
+
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                placeholder="请输入活动人数"
+                                val={this.state.event.eventMaxMemNum}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({user:Object.assign(this.state.event,{eventMaxMemNum:value})})
                                     }}
-                                value={this.state.event.eventMaxMemNum}
-                                placeholder='请输入活动人数'
-                                placeholderTextColor="#aaa"
-                                underlineColorAndroid="transparent"
                             />
+                            {/*<TextInput*/}
+                                {/*style={{height:35*height/736,justifyContent:'center',alignItems: 'center',width:width*0.4,marginLeft:20,*/}
+                                        {/*paddingTop:4,paddingBottom:4,fontSize:13,color:'#222'}}*/}
+                                {/*onChangeText={(eventMaxMemNum) => {*/}
+                                         {/*this.setState({event:Object.assign(this.state.event,{eventMaxMemNum:eventMaxMemNum})});*/}
+                                    {/*}}*/}
+                                {/*value={this.state.event.eventMaxMemNum}*/}
+                                {/*placeholder='请输入活动人数'*/}
+                                {/*placeholderTextColor="#aaa"*/}
+                                {/*underlineColorAndroid="transparent"*/}
+                            {/*/>*/}
                         </View>
                     </View>
 
@@ -264,20 +287,20 @@ class AddActivity extends Component{
                         <View style={{flex:1}}>
                             <Text>对象水平：</Text>
                         </View>
-                        <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10}}
+                        <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
                                           onPress={()=>{ this.show('actionSheet1'); }}>
 
                             {
                                 this.state.event.memberLevel==null?
-                                <View style={{flex:3,marginLeft:20,justifyContent:'center',alignItems: 'center',}}>
-                                    <Text style={{color:'#aaa',fontSize:13}}>请选择对象水平：</Text>
+                                <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                    <Text style={{color:'#888',fontSize:13}}>请选择对象水平：</Text>
                                 </View> :
-                                <View style={{flex:3,marginLeft:20,justifyContent:'center',alignItems: 'center',}}>
-                                    <Text style={{color:'#aaa',fontSize:13}}>{this.state.event.memberLevel}</Text>
+                                <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                    <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevel}</Text>
                                 </View>
                             }
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                            <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
                                 <Icon name={'angle-right'} size={30} color="#fff"/>
                             </View>
                             <ActionSheet
@@ -378,38 +401,50 @@ class AddActivity extends Component{
                         <View style={{flex:1}}>
                             <Text>活动说明：</Text>
                         </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                        borderRadius:10}}>
-                            <TextInput
-                                style={{flex:10,height:35*height/736,justifyContent:'center',alignItems: 'center',marginLeft:5,
-                                paddingTop:4,paddingBottom:4,fontSize:13,color:'#aaa'}}
-                                onChangeText={(eventBrief) => {
-                                         this.setState({event:Object.assign(this.state.event,{eventBrief:eventBrief})});
-                                         if( eventBrief==''){
-                                         Animated.timing(          // Uses easing functions
-                                            this.state.fadeAnim1,    // The value to drive
-                                            {toValue: 0},           // Configuration
-                                         ).start();
-                                      }else{
-                                         Animated.timing(          // Uses easing functions
-                                            this.state.fadeAnim1,    // The value to drive
-                                            {toValue: 1},           // Configuration
-                                        ).start();
-                                      }
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                placeholder="请输入活动说明"
+                                val={this.state.event.eventBrief}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({user:Object.assign(this.state.event,{eventBrief:value})})
                                     }}
-                                value={this.state.event.eventBrief}
-                                placeholder='         请输入活动说明'
-                                placeholderTextColor="#aaa"
-                                underlineColorAndroid="transparent"
                             />
-                            <Animated.View style={{flex:1,opacity: this.state.fadeAnim1,backgroundColor:'transparent',padding:4}}>
-                                <TouchableOpacity onPress={()=>{
-                                    var event = this.state.event;
-                                    event.eventBrief = '';
-                                    this.setState({event:event});}}>
-                                    <Ionicons name='md-close-circle' size={18} color="red"/>
-                                </TouchableOpacity>
-                            </Animated.View>
+
+                            {/*<TextInput*/}
+                                {/*style={{flex:10,height:35*height/736,justifyContent:'center',alignItems: 'center',marginLeft:5,*/}
+                                {/*paddingTop:4,paddingBottom:4,fontSize:13,color:'#aaa'}}*/}
+                                {/*onChangeText={(eventBrief) => {*/}
+                                         {/*this.setState({event:Object.assign(this.state.event,{eventBrief:eventBrief})});*/}
+                                         {/*if( eventBrief==''){*/}
+                                         {/*Animated.timing(          // Uses easing functions*/}
+                                            {/*this.state.fadeAnim1,    // The value to drive*/}
+                                            {/*{toValue: 0},           // Configuration*/}
+                                         {/*).start();*/}
+                                      {/*}else{*/}
+                                         {/*Animated.timing(          // Uses easing functions*/}
+                                            {/*this.state.fadeAnim1,    // The value to drive*/}
+                                            {/*{toValue: 1},           // Configuration*/}
+                                        {/*).start();*/}
+                                      {/*}*/}
+                                    {/*}}*/}
+                                {/*value={this.state.event.eventBrief}*/}
+                                {/*placeholder='         请输入活动说明'*/}
+                                {/*placeholderTextColor="#aaa"*/}
+                                {/*underlineColorAndroid="transparent"*/}
+                            {/*/>*/}
+                            {/*<Animated.View style={{flex:1,opacity: this.state.fadeAnim1,backgroundColor:'transparent',padding:4}}>*/}
+                                {/*<TouchableOpacity onPress={()=>{*/}
+                                    {/*var event = this.state.event;*/}
+                                    {/*event.eventBrief = '';*/}
+                                    {/*this.setState({event:event});}}>*/}
+                                    {/*<Ionicons name='md-close-circle' size={18} color="red"/>*/}
+                                {/*</TouchableOpacity>*/}
+                            {/*</Animated.View>*/}
                         </View>
                     </View>
 
