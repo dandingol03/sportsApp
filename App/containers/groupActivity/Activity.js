@@ -123,9 +123,9 @@ class Activity extends Component {
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>
-                    <View style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center',borderRadius:6}}>
-                        <Text style={{color:'#66CDAA',fontSize:13}}>我要报名</Text>
-                    </View>
+                    <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center',borderRadius:6}}>
+                        <Text style={{color:'#66CDAA',fontSize:12}}>我要报名</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -161,6 +161,7 @@ class Activity extends Component {
         }
 
         return (
+
             <View style={{flex:1}}>
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
                 backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
@@ -171,9 +172,9 @@ class Activity extends Component {
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
                         <Text style={{color:'#fff',fontSize:18}}>群活动</Text>
                     </View>
-                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                    <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
-                    </TouchableOpacity>
+                    </View>
                 </View>
 
                     {/*内容区*/}

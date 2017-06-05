@@ -36,11 +36,45 @@ import {
     registerUser
 } from '../action/UserActions';
 
-import Camera from 'react-native-camera'
+import Camera from 'react-native-camera';
+var ImagePicker = require('react-native-image-picker');
 
 import ActionSheet from 'react-native-actionsheet'
 
+
 class Register extends Component{
+
+    showImagePicker(){
+        var options = {
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            },
+            title:'请选择',
+            takePhotoButtonTitle:'拍照',
+            chooseFromLibraryButtonTitle:'图库',
+            cancelButtonTitle:'取消',
+
+
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                let source = { uri: response.uri };
+                this.setState({portrait: source});
+
+            }
+        });
+    }
 
     register()
     {
@@ -97,20 +131,12 @@ class Register extends Component{
                 password:'',
                 userType:0,
                 genderCode:1,
-                sportLevel:null
+                sportLevel:null,
             },
+            portrait:null,
             fadeCancel: new Animated.Value(0),
             fadeNickNameCancel:new Animated.Value(0),
             fadePasswordCancel:new Animated.Value(0),
-            cameraModalVisible:false,
-            camera: {
-                aspect: Camera.constants.Aspect.fill,
-                captureTarget: Camera.constants.CaptureTarget.disk,
-                type: Camera.constants.Type.back,
-                orientation: Camera.constants.Orientation.auto,
-                flashMode: Camera.constants.FlashMode.auto,
-            },
-            videoPath:null
         }
     }
 
@@ -220,16 +246,34 @@ class Register extends Component{
                         backgroundColor:'#fff',marginTop:15}}>
 
                         {/*照相*/}
-                        <TouchableOpacity style={{flex:1,backgroundColor:'#ddd',justifyContent:'center',alignItems: 'center',
+
+
+                        {
+                            this.state.portrait==null?
+                                <TouchableOpacity style={{flex:1,backgroundColor:'#ddd',justifyContent:'center',alignItems: 'center',
                             margin:5,paddingTop:15,paddingBottom:15}}
-                            onPress={
+                                                  onPress={
                                 ()=>{
-                                     this.setState({cameraModalVisible:true});
+                                   this.showImagePicker();
                                 }
                             }
-                        >
-                            <Icon size={40} name="camera-retro" color="#fff"></Icon>
-                        </TouchableOpacity>
+                                >
+                                    <Icon size={40} name="camera-retro" color="#fff"></Icon>
+                                </TouchableOpacity>:
+                                <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
+                            margin:5,paddingTop:15,paddingBottom:15}}
+                                                  onPress={
+                                ()=>{
+                                   this.showImagePicker();
+                                }
+                            }
+                                >
+                                    <Image resizeMode="stretch" source={this.state.portrait}
+                                           style={{width:75,height:70,}}/>
+                                </TouchableOpacity>
+
+                        }
+
                         <View style={{flex:3,padding:5,}}>
                             <View style={{borderBottomWidth:1,borderColor:'#eee',flexDirection:'row'}}>
                                 <TextInput
@@ -492,85 +536,6 @@ class Register extends Component{
                     {/*</View>*/}
 
                 </View>
-
-
-                <Modal
-                    animationType={"slide"}
-                    transparent={false}
-                    visible={this.state.cameraModalVisible}
-                >
-                    <Camera
-                        ref={(cam) => {
-                            this.camera = cam;
-                          }}
-                        style={styles.preview}
-
-                        captureTarget={this.state.camera.captureTarget}
-                        type={this.state.camera.type}
-                        flashMode={this.state.camera.flashMode}
-                        defaultTouchToFocus
-                        mirrorImage={false}
-                    />
-                    <View style={[styles.overlay, styles.topOverlay]}>
-                        <TouchableOpacity
-                            style={styles.typeButton}
-                            onPress={this.switchType}
-                        >
-                            <Image
-                                source={this.typeIcon}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.flashButton}
-                            onPress={this.switchFlash}
-                        >
-                            <Image
-                                source={this.flashIcon}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.overlay, styles.bottomOverlay]}>
-                        {
-                            !this.state.isRecording
-                            &&
-                            <TouchableOpacity
-                                style={styles.captureButton}
-                                onPress={this.takePicture}
-                            >
-                                <Image
-                                    source={require('../../img/ic_photo_camera_36pt.png')}
-                                />
-                            </TouchableOpacity>
-                            ||
-                            null
-                        }
-                        <View style={styles.buttonsSpace} />
-                        {
-                            !this.state.isRecording
-                            &&
-                            <TouchableOpacity
-                                style={styles.captureButton}
-                                onPress={this.startVideoCapture}
-                            >
-                                <Image
-                                    source={require('../../img/ic_videocam_36pt.png')}
-                                />
-                            </TouchableOpacity>
-                            ||
-                            <TouchableOpacity
-                                style={styles.captureButton}
-                                onPress={this.stopVideoCapture}
-                            >
-                                <Image
-                                    source={require('../../img/ic_stop_36pt.png')}
-                                />
-                            </TouchableOpacity>
-                        }
-                    </View>
-
-                </Modal>
-
-
 
                 <ActionSheet
                     ref={o => this.ActionSheet = o}
