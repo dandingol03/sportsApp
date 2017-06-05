@@ -30,7 +30,6 @@ import {
     updatePageState
 } from '../action/PageStateActions';
 
-import Markdown from 'react-native-simple-markdown'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
