@@ -333,7 +333,7 @@ class AddActivity extends Component{
 
 
 
-                    <View style={{height:50*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                    <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>邀请教练：</Text>
                         </View>
@@ -381,7 +381,7 @@ class AddActivity extends Component{
                     </View>
 
 
-                    <View style={{height:50*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                    <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>邀请陪练：</Text>
                         </View>
