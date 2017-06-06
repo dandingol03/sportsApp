@@ -24,6 +24,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ActionSheet from 'react-native-actionsheet';
 import DatePicker from 'react-native-datepicker';
+import {BoxShadow} from 'react-native-shadow';
 import DateFilter from '../../utils/DateFilter';
 import {
     releaseActivity
@@ -106,8 +107,8 @@ class AddActivity extends Component{
             fadeAnim1: new Animated.Value(0),
             selectTime:false,
             eventTime:null,
-            event:{eventBrief:'',type:null,eventTime:null,eventPlace:'1',eventMaxMemNum:null,memberLevel:null,hasCoach:0,hasSparring:0},//0:需要，1：不需要
-            memberLevelButtons:['取消','业余小白','初级爱好者','业余高手','专业运动员'],
+            event:{eventBrief:'',type:null,eventTime:null,eventPlace:'1',eventMaxMemNum:null,memberLevel:null,hasCoach:0,hasSparring:0},
+            memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','羽毛球单打','羽毛球双打','羽毛球混双','基础练习'],
         }
     }
@@ -117,8 +118,20 @@ class AddActivity extends Component{
         const CANCEL_INDEX = 0;
         const DESTRUCTIVE_INDEX = 1;
 
-        const memberLevelButtons=['取消','业余小白','初级爱好者','业余高手','专业运动员'];
+        const memberLevelButtons=['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'];
         const eventTypeButtons=['取消','羽毛球单打','羽毛球双打','羽毛球混双','基础练习'];
+
+        const shadowOpt = {
+            width:224*width/320,
+            height:25*height/568,
+            color:"#000",
+            border:2,
+            radius:3,
+            opacity:0.2,
+            x:0,
+            y:1.5,
+            style:{marginVertical:8}
+        }
 
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
@@ -318,23 +331,26 @@ class AddActivity extends Component{
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+
+
+                    <View style={{height:50*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>邀请教练：</Text>
                         </View>
 
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                        <BoxShadow setting={shadowOpt}>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
                             {
                                 this.state.event.hasCoach==1?
-                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5
+                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
                                         ,borderWidth:1,borderColor:'#66CDAA'}}>
                                         <Text style={{color:'#fff'}}>是</Text>
                                     </View>:
-                                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
-                                        onPress={()=>{
+                                                      onPress={()=>{
                                             this.setState({event:Object.assign(this.state.event,{hasCoach:1})})
                                         }}
                                     >
@@ -344,13 +360,13 @@ class AddActivity extends Component{
 
                             {
                                 this.state.event.hasCoach==0?
-                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',padding:5
+                                    <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
                                         ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
                                         <Text style={{color:'#fff'}}>否</Text>
                                     </View>:
-                                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#eee',padding:5,
+                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
-                                          onPress={()=>{
+                                                      onPress={()=>{
                                               this.setState({event:Object.assign(this.state.event,{hasCoach:0})})
                                           }}
                                     >
@@ -360,52 +376,58 @@ class AddActivity extends Component{
                             }
 
                         </View>
-
+                        </BoxShadow>
 
                     </View>
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+
+
+                    <View style={{height:50*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>邀请陪练：</Text>
                         </View>
 
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                        <BoxShadow setting={shadowOpt}>
+                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
-                            {
-                                this.state.event.hasSparring==1?
-                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5
+
+                                {
+                                    this.state.event.hasSparring==1?
+                                        <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
                                         ,borderWidth:1,borderColor:'#66CDAA'}}>
-                                        <Text style={{color:'#fff'}}>是</Text>
-                                    </View>:
-                                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                            <Text style={{color:'#fff'}}>是</Text>
+                                        </View>:
+                                        <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
-                                                      onPress={()=>{
-                                            this.setState({event:Object.assign(this.state.event,{hasSparring:1})})
+                                                          onPress={()=>{
+                                            this.setState({event:Object.assign(this.state.event,{hasCoach:1})})
                                         }}
-                                    >
-                                        <Text style={{color:'#666'}}>是</Text>
-                                    </TouchableOpacity>
-                            }
+                                        >
+                                            <Text style={{color:'#666'}}>是</Text>
+                                        </TouchableOpacity>
+                                }
 
-                            {
-                                this.state.event.hasSparring==0?
-                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',padding:5
+                                {
+                                    this.state.event.hasSparring==0?
+                                        <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
                                         ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
-                                        <Text style={{color:'#fff'}}>否</Text>
-                                    </View>:
-                                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#eee',padding:5,
+                                            <Text style={{color:'#fff'}}>否</Text>
+                                        </View>:
+                                        <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
-                                                      onPress={()=>{
-                                              this.setState({event:Object.assign(this.state.event,{hasSparring:0})})
+                                                          onPress={()=>{
+                                              this.setState({event:Object.assign(this.state.event,{hasCoach:0})})
                                           }}
-                                    >
-                                        <Text style={{color:'#888'}}>否</Text>
-                                    </TouchableOpacity>
+                                        >
+                                            <Text style={{color:'#888'}}>否</Text>
+                                        </TouchableOpacity>
 
-                            }
-                        </View>
+                                }
 
+                            </View>
+                        </BoxShadow>
 
                     </View>
+
 
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>

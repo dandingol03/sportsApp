@@ -113,6 +113,7 @@ var  Login =React.createClass({
 
     render:function () {
 
+        var username = this.state.user.username;
         const shadowOpt = {
             width:width-20,
             height:200,

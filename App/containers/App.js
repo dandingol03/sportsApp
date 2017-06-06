@@ -61,9 +61,9 @@ class App extends Component {
                 selected={this.state.selectedTab === route}
                 title={route}
                 titleStyle={{color:'#9e9ca3',fontSize:13}}
-                selectedTitleStyle={{color:'#008B00'}}
+                selectedTitleStyle={{color:'#66CDAA'}}
                 renderIcon={() => <Icon name={icon} size={26} color="#aaa"/>}
-                renderSelectedIcon={() => <Icon name={icon} size={26} color='#008B00' />}
+                renderSelectedIcon={() => <Icon name={icon} size={26} color='#66CDAA' />}
                 onPress={() => {
                     this.setState({ selectedTab: route });
                     this.props.dispatch(updateRootTab({tab:route}));
