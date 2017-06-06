@@ -30,6 +30,7 @@ import {
 } from '../../action/ActivityActions';
 
 import TextInputWrapper from '../../encrypt/TextInputWrapper';
+import VenueInspect from '../../components/venue/VenueInspect'
 
 class AddActivity extends Component{
 
@@ -37,6 +38,19 @@ class AddActivity extends Component{
         const { navigator } = this.props;
         if(navigator) {
             navigator.pop();
+        }
+    }
+
+    navigate2VenueInspect(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'VenueInspect',
+                component: VenueInspect,
+                params: {
+
+                }
+            })
         }
     }
 
@@ -237,7 +251,12 @@ class AddActivity extends Component{
                         </View>
 
                         <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
+                            borderRadius:10}}
+                              onPress={
+                                  ()=>{
+                                      this.navigate2VenueInspect()
+                                  }}
+                        >
                             <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                 <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>
                             </View>
