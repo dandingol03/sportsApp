@@ -139,11 +139,11 @@ class AddActivity extends Component{
             width:224*width/320,
             height:25*height/568,
             color:"#000",
-            border:2,
-            radius:3,
+            border:0.5,
+            radius:1,
             opacity:0.2,
-            x:0,
-            y:1.5,
+            x:-0.5,
+            y:1,
             style:{marginVertical:8}
         }
 
