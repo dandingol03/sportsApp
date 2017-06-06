@@ -44,12 +44,12 @@ class Home extends Component{
                             <View style={{flex:1,backgroundColor:'#66CDAA',flexDirection:'row',borderRadius:20}}>
                                 <Icon name={'group'} size={30} color="#fff"/>
                             </View>
-                            <View style={{flex:5,backgroundColor:'#fff',flexDirection:'row',}}>
+                            <View style={{height:55,backgroundColor:'#fff',flexDirection:'row',}}>
                                 <Text>我的群</Text>
                             </View>
 
                         </View>
-                        <View style={{flex:1,backgroundColor:'#fff',flexDirection:'row',}}>
+                        <View style={{height:55,backgroundColor:'#fff',flexDirection:'row',}}>
                             <View>
                                 <Icon name={'angle-left'} size={30} color="#fff"/>
                             </View>
@@ -58,7 +58,7 @@ class Home extends Component{
                             </View>
 
                         </View>
-                        <View style={{flex:1,backgroundColor:'#fff',flexDirection:'row',}}>
+                        <View style={{height:55,backgroundColor:'#fff',flexDirection:'row',}}>
                             <View>
                                 <Icon name={'angle-left'} size={30} color="#fff"/>
                             </View>
