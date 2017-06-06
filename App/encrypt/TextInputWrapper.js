@@ -23,6 +23,11 @@ class TextInputWrapper extends Component{
         }
     }
 
+    componentWillReceiveProps(nextProps)
+    {
+        this.setState(nextProps)
+    }
+
     render() {
 
         var defaultStyle1={

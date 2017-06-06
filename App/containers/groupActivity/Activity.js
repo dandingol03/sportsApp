@@ -20,6 +20,7 @@ var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddActivity from './AddActivity';
+import ActivityDetail from './ActivityDetail';
 
 class Activity extends Component {
 
@@ -61,6 +62,19 @@ class Activity extends Component {
         }
     }
 
+    navigate2ActivityDetail(rowData){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'activity_detail',
+                component: ActivityDetail,
+                params: {
+                    activity:rowData,
+                }
+            })
+        }
+    }
+
     renderRow(rowData,sectionId,rowId){
 
         var row=(
@@ -81,9 +95,13 @@ class Activity extends Component {
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
-                        <Text>AA</Text>
-                    </View>
+                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
+                                      onPress={()=>{
+                                          this.navigate2ActivityDetail(rowData);
+                                      }}>
+                        <Text style={{marginRight:5}}>详情</Text>
+                        <Icon name={'angle-right'} size={25} color="#343434"/>
+                    </TouchableOpacity>
                 </View>
                 <View style={{flex:3,padding:10}}>
                     <View style={{flexDirection:'row',marginBottom:3}}>

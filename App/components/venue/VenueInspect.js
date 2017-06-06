@@ -22,6 +22,7 @@ var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
 import {
     MapView,
     MapTypes,
@@ -50,7 +51,7 @@ class VenueInspect extends Component{
                 title: '您的位置'
             },
             center:props.center,
-            detailPostion:new Animated.Value(0)
+            detailPosition:new Animated.Value(0)
         }
     }
 
@@ -84,12 +85,35 @@ class VenueInspect extends Component{
                         markers={this.state.markers}
                         style={styles.map}
                         onMarkerClick={(e) => {
-                            alert(e)
+
+                            var {position}=e;
+
+                            var {detailDisplay}=this.state;
+                            if(detailDisplay==true)//已经显示
+                            {
+                                Animated.timing(this.state.detailPosition, {
+                                    toValue: 0, // 目标值
+                                    duration: 200, // 动画时间
+                                    easing: Easing.linear // 缓动函数
+                                }).start();
+                            }
+
+                            setTimeout(()=>{
+                                 Animated.timing(this.state.detailPosition, {
+                                    toValue: 1, // 目标值
+                                    duration: 200, // 动画时间
+                                    easing: Easing.linear // 缓动函数
+                                }).start();
+                            },200)
+
+                            if(detailDisplay!=true)
+                                this.setState({detailDisplay:true})
+
                           }}
                     >
                         <Animated.View style={[{flexDirection:'row',width:width,height:50,justifyContent:'center',alignItems:'center',
                                 backgroundColor:'#fff'},
-                                {top:this.state.detailPostion.interpolate({
+                                {top:this.state.detailPosition.interpolate({
                                     inputRange: [0,1],
                                     outputRange: [50, 0]
                                 })}]}>
@@ -126,15 +150,16 @@ class VenueInspect extends Component{
             }
         })
 
-        setTimeout(()=>{
-
-            Animated.timing(this.state.detailPostion, {
-                toValue: 1, // 目标值
-                duration: 300, // 动画时间
-                easing: Easing.linear // 缓动函数
-            }).start();
-
-        },300)
+        // setTimeout(()=>{
+        //
+        //     Animated.timing(this.state.detailPosition, {
+        //         toValue: 1, // 目标值
+        //         duration: 300, // 动画时间
+        //         easing: Easing.linear // 缓动函数
+        //     }).start();
+        //     this.setState({detailDisplay:true})
+        //
+        // },300)
     }
 }
 

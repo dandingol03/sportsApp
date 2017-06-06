@@ -30,7 +30,6 @@ import {
     updatePageState
 } from '../action/PageStateActions';
 
-import Markdown from 'react-native-simple-markdown'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import TextInputWrapper from '../encrypt/TextInputWrapper';
@@ -114,6 +113,7 @@ var  Login =React.createClass({
 
     render:function () {
 
+        var username = this.state.user.username;
         const shadowOpt = {
             width:width-20,
             height:200,

@@ -16,6 +16,7 @@ import {
 
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Home extends Component{
 
@@ -31,8 +32,46 @@ class Home extends Component{
     render() {
 
         return (
-            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
-                <Text>我的</Text>
+            <View style={{flex:1}}>
+                <View style={{flex:2}}>
+                    <Image style={{flex:2,width:width,position:'relative'}} source={require('../../img/my_banner.jpeg')} >
+
+                    </Image>
+                </View>
+                <View style={{flex:5,backgroundColor:'#eee'}}>
+                    <View style={{flex:12,backgroundColor:'#fff'}}>
+                        <View style={{flex:1,backgroundColor:'#fff',flexDirection:'row',}}>
+                            <View style={{flex:1,backgroundColor:'#66CDAA',flexDirection:'row',borderRadius:20}}>
+                                <Icon name={'group'} size={30} color="#fff"/>
+                            </View>
+                            <View style={{flex:5,backgroundColor:'#fff',flexDirection:'row',}}>
+                                <Text>我的群</Text>
+                            </View>
+
+                        </View>
+                        <View style={{flex:1,backgroundColor:'#fff',flexDirection:'row',}}>
+                            <View>
+                                <Icon name={'angle-left'} size={30} color="#fff"/>
+                            </View>
+                            <View>
+                                <Text>我的资料</Text>
+                            </View>
+
+                        </View>
+                        <View style={{flex:1,backgroundColor:'#fff',flexDirection:'row',}}>
+                            <View>
+                                <Icon name={'angle-left'} size={30} color="#fff"/>
+                            </View>
+                            <View>
+                                <Text>设置</Text>
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={{flex:1,backgroundColor:'#eee'}}>
+
+                    </View>
+                </View>
             </View>
         );
     }
