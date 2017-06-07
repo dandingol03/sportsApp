@@ -157,7 +157,7 @@ class AddActivity extends Component{
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>发布邀约</Text>
+                        <Text style={{color:'#fff',fontSize:18}}>发布活动</Text>
                     </View>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
@@ -257,7 +257,6 @@ class AddActivity extends Component{
 
                     </View>
 
-
                     {/*活动地点*/}
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
@@ -280,9 +279,6 @@ class AddActivity extends Component{
                         </TouchableOpacity>
                     </View>
 
-
-
-
                     {/*活动人数*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
@@ -299,7 +295,7 @@ class AddActivity extends Component{
                                 val={this.state.event.eventMaxMemNum}
                                 onChangeText={
                                     (value)=>{
-                                        this.setState({user:Object.assign(this.state.event,{eventMaxMemNum:value})})
+                                        this.setState({event:Object.assign(this.state.event,{eventMaxMemNum:value})})
                                     }}
                             />
                             {/*<TextInput*/}
@@ -463,7 +459,7 @@ class AddActivity extends Component{
                                 val={this.state.event.eventBrief}
                                 onChangeText={
                                     (value)=>{
-                                        this.setState({user:Object.assign(this.state.event,{eventBrief:value})})
+                                        this.setState({event:Object.assign(this.state.event,{eventBrief:value})})
                                     }}
                             />
 

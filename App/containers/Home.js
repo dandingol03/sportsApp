@@ -149,7 +149,7 @@ class Home extends Component {
 
                             </View>
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:20}}>
-                                <Text style={{color:'#fff',fontSize:18}}>健康猫</Text>
+                                <Text style={{color:'#fff',fontSize:18}}>SportsHot</Text>
                             </View>
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center',paddingRight:20}}>
 
@@ -167,7 +167,7 @@ class Home extends Component {
                             </View>
 
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:20}}>
-                                <Text style={{color:'#fff',fontSize:18}}>健康猫</Text>
+                                <Text style={{color:'#fff',fontSize:18}}>SportsHot</Text>
                             </View>
                             <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'flex-end',paddingRight:20,
                                 alignItems: 'center',}}
