@@ -21,7 +21,9 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import ViewPager from 'react-native-viewpager';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Coach from '../components/Coach';
+import BadmintonCourse from '../components/course/BadmintonCourse';
 import Mall from './mall/Home';
 import Activity from './groupActivity/Activity';
 import Register from './Register';
@@ -89,6 +91,23 @@ class Home extends Component {
             })
         }
     }
+
+    //导航至定制
+    navigate2BadmintonCourse()
+    {
+        const {navigator} =this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'BadmintonCourse',
+                component: BadmintonCourse,
+                params: {
+
+                }
+            })
+        }
+    }
+
+
 
     _renderPage(data, pageID) {
         return (
@@ -179,34 +198,40 @@ class Home extends Component {
 
                                 <View style={{flex:2,backgroundColor:'#fff',padding:0,marginBottom:10}}>
                                      <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
-                                      onPress={ ()=>{
 
-                                       }}>
-                                        <Icon name="newspaper-o" size={30} color="#66CD00" />
-                                        <View style={{marginTop:0,paddingTop:10}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>资讯</Text>
-                                        </View>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',flexDirection:'column',
+                                        padding:8,paddingVertical:0}}
                                       onPress={ ()=>{
                                           this.navigate2Mall();
                                           console.log('健康商城');
                                       }}>
 
-                                        <Icon name="shopping-cart" size={30} color="#EEAD0E" />
-                                        <View style={{marginTop:0,paddingTop:10}}>
+                                        <Icon name="shopping-cart" size={36} color="#EEAD0E" style={{paddingBottom:4}}/>
+                                        <View style={{marginTop:0,paddingTop:0}}>
                                             <Text style={{fontSize:13,color:'#343434'}}>商城</Text>
                                         </View>
                                     </TouchableOpacity>
+
+
+                                      <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                      onPress={ ()=>{
+                                         this.navigate2BadmintonCourse();
+                                      }}>
+
+                                        <CommIcon name="tag-plus" size={32} color="#0adc5e" style={{backgroundColor:'transparent'}}/>
+                                        <View style={{marginTop:0,paddingTop:6}}>
+                                            <Text style={{fontSize:13,color:'#343434'}}>课程定制</Text>
+                                        </View>
+                                    </TouchableOpacity>
+
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
                                       onPress={ ()=>{
                                          this.navigate2Coach();
                                       }}>
-                                        <Icon name="flag" size={30} color="#EE6363" />
-                                        <View style={{marginTop:0,paddingTop:10}}>
+
+                                        <Icon name="users" size={30} color="#0adc5e" style={{backgroundColor:'transparent'}}/>
+                                        <View style={{marginTop:0,paddingTop:6}}>
                                             <Text style={{fontSize:13,color:'#343434'}}>找教练</Text>
                                         </View>
                                     </TouchableOpacity>

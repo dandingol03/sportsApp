@@ -152,7 +152,8 @@ class AddActivity extends Component{
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',
                     backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
-                                      onPress={()=>{this.goBack();}}>
+                                      onPress={()=>{
+                                          this.goBack();}}>
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
