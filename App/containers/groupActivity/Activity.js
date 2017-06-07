@@ -223,7 +223,7 @@ class Activity extends Component {
                 <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
                 position:'absolute',bottom:3}}>
                     <View style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
-                        <Text style={{color:'#66CDAA',}}>我的邀约</Text>
+                        <Text style={{color:'#66CDAA',}}>我的活动</Text>
                     </View>
                     <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}
                     onPress={()=>{this.navigate2AddActivity();}}>
