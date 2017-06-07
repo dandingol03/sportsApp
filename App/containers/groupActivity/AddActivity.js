@@ -31,6 +31,7 @@ import {
 } from '../../action/ActivityActions';
 
 import TextInputWrapper from '../../encrypt/TextInputWrapper';
+import VenueInspect from '../../components/venue/VenueInspect'
 
 class AddActivity extends Component{
 
@@ -41,7 +42,18 @@ class AddActivity extends Component{
         }
     }
 
+    navigate2VenueInspect(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'VenueInspect',
+                component: VenueInspect,
+                params: {
 
+                }
+            })
+        }
+    }
 
     release()
     {
@@ -127,14 +139,12 @@ class AddActivity extends Component{
             width:224*width/320,
             height:25*height/568,
             color:"#000",
-            border:2,
-            radius:3,
+            border:0.5,
+            radius:1,
             opacity:0.2,
-            x:0,
-            y:1.5,
-            style:{marginVertical:8},
-            side:"bottom",
-            inset:false,
+            x:-0.5,
+            y:1,
+            style:{marginVertical:8}
         }
 
         return (
@@ -142,7 +152,8 @@ class AddActivity extends Component{
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',
                     backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
-                                      onPress={()=>{this.goBack();}}>
+                                      onPress={()=>{
+                                          this.goBack();}}>
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
@@ -253,7 +264,12 @@ class AddActivity extends Component{
                         </View>
 
                         <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
+                            borderRadius:10}}
+                              onPress={
+                                  ()=>{
+                                      this.navigate2VenueInspect()
+                                  }}
+                        >
                             <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                 <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>
                             </View>

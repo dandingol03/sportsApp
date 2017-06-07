@@ -5,6 +5,7 @@ import tabReducer from './TabReducer';
 import userReducer from './UserReducer';
 import pageState from './PageStateReducer';
 import activityReducer from './ActivityReducer';
+import mapReducer from './MapReducer';
 
 
 export default rootReducer = combineReducers({
@@ -12,4 +13,5 @@ export default rootReducer = combineReducers({
     user:userReducer,
     page:pageState,
     activity:activityReducer,
+    map:mapReducer
 })

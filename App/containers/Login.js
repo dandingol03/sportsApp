@@ -32,7 +32,8 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import TextInputWrapper from '../encrypt/TextInputWrapper';
+//import TextInputWrapper from '../encrypt/TextInputWrapper';
+import TextInputWrapper from 'react-native-text-input-wrapper'
 
 var  Login =React.createClass({
 
