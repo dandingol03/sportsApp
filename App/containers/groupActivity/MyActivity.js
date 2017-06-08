@@ -48,23 +48,10 @@ class MyActivity extends Component {
 
     }
 
-    navigate2ActivityDetail(rowData){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'activity_detail',
-                component: ActivityDetail,
-                params: {
-                    activity:rowData,
-                }
-            })
-        }
-    }
-
     renderRow(rowData,sectionId,rowId){
 
         var row=(
-            <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,}}>
+            <View style={{flex:1,backgroundColor:'#fff',marginBottom:5,}}>
                 <View style={{flex:3,padding:10}}>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
@@ -93,20 +80,7 @@ class MyActivity extends Component {
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{rowData.eventBrief}</Text>
                     </View>
                 </View>
-                <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
-                    <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                        <Text style={{color:'#aaa',fontSize:13}}>0报名</Text>
-                    </View>
-                    <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                        <Text style={{color:'#aaa',fontSize:13}}>0评论</Text>
-                    </View>
-                    <View style={{flex:3,justifyContent:'center',alignItems: 'center'}}>
 
-                    </View>
-                    <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center',borderRadius:6}}>
-                        <Text style={{color:'#66CDAA',fontSize:12}}>我要报名</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
         );
         return row;
@@ -159,7 +133,7 @@ class MyActivity extends Component {
 
                 {/*内容区*/}
                 <View style={{flex:5,backgroundColor:'#eee'}}>
-                    <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:5,paddingBottom:5,}}>
+                    <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:0,paddingBottom:5,}}>
                         <ScrollView
                             refreshControl={
                                 <RefreshControl

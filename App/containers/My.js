@@ -69,7 +69,7 @@ class Home extends Component{
                             justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'group'} size={18} color="#fff"/>
                             </View>
-                            <View style={{flex:13,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                 <Text>我的群</Text>
                             </View>
                         </TouchableOpacity>
@@ -78,7 +78,7 @@ class Home extends Component{
                             justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'user'} size={20} color="#fff"/>
                             </View>
-                            <View style={{flex:13,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                 <Text>我的资料</Text>
                             </View>
 
@@ -88,7 +88,7 @@ class Home extends Component{
                             justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'edit'} size={20} color="#fff"/>
                             </View>
-                            <View style={{flex:13,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                 <Text>我的课程定制</Text>
                             </View>
                         </View>
@@ -97,7 +97,7 @@ class Home extends Component{
                             justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'gear'} size={20} color="#fff"/>
                             </View>
-                            <View style={{flex:13,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                 <Text>设置</Text>
                             </View>
                         </View>
