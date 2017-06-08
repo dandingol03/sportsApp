@@ -138,32 +138,7 @@ class AddGroup extends Component{
                         </View>
                     </View>
 
-                    {/*限制人数*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
-                    margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>限制人数：</Text>
-                        </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
-
-
-                            <TextInputWrapper
-                                placeholderTextColor='#888'
-                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入群人数上限"
-                                val={this.state.group.groupMaxMemNum==null?'':this.state.group.groupMaxMemNum}
-                                onChangeText={
-                                    (value)=>{
-                                        this.setState({group:Object.assign(this.state.group,{groupMaxMemNum:value})})
-                                    }}
-                                onCancel={
-                                    ()=>{this.setState({group:Object.assign(this.state.group,{groupMaxMemNum:null})});}
-                                }
-                            />
-                        </View>
-                    </View>
-
+                    {/*群简介*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,
                     marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
