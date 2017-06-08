@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MyGroup from './groupActivity/MyGroup';
-
+import CustomCourse from '../components/course/CustomCourse';
 
 class Home extends Component{
 
@@ -28,6 +28,19 @@ class Home extends Component{
             navigator.push({
                 name: 'my_group',
                 component: MyGroup,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    navigate2CustomCourse(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'CustomCourse',
+                component: CustomCourse,
                 params: {
 
                 }
@@ -84,7 +97,11 @@ class Home extends Component{
                             </View>
 
                         </View>
-                        <View style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}>
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                            onPress={()=>{
+                                this.navigate2CustomCourse()
+                            }}
+                        >
                             <View style={{flex:1,backgroundColor:'#98FB98',flexDirection:'row',borderRadius:30,padding:5,margin:5,
                             justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'edit'} size={20} color="#fff"/>
@@ -92,7 +109,7 @@ class Home extends Component{
                             <View style={{flex:13,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                 <Text>我的课程定制</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                         <View style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}>
                             <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
                             justifyContent:'center',alignItems: 'center'}}>
