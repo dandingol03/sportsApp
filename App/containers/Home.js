@@ -210,29 +210,16 @@ class Home extends Component {
                                         </View>
                                     </TouchableOpacity>
 
-
-                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
-                                      onPress={ ()=>{
-                                         this.navigate2BadmintonCourse();
-                                      }}>
-
-                                        <Icon name="pencil-square-o" size={30} color="#FF82AB" style={{backgroundColor:'transparent'}}/>
+                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                          onPress={ ()=>{
+                                             this.navigate2BadmintonCourse();
+                                          }}>
+                                        <CommIcon name="tag-plus" size={32} color="#0adc5e" style={{backgroundColor:'transparent'}}/>
                                         <View style={{marginTop:0,paddingTop:6}}>
                                             <Text style={{fontSize:13,color:'#343434'}}>课程制定</Text>
                                         </View>
                                     </TouchableOpacity>
 
-
-                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
-                                      onPress={ ()=>{
-                                         this.navigate2Coach();
-                                      }}>
-
-                                        <Icon name="search" size={30} color="#1E90FF" style={{backgroundColor:'transparent'}}/>
-                                        <View style={{marginTop:0,paddingTop:6}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>找教练</Text>
-                                        </View>
-                                    </TouchableOpacity>
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                       onPress={ ()=>{
