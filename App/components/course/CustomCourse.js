@@ -60,7 +60,6 @@ class CustomCourse extends Component{
         });
     }
 
-
     closePopover(){
         this.setState({menuVisible: false});
     }
