@@ -640,7 +640,7 @@ class AddActivity extends Component{
                 </ScrollView>
 
 
-                <TouchableOpacity style={{height:30,width:width*0.6,marginLeft:width*0.2,backgroundColor:'#66CDAA',marginBottom:15,marginTop:5,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
+                <TouchableOpacity style={{height:30,width:width*0.6,marginLeft:width*0.2,backgroundColor:'#66CDAA',marginBottom:10,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                   onPress={()=>{
                                       this.release();
                                       }}>
