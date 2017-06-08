@@ -220,7 +220,7 @@ class Home extends Component {
 
                                         <Icon name="pencil-square-o" size={30} color="#FF82AB" style={{backgroundColor:'transparent'}}/>
                                         <View style={{marginTop:0,paddingTop:6}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>课程定制</Text>
+                                            <Text style={{fontSize:13,color:'#343434'}}>课程制定</Text>
                                         </View>
                                     </TouchableOpacity>
 

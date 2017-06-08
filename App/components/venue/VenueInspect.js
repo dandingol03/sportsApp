@@ -44,6 +44,14 @@ class VenueInspect extends Component{
         }
     }
 
+    goBack(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.pop();
+        }
+    }
+
+
     constructor(props) {
         super(props);
         this.state={

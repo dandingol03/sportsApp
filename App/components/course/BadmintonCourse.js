@@ -22,13 +22,34 @@ import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import  Popover from  'react-native-popover'
 import TextInputWrapper from 'react-native-text-input-wrapper'
 import {BoxShadow} from 'react-native-shadow';
+import ActionSheet from 'react-native-actionsheet';
+import DatePicker from 'react-native-datepicker';
+import MadeCustomCourse from './MadeCustomCourse'
+
 
 import ScrollableTabView, {DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
 
 var {height, width} = Dimensions.get('window');
 
+const CANCEL_INDEX = 0;
+const DESTRUCTIVE_INDEX = 1;
+
 class BadmintonCourse extends Component{
+
+    navigate2MadeCustomCourse(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'MadeCustomCourse',
+                component: MadeCustomCourse,
+                params: {
+
+                }
+            })
+        }
+    }
+
 
     goBack(){
         const { navigator } = this.props;
@@ -105,11 +126,44 @@ class BadmintonCourse extends Component{
         }.bind(this), 2000);
     }
 
+    _handlePress2(index) {
+
+        if(index!==0){
+            var eventType = this.state.eventTypeButtons[index];
+            var eventTypeCode = index;
+            this.setState({event:Object.assign(this.state.event,{type:eventType})});
+        }
+
+    }
+
+    show(actionSheet) {
+        this[actionSheet].show();
+    }
+
+
+    showPopover(ref){
+        this.refs[ref].measure((ox, oy, width, height, px, py) => {
+            this.setState({
+                menuVisible: true,
+                buttonRect: {x: px+20, y: py+0, width: 200, height: height}
+            });
+        });
+    }
+
+
+    closePopover(){
+        this.setState({menuVisible: false});
+    }
+
 
     constructor(props) {
         super(props);
         this.state={
             isRefreshing:false,
+            event:{},
+            menuVisible:false,
+            memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
+            eventTypeButtons:['取消','羽毛球单打','羽毛球双打','羽毛球混双','基础练习'],
             courses:[
                 {
                     className:'羽毛球新手班',detail:'带初学者迅速学会羽毛球',cost:'500',classCount:8,venue:'山东省体育中心-羽毛球俱乐部'
@@ -133,6 +187,20 @@ class BadmintonCourse extends Component{
     }
 
     render(){
+
+        const shadowOpt = {
+            width:224*width/320,
+            height:25*height/568,
+            color:"#000",
+            border:0.5,
+            radius:1,
+            opacity:0.2,
+            x:-0.5,
+            y:1,
+            style:{marginVertical:8},
+        }
+
+        var displayArea = {x: 5, y: 20, width:width, height: height - 25};
 
 
         var courseList=null
@@ -175,90 +243,92 @@ class BadmintonCourse extends Component{
                     <View style={{flex:3,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                         <Text style={{color:'#fff',fontSize:18}}>课程制定</Text>
                     </View>
-                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
-
+                    <TouchableOpacity ref="menu"  style={{flex:1,justifyContent:'center',alignItems: 'center',}}
+                      onPress={()=>{
+                          this.showPopover('menu')
+                      }}
+                    >
+                        <Ionicons name={'md-more'} size={25} color="#fff"/>
                     </TouchableOpacity>
                 </View>
 
 
                 <View style={{flex:1,width:width,backgroundColor:'#66CDAA'}}>
-                    <ScrollableTabView
-                        renderTabBar={() => <DefaultTabBar  style={{borderBottomColor:0,}}/>}
-                        ref={(tabView) => { this.tabView = tabView; }}
-                        tabBarActiveTextColor='#fff'
-                        tabBarInactiveTextColor="#eee"
-                        tabBarUnderlineStyle={{backgroundColor:'#fff'}}
 
-                    >
-                        <View tabLabel='浏览' style={{backgroundColor:'#fff',flex:1}}>
 
-                            {/*搜索框*/}
-                            <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',padding:8}}>
-                                <View style={{flexDirection:'row',width:width*7/8,justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',borderRadius:8}}>
+                    {/*搜索框*/}
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',padding:8}}>
+                        <View style={{flexDirection:'row',width:width*7/8,justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',borderRadius:8}}>
 
-                                    <TextInputWrapper
-                                        search={true}
-                                        textInputStyle={{marginLeft:15,fontSize:14,color:'#222',}}
-                                        iconStyle={{size:22}}
-                                        placeholder="按教练名进行搜索"
-                                        val={this.state.coachName}
-                                        onChangeText={(coachName)=>{
+                            <TextInputWrapper
+                                search={true}
+                                textInputStyle={{marginLeft:15,fontSize:14,color:'#222',}}
+                                iconStyle={{size:22}}
+                                placeholder="按教练名进行搜索"
+                                val={this.state.coachName}
+                                onChangeText={(coachName)=>{
                                             this.setState({coachName:coachName})
                                         }}
-                                        onConfirm={()=>{
+                                onConfirm={()=>{
                                             alert('dw')
                                         }}
-                                    />
-
-                                </View>
-
-                            </View>
-
-                            {/*筛选*/}
-                            <View style={{height:45*height/736,flexDirection:'row',justifyContent:'center',alignItems: 'center',padding:8,borderTopWidth:1,borderBottomWidth:1,borderColor:'#ddd'}}>
-                                <View style={{flexDirection:'row',flex:1}}>
-                                    <View style={{flex:3,justifyContent:'center',alignItems: 'flex-start',paddingLeft:15}}>
-                                        <Text style={{fontSize:13,color:'#008B00'}}>默认</Text>
-                                    </View>
-                                    <View style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',}}>
-                                        <Text style={{fontSize:13}}>花销</Text>
-                                        <View style={{marginLeft:5}}>
-                                            <Icon name={'caret-up'} size={15} color="#008B00"/>
-                                            <Icon name={'caret-down'} size={15} color="#aaa"/>
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',}}>
-                                        <Text style={{fontSize:13}}>距离</Text>
-                                        <View style={{marginLeft:5}}>
-                                            <Icon name={'caret-up'} size={15} color="#aaa"/>
-                                            <Icon name={'caret-down'} size={15} color="#008B00"/>
-                                        </View>
-                                    </View>
-                                </View>
-                                <View style={{width:10}}></View>
-                            </View>
-
-                            {/*课程列表*/}
-
-                            <Animated.View style={{ flex:1,padding:4,opacity: this.state.fadeAnim }}>
-                                {courseList}
-                            </Animated.View>
-
-
-
-
-
+                            />
 
                         </View>
-                        <View tabLabel='定制' style={{backgroundColor:'#fff',flex:1}}>
-                            <Text>
-                                favorite
-                            </Text>
-                        </View>
 
-                    </ScrollableTabView>
+                    </View>
+
+                    {/*筛选*/}
+                    <View style={{height:45*height/736,flexDirection:'row',justifyContent:'center',alignItems: 'center',padding:8,
+                            borderTopWidth:1,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'#fff'}}>
+                        <View style={{flexDirection:'row',flex:1}}>
+                            <View style={{flex:3,justifyContent:'center',alignItems: 'flex-start',paddingLeft:15}}>
+                                <Text style={{fontSize:13,color:'#008B00'}}>默认</Text>
+                            </View>
+                            <View style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',}}>
+                                <Text style={{fontSize:13}}>花销</Text>
+                                <View style={{marginLeft:5}}>
+                                    <Icon name={'caret-up'} size={15} color="#008B00"/>
+                                    <Icon name={'caret-down'} size={15} color="#aaa"/>
+                                </View>
+                            </View>
+                            <View style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',}}>
+                                <Text style={{fontSize:13}}>距离</Text>
+                                <View style={{marginLeft:5}}>
+                                    <Icon name={'caret-up'} size={15} color="#aaa"/>
+                                    <Icon name={'caret-down'} size={15} color="#008B00"/>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{width:10}}></View>
+                    </View>
+
+                    {/*课程列表*/}
+
+                    <Animated.View style={{ flex:1,padding:4,opacity: this.state.fadeAnim,backgroundColor:'#fff' }}>
+                        {courseList}
+                    </Animated.View>
+
 
                 </View>
+
+                <Popover
+                    isVisible={this.state.menuVisible}
+                    fromRect={this.state.buttonRect}
+                    displayArea={displayArea}
+                    onClose={()=>{this.closePopover()
+                        }}>
+
+
+                    <TouchableOpacity style={[styles.popoverContent]}
+                      onPress={()=>{
+                              this.closePopover();
+                              this.navigate2MadeCustomCourse();
+                          }}>
+                        <Text style={[styles.popoverText,{color:'#444'}]}>课程定制</Text>
+                    </TouchableOpacity>
+
+                </Popover>
 
             </View>
         )
@@ -270,6 +340,16 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'#fff'
+    },
+    popoverContent: {
+        width: 100,
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    popoverText: {
+        color: '#ccc',
+        fontSize:14
     }
 });
 
