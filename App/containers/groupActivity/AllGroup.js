@@ -73,8 +73,8 @@ class AllGroup extends Component{
                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                 </View>
                 <View style={{flex:3,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                    <Text>{rowData.groupName}</Text>
-                    <Text>({rowData.memberCount})</Text>
+                    <Text style={{color:'#343434'}}>{rowData.groupName}</Text>
+                    <Text style={{color:'#343434'}}>({rowData.memberCount})</Text>
                 </View>
                 <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
@@ -156,6 +156,10 @@ class AllGroup extends Component{
                         underlineColorAndroid="transparent"
 
                     />
+                </View>
+
+                <View style={{backgroundColor:'#eee',padding:5}}>
+                    <Text style={{color:'#343434'}}>全部群组(4)</Text>
                 </View>
 
                 <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,borderTopWidth:1,borderColor:'#eee'}}>

@@ -212,7 +212,7 @@ class Activity extends Component {
                             }
                         >
                             {activityListView}
-                            <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',padding:15}}>
+                            <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',padding:10}}>
                                 <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
                             </View>
                         </ScrollView>
@@ -220,19 +220,32 @@ class Activity extends Component {
                     </Animated.View>
                 </View>
 
-                <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
+                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
                 position:'absolute',bottom:3}}>
-                    <View style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
+                    <View style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
+                    padding:10,margin:5}}>
                         <Text style={{color:'#66CDAA',}}>我的活动</Text>
                     </View>
-                    <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}
-                    onPress={()=>{this.navigate2AddActivity();}}>
-                        <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
-                    </TouchableOpacity>
-                    <View style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
+
+                    <View style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
+                      padding:10,margin:5}}>
                         <Text style={{color:'#66CDAA',}}>我的报名</Text>
                     </View>
                 </View>
+
+
+                <View style={{height:50,width:50,borderRadious:25,position:'absolute',bottom:3,left:width*0.5-25}}>
+                    <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}
+                                      onPress={()=>{this.navigate2AddActivity();}}>
+                        <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
+                    </TouchableOpacity>
+                </View>
+
+                {/*<TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}*/}
+                                  {/*onPress={()=>{this.navigate2AddActivity();}}>*/}
+                    {/*<Icon name={'plus-circle'} size={35} color='#66CDAA'/>*/}
+                {/*</TouchableOpacity>*/}
+
 
             </View>
         );

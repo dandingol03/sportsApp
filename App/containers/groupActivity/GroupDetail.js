@@ -46,6 +46,7 @@ class GroupDetail extends Component{
 
         return (
             <View style={{flex:1, backgroundColor:'#eee',}}>
+
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',
                     backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
@@ -53,15 +54,25 @@ class GroupDetail extends Component{
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>我的群组</Text>
+                        <Text style={{color:'#fff',fontSize:18}}>群名</Text>
                     </View>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{flex:1, backgroundColor:'#eee',}}>
-                    <Text>123</Text>
-                </View>
+                <ScrollView style={{width:width,height:height,backgroundColor:'#eee'}}>
+                    <View style={{flex:1,backgroundColor:'#eee',}}>
+                        <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
+                            <Text>XXX创建的群</Text>
+                            <Text>群号</Text>
+                        </View>
+                        <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
+                            <Text>群成员</Text>
+                        </View>
+
+                    </View>
+                </ScrollView>
+
             </View>
         );
     }

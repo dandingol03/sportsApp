@@ -112,8 +112,8 @@ class MyGroup extends Component{
                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                 </View>
                 <View style={{flex:3,justifyContent:'center',alignItems: 'center',flexDirection:'row'}}>
-                    <Text>{rowData.groupName}</Text>
-                    <Text>({rowData.memberCount})</Text>
+                    <Text style={{color:'#343434'}}>{rowData.groupName}</Text>
+                    <Text style={{color:'#343434'}}>({rowData.memberCount})</Text>
                     {
                         rowData.groupManager=='小鱼丁'?
                             <Icon name={'user'} style={{marginLeft:10}} size={18} color="pink"/>:null

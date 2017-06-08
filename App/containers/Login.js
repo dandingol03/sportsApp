@@ -169,6 +169,9 @@ var  Login =React.createClass({
                                             onChangeText={(value)=>{
                                                 this.setState({user:Object.assign(this.state.user,{username:value})})
                                             }}
+                                            onCancel={
+                                                ()=>{this.setState({user:Object.assign(this.state.user,{username:value})});}
+                                            }
                                         />
                                         {/*<TextInput*/}
                                             {/*style={{height: 42,flex:1,paddingLeft:0,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:16,*/}

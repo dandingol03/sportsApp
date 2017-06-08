@@ -42,7 +42,7 @@ class AddGroup extends Component{
                 <View style={{flex:3,marginLeft:5}}>
                     <View style={{flexDirection:'row',marginLeft:10}}>
                         <Icon name={'user'} size={15} color="pink"/>
-                        <Text style={{marginLeft:10}}>{rowData.perName}</Text>
+                        <Text style={{marginLeft:10,color:'#343434'}}>{rowData.perName}</Text>
                     </View>
                     <View  style={{flexDirection:'row',marginLeft:10,marginTop:5}}>
                         <Icon name={'mobile'} size={15} color="#87CEFF"/>
@@ -113,11 +113,11 @@ class AddGroup extends Component{
 
                 <View style={{flex:5,backgroundColor:'#fff'}}>
 
-                    {/*活动类型*/}
+                    {/*群名*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
                     ,margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
-                            <Text>群名：</Text>
+                            <Text style={{color:'#343434'}}>群名：</Text>
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
@@ -131,6 +131,9 @@ class AddGroup extends Component{
                                     (value)=>{
                                         this.setState({group:Object.assign(this.state.group,{groupName:value})})
                                     }}
+                                onCancel={
+                                    ()=>{this.setState({group:Object.assign(this.state.group,{groupName:null})});}
+                                }
                             />
                         </View>
                     </View>
@@ -139,7 +142,7 @@ class AddGroup extends Component{
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
                     margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
-                            <Text>限制人数：</Text>
+                            <Text style={{color:'#343434'}}>限制人数：</Text>
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
@@ -154,6 +157,9 @@ class AddGroup extends Component{
                                     (value)=>{
                                         this.setState({group:Object.assign(this.state.group,{groupMaxMemNum:value})})
                                     }}
+                                onCancel={
+                                    ()=>{this.setState({group:Object.assign(this.state.group,{groupMaxMemNum:null})});}
+                                }
                             />
                         </View>
                     </View>
@@ -161,7 +167,7 @@ class AddGroup extends Component{
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,
                     marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
-                            <Text>群简介：</Text>
+                            <Text style={{color:'#343434'}}>群简介：</Text>
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
@@ -175,6 +181,9 @@ class AddGroup extends Component{
                                     (value)=>{
                                         this.setState({group:Object.assign(this.state.group,{groupBrief:value})})
                                     }}
+                                onCancel={
+                                    ()=>{this.setState({group:Object.assign(this.state.group,{groupBrief:null})});}
+                                }
                             />
                         </View>
                     </View>
@@ -183,7 +192,7 @@ class AddGroup extends Component{
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
                     margin:10,marginTop:5,marginBottom:10}}>
                         <View style={{flex:1,justifyContent:'center',alignItems: 'flex-start',}}>
-                            <Text>添加成员：</Text>
+                            <Text style={{color:'#343434'}}>添加成员：</Text>
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-end',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
