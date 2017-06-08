@@ -31,7 +31,8 @@ import {
 } from '../../action/ActivityActions';
 
 import TextInputWrapper from '../../encrypt/TextInputWrapper';
-import VenueInspect from '../../components/venue/VenueInspect'
+import VenueInspect from '../../components/venue/VenueInspect';
+import CreateGroup from './CreateGroup';
 
 class AddActivity extends Component{
 
@@ -48,6 +49,19 @@ class AddActivity extends Component{
             navigator.push({
                 name: 'VenueInspect',
                 component: VenueInspect,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    navigate2CreateGroup(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'create_group',
+                component: CreateGroup,
                 params: {
 
                 }
@@ -111,6 +125,20 @@ class AddActivity extends Component{
 
     }
 
+    _handlePress3(index) {
+
+        if(index!==0){
+            var groupName = this.state.groupNameButtons[index];
+            if(groupName=='新建群组'){
+                this.navigate2CreateGroup();
+            }else{
+                var groupNameCode = index;
+                this.setState({event:Object.assign(this.state.event,{groupName:groupName})});
+            }
+        }
+
+    }
+
     show(actionSheet) {
         this[actionSheet].show();
     }
@@ -121,9 +149,11 @@ class AddActivity extends Component{
             fadeAnim1: new Animated.Value(0),
             selectTime:false,
             eventTime:null,
-            event:{eventBrief:'',type:null,eventTime:null,eventPlace:'1',eventMaxMemNum:null,memberLevel:null,hasCoach:0,hasSparring:0},
+            event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:'1',eventMaxMemNum:null,
+                memberLevel:null,hasCoach:0,hasSparring:0,groupName:null},
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
-            eventTypeButtons:['取消','羽毛球单打','羽毛球双打','羽毛球混双','基础练习'],
+            eventTypeButtons:['取消','公开','私人'],
+            groupNameButtons:['取消','宇宙无敌战队组','骑摩托的部长队组','新建群组'],
         }
     }
 
@@ -133,7 +163,8 @@ class AddActivity extends Component{
         const DESTRUCTIVE_INDEX = 1;
 
         const memberLevelButtons=['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'];
-        const eventTypeButtons=['取消','羽毛球单打','羽毛球双打','羽毛球混双','基础练习'];
+        const eventTypeButtons=['取消','公开','私人'];
+        const groupNameButtons=['取消','宇宙无敌战队组','骑摩托的部长队组','新建群组'];
 
         const shadowOpt = {
             width:224*width/320,
@@ -279,15 +310,15 @@ class AddActivity extends Component{
                         </TouchableOpacity>
                     </View>
 
-                    {/*活动人数*/}
+
+                {
+                    (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
                             <Text>活动人数：</Text>
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
-
-
                             <TextInputWrapper
                                 placeholderTextColor='#888'
                                 textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
@@ -297,20 +328,17 @@ class AddActivity extends Component{
                                     (value)=>{
                                         this.setState({event:Object.assign(this.state.event,{eventMaxMemNum:value})})
                                     }}
+                                onCancel={
+                                    ()=>{this.setState({event:Object.assign(this.state.event,{eventMaxMemNum:null})});}
+                                }
                             />
-                            {/*<TextInput*/}
-                                {/*style={{height:35*height/736,justifyContent:'center',alignItems: 'center',width:width*0.4,marginLeft:20,*/}
-                                        {/*paddingTop:4,paddingBottom:4,fontSize:13,color:'#222'}}*/}
-                                {/*onChangeText={(eventMaxMemNum) => {*/}
-                                         {/*this.setState({event:Object.assign(this.state.event,{eventMaxMemNum:eventMaxMemNum})});*/}
-                                    {/*}}*/}
-                                {/*value={this.state.event.eventMaxMemNum}*/}
-                                {/*placeholder='请输入活动人数'*/}
-                                {/*placeholderTextColor="#aaa"*/}
-                                {/*underlineColorAndroid="transparent"*/}
-                            {/*/>*/}
                         </View>
-                    </View>
+                    </View>:null
+
+                }
+
+                {
+                    (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
 
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
@@ -322,12 +350,12 @@ class AddActivity extends Component{
 
                             {
                                 this.state.event.memberLevel==null?
-                                <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                    <Text style={{color:'#888',fontSize:13}}>请选择对象水平：</Text>
-                                </View> :
-                                <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                    <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevel}</Text>
-                                </View>
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#888',fontSize:13}}>请选择对象水平：</Text>
+                                    </View> :
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevel}</Text>
+                                    </View>
                             }
                             <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
                                 <Icon name={'angle-right'} size={30} color="#fff"/>
@@ -345,7 +373,87 @@ class AddActivity extends Component{
                                     }
                             />
                         </TouchableOpacity>
-                    </View>
+                    </View>:null
+                }
+
+                    {
+                        (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
+                            <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                                <View style={{flex:1}}>
+                                    <Text>邀请群组：</Text>
+                                </View>
+                                <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                                  onPress={()=>{ this.show('actionSheet3'); }}>
+
+                                    {
+                                        this.state.event.memberLevel==null?
+                                            <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                <Text style={{color:'#888',fontSize:13}}>请选择群组：</Text>
+                                            </View> :
+                                            <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevel}</Text>
+                                            </View>
+                                    }
+                                    <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                        <Icon name={'angle-right'} size={30} color="#fff"/>
+                                    </View>
+                                    <ActionSheet
+                                        ref={(o) => {
+                                        this.actionSheet3 = o;
+                                    }}
+                                        title="请选择对象水平"
+                                        options={groupNameButtons}
+                                        cancelButtonIndex={CANCEL_INDEX}
+                                        destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                        onPress={
+                                        (data)=>{ this._handlePress3(data); }
+                                    }
+                                    />
+                                </TouchableOpacity>
+                            </View>:null
+
+                    }
+
+                {
+                    this.state.event.type=='私人'?
+
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                        <View style={{flex:1}}>
+                            <Text>选择群组：</Text>
+                        </View>
+                        <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                          onPress={()=>{ this.show('actionSheet3'); }}>
+
+                            {
+                                this.state.event.memberLevel==null?
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#888',fontSize:13}}>请选择群组：</Text>
+                                    </View> :
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevel}</Text>
+                                    </View>
+                            }
+                            <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                <Icon name={'angle-right'} size={30} color="#fff"/>
+                            </View>
+                            <ActionSheet
+                                ref={(o) => {
+                                        this.actionSheet3 = o;
+                                    }}
+                                title="请选择对象水平"
+                                options={groupNameButtons}
+                                cancelButtonIndex={CANCEL_INDEX}
+                                destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                onPress={
+                                        (data)=>{ this._handlePress3(data); }
+                                    }
+                            />
+                        </TouchableOpacity>
+                    </View>:null
+
+                }
 
 
 
@@ -461,6 +569,9 @@ class AddActivity extends Component{
                                     (value)=>{
                                         this.setState({event:Object.assign(this.state.event,{eventBrief:value})})
                                     }}
+                                onCancel={
+                                    ()=>{this.setState({event:Object.assign(this.state.event,{eventBrief:null})});}
+                                }
                             />
 
                             {/*<TextInput*/}

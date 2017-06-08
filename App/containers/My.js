@@ -61,32 +61,44 @@ class Home extends Component{
                 </View>
                 <View style={{flex:5,backgroundColor:'#eee'}}>
                     <View style={{flex:12,backgroundColor:'#eee'}}>
-                        <TouchableOpacity style={{height:55,backgroundColor:'#fff',flexDirection:'row',padding:5,marginBottom:3}}
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
                         onPress={()=>{
                             this.navigate2MyGroup();
                         }}>
-                            <View style={{flex:1,backgroundColor:'#FF69B4',flexDirection:'row',height:40,width:40,borderRadius:40,
-                                padding:5,margin:5,justifyContent:'center',alignItems: 'center'}}>
-                                <Icon name={'group'} size={23} color="#fff"/>
+
+                            <View style={{flex:1,backgroundColor:'#FF69B4',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                            justifyContent:'center',alignItems: 'center'}}>
+                                <Icon name={'group'} size={18} color="#fff"/>
                             </View>
-                            <View style={{flex:9,backgroundColor:'#fff',justifyContent:'center',marginLeft:10}}>
+                            <View style={{flex:13,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                 <Text>我的群</Text>
                             </View>
                         </TouchableOpacity>
-                        <View style={{height:55,backgroundColor:'#fff',flexDirection:'row',padding:5,marginBottom:3}}>
-                            <View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:40,padding:5,margin:5,justifyContent:'center',alignItems: 'center'}}>
-                                <Icon name={'pencil'} size={25} color="#fff"/>
+                        <View style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}>
+                            <View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                            justifyContent:'center',alignItems: 'center'}}>
+                                <Icon name={'user'} size={20} color="#fff"/>
                             </View>
-                            <View style={{flex:9,backgroundColor:'#fff',justifyContent:'center',marginLeft:10}}>
+                            <View style={{flex:13,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                 <Text>我的资料</Text>
                             </View>
 
                         </View>
-                        <View style={{height:55,backgroundColor:'#fff',flexDirection:'row',padding:5,marginBottom:3}}>
-                            <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:40,padding:5,margin:5,justifyContent:'center',alignItems: 'center'}}>
-                                <Icon name={'gear'} size={25} color="#fff"/>
+                        <View style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}>
+                            <View style={{flex:1,backgroundColor:'#98FB98',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                            justifyContent:'center',alignItems: 'center'}}>
+                                <Icon name={'edit'} size={20} color="#fff"/>
                             </View>
-                            <View style={{flex:9,backgroundColor:'#fff',justifyContent:'center',marginLeft:10}}>
+                            <View style={{flex:13,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                                <Text>我的课程定制</Text>
+                            </View>
+                        </View>
+                        <View style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}>
+                            <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                            justifyContent:'center',alignItems: 'center'}}>
+                                <Icon name={'gear'} size={20} color="#fff"/>
+                            </View>
+                            <View style={{flex:13,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                 <Text>设置</Text>
                             </View>
                         </View>

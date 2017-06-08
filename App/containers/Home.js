@@ -197,10 +197,10 @@ class Home extends Component {
                             <View style={{flex:5,justifyContent:'center',backgroundColor:'#eee'}}>
 
                                 <View style={{flex:2,backgroundColor:'#fff',padding:0,marginBottom:10}}>
-                                     <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',flexDirection:'column',
-                                        padding:8,paddingVertical:0}}
+                                        padding:5,paddingVertical:0}}
                                       onPress={ ()=>{
                                           this.navigate2Mall();
                                           console.log('健康商城');
@@ -213,30 +213,30 @@ class Home extends Component {
                                     </TouchableOpacity>
 
 
-                                      <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                      <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                       onPress={ ()=>{
                                          this.navigate2BadmintonCourse();
                                       }}>
 
-                                        <CommIcon name="tag-plus" size={32} color="#0adc5e" style={{backgroundColor:'transparent'}}/>
+                                        <Icon name="pencil-square-o" size={30} color="#FF82AB" style={{backgroundColor:'transparent'}}/>
                                         <View style={{marginTop:0,paddingTop:6}}>
                                             <Text style={{fontSize:13,color:'#343434'}}>课程制定</Text>
                                         </View>
                                     </TouchableOpacity>
 
 
-                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                       onPress={ ()=>{
                                          this.navigate2Coach();
                                       }}>
 
-                                        <Icon name="users" size={30} color="#0adc5e" style={{backgroundColor:'transparent'}}/>
+                                        <Icon name="search" size={30} color="#1E90FF" style={{backgroundColor:'transparent'}}/>
                                         <View style={{marginTop:0,paddingTop:6}}>
                                             <Text style={{fontSize:13,color:'#343434'}}>找教练</Text>
                                         </View>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                       onPress={ ()=>{
                                         this.navigate2Activity();
                                       }}>
@@ -246,7 +246,7 @@ class Home extends Component {
                                         </View>
                                     </TouchableOpacity>
 
-                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                       onPress={ ()=>{
                                          this.navigate2Market(vegetable);
                                          console.log('找教练');

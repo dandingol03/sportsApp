@@ -19,10 +19,9 @@ var {height, width} = Dimensions.get('window');
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MyActivity from './MyActivity';
 import ActivityDetail from './ActivityDetail';
 
-class Activity extends Component {
+class MyActivity extends Component {
 
     goBack(){
         const { navigator } = this.props;
@@ -49,32 +48,6 @@ class Activity extends Component {
 
     }
 
-    navigate2AddActivity(){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'add_activity',
-                component: AddActivity,
-                params: {
-
-                }
-            })
-        }
-    }
-
-    navigate2MyActivity(){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'my_activity',
-                component: MyActivity,
-                params: {
-
-                }
-            })
-        }
-    }
-
     navigate2ActivityDetail(rowData){
         const { navigator } = this.props;
         if(navigator) {
@@ -92,30 +65,6 @@ class Activity extends Component {
 
         var row=(
             <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,}}>
-                <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
-                    <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
-                        <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
-                    </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:5}}>
-                        <View>
-                            <Text>小鱼丁</Text>
-                        </View>
-                        <View style={{flexDirection:'row',marginTop:5}}>
-                            <Icon name={'venus'} size={14} color="pink"/>
-                            <Text style={{color:'#aaa',fontSize:11}}>25岁</Text>
-                        </View>
-                    </View>
-                    <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-
-                    </View>
-                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
-                                      onPress={()=>{
-                                          this.navigate2ActivityDetail(rowData);
-                                      }}>
-                        <Text style={{marginRight:5}}>详情</Text>
-                        <Icon name={'angle-right'} size={25} color="#343434"/>
-                    </TouchableOpacity>
-                </View>
                 <View style={{flex:3,padding:10}}>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
@@ -208,7 +157,7 @@ class Activity extends Component {
                     </View>
                 </View>
 
-                    {/*内容区*/}
+                {/*内容区*/}
                 <View style={{flex:5,backgroundColor:'#eee'}}>
                     <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:5,paddingBottom:5,}}>
                         <ScrollView
@@ -233,32 +182,6 @@ class Activity extends Component {
                     </Animated.View>
                 </View>
 
-                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
-                position:'absolute',bottom:3}}>
-                    <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
-                    padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity();}}>
-                        <Text style={{color:'#66CDAA',}}>我的活动</Text>
-                    </TouchableOpacity>
-
-                    <View style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
-                      padding:10,margin:5}}>
-                        <Text style={{color:'#66CDAA',}}>我的报名</Text>
-                    </View>
-                </View>
-
-
-                <View style={{height:50,width:50,borderRadious:25,position:'absolute',bottom:3,left:width*0.5-25}}>
-                    <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}
-                                      onPress={()=>{this.navigate2AddActivity();}}>
-                        <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
-                    </TouchableOpacity>
-                </View>
-
-                {/*<TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}*/}
-                                  {/*onPress={()=>{this.navigate2AddActivity();}}>*/}
-                    {/*<Icon name={'plus-circle'} size={35} color='#66CDAA'/>*/}
-                {/*</TouchableOpacity>*/}
-
 
             </View>
         );
@@ -279,5 +202,6 @@ const mapStateToProps = (state, ownProps) => {
     return props
 }
 
-export default connect(mapStateToProps)(Activity);
+export default connect(mapStateToProps)(MyActivity);
+
 
