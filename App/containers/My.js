@@ -65,7 +65,8 @@ class Home extends Component{
                         onPress={()=>{
                             this.navigate2MyGroup();
                         }}>
-                            <View style={{flex:1,backgroundColor:'#FF69B4',flexDirection:'row',borderRadius:40,padding:5,margin:5,justifyContent:'center',alignItems: 'center'}}>
+                            <View style={{flex:1,backgroundColor:'#FF69B4',flexDirection:'row',height:40,width:40,borderRadius:40,
+                                padding:5,margin:5,justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'group'} size={23} color="#fff"/>
                             </View>
                             <View style={{flex:9,backgroundColor:'#fff',justifyContent:'center',marginLeft:10}}>

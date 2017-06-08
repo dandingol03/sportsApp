@@ -220,7 +220,7 @@ class Home extends Component {
 
                                         <CommIcon name="tag-plus" size={32} color="#0adc5e" style={{backgroundColor:'transparent'}}/>
                                         <View style={{marginTop:0,paddingTop:6}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>课程定制</Text>
+                                            <Text style={{fontSize:13,color:'#343434'}}>课程制定</Text>
                                         </View>
                                     </TouchableOpacity>
 
