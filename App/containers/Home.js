@@ -199,21 +199,19 @@ class Home extends Component {
                                 <View style={{flex:2,backgroundColor:'#fff',padding:0,marginBottom:10}}>
                                     <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
 
-                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',flexDirection:'column',
-                                        padding:5,paddingVertical:0}}
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                       onPress={ ()=>{
                                           this.navigate2Mall();
-                                          console.log('健康商城');
                                       }}>
 
-                                        <Icon name="shopping-cart" size={36} color="#EEAD0E" style={{paddingBottom:4}}/>
-                                        <View style={{marginTop:0,paddingTop:0}}>
+                                        <Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>
+                                        <View style={{marginTop:0,paddingTop:6}}>
                                             <Text style={{fontSize:13,color:'#343434'}}>商城</Text>
                                         </View>
                                     </TouchableOpacity>
 
 
-                                      <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                       onPress={ ()=>{
                                          this.navigate2BadmintonCourse();
                                       }}>

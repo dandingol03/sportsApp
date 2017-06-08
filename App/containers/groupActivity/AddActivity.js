@@ -195,7 +195,8 @@ class AddActivity extends Component{
                     </TouchableOpacity>
                 </View>
 
-                <View style={{flex:8,backgroundColor:'#fff',padding:5}}>
+
+                <ScrollView style={{height:height,width:width,backgroundColor:'#fff',padding:5}}>
 
                     {/*活动类型*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
@@ -231,6 +232,29 @@ class AddActivity extends Component{
                                     }
                             />
                         </TouchableOpacity>
+                    </View>
+
+                    {/*活动名称*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                        <View style={{flex:1}}>
+                            <Text>活动名称：</Text>
+                        </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                placeholder="请输入活动名称"
+                                val={this.state.event.eventName}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({event:Object.assign(this.state.event,{eventName:value})})
+                                    }}
+                                onCancel={
+                                    ()=>{this.setState({event:Object.assign(this.state.event,{eventName:null})});}
+                                }
+                            />
+                        </View>
                     </View>
 
                     {/*活动时间*/}
@@ -613,10 +637,10 @@ class AddActivity extends Component{
                             温馨提示：您发布的内容应合法、真实、健康、共创文明的网络环境
                         </Text>
                     </View>
-                </View>
+                </ScrollView>
 
 
-                <TouchableOpacity style={{height:40,backgroundColor:'#66CDAA',margin:30,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
+                <TouchableOpacity style={{height:30,width:width*0.6,marginLeft:width*0.2,backgroundColor:'#66CDAA',marginBottom:15,marginTop:5,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                   onPress={()=>{
                                       this.release();
                                       }}>

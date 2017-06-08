@@ -11,13 +11,16 @@ import {
     TouchableOpacity,
     RefreshControl,
     Animated,
-    Easing
+    Easing,
+    Modal
 } from 'react-native';
 
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import GridView from 'react-native-grid-view';
+import GroupMemberModal from './GroupMemberModal'
 
 class GroupDetail extends Component{
 
@@ -28,9 +31,35 @@ class GroupDetail extends Component{
         }
     }
 
+    renderRow(rowData)
+    {
+
+        if(rowData.addNewOne==true)
+        {
+            return  (
+                <TouchableOpacity style={{height:50,width:50,borderRadius:10,borderWidth:1,borderColor:'#ddd',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                onPress={()=>{
+                        this.setState({modalVisible:true});
+                }}>
+                    <Ionicons name='md-add' size={26} color="#ddd"/>
+                </TouchableOpacity>
+            );
+        }else{
+            return  (
+                <View>
+                    <View style={{height:50,width:50,borderRadius:10,borderWidth:1,borderColor:'#eee',margin:5}}>
+                        <Image resizeMode="stretch" style={{height:50,width:50,borderRadius:10,}} source={rowData.portrait}/>
+                    </View>
+                </View>
+            );
+        }
+    }
+
     constructor(props) {
         super(props);
         this.state={
+            modalVisible:false,
             doingFetch: false,
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
@@ -38,11 +67,23 @@ class GroupDetail extends Component{
                 {groupId:1,groupNum:'G00001',groupName:'宇宙无敌战队组',groupManager:'小鱼丁',createTime:new Date(),memberCount:5,isManager:true},
                 {groupId:2,groupNum:'G00002',groupName:'骑摩托的部长队组',groupManager:'Danding',createTime:new Date(),memberCount:3,isManager:false},
             ],
+            memberList:[
+                {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
+                {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
+                {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
+                {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730',addNewOne:false},
+                {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730',addNewOne:false},
+                {perName:null,portrait:require('../../../img/portrait.jpg'),mobilePhone:null,addNewOne:true},
+            ],
 
         }
     }
 
     render() {
+
+        var memberList = this.state.memberList;
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        var dataSource=ds.cloneWithRows(memberList);
 
         return (
             <View style={{flex:1, backgroundColor:'#eee',}}>
@@ -60,25 +101,78 @@ class GroupDetail extends Component{
                     </TouchableOpacity>
                 </View>
 
-                <ScrollView style={{width:width,height:height,backgroundColor:'#eee'}}>
-                    <View style={{flex:1,backgroundColor:'#eee',}}>
-                        <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
+                <ScrollView style={{width:width,height:height,backgroundColor:'#eee',}}>
+                    <View style={{flex:1,backgroundColor:'#eee',marginBottom:5}}>
+                        <View style={{flex:1,backgroundColor:'#fff',padding:10,}}>
                             <Text>群成员</Text>
                         </View>
-                        <View>
-
+                        <View style={{backgroundColor:'#fff',padding:10}}>
+                            <GridView
+                                items={dataSource}
+                                itemsPerRow={5}
+                                renderItem={this.renderRow.bind(this)}
+                                style={styles.listView}
+                            />
                         </View>
                     </View>
 
-                    <View style={{flex:1,backgroundColor:'#eee',}}>
-                        <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
-                            <Text>群聊名称</Text>
+                    <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
+                        <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',padding:5,justifyContent:'center',alignItems: 'center',
+                        borderBottomWidth:1,borderColor:'#eee'}}>
+                            <View style={{flex:2}}>
+                                <Text>群组名称:</Text>
+                            </View>
+                            <View style={{flex:4,}}>
+                                <Text>宇宙无敌羽毛球战队</Text>
+                            </View>
+                            <View style={{flex:1,}}>
+                                <Icon name={'angle-right'} size={25} color="#aaa"/>
+                            </View>
                         </View>
-                        <View>
-                            <Text>群简介</Text>
+
+                        <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',padding:5,justifyContent:'center',alignItems: 'center',
+                         borderBottomWidth:1,borderColor:'#eee'}}>
+                            <View style={{flex:2}}>
+                                <Text>群简介:</Text>
+                            </View>
+                            <View style={{flex:4,}}>
+                                <Text>羽毛球爱好者聚集地</Text>
+                            </View>
+                            <View style={{flex:1,}}>
+                                <Icon name={'angle-right'} size={25} color="#aaa"/>
+                            </View>
                         </View>
                     </View>
+
+                    <TouchableOpacity style={{height:30,backgroundColor:'#EE6A50',margin:20,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
+                                      onPress={()=>{
+
+                                      }}>
+                        <Text style={{color:'#fff',fontSize:15}}>删除并退出</Text>
+                    </TouchableOpacity>
+
                 </ScrollView>
+
+                {/* Add GroupMember Modal*/}
+                <Modal
+                    animationType={"slide"}
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        console.log("Modal has been closed.");
+                    }}
+                >
+
+                    <GroupMemberModal
+                        onClose={()=>{
+                            this.setState({modalVisible:false});
+                        }}
+
+                        accessToken={this.props.accessToken}
+                    />
+
+                </Modal>
+
 
             </View>
         );

@@ -48,11 +48,27 @@ class MyActivity extends Component {
 
     }
 
+    navigate2ActivityDetail(rowData){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'activity_detail',
+                component: ActivityDetail,
+                params: {
+                    activity:rowData,
+                }
+            })
+        }
+    }
+
     renderRow(rowData,sectionId,rowId){
 
         var row=(
             <View style={{flex:1,backgroundColor:'#fff',marginBottom:5,}}>
-                <View style={{flex:3,padding:10}}>
+                <TouchableOpacity style={{flex:3,padding:10}}
+                      onPress={()=>{
+                                          this.navigate2ActivityDetail(rowData);
+                                      }}>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'star'} size={16} color="#66CDAA"/>
@@ -79,7 +95,7 @@ class MyActivity extends Component {
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{rowData.eventBrief}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
             </View>
         );
