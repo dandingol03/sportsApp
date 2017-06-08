@@ -84,7 +84,7 @@ class CustomCourse extends Component{
                 {/*tabbar部分*/}
 
                 <Toolbar width={width} title="我的定制" actions={['发布定制']}
-                     onPress={(i)=>{
+                         onPress={(i)=>{
                          console.log(i)
                      }}
                 >

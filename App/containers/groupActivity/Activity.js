@@ -19,6 +19,7 @@ var {height, width} = Dimensions.get('window');
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AddActivity from './AddActivity';
 import MyActivity from './MyActivity';
 import ActivityDetail from './ActivityDetail';
 
