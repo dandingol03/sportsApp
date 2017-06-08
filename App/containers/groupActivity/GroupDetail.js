@@ -63,13 +63,20 @@ class GroupDetail extends Component{
                 <ScrollView style={{width:width,height:height,backgroundColor:'#eee'}}>
                     <View style={{flex:1,backgroundColor:'#eee',}}>
                         <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
-                            <Text>XXX创建的群</Text>
-                            <Text>群号</Text>
-                        </View>
-                        <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
                             <Text>群成员</Text>
                         </View>
+                        <View>
 
+                        </View>
+                    </View>
+
+                    <View style={{flex:1,backgroundColor:'#eee',}}>
+                        <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
+                            <Text>群聊名称</Text>
+                        </View>
+                        <View>
+                            <Text>群简介</Text>
+                        </View>
                     </View>
                 </ScrollView>
 

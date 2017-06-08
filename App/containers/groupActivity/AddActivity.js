@@ -376,6 +376,45 @@ class AddActivity extends Component{
                     </View>:null
                 }
 
+                    {
+                        (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
+                            <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                                <View style={{flex:1}}>
+                                    <Text>邀请群组：</Text>
+                                </View>
+                                <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                                  onPress={()=>{ this.show('actionSheet3'); }}>
+
+                                    {
+                                        this.state.event.memberLevel==null?
+                                            <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                <Text style={{color:'#888',fontSize:13}}>请选择群组：</Text>
+                                            </View> :
+                                            <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevel}</Text>
+                                            </View>
+                                    }
+                                    <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                        <Icon name={'angle-right'} size={30} color="#fff"/>
+                                    </View>
+                                    <ActionSheet
+                                        ref={(o) => {
+                                        this.actionSheet3 = o;
+                                    }}
+                                        title="请选择对象水平"
+                                        options={groupNameButtons}
+                                        cancelButtonIndex={CANCEL_INDEX}
+                                        destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                        onPress={
+                                        (data)=>{ this._handlePress3(data); }
+                                    }
+                                    />
+                                </TouchableOpacity>
+                            </View>:null
+
+                    }
+
                 {
                     this.state.event.type=='私人'?
 
