@@ -20,8 +20,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import  Popover from  'react-native-popover'
 import CustomCourseDetail from './CustomCourseDetail';
-import Toolbar from '../../encrypt/Toolbar';
-
+//import Toolbar from '../../encrypt/Toolbar';
+import Toolbar from 'react-native-toolbar-wrapper'
 
 var {height, width} = Dimensions.get('window');
 
