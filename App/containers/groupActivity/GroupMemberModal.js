@@ -29,45 +29,77 @@ class GroupMemberModal extends Component{
         }
     }
 
+    setMemberList(){
+        this.close();
+        if(this.props.setMemberList!==undefined&&this.props.setMemberList!==null)
+        {
+            this.props.setMemberList();
+        }
+    }
+
+    componentWillReceiveProps(nextProps)
+    {
+        this.setState(nextProps)
+    }
 
     constructor(props)
     {
         super(props);
         this.state={
-            shareType:null,
-            shareTypeButtons:['取消','好友','朋友圈'],
+           searchInfo:null,
+            member:this.props.member,
         }
     }
 
-
     render(){
-
 
         return (
             <View>
                 <View style={{height:height*0.4,width:width*0.8,padding:5,margin:width*0.1,marginTop:100,borderColor:'#66CDAA',borderWidth:1,
                 backgroundColor:'#fff',borderRadius:6}}>
 
-                    <View style={{flex:5}}>
+                    <View style={{flex:2}}>
                         {/*//搜索框*/}
                         <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',margin:8,padding:5,borderRadius:8}}>
                             <TextInputWrapper
                                 style={{fontSize:13}}
-                                onConfirm={()=>{alert('ccc');}}
+                                onConfirm={()=>{this.props.searchMember(this.state.searchInfo);}}
                                 search={true}
-                                onChangeText={(groupName) => {
-                                      this.setState({groupName:groupName});
+                                onChangeText={(searchInfo) => {
+                                      this.setState({searchInfo:searchInfo});
                                     }}
-                                value={this.state.groupName==null?'':this.state.groupName}
-                                placeholder='请输入手机号或用户名'
+                                value={this.state.searchInfo==null?'':this.state.searchInfo}
+                                placeholder='请输入手机号'
                                 placeholderTextColor="#aaa"
                                 underlineColorAndroid="transparent"
-
                             />
                         </View>
-
-
                     </View>
+
+                    {
+                        this.props.member==null?null:
+                            <View style={{flex:3,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,padding:5,borderBottomWidth:1,
+            borderColor:'#eee',borderRadius:8}}>
+                                <View style={{flex:1,}}>
+                                    <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
+                                </View>
+                                <View style={{flex:3,marginLeft:5}}>
+                                    <View style={{flexDirection:'row',marginLeft:10}}>
+                                        <Icon name={'user'} size={15} color="pink"/>
+                                        <Text style={{marginLeft:10,color:'#343434'}}>{this.props.member.perName}</Text>
+                                    </View>
+                                    <View  style={{flexDirection:'row',marginLeft:10,marginTop:5}}>
+                                        <Icon name={'mobile'} size={15} color="#87CEFF"/>
+                                        <Text style={{marginLeft:10,color:'#aaa'}}>{this.props.member.mobilePhone}</Text>
+                                    </View>
+                                </View>
+                                <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+
+                                </View>
+
+                            </View>
+                    }
+
                     <View style={{flex:1,padding:2,margin:4,flexDirection:'row',justifyContent:'center',alignItems:'flex-end'}}>
                         <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
                     backgroundColor:'#fff',borderRadius:6,borderWidth:1,borderColor:'#66CDAA'}}
@@ -77,7 +109,7 @@ class GroupMemberModal extends Component{
 
                         <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
                     backgroundColor:'#66CDAA',borderRadius:6}}
-                                          onPress={()=>{}}>
+                                          onPress={()=>{this.setMemberList();}}>
                             <Text style={{color:'#fff',padding:5}}>添加</Text>
                         </TouchableOpacity>
                     </View>

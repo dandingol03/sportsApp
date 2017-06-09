@@ -33,12 +33,77 @@ export let releaseActivity=(payload)=>{
     }
 }
 
+//用手机号或用户名搜索成员
+export let searchMember=(searchInfo)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
 
-//获取群组信息
-export let setGroupList=(groupList)=>{
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'searchOnePerson',
+                    info:{
+                        searchInfo:searchInfo
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+
+        });
+    }
+}
+
+//创建群组
+export let createGroup=(info)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'createGroup',
+                    info: {
+                        groupName:info.group.groupName,
+                        groupBrief:info.group.groupBrief,
+                        memberList:info.memberList,
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+
+        });
+    }
+}
+
+//设置组列表
+export let setMyGroupList=(myGroupList)=>{
     return {
-        type:SET_GROUP_LIST,
-        groupList:groupList
+        type:SET_MY_GROUP_LIST,
+        myGroupList:myGroupList
     }
 }
 

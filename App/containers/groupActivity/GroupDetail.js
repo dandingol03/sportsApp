@@ -118,12 +118,25 @@ class GroupDetail extends Component{
 
                     <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
                         <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',padding:5,justifyContent:'center',alignItems: 'center',
-                        borderBottomWidth:1,borderColor:'#eee'}}>
+                                      borderBottomWidth:1,borderColor:'#eee'}}>
                             <View style={{flex:2}}>
                                 <Text>群组名称:</Text>
                             </View>
                             <View style={{flex:4,}}>
                                 <Text>宇宙无敌羽毛球战队</Text>
+                            </View>
+                            <View style={{flex:1,}}>
+                                <Icon name={'angle-right'} size={25} color="#aaa"/>
+                            </View>
+                        </View>
+
+                        <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',padding:5,justifyContent:'center',alignItems: 'center',
+                                      borderBottomWidth:1,borderColor:'#eee'}}>
+                            <View style={{flex:2}}>
+                                <Text>群号:</Text>
+                            </View>
+                            <View style={{flex:4,}}>
+                                <Text>000001</Text>
                             </View>
                             <View style={{flex:1,}}>
                                 <Icon name={'angle-right'} size={25} color="#aaa"/>

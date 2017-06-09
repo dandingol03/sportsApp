@@ -93,7 +93,7 @@ class CustomCourse extends Component{
             <View style={styles.container}>
                 {/*tabbar部分*/}
 
-                <Toolbar width={width} title="我的定制" actions={['发布定制']}
+                <Toolbar width={width} title="我的定制" navigator={this.props.navigator} actions={['发布定制']}
                          onPress={(i)=>{
                          console.log(i)
                      }}
@@ -122,7 +122,6 @@ class CustomCourse extends Component{
                                     </View>
 
                                     <View style={{flex:1}}></View>
-
 
                                     <Text style={{fontSize:13,color:'#008B00',fontWeight:'bold'}}>
                                         进行中
