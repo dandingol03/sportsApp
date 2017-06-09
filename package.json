@@ -28,7 +28,7 @@
     "react-native-svg": "^5.1.8",
     "react-native-tab-navigator": "^0.3.3",
     "react-native-text-input-wrapper": "^1.1.2",
-    "react-native-toolbar-wrapper": "^1.0.0",
+    "react-native-toolbar-wrapper": "^1.0.1",
     "react-native-vector-icons": "^4.1.1",
     "react-native-viewpager": "^0.2.13",
     "react-redux": "^5.0.5",
