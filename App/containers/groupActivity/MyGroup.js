@@ -98,14 +98,15 @@ class MyGroup extends Component{
         }
     }
 
-    navigate2GroupDetail(){
+    navigate2GroupDetail(group){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
                 name:'group_detail',
                 component: GroupDetail,
                 params: {
-
+                    groupInfo:group.groupInfo,
+                    memberList:group.memberList,
                 }
             })
         }
@@ -114,15 +115,18 @@ class MyGroup extends Component{
     renderRow(rowData,sectionId,rowId){
 
         var row=(
-            <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,padding:10}}>
+            <TouchableOpacity style={{flex:1,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,padding:10}}
+                              onPress={()=>{
+                    this.navigate2GroupDetail(rowData);
+                }}>
                 <View style={{flex:1,}}>
                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                 </View>
                 <View style={{flex:3,justifyContent:'center',alignItems: 'center',flexDirection:'row'}}>
-                    <Text style={{color:'#343434'}}>{rowData.groupName}</Text>
-                    <Text style={{color:'#343434'}}>({rowData.memberCount})</Text>
+                    <Text style={{color:'#343434'}}>{rowData.groupInfo.groupName}</Text>
+                    <Text style={{color:'#343434'}}>({rowData.memberList.length})</Text>
                     {
-                        rowData.groupManager==this.props.personInfo.personId?
+                        rowData.groupInfo.groupManager==this.props.personInfo.personId?
                             <Icon name={'user'} style={{marginLeft:10}} size={18} color="pink"/>:null
                     }
                 </View>
@@ -131,11 +135,11 @@ class MyGroup extends Component{
                 </View>
                 <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',margin:10,borderWidth:1,borderColor:'#66CDAA',borderRadius:5}}
                 onPress={()=>{
-                    this.navigate2GroupDetail();
+                    this.navigate2GroupDetail(rowData);
                 }}>
                     <Text style={{color:'#66CDAA',fontSize:12,}}>详情</Text>
                 </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
         );
         return row;
     }
@@ -159,11 +163,6 @@ class MyGroup extends Component{
             doingFetch: false,
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
-            groupList:[
-                {groupId:1,groupNum:'G00001',groupName:'宇宙无敌战队组',groupManager:'小鱼丁',createTime:new Date(),memberCount:5,isManager:true},
-                {groupId:2,groupNum:'G00002',groupName:'骑摩托的部长队组',groupManager:'Danding',createTime:new Date(),memberCount:3,isManager:false},
-                ],
-
         }
     }
 
