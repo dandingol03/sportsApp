@@ -11,7 +11,8 @@ import {
     TouchableOpacity,
     RefreshControl,
     Animated,
-    Easing
+    Easing,
+    InteractionManager
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -26,8 +27,15 @@ import Coach from '../components/Coach';
 import BadmintonCourse from '../components/course/BadmintonCourse';
 import Mall from './mall/Home';
 import Activity from './groupActivity/Activity';
-import Register from './Register';
+import NewsContentDetail from '../components/news/NewsContentDetail';
+import DateFilter from '../utils/DateFilter';
 
+
+import {
+    fetchNewsTheme,
+    updateNewsTheme,
+    getNewsContentUrl
+} from '../action/NewsActions';
 
 var IMGS = [
     require('../../img/banner1.jpeg'),
@@ -39,14 +47,14 @@ var IMGS = [
 
 class Home extends Component {
 
-    navigate2Register(){
+    navigate2NewsContentDetail(url){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
-                name: 'register',
-                component: Register,
+                name: 'NewsContentDetail',
+                component: NewsContentDetail,
                 params: {
-
+                    url
                 }
             })
         }
@@ -123,15 +131,107 @@ class Home extends Component {
         );
     }
 
+    _onRefresh() {
+        this.setState({ isRefreshing: true, fadeAnim: new Animated.Value(0) });
+        setTimeout(function () {
+            this.setState({
+                isRefreshing: false,
+            });
+            Animated.timing(          // Uses easing functions
+                this.state.fadeAnim,    // The value to drive
+                {
+                    toValue: 1,
+                    duration: 600,
+                    easing: Easing.bounce
+                },           // Configuration
+            ).start();
+        }.bind(this), 2000);
+    }
+
+
+    renderRow(rowData,sectionId,rowId){
+
+
+
+        return(
+            <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1,borderColor:'#ddd',marginTop:4}}
+                onPress={()=>{
+                    this.props.dispatch(getNewsContentUrl(rowData.themeId)).then((json)=>{
+                        if(json.re==1)
+                        {
+                            var url=json.data
+                            this.navigate2NewsContentDetail(url)
+                        }
+                    })
+                }}
+            >
+
+                <View style={{flexDirection:'column',width:70,justifyContent:'center',alignItems:'center'}}>
+                    <Image  resizeMode="stretch" style={{width:65,height:65}}
+                        source={{uri: rowData.themeImg}}
+                    />
+                </View>
+
+                <View style={{flex:1,flexDirection:'column',alignItems:'flex-start'}}>
+                    <View style={{padding:4,paddingHorizontal:12}}>
+
+                        <Text style={{color:'#222',fontWeight:'bold',fontSize:14}}>
+                            {rowData.title}
+                        </Text>
+                    </View>
+
+
+                    <View style={{paddingTop:12,paddingBottom:4,paddingHorizontal:12,flexDirection:'row',alignItems:'center'}}>
+                        <View style={{backgroundColor:'#66CDAA',borderRadius:6,padding:4,paddingHorizontal:6,marginLeft:10}}>
+                            <Text style={{color:'#fff',fontSize:12}}>
+                                { DateFilter.filter(rowData.createTime,'yyyy-mm-dd hh:mm')}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+
+
+            </TouchableOpacity>)
+
+    }
+
     constructor(props) {
         super(props);
         var ds = new ViewPager.DataSource({pageHasChanged: (p1, p2) => p1 !== p2});
         this.state = {
             dataSource: ds.cloneWithPages(IMGS),
+            isRefreshing:false,
         }
     }
 
     render() {
+
+        var newsList=null
+        if(this.props.news&&this.props.news.length>0)
+        {
+            var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+            newsList=(
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this._onRefresh.bind(this)}
+                            tintColor="#ff0000"
+                            title="拉取球讯..."
+                            titleColor="#00ff00"
+                            colors={['#ff0000', '#00ff00', '#0000ff']}
+                            progressBackgroundColor="#ffff00"
+                        />
+                    }
+                >
+                    <ListView
+                        automaticallyAdjustContentInsets={false}
+                        dataSource={ds.cloneWithRows(this.props.news)}
+                        renderRow={this.renderRow.bind(this)}
+                    />
+                </ScrollView>
+            );
+        }
 
         return (
             <View style={styles.container}>
@@ -248,7 +348,7 @@ class Home extends Component {
 
 
                                 <View style={{flex:5,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',marginBottom:10}}>
-                                     <Text>发现</Text>
+                                     {newsList}
                                 </View>
 
                             </View>
@@ -260,6 +360,19 @@ class Home extends Component {
 
             </View>
         );
+    }
+
+    componentDidMount()
+    {
+        InteractionManager.runAfterInteractions(() => {
+            this.props.dispatch(fetchNewsTheme()).then((json)=>{
+                if(json.re==1)
+                {
+                    this.props.dispatch(updateNewsTheme(json.data))
+                }
+            })
+        });
+
     }
 
 }
@@ -274,7 +387,9 @@ var styles = StyleSheet.create({
 
 const mapStateToProps = (state, ownProps) => {
 
-    const props = {}
+    const props = {
+        news:state.newsTheme.news
+    }
     return props
 }
 
