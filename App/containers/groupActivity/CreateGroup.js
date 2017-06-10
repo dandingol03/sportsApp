@@ -19,8 +19,11 @@ import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import TextInputWrapper from 'react-native-text-input-wrapper'
-import GroupMemberModal from './GroupMemberModal'
+import TextInputWrapper from 'react-native-text-input-wrapper';
+import GroupMemberModal from './GroupMemberModal';
+import {
+    createGroup,searchMember,setMyGroupList
+} from '../../action/ActivityActions';
 
 
 class AddGroup extends Component{
@@ -30,6 +33,47 @@ class AddGroup extends Component{
         if(navigator) {
             navigator.pop();
         }
+    }
+
+    searchMember(info){
+        this.props.dispatch(searchMember(info)).then((json)=>{
+            if(json.re==1){
+                this.setState({member:json.data});
+            }else{
+                alert('该用户未注册，是否邀请');
+                //TODO:微信分享邀请好友
+            }
+        });
+    }
+
+    removeMember(memberList,rowData) {
+
+        var index=null;
+        memberList.map((member, i) => {
+            if(member.mobilePhone==rowData.mobilePhone){
+                index = i;
+            }else{
+                index=-1;
+            }
+        });
+        if(index!==-1){
+            memberList.splice(index, 1);
+            this.setState({memberList:memberList});
+        }
+    }
+
+    createGroup(info){
+        this.props.dispatch(createGroup(info)).then((json)=>{
+            if(json.re==1){
+                alert('创建成功！');
+                var newGroup = json.data;
+                this.props.dispatch(setMyGroupList(newGroup));
+                this.goBack();
+            }else{
+                alert('创建失败');
+
+            }
+        });
     }
 
     renderRow(rowData,sectionId,rowId){
@@ -54,7 +98,7 @@ class AddGroup extends Component{
                 </View>
                 <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',margin:10,borderWidth:1,borderColor:'#FF4040',borderRadius:5}}
                                   onPress={()=>{
-                    this.navigate2GroupDetail();
+                                        this.removeMember(this.state.memberList,rowData);
                 }}>
                     <Text style={{color:'#FF4040',fontSize:12,}}>删除</Text>
                 </TouchableOpacity>
@@ -67,13 +111,13 @@ class AddGroup extends Component{
         super(props);
         this.state={
             modalVisible:false,
-            group:{groupName:null,groupMaxMemNum:null,groupBrief:null},
+            group:{groupName:null,groupBrief:null},
             doingFetch: false,
             isRefreshing: false,
+            member:null,
             memberList:[
-                {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627'},
-                {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730'},
-                {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730'},
+                {personId:1,perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627'},
+                {personId:2,perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730'},
                 ],
 
         }
@@ -191,9 +235,6 @@ class AddGroup extends Component{
                     }
 
 
-
-
-
                     <View style={{flex:1,backgroundColor:'#fff',padding:10}}>
                         <Text style={{color:'#aaa',fontSize:11}}>
                             温馨提示：您发布的内容应合法、真实、健康、共创文明的网络环境
@@ -203,7 +244,8 @@ class AddGroup extends Component{
 
                 <TouchableOpacity style={{height:35,backgroundColor:'#66CDAA',margin:20,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                   onPress={()=>{
-
+                                      var info ={group:this.state.group,memberList:this.state.memberList};
+                                      this.createGroup(info);
                                       }}>
                     <Text style={{color:'#fff',fontSize:15}}>确 认</Text>
                 </TouchableOpacity>
@@ -223,8 +265,18 @@ class AddGroup extends Component{
                         onClose={()=>{
                             this.setState({modalVisible:false});
                         }}
-
+                        searchMember={(info)=>{
+                            this.searchMember(info);
+                        }}
+                        member={this.state.member}
                         accessToken={this.props.accessToken}
+                        setMemberList={()=>{
+                            if(this.state.member!==null&&this.state.member!==undefined){
+                                var memberList = this.state.memberList;
+                                memberList.push(this.state.member);
+                                this.setState({memberList:memberList});
+                            }
+                        }}
                     />
 
                 </Modal>

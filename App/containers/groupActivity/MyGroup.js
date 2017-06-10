@@ -63,6 +63,11 @@ class MyGroup extends Component{
         this.setState({menuVisible: false});
     }
 
+    setMyGroupList(newGroup){
+        var groupList = this.state.groupList;
+        groupList.push(newGroup);
+        this.setState({groupList:groupList});
+    }
 
     navigate2CreateGroup(){
         const { navigator } = this.props;
@@ -71,7 +76,7 @@ class MyGroup extends Component{
                 name: 'create_group',
                 component: CreateGroup,
                 params: {
-
+                    setMyGroupList:this.setMyGroupList.bind(this),
                 }
             })
         }
@@ -103,7 +108,6 @@ class MyGroup extends Component{
         }
     }
 
-
     renderRow(rowData,sectionId,rowId){
 
         var row=(
@@ -132,7 +136,6 @@ class MyGroup extends Component{
         );
         return row;
     }
-
 
     constructor(props) {
         super(props);

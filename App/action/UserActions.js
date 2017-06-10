@@ -81,7 +81,6 @@ export let doLogin=function(username,password){
 
         return new Promise((resolve, reject) => {
 
-
             var accessToken=null;
             Proxy.postes({
                 url: Config.server + '/login',

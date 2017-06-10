@@ -37,63 +37,6 @@ import TextInputWrapper from 'react-native-text-input-wrapper'
 
 var  Login =React.createClass({
 
-    onLoginPressed:function () {
-        const {dispatch} = this.props;
-        var {user}=this.state;
-        if(user.username!==undefined&&user.username!==null)
-        {
-            if(user.password!==undefined&&user.password!==null)
-            {
-                this.setState({showProgress: true,modalVisible:true});
-                const {dispatch} = this.props;
-                this.timer= setInterval(
-
-                    function () {
-
-                        var loginDot=this.state.loginDot;
-                        if(loginDot=='......')
-                            loginDot='.';
-                        else
-                            loginDot+='.';
-                        this.setState({loginDot:loginDot});
-                    }.bind(this)
-                    ,
-                    600,
-                );
-                dispatch(setTimerAction(this.timer));
-
-
-                //make a test
-
-                dispatch(loginAction(user.username,user.password,(errorMsg)=> {
-                    this.setState({showProgress: false,user:{}});
-
-                    if(errorMsg!==undefined&&errorMsg!==null){
-                        var string = errorMsg;
-                        setTimeout(()=>{
-                            Alert.alert(
-                                '错误',
-                                string,
-                                [
-                                    {text: 'OK', onPress: () => {
-                                    }},
-                                ]
-                            );
-                        },900)
-                    }
-                })).then(()=>{
-
-                    this.setState({showProgress: false,user:{}});
-
-                }).catch((e)=>{
-                    alert(e);
-                })
-
-            }
-        }else{}
-
-    },
-
     navigate2Register:function(){
         //TODO:dispatch a action
         this.props.dispatch(updatePageState({state:PAGE_REGISTER}))
@@ -173,57 +116,7 @@ var  Login =React.createClass({
                                                 ()=>{this.setState({user:Object.assign(this.state.user,{username:value})});}
                                             }
                                         />
-                                        {/*<TextInput*/}
-                                            {/*style={{height: 42,flex:1,paddingLeft:0,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:16,*/}
-                                                        {/*}}*/}
 
-
-                                            {/*onChangeText={(username) => {*/}
-
-                                              {/*if( username&&username!='')//不为空*/}
-                                              {/*{*/}
-                                                     {/*Animated.timing(*/}
-                                                    {/*this.state.fadeCancel,*/}
-                                                    {/*{toValue: 1},*/}
-                                                {/*).start();*/}
-                                              {/*}else{*/}
-                                                     {/*Animated.timing(*/}
-                                                    {/*this.state.fadeCancel,*/}
-                                                    {/*{toValue: 0},*/}
-                                                 {/*).start();*/}
-
-                                              {/*}*/}
-
-                                                {/*this.state.user.username=username;*/}
-                                                {/*this.setState({user:this.state.user});*/}
-                                            {/*}}*/}
-                                            {/*onBlur={()=>{*/}
-                                               {/*if(this.state.fadeCancel==0)*/}
-                                               {/*{}*/}
-                                               {/*else{*/}
-                                                         {/*Animated.timing(*/}
-                                                        {/*this.state.fadeCancel,*/}
-                                                        {/*{toValue: 0},*/}
-                                                     {/*).start();*/}
-                                               {/*}*/}
-                                            {/*}}*/}
-                                            {/*value={this.state.user.username}*/}
-                                            {/*placeholder="帐号/手机号"*/}
-                                            {/*placeholderTextColor="#aaa"*/}
-                                            {/*underlineColorAndroid="transparent"*/}
-                                        {/*/>*/}
-                                        {/*<Animated.View style={{opacity: this.state.fadeCancel,backgroundColor:'transparent',padding:4,marginRight:8}}>*/}
-                                            {/*<TouchableOpacity onPress={()=>{*/}
-
-                                                {/*this.setState({user:Object.assign(this.state.user,{username:''})});*/}
-                                                 {/*Animated.timing(*/}
-                                                        {/*this.state.fadeCancel,*/}
-                                                        {/*{toValue: 0},*/}
-                                                     {/*).start();*/}
-                                            {/*}}>*/}
-                                                {/*<Ionicons name='md-close-circle' size={18} color="red"/>*/}
-                                            {/*</TouchableOpacity>*/}
-                                        {/*</Animated.View>*/}
                                     </View>
                                 </View>
                             </View>
