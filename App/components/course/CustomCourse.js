@@ -21,7 +21,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import  Popover from  'react-native-popover';
 import {BoxShadow} from 'react-native-shadow';
 import CustomCourseDetail from './CustomCourseDetail';
-import Toolbar from 'react-native-toolbar-wrapper'
+import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 
 var {height, width} = Dimensions.get('window');
 
@@ -93,7 +93,11 @@ class CustomCourse extends Component{
             <View style={styles.container}>
                 {/*tabbar部分*/}
 
-                <Toolbar width={width} title="我的定制" navigator={this.props.navigator} actions={['发布定制']}
+                <Toolbar width={width} title="我的定制" navigator={this.props.navigator}
+                         actions={[
+                                    {icon:ACTION_ADD,value:'',show:OPTION_SHOW},
+                                      {value:'发布定制',show:OPTION_NEVER},
+                                    ]}
                          onPress={(i)=>{
                          console.log(i)
                      }}
@@ -103,8 +107,8 @@ class CustomCourse extends Component{
                         <BoxShadow setting={shadowOpt}>
                             <TouchableOpacity style={{padding:4,backgroundColor:'#fff',flexDirection:'column',paddingBottom:7}}
                                               onPress={()=>{
-                        this.navigate2MadeCustomCourseDetail()
-                    }}
+                                    this.navigate2MadeCustomCourseDetail()
+                                }}
                             >
                                 <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center'}}>
                                     <Text style={{fontSize:16,color:'#222',fontWeight:'bold'}}>

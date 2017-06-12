@@ -19,7 +19,7 @@ import {connect} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Toolbar from 'react-native-toolbar-wrapper'
+import {Toolbar} from 'react-native-toolbar-wrapper'
 
 var {height, width} = Dimensions.get('window');
 
@@ -42,7 +42,11 @@ class CustomCourse extends Component{
 
         return (
             <View style={styles.container}>
-                <Toolbar width={width} title="我的定制" actions={['发布定制']}
+                <Toolbar width={width} title="我的定制"
+                         actions={[
+                            { icon: ACTION_ADD, value: '', show: OPTION_SHOW },
+                            { value: '发布定制', show: OPTION_NEVER },
+                        ]}
                          onPress={(i)=>{
                              console.log(i)
                          }}
