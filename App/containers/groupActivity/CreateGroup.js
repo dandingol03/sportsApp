@@ -26,7 +26,7 @@ import {
 } from '../../action/ActivityActions';
 
 
-class AddGroup extends Component{
+class CreateGroup extends Component{
 
     goBack(){
         const { navigator } = this.props;
@@ -115,10 +115,7 @@ class AddGroup extends Component{
             doingFetch: false,
             isRefreshing: false,
             member:null,
-            memberList:[
-                {personId:1,perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627'},
-                {personId:2,perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730'},
-                ],
+            memberList:[]
 
         }
     }
@@ -244,6 +241,7 @@ class AddGroup extends Component{
 
                 <TouchableOpacity style={{height:35,backgroundColor:'#66CDAA',margin:20,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                   onPress={()=>{
+                                      this.state.memberList.push(this.props.personInfo);
                                       var info ={group:this.state.group,memberList:this.state.memberList};
                                       this.createGroup(info);
                                       }}>
@@ -294,12 +292,12 @@ var styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = (state, ownProps) => {
 
-    const props = {
+module.exports = connect(state=>({
+        accessToken:state.user.accessToken,
+        personInfo:state.user.personInfo,
+        myGroupList:state.activity.myGroupList,
+        groupOnFresh:state.activity.groupOnFresh
+    })
+)(CreateGroup);
 
-    }
-    return props
-}
-
-export default connect(mapStateToProps)(AddGroup);

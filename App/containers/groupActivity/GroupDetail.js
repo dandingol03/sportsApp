@@ -37,19 +37,28 @@ class GroupDetail extends Component{
         if(rowData.addNewOne==true)
         {
             return  (
-                <TouchableOpacity style={{height:50,width:50,borderRadius:10,borderWidth:1,borderColor:'#ddd',margin:5,
+                <View>
+                    <TouchableOpacity style={{height:50,width:50,borderRadius:10,borderWidth:1,borderColor:'#ddd',margin:5,
                 justifyContent:'center',alignItems: 'center'}}
-                                onPress={()=>{
+                                      onPress={()=>{
                         this.setState({modalVisible:true});
                 }}>
-                    <Ionicons name='md-add' size={26} color="#ddd"/>
-                </TouchableOpacity>
+                        <Ionicons name='md-add' size={26} color="#ddd"/>
+                    </TouchableOpacity>
+                    <View>
+                        <Text> </Text>
+                    </View>
+                </View>
+
             );
         }else{
             return  (
                 <View>
                     <View style={{height:50,width:50,borderRadius:10,borderWidth:1,borderColor:'#eee',margin:5}}>
                         <Image resizeMode="stretch" style={{height:50,width:50,borderRadius:10,}} source={rowData.portrait}/>
+                    </View>
+                    <View>
+                        <Text numberOfLines={1}>{rowData.perName}</Text>
                     </View>
                 </View>
             );
@@ -58,23 +67,24 @@ class GroupDetail extends Component{
 
     constructor(props) {
         super(props);
+        var memberList = this.props.memberList;
+        memberList.push({perName:null,portrait:require('../../../img/portrait.jpg'),mobilePhone:null,addNewOne:true},);
         this.state={
             modalVisible:false,
             doingFetch: false,
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
-            groupList:[
-                {groupId:1,groupNum:'G00001',groupName:'宇宙无敌战队组',groupManager:'小鱼丁',createTime:new Date(),memberCount:5,isManager:true},
-                {groupId:2,groupNum:'G00002',groupName:'骑摩托的部长队组',groupManager:'Danding',createTime:new Date(),memberCount:3,isManager:false},
-            ],
-            memberList:[
-                {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
-                {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
-                {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
-                {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730',addNewOne:false},
-                {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730',addNewOne:false},
-                {perName:null,portrait:require('../../../img/portrait.jpg'),mobilePhone:null,addNewOne:true},
-            ],
+            groupInfo:this.props.groupInfo,
+            memberList:memberList,
+
+            // memberList:[
+            //     {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
+            //     {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
+            //     {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
+            //     {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730',addNewOne:false},
+            //     {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730',addNewOne:false},
+            //     {perName:null,portrait:require('../../../img/portrait.jpg'),mobilePhone:null,addNewOne:true},
+            // ],
 
         }
     }
@@ -95,7 +105,7 @@ class GroupDetail extends Component{
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>群名</Text>
+                        <Text style={{color:'#fff',fontSize:18}}>{this.state.groupInfo.groupName}</Text>
                     </View>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
                     </TouchableOpacity>
@@ -123,7 +133,7 @@ class GroupDetail extends Component{
                                 <Text>群组名称:</Text>
                             </View>
                             <View style={{flex:4,}}>
-                                <Text>宇宙无敌羽毛球战队</Text>
+                                <Text>{this.state.groupInfo.groupName}</Text>
                             </View>
                             <View style={{flex:1,}}>
                                 <Icon name={'angle-right'} size={25} color="#aaa"/>
@@ -136,7 +146,7 @@ class GroupDetail extends Component{
                                 <Text>群号:</Text>
                             </View>
                             <View style={{flex:4,}}>
-                                <Text>000001</Text>
+                                <Text>{this.state.groupInfo.groupNum}</Text>
                             </View>
                             <View style={{flex:1,}}>
                                 <Icon name={'angle-right'} size={25} color="#aaa"/>
@@ -149,7 +159,7 @@ class GroupDetail extends Component{
                                 <Text>群简介:</Text>
                             </View>
                             <View style={{flex:4,}}>
-                                <Text>羽毛球爱好者聚集地</Text>
+                                <Text>{this.state.groupInfo.groupBrief}</Text>
                             </View>
                             <View style={{flex:1,}}>
                                 <Icon name={'angle-right'} size={25} color="#aaa"/>

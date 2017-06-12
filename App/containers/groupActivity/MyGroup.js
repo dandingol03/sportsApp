@@ -22,6 +22,9 @@ var Popover = require('react-native-popover');
 import CreateGroup from './CreateGroup';
 import GroupDetail from './GroupDetail';
 import AllGroup from './AllGroup';
+import {
+    fetchMyGroupList,disableGroupOnFresh
+} from '../../action/ActivityActions';
 
 class MyGroup extends Component{
 
@@ -95,14 +98,15 @@ class MyGroup extends Component{
         }
     }
 
-    navigate2GroupDetail(){
+    navigate2GroupDetail(group){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
                 name:'group_detail',
                 component: GroupDetail,
                 params: {
-
+                    groupInfo:group.groupInfo,
+                    memberList:group.memberList,
                 }
             })
         }
@@ -111,15 +115,18 @@ class MyGroup extends Component{
     renderRow(rowData,sectionId,rowId){
 
         var row=(
-            <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,padding:10}}>
+            <TouchableOpacity style={{flex:1,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,padding:10}}
+                              onPress={()=>{
+                    this.navigate2GroupDetail(rowData);
+                }}>
                 <View style={{flex:1,}}>
                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                 </View>
                 <View style={{flex:3,justifyContent:'center',alignItems: 'center',flexDirection:'row'}}>
-                    <Text style={{color:'#343434'}}>{rowData.groupName}</Text>
-                    <Text style={{color:'#343434'}}>({rowData.memberCount})</Text>
+                    <Text style={{color:'#343434'}}>{rowData.groupInfo.groupName}</Text>
+                    <Text style={{color:'#343434'}}>({rowData.memberList.length})</Text>
                     {
-                        rowData.groupManager=='小鱼丁'?
+                        rowData.groupInfo.groupManager==this.props.personInfo.personId?
                             <Icon name={'user'} style={{marginLeft:10}} size={18} color="pink"/>:null
                     }
                 </View>
@@ -128,13 +135,26 @@ class MyGroup extends Component{
                 </View>
                 <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',margin:10,borderWidth:1,borderColor:'#66CDAA',borderRadius:5}}
                 onPress={()=>{
-                    this.navigate2GroupDetail();
+                    this.navigate2GroupDetail(rowData);
                 }}>
                     <Text style={{color:'#66CDAA',fontSize:12,}}>详情</Text>
                 </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
         );
         return row;
+    }
+
+    fetchData(){
+        this.state.doingFetch=true;
+        this.state.isRefreshing=true;
+        this.props.dispatch(fetchMyGroupList()).then(()=> {
+            this.props.dispatch(disableGroupOnFresh());
+            this.setState({doingFetch:false,isRefreshing:false})
+        }).catch((e)=>{
+            this.props.dispatch(disableGroupOnFresh());
+            this.setState({doingFetch:false,isRefreshing:false});
+            alert(e)
+        });
     }
 
     constructor(props) {
@@ -143,11 +163,6 @@ class MyGroup extends Component{
             doingFetch: false,
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
-            groupList:[
-                {groupId:1,groupNum:'G00001',groupName:'宇宙无敌战队组',groupManager:'小鱼丁',createTime:new Date(),memberCount:5,isManager:true},
-                {groupId:2,groupNum:'G00002',groupName:'骑摩托的部长队组',groupManager:'Danding',createTime:new Date(),memberCount:3,isManager:false},
-                ],
-
         }
     }
 
@@ -156,18 +171,27 @@ class MyGroup extends Component{
         var displayArea = {x:5, y:10, width:width-20, height: height - 10};
 
         var groupListView=null;
-        var groupList = this.state.groupList;
+        var {myGroupList,groupOnFresh}=this.props;
 
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        if (groupList !== undefined && groupList !== null && groupList.length > 0) {
-            groupListView = (
-                <ListView
-                    automaticallyAdjustContentInsets={false}
-                    dataSource={ds.cloneWithRows(groupList)}
-                    renderRow={this.renderRow.bind(this)}
-                />
-            );
+        if(groupOnFresh==true)
+        {
+            if(this.state.doingFetch==false)
+                this.fetchData();
+        }else {
+            var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+            if (myGroupList !== undefined && myGroupList !== null && myGroupList.length > 0) {
+                groupListView = (
+                    <ListView
+                        automaticallyAdjustContentInsets={false}
+                        dataSource={ds.cloneWithRows(myGroupList)}
+                        renderRow={this.renderRow.bind(this)}
+                    />
+                );
+            }
         }
+
+        // var groupList = this.state.groupList;
+        // var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         return (
             <View style={{flex:1, backgroundColor:'#eee',}}>
@@ -265,7 +289,8 @@ var styles = StyleSheet.create({
 
 module.exports = connect(state=>({
         accessToken:state.user.accessToken,
-        groupList:state.activity.groupList,
+        personInfo:state.user.personInfo,
+        myGroupList:state.activity.myGroupList,
         groupOnFresh:state.activity.groupOnFresh
     })
 )(MyGroup);
