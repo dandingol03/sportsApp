@@ -368,6 +368,7 @@ class Home extends Component {
             this.props.dispatch(fetchNewsTheme()).then((json)=>{
                 if(json.re==1)
                 {
+
                     this.props.dispatch(updateNewsTheme(json.data))
                 }
             })

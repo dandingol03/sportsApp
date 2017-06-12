@@ -155,6 +155,11 @@ class BadmintonCourse extends Component{
         this.setState({menuVisible: false});
     }
 
+    /**
+     * ascend,descend
+     * @param props
+     */
+
 
     constructor(props) {
         super(props);
@@ -166,39 +171,31 @@ class BadmintonCourse extends Component{
             eventTypeButtons:['取消','羽毛球单打','羽毛球双打','羽毛球混双','基础练习'],
             courses:[
                 {
-                    className:'羽毛球新手班',detail:'带初学者迅速学会羽毛球',cost:'500',classCount:8,venue:'山东省体育中心-羽毛球俱乐部'
+                    className:'羽毛球新手班',detail:'带初学者迅速学会羽毛球',cost:500,classCount:8,venue:'山东省体育中心-羽毛球俱乐部'
                 },
                 {
-                    className:'羽毛球发球训练班',detail:'带初学者迅速学会羽毛球',cost:'1000',classCount:4,venue:'山东大学东区新校-羽毛球馆'
+                    className:'羽毛球发球训练班',detail:'带初学者迅速学会羽毛球',cost:1000,classCount:4,venue:'山东大学东区新校-羽毛球馆'
                 },
 
                 {
-                    className:'羽毛球高阶训练班',detail:'带初学者迅速学会羽毛球',cost:'700',classCount:5,venue:'爱菲特羽毛球馆'
+                    className:'羽毛球高阶训练班',detail:'带初学者迅速学会羽毛球',cost:700,classCount:5,venue:'爱菲特羽毛球馆'
                 },
                 {
-                    className:'羽毛球双打训练班',detail:'带初学者迅速学会羽毛球',cost:'1200',classCount:8,venue:'章丘李宁羽毛球馆'
+                    className:'羽毛球双打训练班',detail:'带初学者迅速学会羽毛球',cost:1200,classCount:8,venue:'章丘李宁羽毛球馆'
                 },
                 {
-                    className:'羽毛球',detail:'带初学者迅速学会羽毛球',cost:'300',classCount:2,venue:'鑫立华羽毛球俱乐部'
+                    className:'羽毛球',detail:'带初学者迅速学会羽毛球',cost:300,classCount:2,venue:'鑫立华羽毛球俱乐部'
                 },
 
-            ]
+            ],
+            filter:{
+                cost:'ascend'
+            }
         };
     }
 
     render(){
 
-        const shadowOpt = {
-            width:224*width/320,
-            height:25*height/568,
-            color:"#000",
-            border:0.5,
-            radius:1,
-            opacity:0.2,
-            x:-0.5,
-            y:1,
-            style:{marginVertical:8},
-        }
 
         var displayArea = {x: 5, y: 20, width:width, height: height - 25};
 
@@ -207,6 +204,27 @@ class BadmintonCourse extends Component{
         if(this.state.courses&&this.state.courses.length>0)
         {
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+            var sortedCourses = null;
+            //升序
+            if(this.state.filter.cost=='ascend')
+            {
+                sortedCourses= this.state.courses.sort((a, b) => {
+                    if(a.cost>b.cost)
+                        return 1;
+                    else
+                        return -1;
+                });
+            }else if(this.state.filter.cost=='descend'){
+                sortedCourses= this.state.courses.sort((a, b) => {
+                    if(a.cost>b.cost)
+                        return -1;
+                    else
+                        return 1;
+                });
+            }
+
+
             courseList=(
                 <ScrollView
                     refreshControl={
@@ -223,7 +241,7 @@ class BadmintonCourse extends Component{
                 >
                     <ListView
                         automaticallyAdjustContentInsets={false}
-                        dataSource={ds.cloneWithRows(this.state.courses)}
+                        dataSource={ds.cloneWithRows(sortedCourses)}
                         renderRow={this.renderRow.bind(this)}
                     />
                 </ScrollView>
@@ -285,13 +303,30 @@ class BadmintonCourse extends Component{
                             <View style={{flex:3,justifyContent:'center',alignItems: 'flex-start',paddingLeft:15}}>
                                 <Text style={{fontSize:13,color:'#008B00'}}>默认</Text>
                             </View>
-                            <View style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',}}>
+                            <TouchableOpacity  style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',}}
+                              onPress={()=>{
+                                    if(this.state.filter.cost=='ascend')//升序
+                                    {
+                                        this.setState({filter:Object.assign(this.state.filter,{cost:'descend'})})
+                                    }else{
+                                        //降序
+                                        this.setState({filter:Object.assign(this.state.filter,{cost:'ascend'})})
+                                    }
+                                  }}
+                            >
                                 <Text style={{fontSize:13}}>花销</Text>
-                                <View style={{marginLeft:5}}>
-                                    <Icon name={'caret-up'} size={15} color="#008B00"/>
-                                    <Icon name={'caret-down'} size={15} color="#aaa"/>
-                                </View>
-                            </View>
+                                {
+                                    this.state.filter.cost=='ascend'?
+                                        <View style={{marginLeft:5}}>
+                                            <Icon name={'caret-up'} size={15} color="#008B00"/>
+                                            <Icon name={'caret-down'} size={15} color="#aaa"/>
+                                        </View>:
+                                        <View style={{marginLeft:5}}>
+                                            <Icon name={'caret-up'} size={15} color="#aaa"/>
+                                            <Icon name={'caret-down'} size={15} color="#008B00"/>
+                                        </View>
+                                }
+                            </TouchableOpacity>
                             <View style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',}}>
                                 <Text style={{fontSize:13}}>距离</Text>
                                 <View style={{marginLeft:5}}>
