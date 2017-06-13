@@ -33,6 +33,9 @@ import {
 import TextInputWrapper from '../../encrypt/TextInputWrapper';
 import VenueInspect from '../../components/venue/VenueInspect';
 import CreateGroup from './CreateGroup';
+import {
+    fetchMyGroupList,disableGroupOnFresh
+} from '../../action/ActivityActions';
 
 class AddActivity extends Component{
 
@@ -143,14 +146,27 @@ class AddActivity extends Component{
         this[actionSheet].show();
     }
 
+    fetchMyGroupList(){
+        this.state.doingFetch=true;
+        this.props.dispatch(fetchMyGroupList()).then(()=> {
+            this.props.dispatch(disableGroupOnFresh());
+            this.setState({doingFetch:false,})
+        }).catch((e)=>{
+            this.props.dispatch(disableGroupOnFresh());
+            this.setState({doingFetch:false,});
+            alert(e)
+        });
+
+    }
+
     constructor(props) {
         super(props);
         this.state={
-            fadeAnim1: new Animated.Value(0),
+            doingFetch: false,
             selectTime:false,
             eventTime:null,
             event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:'1',eventMaxMemNum:null,
-                memberLevel:null,hasCoach:0,hasSparring:0,groupName:null},
+                   memberLevel:null,hasCoach:0,hasSparring:0,groupName:null},
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','私人'],
             groupNameButtons:['取消','宇宙无敌战队组','骑摩托的部长队组','新建群组'],
@@ -161,6 +177,17 @@ class AddActivity extends Component{
 
         const CANCEL_INDEX = 0;
         const DESTRUCTIVE_INDEX = 1;
+
+
+        // var {myGroupList} = this.props;
+        // if(myGroupList==null){
+        //     if(this.state.doingFetch==false)
+        //         this.fetchMyGroupList();
+        // }
+        //const groupNameButtons=['取消'];
+        // myGroupList.map((group,i)=>{
+        //     groupNameButtons.push(group.groupInfo.groupName);
+        // })
 
         const memberLevelButtons=['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'];
         const eventTypeButtons=['取消','公开','私人'];
@@ -196,7 +223,7 @@ class AddActivity extends Component{
                 </View>
 
 
-                <ScrollView style={{height:height,width:width,backgroundColor:'#fff',padding:5}}>
+                <ScrollView style={{height:height-200,width:width,backgroundColor:'#fff',padding:5}}>
 
                     {/*活动类型*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
@@ -598,36 +625,6 @@ class AddActivity extends Component{
                                 }
                             />
 
-                            {/*<TextInput*/}
-                                {/*style={{flex:10,height:35*height/736,justifyContent:'center',alignItems: 'center',marginLeft:5,*/}
-                                {/*paddingTop:4,paddingBottom:4,fontSize:13,color:'#aaa'}}*/}
-                                {/*onChangeText={(eventBrief) => {*/}
-                                         {/*this.setState({event:Object.assign(this.state.event,{eventBrief:eventBrief})});*/}
-                                         {/*if( eventBrief==''){*/}
-                                         {/*Animated.timing(          // Uses easing functions*/}
-                                            {/*this.state.fadeAnim1,    // The value to drive*/}
-                                            {/*{toValue: 0},           // Configuration*/}
-                                         {/*).start();*/}
-                                      {/*}else{*/}
-                                         {/*Animated.timing(          // Uses easing functions*/}
-                                            {/*this.state.fadeAnim1,    // The value to drive*/}
-                                            {/*{toValue: 1},           // Configuration*/}
-                                        {/*).start();*/}
-                                      {/*}*/}
-                                    {/*}}*/}
-                                {/*value={this.state.event.eventBrief}*/}
-                                {/*placeholder='         请输入活动说明'*/}
-                                {/*placeholderTextColor="#aaa"*/}
-                                {/*underlineColorAndroid="transparent"*/}
-                            {/*/>*/}
-                            {/*<Animated.View style={{flex:1,opacity: this.state.fadeAnim1,backgroundColor:'transparent',padding:4}}>*/}
-                                {/*<TouchableOpacity onPress={()=>{*/}
-                                    {/*var event = this.state.event;*/}
-                                    {/*event.eventBrief = '';*/}
-                                    {/*this.setState({event:event});}}>*/}
-                                    {/*<Ionicons name='md-close-circle' size={18} color="red"/>*/}
-                                {/*</TouchableOpacity>*/}
-                            {/*</Animated.View>*/}
                         </View>
                     </View>
 
@@ -640,7 +637,8 @@ class AddActivity extends Component{
                 </ScrollView>
 
 
-                <TouchableOpacity style={{height:30,width:width*0.6,marginLeft:width*0.2,backgroundColor:'#66CDAA',marginBottom:10,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
+                <TouchableOpacity style={{height:30,width:width*0.6,marginLeft:width*0.2,backgroundColor:'#66CDAA',margin:10,
+                marginBottom:10,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                   onPress={()=>{
                                       this.release();
                                       }}>
@@ -657,13 +655,10 @@ var styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = (state, ownProps) => {
-
-    const props = {
-
-    }
-    return props
-}
-
-export default connect(mapStateToProps)(AddActivity);
+module.exports = connect(state=>({
+        accessToken:state.user.accessToken,
+        personInfo:state.user.personInfo,
+        myGroupList:state.activity.myGroupList,
+    })
+)(AddActivity);
 

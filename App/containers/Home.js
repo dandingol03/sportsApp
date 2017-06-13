@@ -29,7 +29,7 @@ import Mall from './mall/FirstPage';
 import Activity from './groupActivity/Activity';
 import NewsContentDetail from '../components/news/NewsContentDetail';
 import DateFilter from '../utils/DateFilter';
-
+import CreateBadmintonCourse from '../components/course/CreateBadmintonCourse';
 
 import {
     fetchNewsTheme,
@@ -100,7 +100,7 @@ class Home extends Component {
         }
     }
 
-    //导航至定制
+    //导航至定制（for 用户）
     navigate2BadmintonCourse()
     {
         const {navigator} =this.props;
@@ -113,6 +113,22 @@ class Home extends Component {
                 }
             })
         }
+    }
+
+    //导航至定制（for 教练）
+    navigate2BadmintonCourseForCoach()
+    {
+        const {navigator} =this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'CreateBadmintonCourse',
+                component: CreateBadmintonCourse,
+                params: {
+
+                }
+            })
+        }
+
     }
 
 
@@ -301,7 +317,9 @@ class Home extends Component {
 
                                      <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
                                           onPress={ ()=>{
-                                             this.navigate2BadmintonCourse();
+                                             //this.navigate2BadmintonCourse();
+                                             this.navigate2BadmintonCourseForCoach();
+
                                           }}>
                                         <CommIcon name="tag-plus" size={32} color="#0adc5e" style={{backgroundColor:'transparent'}}/>
                                         <View style={{marginTop:0,paddingTop:6}}>

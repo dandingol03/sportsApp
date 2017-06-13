@@ -76,16 +76,6 @@ class GroupDetail extends Component{
             fadeAnim: new Animated.Value(1),
             groupInfo:this.props.groupInfo,
             memberList:memberList,
-
-            // memberList:[
-            //     {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
-            //     {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
-            //     {perName:'小鱼丁',portrait:require('../../../img/portrait.jpg'),mobilePhone:'18253160627',addNewOne:false},
-            //     {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730',addNewOne:false},
-            //     {perName:'Danding',portrait:require('../../../img/portrait.jpg'),mobilePhone:'17865135730',addNewOne:false},
-            //     {perName:null,portrait:require('../../../img/portrait.jpg'),mobilePhone:null,addNewOne:true},
-            // ],
-
         }
     }
 
@@ -126,7 +116,7 @@ class GroupDetail extends Component{
                         </View>
                     </View>
 
-                    <View style={{flex:1,backgroundColor:'#fff',padding:5}}>
+                    <View style={{flex:1,backgroundColor:'#fff',padding:5,paddingBottom:0}}>
                         <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',padding:5,justifyContent:'center',alignItems: 'center',
                                       borderBottomWidth:1,borderColor:'#eee'}}>
                             <View style={{flex:2}}>
