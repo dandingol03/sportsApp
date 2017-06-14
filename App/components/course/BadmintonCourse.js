@@ -303,7 +303,7 @@ class BadmintonCourse extends Component{
                             <View style={{flex:3,justifyContent:'center',alignItems: 'flex-start',paddingLeft:15}}>
                                 <Text style={{fontSize:13,color:'#008B00'}}>默认</Text>
                             </View>
-                            <TouchableOpacity  style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',}}
+                            <TouchableOpacity  style={{flexDirection:'row',flex:2,justifyContent:'flex-end',alignItems: 'center',}}
                               onPress={()=>{
                                     if(this.state.filter.cost=='ascend')//升序
                                     {
@@ -327,13 +327,6 @@ class BadmintonCourse extends Component{
                                         </View>
                                 }
                             </TouchableOpacity>
-                            <View style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems: 'center',}}>
-                                <Text style={{fontSize:13}}>距离</Text>
-                                <View style={{marginLeft:5}}>
-                                    <Icon name={'caret-up'} size={15} color="#aaa"/>
-                                    <Icon name={'caret-down'} size={15} color="#008B00"/>
-                                </View>
-                            </View>
                         </View>
                         <View style={{width:10}}></View>
                     </View>

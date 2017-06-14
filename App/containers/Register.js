@@ -42,6 +42,10 @@ var ImagePicker = require('react-native-image-picker');
 import ActionSheet from 'react-native-actionsheet'
 
 
+/**
+ * userType:0为用户 1为教练
+ */
+
 class Register extends Component{
 
     showImagePicker(){
@@ -137,6 +141,7 @@ class Register extends Component{
             fadeCancel: new Animated.Value(0),
             fadeNickNameCancel:new Animated.Value(0),
             fadePasswordCancel:new Animated.Value(0),
+            fadeSportsLevel:new Animated.Value(0)
 
         }
     }
@@ -244,7 +249,7 @@ class Register extends Component{
                     {/*</View>*/}
 
                     <View  style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                        backgroundColor:'#fff',marginTop:15}}>
+                        backgroundColor:'#fff',marginTop:15,paddingBottom:10}}>
 
                         {/*照相*/}
 
@@ -397,7 +402,14 @@ class Register extends Component{
                                         <TouchableOpacity style={{flexDirection:'row',alignItems:'center',flex:1}}
                                             onPress={()=>{
                                                 if(this.state.info.userType!=1)
-                                                    this.setState({info:Object.assign(this.state.info,{userType:1})})
+                                                    {
+                                                           Animated.timing(
+                                                                this.state.fadeSportsLevel,
+                                                                {toValue: 1},
+                                                            ).start();
+                                                           this.setState({info:Object.assign(this.state.info,{userType:1})})
+                                                    }
+
                                             }}
                                         >
                                             {
@@ -417,7 +429,14 @@ class Register extends Component{
                                         <TouchableOpacity style={{flexDirection:'row',alignItems:'center',flex:1}}
                                             onPress={()=>{
                                                 if(this.state.info.userType==1)
-                                                     this.setState({info:Object.assign(this.state.info,{userType:0})})
+                                                {
+                                                      Animated.timing(
+                                                            this.state.fadeSportsLevel,
+                                                            {toValue: 0},
+                                                        ).start();
+                                                      this.setState({info:Object.assign(this.state.info,{userType:0})})
+                                                }
+
                                             }}
                                         >
                                             {
@@ -442,9 +461,10 @@ class Register extends Component{
                             </View>
 
 
-                            <View style={{flexDirection:'row'}}>
+                            {/*渐入*/}
+                            <Animated.View style={{opacity: this.state.fadeSportsLevel,flexDirection:'row'}}>
                                 <View style={{flexDirection:'row',flex:1,paddingLeft:15,paddingRight:10,
-                                    paddingVertical:3}}>
+                                        paddingVertical:3}}>
 
                                     <View style={{flexDirection:'row',alignItems:'center',flex:2}}>
                                         <Text style={{color:'#999',fontSize:13}}>
@@ -452,31 +472,32 @@ class Register extends Component{
                                         </Text>
                                     </View>
 
-                                    <TouchableOpacity style={{flexDirection:'row',flex:2,justifyContent:'center'}}
+                                    <TouchableOpacity style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems:'center'}}
                                                       onPress={()=>{
-                                              this.showActionSheet()
-                                            }}>
+                                      this.showActionSheet()
+                                    }}>
 
 
-                                            {
-                                                this.state.info.sportLevel?
-                                                    <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
-                                                            paddingHorizontal:6,}}>
-                                                        <Text style={{fontSize:12,color:'#333'}}>
-                                                            {this.state.sportLevelStr}
-                                                        </Text>
-                                                    </View>:
-                                                    <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
-                                                            paddingHorizontal:20,}}>
-                                                        <Text style={{fontSize:12,color:'#333'}}>无</Text>
-                                                    </View>
-                                            }
+                                        {
+                                            this.state.info.sportLevel?
+                                                <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
+                                                        paddingHorizontal:6,}}>
+                                                    <Text style={{fontSize:12,color:'#333'}}>
+                                                        {this.state.sportLevelStr}
+                                                    </Text>
+                                                </View>:
+                                                <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
+                                                    paddingHorizontal:20,}}>
+                                                    <Text style={{fontSize:12,color:'#333'}}>无</Text>
+                                                </View>
+                                        }
 
                                     </TouchableOpacity>
 
                                 </View>
 
-                            </View>
+                            </Animated.View>
+
 
 
                         </View>
