@@ -17,7 +17,7 @@ import {
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import GroupDetail from './GroupDetail';
 import {

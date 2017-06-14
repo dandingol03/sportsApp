@@ -21,7 +21,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import CourseTimeModal from './CourseTimeModal';
-
+import PopupDialog, { ScaleAnimation,DialogTitle,DialogButton,} from 'react-native-popup-dialog';
+const scaleAnimation = new ScaleAnimation();
 
 class CreateBadmintonCourse extends Component{
 
@@ -92,15 +93,21 @@ class CreateBadmintonCourse extends Component{
     constructor(props) {
         super(props);
         this.state={
+            dialogShow: false,
             modalVisible:false,
             course:{courseName:null,courseBrief:null,coursePlace:null,courseTime:null,memberCount:null,fee:null},
             doingFetch: false,
             isRefreshing: false,
             time:null,
             timeList:[]
-
         }
+        this.showScaleAnimationDialog = this.showScaleAnimationDialog.bind(this);
     }
+
+    showScaleAnimationDialog() {
+        this.scaleAnimationDialog.show();
+    }
+
 
     render() {
 
@@ -253,15 +260,14 @@ class CreateBadmintonCourse extends Component{
                             <Text style={{color:'#343434'}}>添加细项：</Text>
                         </View>
                         <View style={{flex:3,}}>
-                            <TouchableOpacity
-                                              onPress={()=>{
-                                this.setState({modalVisible:true});
+                            <TouchableOpacity onPress={()=>{
+                                //this.setState({modalVisible:true});
+                                this.showScaleAnimationDialog();
                             }}>
                                 <Ionicons name='md-add-circle'  size={22} color="#66CDAA"/>
                             </TouchableOpacity>
                         </View>
                     </View>
-
 
                     <View style={{height:100,width:width,padding:5,backgroundColor:'#eee'}}>
                         {
@@ -273,7 +279,6 @@ class CreateBadmintonCourse extends Component{
                         }
 
                     </View>
-
 
                     <View style={{flex:1,backgroundColor:'#fff',padding:10}}>
                         <Text style={{color:'#aaa',fontSize:11}}>
@@ -314,10 +319,37 @@ class CreateBadmintonCourse extends Component{
                         timeListLength={(this.state.timeList!==null&&this.state.timeList!==undefined)?this.state.timeList.length:0}
 
                     />
-
                 </Modal>
 
+                <PopupDialog
+                    ref={(popupDialog) => {
+                        this.scaleAnimationDialog = popupDialog;
+                    }}
+                    dialogAnimation={scaleAnimation}
+                    actions={[
 
+                    ]}
+                >
+                    <View style={styles.dialogContentView}>
+                        <CourseTimeModal
+                            onClose={()=>{
+                                this.scaleAnimationDialog.dismiss();
+                           // this.setState({modalVisible:false});
+                        }}
+                            accessToken={this.props.accessToken}
+                            setTime={(time)=>{
+                            if(this.state.timeList!==null&&this.state.timeList!==undefined){
+                                var timeList = this.state.timeList;
+                                timeList.push(time);
+                                this.setState({timeList:timeList});
+                                this.scaleAnimationDialog.dismiss();
+                            }
+                        }}
+                            timeListLength={(this.state.timeList!==null&&this.state.timeList!==undefined)?this.state.timeList.length:0}
+
+                        />
+                    </View>
+                </PopupDialog>
 
             </View>
         );
@@ -326,7 +358,11 @@ class CreateBadmintonCourse extends Component{
 }
 
 var styles = StyleSheet.create({
-
+    dialogContentView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 
 });
 

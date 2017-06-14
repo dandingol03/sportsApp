@@ -95,8 +95,7 @@ class CourseTimeModal extends Component{
         var dataSource=ds.cloneWithRows(weekList);
 
         return (
-            <View>
-                <View style={{height:height*0.45,width:width*0.9,margin:width*0.05,marginTop:100,borderColor:'#66CDAA',borderWidth:1,
+                <View style={{flex:1,
                 backgroundColor:'#fff',borderRadius:6}}>
 
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
@@ -225,7 +224,6 @@ class CourseTimeModal extends Component{
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
         );
     }
 }

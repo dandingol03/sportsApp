@@ -18,10 +18,12 @@ import {connect} from 'react-redux';
 var {height, width} = Dimensions.get('window');
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddActivity from './AddActivity';
 import MyActivity from './MyActivity';
 import ActivityDetail from './ActivityDetail';
+import {
+    fetchActivityList,disableActivityOnFresh
+} from '../../action/ActivityActions';
 
 class Activity extends Component {
 
@@ -164,15 +166,50 @@ class Activity extends Component {
         return row;
     }
 
+    fetchData(){
+        this.state.doingFetch=true;
+        this.state.isRefreshing=true;
+        this.props.dispatch(fetchActivityList()).then(()=> {
+            this.props.dispatch(disableActivityOnFresh());
+            this.setState({doingFetch:false,isRefreshing:false})
+        }).catch((e)=>{
+            this.props.dispatch(disableActivityOnFresh());
+            this.setState({doingFetch:false,isRefreshing:false});
+            alert(e)
+        });
+    }
+
     constructor(props) {
         super(props);
         this.state = {
+            doingFetch: false,
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
         }
     }
 
     render() {
+
+        // var activityListView=null;
+        // var {activityList,activityOnFresh}=this.props;
+        //
+        // if(activityOnFresh==true)
+        // {
+        //     if(this.state.doingFetch==false)
+        //         this.fetchData();
+        // }else {
+        //     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        //     if (activityList !== undefined && activityList !== null && activityList.length > 0) {
+        //
+        //         activityListView = (
+        //             <ListView
+        //                 automaticallyAdjustContentInsets={false}
+        //                 dataSource={ds.cloneWithRows(activityList)}
+        //                 renderRow={this.renderRow.bind(this)}
+        //             />
+        //         );
+        //     }
+        // }
 
         var activityList = [
             {eventBrief:'love sports',type:'基础练习',eventTime:'2017-06-08 10:30',eventPlace:'山大软件园',eventMaxMemNum:5,memberLevel:'业余小白',hasCoach:0,hasSparring:0},
@@ -274,11 +311,14 @@ var styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = (state, ownProps) => {
 
-    const props = {}
-    return props
-}
+module.exports = connect(state=>({
+        accessToken:state.user.accessToken,
+        personInfo:state.user.personInfo,
+        activityList:state.activity.activityList,
+        activityOnFresh:state.activity.activityOnFresh
+    })
+)(Activity);
 
-export default connect(mapStateToProps)(Activity);
+
 

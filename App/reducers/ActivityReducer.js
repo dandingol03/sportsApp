@@ -7,11 +7,15 @@ import {
     DISABLE_ALL_GROUP_ONFRESH,
     SET_MY_GROUP_LIST,
     SET_ALL_GROUP_LIST,
+    SET_ACTIVITY_LIST,
+    ENABLE_ACTIVITY_ONFRESH,
+    DISABLE_ACTIVITY_ONFRESH,
 } from '../constants/ActivityConstants';
 
 const initialState = {
     myGroupList: null,
     allGroupList:null,
+    activityList:null,
     myGroupOnFresh:true,
     allGroupOnFresh:true,
     activityOnFresh:false,
@@ -44,6 +48,18 @@ let activity = (state = initialState, action) => {
         case SET_ALL_GROUP_LIST:
             return Object.assign({}, state, {
                 allGroupList:action.allGroupList
+            })
+        case SET_ACTIVITY_LIST:
+            return Object.assign({}, state, {
+                activityList:action.activityList
+            })
+        case ENABLE_ACTIVITY_ONFRESH:
+            return Object.assign({}, state, {
+                activityOnFresh:true
+            })
+        case DISABLE_ACTIVITY_ONFRESH:
+            return Object.assign({}, state, {
+                activityOnFresh:false
             })
 
         default:
