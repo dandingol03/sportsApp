@@ -61,7 +61,7 @@ class CreateBadmintonCourse extends Component{
     renderRow(rowData,sectionId,rowId){
         var row=(
             <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,padding:5,borderBottomWidth:1,
-            borderColor:'#eee',borderRadius:8}}>
+            borderColor:'#eee',borderRadius:8,margin:5}}>
 
                 <View style={{flex:3,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
                     <View style={{flex:1}}>
@@ -71,12 +71,13 @@ class CreateBadmintonCourse extends Component{
                         <Text style={{color:'#888'}}>{rowData.day}</Text>
                     </View>
                     <View style={{flex:2,}}>
-                        <Text style={{color:'#aaa'}}>{rowData.startTime}  -</Text>
+                        <Text style={{color:'#aaa'}}>{rowData.startTime}   -</Text>
                     </View>
                     <View style={{flex:2,marginLeft:5}}>
                         <Text style={{color:'#aaa'}}>{rowData.endTime}</Text>
                     </View>
                 </View>
+
                 <TouchableOpacity style={{flex:1}}
                                   onPress={()=>{
                                         this.removeMember(this.state.timeList,rowData);
@@ -133,11 +134,11 @@ class CreateBadmintonCourse extends Component{
                     </View>
                 </View>
 
-                <View style={{flex:6,backgroundColor:'#fff'}}>
+                <View style={{flex:5,backgroundColor:'#fff'}}>
 
                     {/*课程名称*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:15,marginBottom:5}}>
+                    ,margin:10,marginTop:10,marginBottom:5}}>
                         <View style={{flex:1}}>
                             <Text style={{color:'#343434'}}>课程名称：</Text>
                         </View>
@@ -154,6 +155,78 @@ class CreateBadmintonCourse extends Component{
                                     }}
                                 onCancel={
                                     ()=>{this.setState({course:Object.assign(this.state.course,{courseName:null})});}
+                                }
+                            />
+                        </View>
+                    </View>
+
+                    {/*课程人数*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
+                    ,margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text style={{color:'#343434'}}>课程人数：</Text>
+                        </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                placeholder="请输入课程人数"
+                                val={this.state.course.memberCount==null?'':this.state.course.memberCount==null}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({course:Object.assign(this.state.course,{memberCount:value})})
+                                    }}
+                                onCancel={
+                                    ()=>{this.setState({course:Object.assign(this.state.course,{memberCount:null})});}
+                                }
+                            />
+                        </View>
+                    </View>
+
+                    {/*课程花费*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
+                    ,margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text style={{color:'#343434'}}>课程花费：</Text>
+                        </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                placeholder="请输入课程花费"
+                                val={this.state.course.fee==null?'':this.state.course.fee==null}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({course:Object.assign(this.state.course,{fee:value})})
+                                    }}
+                                onCancel={
+                                    ()=>{this.setState({course:Object.assign(this.state.course,{fee:null})});}
+                                }
+                            />
+                        </View>
+                    </View>
+
+                    {/*课程说明*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
+                    ,margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text style={{color:'#343434'}}>课程说明：</Text>
+                        </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                placeholder="请输入课程说明"
+                                val={this.state.course.courseBrief==null?'':this.state.course.courseBrief==null}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({course:Object.assign(this.state.course,{courseBrief:value})})
+                                    }}
+                                onCancel={
+                                    ()=>{this.setState({course:Object.assign(this.state.course,{courseBrief:null})});}
                                 }
                             />
                         </View>
@@ -179,111 +252,25 @@ class CreateBadmintonCourse extends Component{
                         <View style={{flex:1}}>
                             <Text style={{color:'#343434'}}>添加细项：</Text>
                         </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
+                        <View style={{flex:3,}}>
+                            <TouchableOpacity
+                                              onPress={()=>{
+                                this.setState({modalVisible:true});
+                            }}>
+                                <Ionicons name='md-add-circle'  size={22} color="#66CDAA"/>
+                            </TouchableOpacity>
                         </View>
                     </View>
 
-                    <View style={{height:250,justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                    borderRadius:10,margin:10,marginTop:0,marginBottom:5}}>
-                        {/*课程人数*/}
-                        <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',margin:5}}>
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
-                                <Text style={{color:'#343434'}}>课程人数:</Text>
-                            </View>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10,borderBottomWidth:1,borderColor:'#888'}}>
-                                <TextInputWrapper
-                                    placeholderTextColor='#888'
-                                    textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                    placeholder="请输入课程人数"
-                                    val={this.state.course.memberCount==null?'':this.state.course.memberCount==null}
-                                    onChangeText={
-                                    (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{memberCount:value})})
-                                    }}
-                                    onCancel={
-                                    ()=>{this.setState({course:Object.assign(this.state.course,{memberCount:null})});}
-                                }
-                                />
-                            </View>
-                        </View>
 
-                        {/*课程花费*/}
-                        <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',margin:5}}>
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
-                                <Text style={{color:'#343434'}}>课程花费:</Text>
-                            </View>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10,borderBottomWidth:1,borderColor:'#888'}}>
-                                <TextInputWrapper
-                                    placeholderTextColor='#888'
-                                    textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                    placeholder="请输入课程花费"
-                                    val={this.state.course.fee==null?'':this.state.course.fee==null}
-                                    onChangeText={
-                                    (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{fee:value})})
-                                    }}
-                                    onCancel={
-                                    ()=>{this.setState({course:Object.assign(this.state.course,{fee:null})});}
-                                }
-                                />
-                            </View>
-                        </View>
-
-                        {/*课程说明*/}
-                        <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',margin:5}}>
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
-                                <Text style={{color:'#343434'}}>课程说明:</Text>
-                            </View>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10,borderBottomWidth:1,borderColor:'#888'}}>
-                                <TextInputWrapper
-                                    placeholderTextColor='#888'
-                                    textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                    placeholder="请输入课程说明"
-                                    val={this.state.course.courseBrief==null?'':this.state.course.courseBrief==null}
-                                    onChangeText={
-                                    (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{courseBrief:value})})
-                                    }}
-                                    onCancel={
-                                    ()=>{this.setState({course:Object.assign(this.state.course,{courseBrief:null})});}
-                                }
-                                />
-                            </View>
-                        </View>
-
-                        {/*开课时间*/}
-                        <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',margin:5}}>
-
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
-                                <Text style={{color:'#343434'}}>开课时间:</Text>
-                            </View>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-end',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
-                                <TouchableOpacity style={{marginRight:15}}
-                                                  onPress={()=>{
-                                this.setState({modalVisible:true});
-                            }}>
-                                    <Ionicons name='md-add-circle'  size={26} color="#66CDAA"/>
-                                </TouchableOpacity>
-                            </View>
-
-                        </View>
-
-                        <View style={{height:100,width:width*0.8}}>
-                            {
-                                (this.state.timeList==null||this.state.timeList==undefined||this.state.timeList.length==0)?
-                                    null:
-                                    <View>
-                                        {timeList}
-                                    </View>
-                            }
-
-                        </View>
-
+                    <View style={{height:100,width:width,padding:5,backgroundColor:'#eee'}}>
+                        {
+                            (this.state.timeList==null||this.state.timeList==undefined||this.state.timeList.length==0)?
+                                null:
+                                <View>
+                                    {timeList}
+                                </View>
+                        }
 
                     </View>
 

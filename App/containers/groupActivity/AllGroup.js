@@ -20,6 +20,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import GroupDetail from './GroupDetail';
+import {
+    fetchAllGroupList,disableAllGroupOnFresh
+} from '../../action/ActivityActions';
 
 class AllGroup extends Component{
 
@@ -73,8 +76,8 @@ class AllGroup extends Component{
                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                 </View>
                 <View style={{flex:3,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                    <Text style={{color:'#343434'}}>{rowData.groupName}</Text>
-                    <Text style={{color:'#343434'}}>({rowData.memberCount})</Text>
+                    <Text style={{color:'#343434'}}>{rowData.groupInfo.groupName}</Text>
+                    <Text style={{color:'#343434'}}>({rowData.memberList.length})</Text>
                 </View>
                 <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
@@ -88,6 +91,19 @@ class AllGroup extends Component{
             </TouchableOpacity>
         );
         return row;
+    }
+
+    fetchData(){
+        this.state.doingFetch=true;
+        this.state.isRefreshing=true;
+        this.props.dispatch(fetchAllGroupList()).then(()=> {
+            this.props.dispatch(disableAllGroupOnFresh());
+            this.setState({doingFetch:false,isRefreshing:false})
+        }).catch((e)=>{
+            this.props.dispatch(disableAllGroupOnFresh());
+            this.setState({doingFetch:false,isRefreshing:false});
+            alert(e)
+        });
     }
 
 
@@ -111,18 +127,38 @@ class AllGroup extends Component{
     render() {
 
         var groupListView=null;
-        var groupList = this.state.groupList;
+        //var groupList = this.state.groupList;
+        var {allGroupList,allGroupOnFresh}=this.props;
 
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        if (groupList !== undefined && groupList !== null && groupList.length > 0) {
-            groupListView = (
-                <ListView
-                    automaticallyAdjustContentInsets={false}
-                    dataSource={ds.cloneWithRows(groupList)}
-                    renderRow={this.renderRow.bind(this)}
-                />
-            );
+        if(allGroupOnFresh==true)
+        {
+            if(this.state.doingFetch==false)
+                this.fetchData();
+        }else {
+            var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+            if (allGroupList !== undefined && allGroupList !== null && allGroupList.length > 0) {
+
+                groupListView = (
+                    <ListView
+                        automaticallyAdjustContentInsets={false}
+                        dataSource={ds.cloneWithRows(allGroupList)}
+                        renderRow={this.renderRow.bind(this)}
+                    />
+                );
+            }
         }
+
+
+        // var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        // if (groupList !== undefined && groupList !== null && groupList.length > 0) {
+        //     groupListView = (
+        //         <ListView
+        //             automaticallyAdjustContentInsets={false}
+        //             dataSource={ds.cloneWithRows(groupList)}
+        //             renderRow={this.renderRow.bind(this)}
+        //         />
+        //     );
+        // }
 
         return (
             <View style={{flex:1, backgroundColor:'#eee',}}>
@@ -154,7 +190,9 @@ class AllGroup extends Component{
                         placeholder='搜索群组'
                         placeholderTextColor="#aaa"
                         underlineColorAndroid="transparent"
-
+                        onCancel={
+                           ()=>{this.setState({groupName:''});}
+                        }
                     />
                 </View>
 
@@ -192,7 +230,8 @@ var styles = StyleSheet.create({
 
 module.exports = connect(state=>({
         accessToken:state.user.accessToken,
-        groupList:state.activity.groupList,
-        groupOnFresh:state.activity.groupOnFresh
+        personInfo:state.user.personInfo,
+        allGroupList:state.activity.allGroupList,
+        allGroupOnFresh:state.activity.allGroupOnFresh
     })
 )(AllGroup);

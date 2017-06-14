@@ -2,9 +2,12 @@ import Config from '../../config';
 import Proxy from '../utils/Proxy';
 
 import {
-    ENABLE_GROUP_ONFRESH,
-    DISABLE_GROUP_ONFRESH,
+    ENABLE_MY_GROUP_ONFRESH,
+    DISABLE_MY_GROUP_ONFRESH,
+    ENABLE_ALL_GROUP_ONFRESH,
+    DISABLE_ALL_GROUP_ONFRESH,
     SET_MY_GROUP_LIST,
+    SET_ALL_GROUP_LIST,
 } from '../constants/ActivityConstants';
 
 //发布群活动
@@ -105,7 +108,7 @@ export let createGroup=(info)=>{
     }
 }
 
-//设置组列表
+//设置我的组列表
 export let setMyGroupList=(myGroupList)=>{
     return {
         type:SET_MY_GROUP_LIST,
@@ -113,15 +116,35 @@ export let setMyGroupList=(myGroupList)=>{
     }
 }
 
-export let enableGroupOnFresh=()=>{
+//设置全部组列表
+export let setAllGroupList=(allGroupList)=>{
     return {
-        type:ENABLE_GROUP_ONFRESH,
+        type:SET_ALL_GROUP_LIST,
+        allGroupList:allGroupList
     }
 }
 
-export let disableGroupOnFresh=()=>{
+export let enableMyGroupOnFresh=()=>{
     return {
-        type:DISABLE_GROUP_ONFRESH,
+        type:ENABLE_MY_GROUP_ONFRESH,
+    }
+}
+
+export let disableMyGroupOnFresh=()=>{
+    return {
+        type:DISABLE_MY_GROUP_ONFRESH,
+    }
+}
+
+export let enableAllGroupOnFresh=()=>{
+    return {
+        type:ENABLE_ALL_GROUP_ONFRESH,
+    }
+}
+
+export let disableAllGroupOnFresh=()=>{
+    return {
+        type:DISABLE_ALL_GROUP_ONFRESH,
     }
 }
 
@@ -140,7 +163,7 @@ export let fetchMyGroupList=()=>{
                     'Content-Type': 'application/json'
                 },
                 body: {
-                    request: 'fetchMyGroup',
+                    request:'fetchMyGroup',
                     info:{
                     }
                 }
@@ -150,7 +173,45 @@ export let fetchMyGroupList=()=>{
 
                     if (myGroupList !== undefined && myGroupList !== null &&myGroupList.length > 0) {
                         dispatch(setMyGroupList(myGroupList));
-                        dispatch(disableGroupOnFresh());
+                        dispatch(disableMyGroupOnFresh());
+                        resolve({re:1});
+                    }
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+export let fetchAllGroupList=()=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            var allGroupList = null;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'fetchAllGroup',
+                    info:{
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    allGroupList = json.data;
+
+                    if (allGroupList!== undefined && allGroupList !== null &&allGroupList.length > 0) {
+                        dispatch(setAllGroupList(allGroupList));
+                        dispatch(disableAllGroupOnFresh());
                         resolve({re:1});
                     }
                 }

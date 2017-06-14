@@ -20,7 +20,10 @@ var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import GridView from 'react-native-grid-view';
-import GroupMemberModal from './GroupMemberModal'
+import GroupMemberModal from './GroupMemberModal';
+import {
+   searchMember,
+} from '../../action/ActivityActions';
 
 class GroupDetail extends Component{
 
@@ -65,16 +68,27 @@ class GroupDetail extends Component{
         }
     }
 
+    searchMember(info){
+        this.props.dispatch(searchMember(info)).then((json)=>{
+            if(json.re==1){
+                this.setState({member:json.data});
+            }else{
+                alert('该用户未注册，是否邀请');
+                //TODO:微信分享邀请好友
+            }
+        });
+    }
+
     constructor(props) {
         super(props);
         var memberList = this.props.memberList;
-        memberList.push({perName:null,portrait:require('../../../img/portrait.jpg'),mobilePhone:null,addNewOne:true},);
         this.state={
             modalVisible:false,
             doingFetch: false,
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
             groupInfo:this.props.groupInfo,
+            member:null,
             memberList:memberList,
         }
     }
@@ -103,8 +117,14 @@ class GroupDetail extends Component{
 
                 <ScrollView style={{width:width,height:height,backgroundColor:'#eee',}}>
                     <View style={{flex:1,backgroundColor:'#eee',marginBottom:5}}>
-                        <View style={{flex:1,backgroundColor:'#fff',padding:10,}}>
-                            <Text>群成员</Text>
+                        <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',padding:10}}>
+                            <View style={{justifyContent:'center',alignItems: 'center',}}>
+                                <Text>群成员</Text>
+                            </View>
+                            <TouchableOpacity style={{marginLeft:10,justifyContent:'center',alignItems: 'center',}}
+                                              onPress={()=>{this.setState({ modalVisible:true,})}}>
+                                <Icon name={'plus-square-o'} size={20} color="#888"/>
+                            </TouchableOpacity>
                         </View>
                         <View style={{backgroundColor:'#fff',padding:10}}>
                             <GridView
@@ -180,8 +200,19 @@ class GroupDetail extends Component{
                         onClose={()=>{
                             this.setState({modalVisible:false});
                         }}
-
+                        searchMember={(info)=>{
+                            this.searchMember(info);
+                        }}
+                        member={this.state.member}
                         accessToken={this.props.accessToken}
+                        setMemberList={()=>{
+                            if(this.state.member!==null&&this.state.member!==undefined){
+                                var memberList = this.state.memberList;
+                                memberList.push(this.state.member);
+                                this.setState({memberList:memberList});
+                                //TODO:把新加入的成员添到数据库
+                            }
+                        }}
                     />
 
                 </Modal>
