@@ -113,7 +113,7 @@ var  Login =React.createClass({
                                                 this.setState({user:Object.assign(this.state.user,{username:value})})
                                             }}
                                             onCancel={
-                                                ()=>{this.setState({user:Object.assign(this.state.user,{username:value})});}
+                                                ()=>{this.setState({user:Object.assign(this.state.user,{username:''})});}
                                             }
                                         />
 

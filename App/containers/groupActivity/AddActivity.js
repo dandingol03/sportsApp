@@ -46,6 +46,11 @@ class AddActivity extends Component{
         }
     }
 
+    componentWillReceiveProps(nextProps)
+    {
+        this.setState(nextProps)
+    }
+
     navigate2VenueInspect(){
         const { navigator } = this.props;
         if(navigator) {
@@ -170,6 +175,7 @@ class AddActivity extends Component{
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','私人'],
             groupNameButtons:['取消','宇宙无敌战队组','骑摩托的部长队组','新建群组'],
+            //myGroupList:this.props.myGroupList,
         }
     }
 
@@ -177,21 +183,20 @@ class AddActivity extends Component{
 
         const CANCEL_INDEX = 0;
         const DESTRUCTIVE_INDEX = 1;
+        const groupNameButtons=['取消'];
 
-
-        // var {myGroupList} = this.props;
-        // if(myGroupList==null){
-        //     if(this.state.doingFetch==false)
-        //         this.fetchMyGroupList();
-        // }
-        //const groupNameButtons=['取消'];
-        // myGroupList.map((group,i)=>{
-        //     groupNameButtons.push(group.groupInfo.groupName);
-        // })
+        var {myGroupList} = this.props;
+        if(myGroupList!==null&&myGroupList!==undefined){
+            myGroupList.map((group,i)=>{
+                groupNameButtons.push(group.groupInfo.groupName);
+            })
+        }else{
+            if(this.state.doingFetch==false)
+                this.fetchMyGroupList();
+        }
 
         const memberLevelButtons=['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'];
         const eventTypeButtons=['取消','公开','私人'];
-        const groupNameButtons=['取消','宇宙无敌战队组','骑摩托的部长队组','新建群组'];
 
         const shadowOpt = {
             width:224*width/320,

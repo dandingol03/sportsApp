@@ -23,7 +23,7 @@ import CreateGroup from './CreateGroup';
 import GroupDetail from './GroupDetail';
 import AllGroup from './AllGroup';
 import {
-    fetchMyGroupList,disableGroupOnFresh
+    fetchMyGroupList,disableMyGroupOnFresh
 } from '../../action/ActivityActions';
 
 class MyGroup extends Component{
@@ -148,10 +148,10 @@ class MyGroup extends Component{
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
         this.props.dispatch(fetchMyGroupList()).then(()=> {
-            this.props.dispatch(disableGroupOnFresh());
+            this.props.dispatch(disableMyGroupOnFresh());
             this.setState({doingFetch:false,isRefreshing:false})
         }).catch((e)=>{
-            this.props.dispatch(disableGroupOnFresh());
+            this.props.dispatch(disableMyGroupOnFresh());
             this.setState({doingFetch:false,isRefreshing:false});
             alert(e)
         });
@@ -171,9 +171,9 @@ class MyGroup extends Component{
         var displayArea = {x:5, y:10, width:width-20, height: height - 10};
 
         var groupListView=null;
-        var {myGroupList,groupOnFresh}=this.props;
+        var {myGroupList,myGroupOnFresh}=this.props;
 
-        if(groupOnFresh==true)
+        if(myGroupOnFresh==true)
         {
             if(this.state.doingFetch==false)
                 this.fetchData();
@@ -203,7 +203,7 @@ class MyGroup extends Component{
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>我的群组</Text>
+                        <Text style={{color:'#fff',fontSize:18}}>我的群</Text>
                     </View>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={this.showPopover.bind(this, 'menu')}  ref="menu">
@@ -291,6 +291,6 @@ module.exports = connect(state=>({
         accessToken:state.user.accessToken,
         personInfo:state.user.personInfo,
         myGroupList:state.activity.myGroupList,
-        groupOnFresh:state.activity.groupOnFresh
+        myGroupOnFresh:state.activity.myGroupOnFresh
     })
 )(MyGroup);

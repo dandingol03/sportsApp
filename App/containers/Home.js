@@ -317,8 +317,8 @@ class Home extends Component {
 
                                      <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
                                           onPress={ ()=>{
-                                             //this.navigate2BadmintonCourse();
-                                             this.navigate2BadmintonCourseForCoach();
+                                             this.navigate2BadmintonCourse();
+                                             //this.navigate2BadmintonCourseForCoach();
 
                                           }}>
                                         <CommIcon name="tag-plus" size={32} color="#0adc5e" style={{backgroundColor:'transparent'}}/>

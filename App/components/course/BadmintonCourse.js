@@ -24,7 +24,8 @@ import TextInputWrapper from 'react-native-text-input-wrapper'
 import {BoxShadow} from 'react-native-shadow';
 import ActionSheet from 'react-native-actionsheet';
 import DatePicker from 'react-native-datepicker';
-import MadeCustomCourse from './MadeCustomCourse'
+import MadeCustomCourse from './MadeCustomCourse';
+import CreateBadmintonCourse from './CreateBadmintonCourse';
 
 
 import ScrollableTabView, {DefaultTabBar, ScrollableTabBar} from 'react-native-scrollable-tab-view';
@@ -48,6 +49,22 @@ class BadmintonCourse extends Component{
                 }
             })
         }
+    }
+
+    //导航至定制（for 教练）
+    navigate2BadmintonCourseForCoach()
+    {
+        const {navigator} =this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'CreateBadmintonCourse',
+                component: CreateBadmintonCourse,
+                params: {
+
+                }
+            })
+        }
+
     }
 
 
@@ -354,6 +371,14 @@ class BadmintonCourse extends Component{
                               this.navigate2MadeCustomCourse();
                           }}>
                         <Text style={[styles.popoverText,{color:'#444'}]}>课程定制</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={[styles.popoverContent]}
+                                      onPress={()=>{
+                              this.closePopover();
+                             this.navigate2BadmintonCourseForCoach();
+                          }}>
+                        <Text style={[styles.popoverText,{color:'#444'}]}>教练创建课程</Text>
                     </TouchableOpacity>
 
                 </Popover>
