@@ -19,7 +19,7 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import  Popover from  'react-native-popover';
-import {BoxShadow} from 'react-native-shadow';
+import {BoxShadow,BorderShadow} from 'react-native-shadow';
 import CustomCourseDetail from './CustomCourseDetail';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 
@@ -77,13 +77,13 @@ class CustomCourse extends Component{
 
         var displayArea = {x: 5, y: 20, width:width, height: height - 25};
         const shadowOpt = {
-            width:width-10,
+            width:width-13,
             height:125,
             color:"#000",
             border:2,
             radius:3,
             opacity:0.2,
-            x:0,
+            x:2,
             y:1.5,
             style:{marginVertical:5}
         }
@@ -105,7 +105,7 @@ class CustomCourse extends Component{
 
                     <View style={{justifyContent:'center',padding:5}}>
                         <BoxShadow setting={shadowOpt}>
-                            <TouchableOpacity style={{padding:4,backgroundColor:'#fff',flexDirection:'column',paddingBottom:7}}
+                            <TouchableOpacity style={{width:width-8,padding:4,backgroundColor:'#fff',flexDirection:'column',paddingBottom:7}}
                                               onPress={()=>{
                                     this.navigate2MadeCustomCourseDetail()
                                 }}
