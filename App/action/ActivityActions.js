@@ -8,6 +8,9 @@ import {
     DISABLE_ALL_GROUP_ONFRESH,
     SET_MY_GROUP_LIST,
     SET_ALL_GROUP_LIST,
+    SET_ACTIVITY_LIST,
+    ENABLE_ACTIVITY_ONFRESH,
+    DISABLE_ACTIVITY_ONFRESH,
 } from '../constants/ActivityConstants';
 
 //发布群活动
@@ -124,6 +127,14 @@ export let setAllGroupList=(allGroupList)=>{
     }
 }
 
+//设置全部活动列表
+export let setActivityList=(activityList)=>{
+    return {
+        type:SET_ACTIVITY_LIST,
+        activityList:activityList
+    }
+}
+
 export let enableMyGroupOnFresh=()=>{
     return {
         type:ENABLE_MY_GROUP_ONFRESH,
@@ -147,6 +158,19 @@ export let disableAllGroupOnFresh=()=>{
         type:DISABLE_ALL_GROUP_ONFRESH,
     }
 }
+
+export let enableActivityOnFresh=()=>{
+    return {
+        type:ENABLE_ACTIVITY_ONFRESH,
+    }
+}
+
+export let disableActivityOnFresh=()=>{
+    return {
+        type:DISABLE_ACTIVITY_ONFRESH,
+    }
+}
+
 
 export let fetchMyGroupList=()=>{
     return (dispatch,getState)=>{
@@ -207,7 +231,7 @@ export let fetchAllGroupList=()=>{
                 }
             }).then((json)=>{
                 if (json.re == 1) {
-                    allGroupList = json.data;
+                    activityList = json.data;
 
                     if (allGroupList!== undefined && allGroupList !== null &&allGroupList.length > 0) {
                         dispatch(setAllGroupList(allGroupList));
@@ -224,3 +248,40 @@ export let fetchAllGroupList=()=>{
     }
 }
 
+export let fetchActivityList=()=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            var activityList = null;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'fetchActivityList',
+                    info:{
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    activityList = json.data;
+
+                    if (allGroupList!== undefined && allGroupList !== null &&allGroupList.length > 0) {
+                        dispatch(setActivityList(activityList));
+                        dispatch(disableActivityOnFresh());
+                        resolve({re:1});
+                    }
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}

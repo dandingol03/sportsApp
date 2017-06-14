@@ -95,9 +95,11 @@ class CourseTimeModal extends Component{
         var dataSource=ds.cloneWithRows(weekList);
 
         return (
-            <View style={{flex:1}}>
-                <View style={{height:height*0.45,width:width*0.9,margin:width*0.05,marginTop:0,borderColor:'#66CDAA',borderWidth:1,
-                backgroundColor:'#fff',borderRadius:6}}>
+
+
+
+                <View style={{flex:1,backgroundColor:'#fff',borderRadius:6}}>
+
 
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
                         <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',margin:5}}>
@@ -114,7 +116,7 @@ class CourseTimeModal extends Component{
 
 
                         <View style={{flexDirection:'row',padding:5,paddingTop:0}}>
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',margin:5}}>
+                            <View style={{flex:2,justifyContent:'center',alignItems: 'center',margin:5}}>
                                 <Text style={{color:'#343434'}}>开始时间:</Text>
                             </View>
                             <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
@@ -161,7 +163,7 @@ class CourseTimeModal extends Component{
                         </View>
 
                         <View style={{flexDirection:'row',padding:5,paddingTop:0}}>
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',margin:5}}>
+                            <View style={{flex:2,justifyContent:'center',alignItems: 'center',margin:5}}>
                                 <Text style={{color:'#343434'}}>结束时间:</Text>
                             </View>
                             <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
@@ -225,7 +227,6 @@ class CourseTimeModal extends Component{
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
         );
     }
 }
