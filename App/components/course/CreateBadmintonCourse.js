@@ -23,6 +23,13 @@ import TextInputWrapper from 'react-native-text-input-wrapper';
 import CourseTimeModal from './CourseTimeModal';
 
 
+import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
+
+const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+const scaleAnimation = new ScaleAnimation();
+const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
+
+
 class CreateBadmintonCourse extends Component{
 
     goBack(){
@@ -248,14 +255,15 @@ class CreateBadmintonCourse extends Component{
 
                     {/*添加细项*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
+                        ,margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
                             <Text style={{color:'#343434'}}>添加细项：</Text>
                         </View>
                         <View style={{flex:3,}}>
                             <TouchableOpacity
-                                              onPress={()=>{
-                                this.setState({modalVisible:true});
+                                onPress={()=>{
+                                    this.popupDialog.show()
+                                    //this.setState({modalVisible:true});
                             }}>
                                 <Ionicons name='md-add-circle'  size={22} color="#66CDAA"/>
                             </TouchableOpacity>
@@ -291,17 +299,17 @@ class CreateBadmintonCourse extends Component{
 
 
                 {/* Add CourseTime Modal*/}
-                <Modal
-                    animationType={"slide"}
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        console.log("Modal has been closed.");
-                    }}
+
+                <PopupDialog
+
+                    dialogAnimation={scaleAnimation}
+                    animationDuration={600}
+                    ref={(popupDialog) => { this.popupDialog = popupDialog; }}
                 >
                     <CourseTimeModal
                         onClose={()=>{
-                            this.setState({modalVisible:false});
+                            this.popupDialog.dismiss()
+                            //this.setState({modalVisible:false});
                         }}
                         accessToken={this.props.accessToken}
                         setTime={(time)=>{
@@ -315,7 +323,20 @@ class CreateBadmintonCourse extends Component{
 
                     />
 
-                </Modal>
+                </PopupDialog>
+
+                {/*
+                 <Modal
+                 animationType={"slide"}
+                 transparent={true}
+                 visible={this.state.modalVisible}
+                 onRequestClose={() => {
+                 console.log("Modal has been closed.");
+                 }}
+                 >
+
+                 </Modal>
+                */}
 
 
 

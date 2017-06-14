@@ -33,7 +33,8 @@ import {
 
 import PreferenceStore from '../utils/PreferenceStore';
 import {
-    registerUser
+    registerUser,
+    uploadPersonIdCard
 } from '../action/UserActions';
 
 import Camera from 'react-native-camera';
@@ -80,6 +81,35 @@ class Register extends Component{
         });
     }
 
+
+    pictureStore(path)
+    {
+        var data = new FormData();
+        data.append('file', {uri: path, name: 'portrait.jpg', type: 'multipart/form-data'});
+        //限定为jpg后缀
+        Proxy.post({
+            url:Config.server+'/svr/request?request=uploadPortrait&suffix=jpg',
+            headers: {
+                'Authorization': "Bearer " + accessToken,
+                'Content-Type':'multipart/form-data',
+            },
+            body: data,
+        },(json)=> {
+            if(json.re==1) {
+                if(json.data!==undefined&&json.data!==null)
+                {
+                    console.log('...');
+                }
+            }
+
+        }, (err) =>{
+            Alert.alert(
+                'error',
+                err
+            );
+        });
+    }
+
     register()
     {
         var {info}=this.state;
@@ -93,15 +123,24 @@ class Register extends Component{
                     PreferenceStore.put('username',info.username);
                     PreferenceStore.put('password',info.password);
 
-                    //TODO:make this to confirm
-                    Alert.alert(
-                        '信息',
-                        '注册成功！是否要直接登录？',
-                        [
-                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
-                            {text: 'OK', onPress: () => this.navigate2Login()},
-                        ]
-                    )
+
+                    //TODO：完成身份证上传业务
+                    if(this.state.portrait)
+                    {
+                        this.props.dispatch(uploadPersonIdCard(this.state.portrait)).then((json)=>{
+                            console.log()
+                        })
+                    }
+
+
+                    // Alert.alert(
+                    //     '信息',
+                    //     '注册成功！是否要直接登录？',
+                    //     [
+                    //         {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
+                    //         {text: 'OK', onPress: () => this.navigate2Login()},
+                    //     ]
+                    // )
 
                 }else{
                     Alert.alert(
@@ -174,6 +213,8 @@ class Register extends Component{
                 </View>
 
                 <View style={{flex:4,backgroundColor:'#eee',paddingTop:15,paddingBottom:10}}>
+
+                    {/*手机号码输入*/}
 
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',padding:5,
                         backgroundColor:'#fff',borderBottomWidth:1,borderColor:'#ddd'}}>
@@ -248,34 +289,32 @@ class Register extends Component{
                         {/*/>*/}
                     {/*</View>*/}
 
+                    {/*照相*/}
                     <View  style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',
                         backgroundColor:'#fff',marginTop:15,paddingBottom:10}}>
-
-                        {/*照相*/}
 
 
                         {
                             this.state.portrait==null?
                                 <TouchableOpacity style={{flex:1,backgroundColor:'#ddd',justifyContent:'center',alignItems: 'center',
-                            margin:5,paddingTop:15,paddingBottom:15}}
-                                                  onPress={
-                                ()=>{
-                                   this.showImagePicker();
-                                }
-                            }
+                                    margin:5,paddingTop:15,paddingBottom:15}}
+                                  onPress={
+                                        ()=>{
+                                           this.showImagePicker();
+                                        }
+                                    }
                                 >
                                     <Icon size={40} name="camera-retro" color="#fff"></Icon>
                                 </TouchableOpacity>:
                                 <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
-                            margin:5,paddingTop:15,paddingBottom:15}}
+                                    margin:5,paddingTop:15,paddingBottom:15}}
                                                   onPress={
-                                ()=>{
-                                   this.showImagePicker();
-                                }
-                            }
-                                >
+                                    ()=>{
+                                       this.showImagePicker();
+                                    }
+                                }>
                                     <Image resizeMode="stretch" source={this.state.portrait}
-                                           style={{width:75,height:70,}}/>
+                                           style={{width:75,height:80}}/>
                                 </TouchableOpacity>
 
                         }
@@ -462,17 +501,17 @@ class Register extends Component{
 
 
                             {/*渐入*/}
-                            <Animated.View style={{opacity: this.state.fadeSportsLevel,flexDirection:'row'}}>
-                                <View style={{flexDirection:'row',flex:1,paddingLeft:15,paddingRight:10,
-                                        paddingVertical:3}}>
+                                <Animated.View style={{opacity:this.state.fadeSportsLevel,flexDirection:'row',
+                                        paddingLeft:15,paddingRight:2,paddingVertical:6}}>
 
-                                    <View style={{flexDirection:'row',alignItems:'center',flex:2}}>
+                                    <View style={{flexDirection:'row',alignItems:'center',flex:1}}>
                                         <Text style={{color:'#999',fontSize:13}}>
                                             选择运动水平
                                         </Text>
                                     </View>
 
-                                    <TouchableOpacity style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems:'center'}}
+                                    <TouchableOpacity style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems:'center',
+                                        }}
                                                       onPress={()=>{
                                       this.showActionSheet()
                                     }}>
@@ -494,9 +533,13 @@ class Register extends Component{
 
                                     </TouchableOpacity>
 
-                                </View>
+                                </Animated.View>
 
-                            </Animated.View>
+                            <View style={{height:20,flexDirection:'row',flex:1}}>
+
+                            </View>
+
+
 
 
 
@@ -538,10 +581,10 @@ class Register extends Component{
                     }
 
                     <TouchableOpacity style={{height:30,width:width*0.4,marginLeft:width*0.3,marginTop:20,justifyContent:'center',alignItems: 'center',
-                        borderRadius:10,backgroundColor:'#66CDAA'}}
-                    onPress={()=>{
-                         this.register();
-                    }}>
+                        borderRadius:3,backgroundColor:'#66CDAA'}}
+                        onPress={()=>{
+                             this.register();
+                        }}>
                         <Text style={{color:'#fff',fontSize:13}}>完成</Text>
                     </TouchableOpacity>
 

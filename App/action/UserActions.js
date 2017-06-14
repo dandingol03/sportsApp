@@ -126,3 +126,31 @@ export let doLogin=function(username,password){
         });
     }
 }
+
+//上传身份证
+export let uploadPersonIdCard=(path)=> {
+
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var data = new FormData();
+            data.append('file', {uri: path, name: 'portrait.jpg', type: 'multipart/form-data'});
+            //限定为jpg后缀
+
+            Proxy.post({
+                url:Config.server+'/uploadPersonIdCard',
+                headers: {
+                    'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
+                    'Content-Type':'multipart/form-data',
+                },
+                body: data,
+            },(json)=> {
+               resolve(json)
+
+            }, (err) =>{
+                reject(err)
+            });
+
+
+        })
+    }
+}

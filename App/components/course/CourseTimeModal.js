@@ -95,8 +95,8 @@ class CourseTimeModal extends Component{
         var dataSource=ds.cloneWithRows(weekList);
 
         return (
-            <View>
-                <View style={{height:height*0.45,width:width*0.9,margin:width*0.05,marginTop:100,borderColor:'#66CDAA',borderWidth:1,
+            <View style={{flex:1}}>
+                <View style={{height:height*0.45,width:width*0.9,margin:width*0.05,marginTop:0,borderColor:'#66CDAA',borderWidth:1,
                 backgroundColor:'#fff',borderRadius:6}}>
 
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
@@ -165,7 +165,7 @@ class CourseTimeModal extends Component{
                                 <Text style={{color:'#343434'}}>结束时间:</Text>
                             </View>
                             <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
-                                backgroundColor:'#eee',borderRadius:10,margin:5}}>
+                            backgroundColor:'#eee',borderRadius:10,margin:5}}>
                                 {
                                     this.state.endTime==null?
                                         <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
