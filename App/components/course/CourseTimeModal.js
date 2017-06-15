@@ -45,7 +45,6 @@ class CourseTimeModal extends Component{
         this.setState(nextProps)
     }
 
-
     renderRow(rowData)
     {
         if(this.state.selectDay!==rowData){
@@ -85,7 +84,7 @@ class CourseTimeModal extends Component{
             endTime:null,
             selectStartTime:false,
             selectEndTime:false,
-            selectDay:false,
+            selectDay:'周一',
         }
     }
 
@@ -96,14 +95,10 @@ class CourseTimeModal extends Component{
 
         return (
 
-
-
                 <View style={{flex:1,backgroundColor:'#fff',borderRadius:6}}>
 
-
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',margin:5}}>
-
+                        <View style={{flex:2,flexDirection:'row',justifyContent:'center',alignItems: 'center',margin:5}}>
                             <View style={{backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:3}}>
                                 <GridView
                                     items={dataSource}
@@ -114,8 +109,7 @@ class CourseTimeModal extends Component{
                             </View>
                         </View>
 
-
-                        <View style={{flexDirection:'row',padding:5,paddingTop:0}}>
+                        <View style={{flex:1,flexDirection:'row',padding:5,paddingTop:0}}>
                             <View style={{flex:2,justifyContent:'center',alignItems: 'center',margin:5}}>
                                 <Text style={{color:'#343434'}}>开始时间:</Text>
                             </View>
@@ -151,8 +145,8 @@ class CourseTimeModal extends Component{
                                         if(this.state.selectStartTime==false)
                                         {
                                             this.state.selectStartTime=true;
-                                            var startTime = DateFilter.filter(date,'hh:mm');
-                                            this.setState({startTime:startTime,selectStartTime:false})
+                                            //var startTime = DateFilter.filter(date,'yyyy-mm-dd hh:mm');
+                                            this.setState({startTime:date,selectStartTime:false})
                                         }else{
                                         }
 
@@ -162,7 +156,7 @@ class CourseTimeModal extends Component{
                             </View>
                         </View>
 
-                        <View style={{flexDirection:'row',padding:5,paddingTop:0}}>
+                        <View style={{flex:1,flexDirection:'row',padding:5,paddingTop:0}}>
                             <View style={{flex:2,justifyContent:'center',alignItems: 'center',margin:5}}>
                                 <Text style={{color:'#343434'}}>结束时间:</Text>
                             </View>

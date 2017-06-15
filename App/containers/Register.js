@@ -122,13 +122,16 @@ class Register extends Component{
 
                     PreferenceStore.put('username',info.username);
                     PreferenceStore.put('password',info.password);
+                    var personId = json.data.userid;
 
-
+                    console.log('注册信息完成');
                     //TODO：完成身份证上传业务
                     if(this.state.portrait)
                     {
-                        this.props.dispatch(uploadPersonIdCard(this.state.portrait)).then((json)=>{
-                            console.log()
+                        var portrait = this.state.portrait.uri;
+                        console.log('下一步上传头像'+portrait);
+                        this.props.dispatch(uploadPersonIdCard(portrait,personId)).then((json)=>{
+                            console.log('上传头像成功')
                         })
                     }
 
