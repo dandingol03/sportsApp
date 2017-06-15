@@ -51,9 +51,7 @@ class CourseTimeModal extends Component{
             return  (
                 <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
                 justifyContent:'center',alignItems: 'center'}}
-                                  onPress={()=>{
-                this.setState({selectDay:rowData});
-            }}>
+                                  onPress={()=>{this.setState({selectDay:rowData});}}>
                     <Text style={{color:'#66CDAA',fontSize:13}}>{rowData}</Text>
                 </TouchableOpacity>
 
@@ -62,9 +60,7 @@ class CourseTimeModal extends Component{
             return  (
                 <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
                 justifyContent:'center',alignItems: 'center'}}
-                                  onPress={()=>{
-                this.setState({selectDay:rowData});
-            }}>
+                                  onPress={()=>{this.setState({selectDay:rowData});}}>
                     <Text style={{color:'#fff',fontSize:13}}>{rowData}</Text>
                 </TouchableOpacity>
 
@@ -98,22 +94,126 @@ class CourseTimeModal extends Component{
                 <View style={{flex:1,backgroundColor:'#fff',borderRadius:6}}>
 
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <View style={{flex:2,flexDirection:'row',justifyContent:'center',alignItems: 'center',margin:5}}>
-                            <View style={{backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:3}}>
-                                <GridView
-                                    items={dataSource}
-                                    itemsPerRow={4}
-                                    renderItem={this.renderRow.bind(this)}
-                                    style={styles.listView}
-                                />
+                        <View style={{flex:2,margin:5,marginTop:20}}>
+                            {/*<View style={{backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:3}}>*/}
+                                {/*<GridView*/}
+                                    {/*items={dataSource}*/}
+                                    {/*itemsPerRow={4}*/}
+                                    {/*renderItem={this.renderRow.bind(this)}*/}
+                                    {/*style={styles.listView}*/}
+                                {/*/>*/}
+                            {/*</View>*/}
+                            <View style={{flexDirection:'row',}}>
+                                {
+                                    this.state.selectDay!=='周一'?
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周一'});}}>
+                                            <Text style={{color:'#66CDAA',fontSize:13}}>周一</Text>
+                                        </TouchableOpacity>:
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周一'});}}>
+                                            <Text style={{color:'#fff',fontSize:13}}>周一</Text>
+                                        </TouchableOpacity>
+
+                                }
+                                {
+                                    this.state.selectDay!=='周二'?
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周二'});}}>
+                                            <Text style={{color:'#66CDAA',fontSize:13}}>周二</Text>
+                                        </TouchableOpacity>:
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周二'});}}>
+                                            <Text style={{color:'#fff',fontSize:13}}>周二</Text>
+                                        </TouchableOpacity>
+
+                                }
+                                {
+                                    this.state.selectDay!=='周三'?
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周三'});}}>
+                                            <Text style={{color:'#66CDAA',fontSize:13}}>周三</Text>
+                                        </TouchableOpacity>:
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周三'});}}>
+                                            <Text style={{color:'#fff',fontSize:13}}>周三</Text>
+                                        </TouchableOpacity>
+
+                                }
+                                {
+                                    this.state.selectDay!=='周四'?
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周四'});}}>
+                                            <Text style={{color:'#66CDAA',fontSize:13}}>周四</Text>
+                                        </TouchableOpacity>:
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周四'});}}>
+                                            <Text style={{color:'#fff',fontSize:13}}>周四</Text>
+                                        </TouchableOpacity>
+
+                                }
+
+                            </View>
+                            <View style={{flexDirection:'row',}}>
+
+                                {
+                                    this.state.selectDay!=='周五'?
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周五'});}}>
+                                            <Text style={{color:'#66CDAA',fontSize:13}}>周五</Text>
+                                        </TouchableOpacity>:
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周五'});}}>
+                                            <Text style={{color:'#fff',fontSize:13}}>周五</Text>
+                                        </TouchableOpacity>
+
+                                }
+                                {
+                                    this.state.selectDay!=='周六'?
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周六'});}}>
+                                            <Text style={{color:'#66CDAA',fontSize:13}}>周六</Text>
+                                        </TouchableOpacity>:
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周六'});}}>
+                                            <Text style={{color:'#fff',fontSize:13}}>周六</Text>
+                                        </TouchableOpacity>
+
+                                }
+                                {
+                                    this.state.selectDay!=='周日'?
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周日'});}}>
+                                            <Text style={{color:'#66CDAA',fontSize:13}}>周日</Text>
+                                        </TouchableOpacity>:
+                                        <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
+                justifyContent:'center',alignItems: 'center'}}
+                                                          onPress={()=>{this.setState({selectDay:'周日'});}}>
+                                            <Text style={{color:'#fff',fontSize:13}}>周日</Text>
+                                        </TouchableOpacity>
+
+                                }
                             </View>
                         </View>
 
                         <View style={{flex:1,flexDirection:'row',padding:5,paddingTop:0}}>
-                            <View style={{flex:2,justifyContent:'center',alignItems: 'center',margin:5}}>
+                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',margin:5}}>
                                 <Text style={{color:'#343434'}}>开始时间:</Text>
                             </View>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                            <View style={{flex:2,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
                             backgroundColor:'#eee',borderRadius:10,margin:5}}>
                                 {
                                     this.state.startTime==null?
@@ -124,7 +224,6 @@ class CourseTimeModal extends Component{
                                             <Text style={{color:'#444',fontSize:13}}>{this.state.startTime}</Text>
                                         </View>
                                 }
-
                                 <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
                                     <DatePicker
                                         style={{width:50,marginLeft:0,borderWidth:0}}
@@ -145,8 +244,9 @@ class CourseTimeModal extends Component{
                                         if(this.state.selectStartTime==false)
                                         {
                                             this.state.selectStartTime=true;
-                                            //var startTime = DateFilter.filter(date,'yyyy-mm-dd hh:mm');
-                                            this.setState({startTime:date,selectStartTime:false})
+                                            var startTime = DateFilter.filter(date,'hh:mm');
+                                            //var startTime = date.getHours().toString()+':'+date.getMinutes()().toString();
+                                            this.setState({startTime:startTime,selectStartTime:false})
                                         }else{
                                         }
 
@@ -157,10 +257,10 @@ class CourseTimeModal extends Component{
                         </View>
 
                         <View style={{flex:1,flexDirection:'row',padding:5,paddingTop:0}}>
-                            <View style={{flex:2,justifyContent:'center',alignItems: 'center',margin:5}}>
+                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',margin:5}}>
                                 <Text style={{color:'#343434'}}>结束时间:</Text>
                             </View>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                            <View style={{flex:2,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
                             backgroundColor:'#eee',borderRadius:10,margin:5}}>
                                 {
                                     this.state.endTime==null?
