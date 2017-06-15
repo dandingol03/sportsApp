@@ -95,7 +95,11 @@ class CourseTimeModal extends Component{
         var dataSource=ds.cloneWithRows(weekList);
 
         return (
+
+
+
                 <View style={{flex:1,backgroundColor:'#fff',borderRadius:6}}>
+
 
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
                         <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',margin:5}}>
