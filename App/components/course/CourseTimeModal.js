@@ -293,6 +293,7 @@ class CourseTimeModal extends Component{
                                         {
                                             this.state.selectEndTime=true;
                                             var endTime = DateFilter.filter(date,'hh:mm');
+                                            //var startTime = date.getHours().toString()+':'+date.getMinutes()().toString();
                                             this.setState({endTime:endTime,selectEndTime:false})
                                         }else{
                                         }
