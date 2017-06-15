@@ -21,8 +21,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import CourseTimeModal from './CourseTimeModal';
-import PopupDialog, { ScaleAnimation,DialogTitle,DialogButton,} from 'react-native-popup-dialog';
-const scaleAnimation = new ScaleAnimation();
 
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
 
