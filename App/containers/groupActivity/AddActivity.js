@@ -33,8 +33,10 @@ import {
 import TextInputWrapper from '../../encrypt/TextInputWrapper';
 import VenueInspect from '../../components/venue/VenueInspect';
 import CreateGroup from './CreateGroup';
+import Coach from '../../components/Coach';
+
 import {
-    fetchMyGroupList,disableGroupOnFresh
+    fetchMyGroupList,disableMyGroupOnFresh
 } from '../../action/ActivityActions';
 
 class AddActivity extends Component{
@@ -51,7 +53,8 @@ class AddActivity extends Component{
         this.setState(nextProps)
     }
 
-    navigate2VenueInspect(){
+    navigate2VenueInspect()
+    {
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
@@ -64,7 +67,22 @@ class AddActivity extends Component{
         }
     }
 
-    navigate2CreateGroup(){
+    navigate2Coach()
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'coach',
+                component: Coach,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    navigate2CreateGroup()
+    {
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
@@ -133,15 +151,25 @@ class AddActivity extends Component{
 
     }
 
-    _handlePress3(index) {
+    _handlePress3(index,groupNameButtons) {
 
         if(index!==0){
-            var groupName = this.state.groupNameButtons[index];
+            var groupName = groupNameButtons[index];
             if(groupName=='新建群组'){
                 this.navigate2CreateGroup();
             }else{
-                var groupNameCode = index;
-                this.setState({event:Object.assign(this.state.event,{groupName:groupName})});
+                var groupId = null;
+                var groupName = groupNameButtons[index];
+                var {myGroupList} = this.props;
+                if(myGroupList!==null&&myGroupList!==undefined){
+                    myGroupList.map((group,i)=>{
+                        if(group.groupName==groupName){
+                            groupId = group.groupId;
+                        }
+                    })
+                }
+
+                this.setState({event:Object.assign(this.state.event,{groupName:groupName,groupId:groupId})});
             }
         }
 
@@ -154,10 +182,10 @@ class AddActivity extends Component{
     fetchMyGroupList(){
         this.state.doingFetch=true;
         this.props.dispatch(fetchMyGroupList()).then(()=> {
-            this.props.dispatch(disableGroupOnFresh());
+            this.props.dispatch(disableMyGroupOnFresh());
             this.setState({doingFetch:false,})
         }).catch((e)=>{
-            this.props.dispatch(disableGroupOnFresh());
+            this.props.dispatch(disableMyGroupOnFresh());
             this.setState({doingFetch:false,});
             alert(e)
         });
@@ -171,10 +199,10 @@ class AddActivity extends Component{
             selectTime:false,
             eventTime:null,
             event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:'1',eventMaxMemNum:null,
-                   memberLevel:null,hasCoach:0,hasSparring:0,groupName:null},
+                   memberLevel:null,hasCoach:0,hasSparring:0,groupName:null,groupId:null},
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','私人'],
-            groupNameButtons:['取消','宇宙无敌战队组','骑摩托的部长队组','新建群组'],
+            //groupNameButtons:['取消','宇宙无敌战队组','骑摩托的部长队组','新建群组'],
             //myGroupList:this.props.myGroupList,
         }
     }
@@ -183,7 +211,7 @@ class AddActivity extends Component{
 
         const CANCEL_INDEX = 0;
         const DESTRUCTIVE_INDEX = 1;
-        const groupNameButtons=['取消'];
+        const groupNameButtons=['取消','新建群组'];
 
         var {myGroupList} = this.props;
         if(myGroupList!==null&&myGroupList!==undefined){
@@ -432,63 +460,21 @@ class AddActivity extends Component{
                     </View>:null
                 }
 
-                    {
-                        (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
-                            <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
-                                <View style={{flex:1}}>
-                                    <Text>邀请群组：</Text>
-                                </View>
-                                <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}
-                                                  onPress={()=>{ this.show('actionSheet3'); }}>
-
-                                    {
-                                        this.state.event.memberLevel==null?
-                                            <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                                <Text style={{color:'#888',fontSize:13}}>请选择群组：</Text>
-                                            </View> :
-                                            <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                                <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevel}</Text>
-                                            </View>
-                                    }
-                                    <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                        <Icon name={'angle-right'} size={30} color="#fff"/>
-                                    </View>
-                                    <ActionSheet
-                                        ref={(o) => {
-                                        this.actionSheet3 = o;
-                                    }}
-                                        title="请选择对象水平"
-                                        options={groupNameButtons}
-                                        cancelButtonIndex={CANCEL_INDEX}
-                                        destructiveButtonIndex={DESTRUCTIVE_INDEX}
-                                        onPress={
-                                        (data)=>{ this._handlePress3(data); }
-                                    }
-                                    />
-                                </TouchableOpacity>
-                            </View>:null
-
-                    }
-
-                {
-                    this.state.event.type=='私人'?
-
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                         <View style={{flex:1}}>
-                            <Text>选择群组：</Text>
+                            <Text>邀请群组：</Text>
                         </View>
                         <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
                                           onPress={()=>{ this.show('actionSheet3'); }}>
 
                             {
-                                this.state.event.memberLevel==null?
+                                this.state.event.groupName==null?
                                     <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                         <Text style={{color:'#888',fontSize:13}}>请选择群组：</Text>
                                     </View> :
                                     <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevel}</Text>
+                                        <Text style={{color:'#444',fontSize:13}}>{this.state.event.groupName}</Text>
                                     </View>
                             }
                             <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
@@ -503,14 +489,11 @@ class AddActivity extends Component{
                                 cancelButtonIndex={CANCEL_INDEX}
                                 destructiveButtonIndex={DESTRUCTIVE_INDEX}
                                 onPress={
-                                        (data)=>{ this._handlePress3(data); }
+                                        (data)=>{ this._handlePress3(data,groupNameButtons); }
                                     }
                             />
                         </TouchableOpacity>
-                    </View>:null
-
-                }
-
+                    </View>
 
 
                     <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
@@ -531,7 +514,8 @@ class AddActivity extends Component{
                                     <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
                                                       onPress={()=>{
-                                            this.setState({event:Object.assign(this.state.event,{hasCoach:1})})
+                                            this.setState({event:Object.assign(this.state.event,{hasCoach:1})});
+                                            this.navigate2Coach();
                                         }}
                                     >
                                         <Text style={{color:'#666'}}>是</Text>
@@ -547,7 +531,7 @@ class AddActivity extends Component{
                                     <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
                                                       onPress={()=>{
-                                              this.setState({event:Object.assign(this.state.event,{hasCoach:0})})
+                                              this.setState({event:Object.assign(this.state.event,{hasCoach:0})});
                                           }}
                                     >
                                         <Text style={{color:'#888'}}>否</Text>
@@ -579,7 +563,8 @@ class AddActivity extends Component{
                                         <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
                                                           onPress={()=>{
-                                            this.setState({event:Object.assign(this.state.event,{hasCoach:1})})
+                                            this.setState({event:Object.assign(this.state.event,{hasSparring:1})});
+                                            this.navigate2Coach();
                                         }}
                                         >
                                             <Text style={{color:'#666'}}>是</Text>
@@ -595,12 +580,11 @@ class AddActivity extends Component{
                                         <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
                                                           onPress={()=>{
-                                              this.setState({event:Object.assign(this.state.event,{hasCoach:0})})
+                                              this.setState({event:Object.assign(this.state.event,{hasSparring:0})})
                                           }}
                                         >
                                             <Text style={{color:'#888'}}>否</Text>
                                         </TouchableOpacity>
-
                                 }
 
                             </View>

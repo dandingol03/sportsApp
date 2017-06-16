@@ -128,8 +128,8 @@ export let doLogin=function(username,password){
 }
 
 //上传身份证
-export let uploadPersonIdCard=(path)=> {
-
+export let uploadPersonIdCard=(path,personId)=> {
+    //var personId = personId.toString();
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var data = new FormData();
@@ -137,7 +137,7 @@ export let uploadPersonIdCard=(path)=> {
             //限定为jpg后缀
 
             Proxy.post({
-                url:Config.server+'/uploadPersonIdCard',
+                url:Config.server+'/uploadPersonIdCard?personId='+personId.toString(),
                 headers: {
                     'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
                     'Content-Type':'multipart/form-data',
