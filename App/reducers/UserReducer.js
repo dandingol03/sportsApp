@@ -3,7 +3,8 @@
 import {
     UPDATE_PERSON_INFO,
     ACCESS_TOKEN_ACK,
-    UPDATE_CERTIFICATE
+    UPDATE_CERTIFICATE,
+    UPDATE_USERTYPE
 } from '../constants/UserConstants';
 
 const initialState = {
@@ -28,7 +29,11 @@ let user = (state = initialState, action) => {
             return Object.assign({}, state, {
                 personInfo:data
             })
-            break;
+        case UPDATE_USERTYPE:
+            var  {usertype}=action.payload;
+            return Object.assign({}, state, {
+                usertype:usertype
+            })
 
 
         default:

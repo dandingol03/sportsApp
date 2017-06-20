@@ -19,7 +19,7 @@ import {connect} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Toolbar} from 'react-native-toolbar-wrapper'
+import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 
 var {height, width} = Dimensions.get('window');
 

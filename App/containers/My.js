@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MyGroup from './groupActivity/MyGroup';
+import MyInformation from '../components/my/MyInformation'
 import CustomCourse from '../components/course/CustomCourse';
 
 class Home extends Component{
@@ -41,6 +42,20 @@ class Home extends Component{
             navigator.push({
                 name: 'CustomCourse',
                 component: CustomCourse,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    navigate2MyInformation()
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'MyInformation',
+                component: MyInformation,
                 params: {
 
                 }
@@ -86,7 +101,11 @@ class Home extends Component{
                                 <Text>我的群</Text>
                             </View>
                         </TouchableOpacity>
-                        <View style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}>
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                                          onPress={()=>{
+                            this.navigate2MyInformation();
+                        }}
+                        >
                             <View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:30,padding:5,margin:5,
                             justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'user'} size={20} color="#fff"/>
@@ -95,7 +114,7 @@ class Home extends Component{
                                 <Text>我的资料</Text>
                             </View>
 
-                        </View>
+                        </TouchableOpacity>
                         <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
                             onPress={()=>{
                                 this.navigate2CustomCourse()

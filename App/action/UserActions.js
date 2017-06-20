@@ -7,6 +7,7 @@ import PreferenceStore from '../utils/PreferenceStore';
 import {
     UPDATE_CERTIFICATE,
     UPDATE_PERSON_INFO,
+    UPDATE_USERTYPE,
     ACCESS_TOKEN_ACK
 } from '../constants/UserConstants'
 
@@ -21,6 +22,15 @@ export let updatePersonInfo=(payload)=>{
     return {
         type:UPDATE_PERSON_INFO,
         payload:payload
+    }
+}
+
+export let updateUserType=(usertype)=>{
+    return {
+        type:UPDATE_USERTYPE,
+        payload:{
+            usertype
+        }
     }
 }
 
@@ -96,9 +106,27 @@ export let doLogin=function(username,password){
                 dispatch(updateCertificate({username: username, password: password}));
 
 
-                PreferenceStore.put('username',username);
-                PreferenceStore.put('password',password);
+                PreferenceStore.put('username', username);
+                PreferenceStore.put('password', password);
 
+
+                return Proxy.postes({
+                    url: Config.server + '/svr/request',
+                    headers: {
+                        'Authorization': "Bearer " + accessToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: {
+                        request: 'getUserTypeByPersonId'
+                    }
+                });
+
+            }).then((json)=>{
+
+                if(json.re==1)
+                {
+                    dispatch(updateUserType(json.data))
+                }
 
                 return Proxy.postes({
                     url: Config.server + '/svr/request',
