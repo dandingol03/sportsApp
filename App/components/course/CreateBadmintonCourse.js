@@ -22,6 +22,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import CourseTimeModal from './CourseTimeModal';
 
+import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
+
+const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+const scaleAnimation = new ScaleAnimation();
+const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
+
+
 class CreateBadmintonCourse extends Component{
 
     goBack(){
@@ -325,7 +332,7 @@ class CreateBadmintonCourse extends Component{
                     }}
                     dialogAnimation={scaleAnimation}
                     actions={[
-                       
+
                     ]}
                 >
                     <View style={styles.dialogContentView}>
