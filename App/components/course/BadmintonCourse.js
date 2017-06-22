@@ -13,6 +13,7 @@ import {
     Animated,
     Easing,
     TextInput,
+    InteractionManager
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -35,6 +36,10 @@ var { height, width } = Dimensions.get('window');
 
 const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = 1;
+import{
+    fetchCourses,
+    onCoursesUpdate
+} from '../../action/CourseActions';
 
 class BadmintonCourse extends Component {
 
@@ -83,11 +88,21 @@ class BadmintonCourse extends Component {
         return (
             <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}>
                 <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <View style={{ padding: 4, paddingHorizontal: 12 }}>
+                    <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
 
-                        <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                            {rowData.className}
-                        </Text>
+                        <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
+                            <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
+                                {rowData.className}
+                            </Text>
+                        </View>
+
+
+                        <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
+                            <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
+                            <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
+                                {rowData.perName}
+                            </Text>
+                        </View>
                     </View>
 
                     <View style={{ padding: 3, paddingHorizontal: 12 }}>
@@ -109,7 +124,7 @@ class BadmintonCourse extends Component {
 
                         <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
                             <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.venue}
+                                {rowData.venueName}
                             </Text>
                         </View>
 
@@ -185,25 +200,6 @@ class BadmintonCourse extends Component {
             menuVisible: false,
             memberLevelButtons: ['取消', '无', '体育本科', '国家一级运动员', '国家二级运动员', '国家三级运动员'],
             eventTypeButtons: ['取消', '羽毛球单打', '羽毛球双打', '羽毛球混双', '基础练习'],
-            courses: [
-                {
-                    className: '羽毛球新手班', detail: '带初学者迅速学会羽毛球', cost: 500, classCount: 8, venue: '山东省体育中心-羽毛球俱乐部'
-                },
-                {
-                    className: '羽毛球发球训练班', detail: '带初学者迅速学会羽毛球', cost: 1000, classCount: 4, venue: '山东大学东区新校-羽毛球馆'
-                },
-
-                {
-                    className: '羽毛球高阶训练班', detail: '带初学者迅速学会羽毛球', cost: 700, classCount: 5, venue: '爱菲特羽毛球馆'
-                },
-                {
-                    className: '羽毛球双打训练班', detail: '带初学者迅速学会羽毛球', cost: 1200, classCount: 8, venue: '章丘李宁羽毛球馆'
-                },
-                {
-                    className: '羽毛球', detail: '带初学者迅速学会羽毛球', cost: 300, classCount: 2, venue: '鑫立华羽毛球俱乐部'
-                },
-
-            ],
             filter: {
                 cost: 'ascend'
             }
@@ -216,21 +212,23 @@ class BadmintonCourse extends Component {
         var displayArea = { x: 5, y: 20, width: width, height: height - 25 };
 
 
+
+
         var courseList = null
-        if (this.state.courses && this.state.courses.length > 0) {
+        if (this.props.courses && this.props.courses.length > 0) {
             var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
             var sortedCourses = null;
             //升序
             if (this.state.filter.cost == 'ascend') {
-                sortedCourses = this.state.courses.sort((a, b) => {
+                sortedCourses = this.props.courses.sort((a, b) => {
                     if (a.cost > b.cost)
                         return 1;
                     else
                         return -1;
                 });
             } else if (this.state.filter.cost == 'descend') {
-                sortedCourses = this.state.courses.sort((a, b) => {
+                sortedCourses = this.props.courses.sort((a, b) => {
                     if (a.cost > b.cost)
                         return -1;
                     else
@@ -266,7 +264,7 @@ class BadmintonCourse extends Component {
         if(this.props.userType==0)//用户
             actions.push({value:'课程定制',show:OPTION_NEVER})
         else
-            actions.push({value:'教练创建课程',show:OPTION_NEVER})
+            actions.push({value:'创建课程',show:OPTION_NEVER})
 
         return (
             <View style={styles.container}>
@@ -358,6 +356,18 @@ class BadmintonCourse extends Component {
         )
     }
 
+    componentDidMount()
+    {
+        InteractionManager.runAfterInteractions(() => {
+            this.props.dispatch(fetchCourses()).then((json)=>{
+                if(json.re==1)
+                {
+                    this.props.dispatch(onCoursesUpdate(json.data))
+                }
+            })
+        });
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -380,7 +390,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => {
 
     const props = {
-        userType: parseInt(state.user.usertype)
+        userType: parseInt(state.user.usertype),
+        courses:state.course.courses
     }
     return props
 }

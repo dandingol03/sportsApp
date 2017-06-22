@@ -51,8 +51,6 @@ class CustomCourse extends Component{
                              console.log(i)
                          }}
                 >
-                   <View style={{"flexDirection":"row","justifyContent":"flex-start","alignItems":"center","backgroundColor":"rgba(74,144,226,1)"}}>
-                   </View>
 
 
                 </Toolbar>

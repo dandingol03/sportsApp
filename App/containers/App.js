@@ -33,6 +33,10 @@ import {
     updateRootTab
 }  from '../action/TabActions';
 
+import ToastAndroid from '../native/ToastAndroid';
+import NotificationAndroid from '../native/NotificationAndroid'
+import UpdateAndroid from '../native/UpdateAndroid'
+
 class App extends Component {
 
     _createNavigatorItem(route,icon)
@@ -138,6 +142,12 @@ class App extends Component {
     componentDidMount()
     {
         //TODO:fetch username and password in cache
+        if(Platform.OS=='android')
+        {
+            //ToastAndroid.show('Awesome', ToastAndroid.SHORT);
+            //NotificationAndroid.notify('你有新的apk版本等待更新')
+            UpdateAndroid.check()
+        }
     }
 }
 

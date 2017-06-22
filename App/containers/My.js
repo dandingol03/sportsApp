@@ -17,7 +17,7 @@ import {
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MyGroup from './groupActivity/MyGroup';
+import MyGroup from '../components/groupActivity/MyGroup';
 import MyInformation from '../components/my/MyInformation'
 import CustomCourse from '../components/course/CustomCourse';
 

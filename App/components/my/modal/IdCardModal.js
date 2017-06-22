@@ -34,7 +34,7 @@ class IdCardModal extends Component{
     confirm()
     {
         if(this.props.onConfirm)
-            this.props.onConfirm()
+            this.props.onConfirm(this.state.val)
     }
 
     setTime(){
@@ -80,7 +80,7 @@ class IdCardModal extends Component{
     {
         super(props);
         this.state={
-
+            val:props.val
         }
     }
 
@@ -100,9 +100,10 @@ class IdCardModal extends Component{
                             placeholderTextColor='#888'
                             textInputStyle={{marginLeft:4,color:'#222',fontSize:15}}
                             placeholder=""
+                            val={this.state.val}
                             onChangeText={
                                     (value)=>{
-
+                                        this.setState({val:value})
                                     }}
                             onCancel={
                                     ()=>{

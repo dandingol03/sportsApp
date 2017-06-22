@@ -25,6 +25,11 @@ import {
     fetchActivityList,disableActivityOnFresh
 } from '../../action/ActivityActions';
 
+import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
+/**
+ * 群活动
+ */
+
 class Activity extends Component {
 
     goBack(){
@@ -124,7 +129,7 @@ class Activity extends Component {
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'star'} size={16} color="#66CDAA"/>
                         </View>
-                        <View style={{flex:7,color:'#343434'}}>
+                        <View style={{flex:7}}>
                             <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.type}</Text>
                         </View>
                     </View>
@@ -232,25 +237,18 @@ class Activity extends Component {
         return (
 
             <View style={{flex:1}}>
-                <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
-                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
-                                      onPress={()=>{this.goBack();}}>
-                        <Icon name={'angle-left'} size={30} color="#fff"/>
-                    </TouchableOpacity>
-                    <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>群活动</Text>
-                    </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
-                    </View>
-                </View>
+                <Toolbar width={width} title="群活动" navigator={this.props.navigator}
+                         actions={[]}
+                         onPress={(i)=>{
+                         }}
+                >
 
                     {/*内容区*/}
-                <View style={{flex:5,backgroundColor:'#eee'}}>
-                    <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:5,paddingBottom:5,}}>
-                        <ScrollView
-                            refreshControl={
+                    <View style={{flex:5,backgroundColor:'#eee'}}>
+                        <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:5,paddingBottom:5,}}>
+                            <ScrollView
+                                refreshControl={
                                 <RefreshControl
                                     refreshing={this.state.isRefreshing}
                                     onRefresh={this._onRefresh.bind(this)}
@@ -261,42 +259,38 @@ class Activity extends Component {
                                     progressBackgroundColor="#ffff00"
                                 />
                             }
-                        >
-                            {activityListView}
-                            <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
-                                <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
-                            </View>
-                        </ScrollView>
+                            >
+                                {activityListView}
+                                <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
+                                    <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
+                                </View>
+                            </ScrollView>
 
-                    </Animated.View>
-                </View>
-
-                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
-                position:'absolute',bottom:3}}>
-                    <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
-                    padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity();}}>
-                        <Text style={{color:'#66CDAA',}}>我的活动</Text>
-                    </TouchableOpacity>
-
-                    <View style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
-                      padding:10,margin:5}}>
-                        <Text style={{color:'#66CDAA',}}>我的报名</Text>
+                        </Animated.View>
                     </View>
-                </View>
+
+                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
+                            position:'absolute',bottom:3}}>
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
+                            padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity();}}>
+                            <Text style={{color:'#66CDAA',}}>我的活动</Text>
+                        </TouchableOpacity>
+
+                        <View style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
+                            padding:10,margin:5}}>
+                            <Text style={{color:'#66CDAA',}}>我的报名</Text>
+                        </View>
+                    </View>
 
 
-                <View style={{height:50,width:50,borderRadious:25,position:'absolute',bottom:3,left:width*0.5-25}}>
-                    <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}
-                                      onPress={()=>{this.navigate2AddActivity();}}>
-                        <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
-                    </TouchableOpacity>
-                </View>
+                    <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:3,left:width*0.5-25}}>
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}
+                                          onPress={()=>{this.navigate2AddActivity();}}>
+                            <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
+                        </TouchableOpacity>
+                    </View>
 
-                {/*<TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}*/}
-                                  {/*onPress={()=>{this.navigate2AddActivity();}}>*/}
-                    {/*<Icon name={'plus-circle'} size={35} color='#66CDAA'/>*/}
-                {/*</TouchableOpacity>*/}
-
+                </Toolbar>
 
             </View>
         );
