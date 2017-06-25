@@ -1,8 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+
 
 import React, { Component } from 'react';
 import {
@@ -14,11 +10,12 @@ import {
 
 import App from './App/index';
 
+
 export default class sportsApp extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{ fontSize: 20,textAlign: 'center',margin: 10}}>
+        <Text style={{ fontSize: 20,textAlign: 'center',margin: 12}}>
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
