@@ -209,13 +209,13 @@ class CreateBadmintonCourse extends Component{
                                 placeholderTextColor='#888'
                                 textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
                                 placeholder="请输入课程人数"
-                                val={this.state.course.memberCount}
+                                val={this.state.course.maxNumber}
                                 onChangeText={
                                     (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{memberCount:value})})
+                                        this.setState({course:Object.assign(this.state.course,{maxNumber:value})})
                                     }}
                                 onCancel={
-                                    ()=>{this.setState({course:Object.assign(this.state.course,{memberCount:null})});}
+                                    ()=>{this.setState({course:Object.assign(this.state.course,{maxNumber:null})});}
                                 }
                             />
                         </View>
