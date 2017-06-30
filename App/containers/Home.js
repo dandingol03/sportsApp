@@ -26,7 +26,7 @@ import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Coach from '../components/Coach';
 import BadmintonCourse from '../components/course/BadmintonCourse';
 import Mall from './mall/FirstPage';
-import Activity from './groupActivity/Activity';
+import Activity from '../components/groupActivity/Activity';
 import NewsContentDetail from '../components/news/NewsContentDetail';
 import DateFilter from '../utils/DateFilter';
 import CreateBadmintonCourse from '../components/course/CreateBadmintonCourse';
@@ -283,7 +283,7 @@ class Home extends Component {
                             </View>
 
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:20}}>
-                                <Text style={{color:'#fff',fontSize:18}}>SportsHot</Text>
+                                <Text style={{color:'#fff',fontSize:18}}>羽毛球热</Text>
                             </View>
                             <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'flex-end',paddingRight:20,
                                 alignItems: 'center',}}

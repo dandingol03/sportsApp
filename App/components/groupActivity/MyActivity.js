@@ -20,6 +20,7 @@ var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ActivityDetail from './ActivityDetail';
+import DateFilter from '../../utils/DateFilter';
 
 class MyActivity extends Component {
 
@@ -48,7 +49,7 @@ class MyActivity extends Component {
 
     }
 
-    navigate2ActivityDetail(rowData){
+    navigate2ActivityDetail(rowData,flag){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
@@ -56,6 +57,7 @@ class MyActivity extends Component {
                 component: ActivityDetail,
                 params: {
                     activity:rowData,
+                    flag:this.props.flag,
                 }
             })
         }
@@ -64,38 +66,43 @@ class MyActivity extends Component {
     renderRow(rowData,sectionId,rowId){
 
         var row=(
-            <View style={{flex:1,backgroundColor:'#fff',marginBottom:5,}}>
-                <TouchableOpacity style={{flex:3,padding:10}}
-                      onPress={()=>{
-                                          this.navigate2ActivityDetail(rowData);
+            <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,}}>
+                <View  style={{flex:2}}>
+                    <TouchableOpacity style={{flex:3,padding:10}}
+                                      onPress={()=>{
+                                          this.navigate2ActivityDetail(rowData,);
                                       }}>
-                    <View style={{flexDirection:'row',marginBottom:3}}>
-                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'star'} size={16} color="#66CDAA"/>
+                        <View style={{flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'star'} size={16} color="#66CDAA"/>
+                            </View>
+                            <View style={{flex:7,color:'#343434'}}>
+                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventName}</Text>
+                            </View>
                         </View>
-                        <View style={{flex:7,color:'#343434'}}>
-                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.type}</Text>
+                        <View style={{flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'circle'} size={10} color="#aaa"/>
+                            </View>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlace.name}</Text>
                         </View>
-                    </View>
-                    <View style={{flexDirection:'row',marginBottom:3}}>
-                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        <View style={{flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'circle'} size={10} color="#aaa"/>
+                            </View>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                                {DateFilter.filter(rowData.eventTime,'yyyy-mm-dd hh:mm')}
+                            </Text>
                         </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlace}</Text>
-                    </View>
-                    <View style={{flexDirection:'row',marginBottom:3}}>
-                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        <View style={{flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'circle'} size={10} color="#aaa"/>
+                            </View>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{rowData.eventBrief}</Text>
                         </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>{rowData.eventTime}</Text>
-                    </View>
-                    <View style={{flexDirection:'row',marginBottom:3}}>
-                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'circle'} size={10} color="#aaa"/>
-                        </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{rowData.eventBrief}</Text>
-                    </View>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                </View>
+
 
             </View>
         );
@@ -107,15 +114,13 @@ class MyActivity extends Component {
         this.state = {
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
+
         }
     }
 
     render() {
 
-        var activityList = [
-            {eventBrief:'love sports',type:'基础练习',eventTime:'2017-06-08 10:30',eventPlace:'山大软件园',eventMaxMemNum:5,memberLevel:'业余小白',hasCoach:0,hasSparring:0},
-            {eventBrief:'爱运动爱生活',type:'羽毛球单打',eventTime:'2017-06-08 10:30',eventPlace:'奥体中心羽毛球馆',eventMaxMemNum:3,memberLevel:'中级爱好者',hasCoach:0,hasSparring:0},
-        ]
+        var activityList = this.props.myEvents;
         var activityListView=null;
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         if(activityList!==undefined&&activityList!==null&&activityList.length>0)
@@ -149,7 +154,7 @@ class MyActivity extends Component {
 
                 {/*内容区*/}
                 <View style={{flex:5,backgroundColor:'#eee'}}>
-                    <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:0,paddingBottom:5,}}>
+                    <Animated.View style={{opacity: this.state.fadeAnim,height:height-100,paddingTop:0,paddingBottom:5,}}>
                         <ScrollView
                             refreshControl={
                                 <RefreshControl

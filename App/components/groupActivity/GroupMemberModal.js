@@ -86,7 +86,7 @@ class GroupMemberModal extends Component{
                                 <View style={{flex:3,marginLeft:5}}>
                                     <View style={{flexDirection:'row',marginLeft:10}}>
                                         <Icon name={'user'} size={15} color="pink"/>
-                                        <Text style={{marginLeft:10,color:'#343434'}}>{this.props.member.perName}</Text>
+                                        <Text style={{marginLeft:10,color:'#343434'}}>{this.props.member.username}</Text>
                                     </View>
                                     <View  style={{flexDirection:'row',marginLeft:10,marginTop:5}}>
                                         <Icon name={'mobile'} size={15} color="#87CEFF"/>

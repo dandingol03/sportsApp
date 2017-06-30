@@ -11,6 +11,9 @@ import {
     SET_ACTIVITY_LIST,
     ENABLE_ACTIVITY_ONFRESH,
     DISABLE_ACTIVITY_ONFRESH,
+    SET_MY_EVENTS,
+    SET_MY_TAKEN_EVENTS,
+    SET_VISIBLE_EVENTS,
 } from '../constants/ActivityConstants';
 
 //发布群活动
@@ -96,6 +99,7 @@ export let createGroup=(info)=>{
                         groupName:info.group.groupName,
                         groupBrief:info.group.groupBrief,
                         memberList:info.memberList,
+                        groupMaxMemNum:info.group.groupMaxMemNum,
                     }
                 }
             }).then((json)=>{
@@ -132,6 +136,30 @@ export let setActivityList=(activityList)=>{
     return {
         type:SET_ACTIVITY_LIST,
         activityList:activityList
+    }
+}
+
+//设置可见活动列表
+export let setVisibleEvents=(visibleEvents)=>{
+    return {
+        type:SET_VISIBLE_EVENTS,
+        visibleEvents:visibleEvents
+    }
+}
+
+//设置我发起的活动列表
+export let setMyEvents=(myEvents)=>{
+    return {
+        type:SET_MY_EVENTS,
+        myEvents:myEvents
+    }
+}
+
+//设置我报名活动列表
+export let setMyTakenEvents=(myTakenEvents)=>{
+    return {
+        type:SET_MY_TAKEN_EVENTS,
+        myTakenEvents:myTakenEvents
     }
 }
 
@@ -200,6 +228,8 @@ export let fetchMyGroupList=()=>{
                         dispatch(disableMyGroupOnFresh());
                         resolve({re:1});
                     }
+                }else{
+                    resolve({re:-1,data:'目前未加入任何群组'});
                 }
             }).catch((e)=>{
                 alert(e);
@@ -231,13 +261,27 @@ export let fetchAllGroupList=()=>{
                 }
             }).then((json)=>{
                 if (json.re == 1) {
-                    activityList = json.data;
+                    allGroupList = json.data;
 
                     if (allGroupList!== undefined && allGroupList !== null &&allGroupList.length > 0) {
-                        dispatch(setAllGroupList(allGroupList));
+
+                        var groupList = [];
+                        allGroupList.map((group)=>{
+                            var flag = 0;
+                            group.memberList.map((member)=>{
+                                if(member.personId==state.user.personInfo.personId)
+                                    flag++;
+                            });
+                            if(flag==0){
+                                groupList.push(group);
+                            }
+                        })
+                        dispatch(setAllGroupList(groupList));
                         dispatch(disableAllGroupOnFresh());
                         resolve({re:1});
                     }
+                }else{
+                    resolve({re:-1,data:'目前没有已创建的群组'});
                 }
             }).catch((e)=>{
                 alert(e);
@@ -254,7 +298,7 @@ export let fetchActivityList=()=>{
             var state=getState();
             var accessToken = state.user.accessToken;
 
-            var activityList = null;
+            var allActivityList = null;
 
             Proxy.postes({
                 url: Config.server + '/svr/request',
@@ -269,13 +313,227 @@ export let fetchActivityList=()=>{
                 }
             }).then((json)=>{
                 if (json.re == 1) {
-                    activityList = json.data;
+                    allActivityList = json.data;
+                    var visibleEvents=[];
+                    var myEvents=[];
+                    var myTakenEvents=[];
 
-                    if (allGroupList!== undefined && allGroupList !== null &&allGroupList.length > 0) {
-                        dispatch(setActivityList(activityList));
+                    if (allActivityList!== undefined && allActivityList !== null &&allActivityList.length > 0) {
+                        dispatch(setActivityList(allActivityList));
+                        allActivityList.map((activity,i)=>{
+                            var isMember=0;
+                            activity.memberList.map((member)=>{
+                                if(member.personId==state.user.personInfo.personId)
+                                {
+                                    isMember++;
+                                }
+                            })
+                            //我发起的活动
+                            if(activity.eventManager.personId==state.user.personInfo.personId){
+                                myEvents.push(activity);
+                            }else{
+                                //我报名的活动
+                                if(isMember!==0){
+                                    myTakenEvents.push(activity);
+                                }else{
+                                    //我可选的活动
+                                    if(activity.eventType==0){
+                                        visibleEvents.push(activity);
+                                    }else{
+                                        var myGroupList = state.activity.myGroupList;
+                                        if(myGroupList==null){
+                                            dispatch(fetchMyGroupList()).then(()=>{
+                                                if(activity.groupId!==null){
+                                                    myGroupList.map((group,i)=>{
+                                                        if(group.groupId==activity.groupId){
+                                                            visibleEvents.push(activity);
+                                                        }
+                                                    })
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+
+                        });
+
+                        dispatch(setVisibleEvents(visibleEvents));
+                        dispatch(setMyEvents(myEvents));
+                        dispatch(setMyTakenEvents(myTakenEvents));
+
                         dispatch(disableActivityOnFresh());
                         resolve({re:1});
                     }
+                }else{
+                    resolve({re:-1,data:'目前没有已创建的群活动'});
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+export let fetchEventMemberList=()=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            var eventMemberList = null;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'fetchEventMemberList',
+                    info:{
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    eventMemberList = json.data;
+                    resolve({re:1,data:eventMemberList});
+                }else{
+                    resolve({re:-1,data:'没有已报名的成员'});
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+export let joinGroup=(groupId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'joinGroup',
+                    info:{
+                        groupId:groupId
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:null});
+                }else{
+                    resolve({re:-1,data:' 加入不成功'});
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+export let deleteGroup=(groupId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'deleteGroup',
+                    info:{
+                        groupId:groupId
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:'删除成功'});
+                }else{
+                    resolve({re:-1,data:'删除不成功'});
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+export let exitGroup=(groupId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'exitGroup',
+                    info:{
+                        groupId:groupId
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:'退出成功'});
+                }else{
+                    resolve({re:-1,data:'退出不成功'});
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+export let signUpActivity=(event)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'signUpActivity',
+                    info:{
+                        event:event
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:'报名成功'});
+                }else{
+                    resolve({re:-1,data:'报名不成功'});
                 }
             }).catch((e)=>{
                 alert(e);

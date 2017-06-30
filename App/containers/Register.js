@@ -122,18 +122,29 @@ class Register extends Component{
 
                     PreferenceStore.put('username',info.username);
                     PreferenceStore.put('password',info.password);
-                    var personId = json.data.userid;
 
-                    console.log('注册信息完成');
-                    //TODO：完成身份证上传业务
-                    if(this.state.portrait)
-                    {
-                        var portrait = this.state.portrait.uri;
-                        console.log('下一步上传头像'+portrait);
-                        this.props.dispatch(uploadPersonIdCard(portrait,personId)).then((json)=>{
-                            console.log('上传头像成功')
-                        })
-                    }
+                    Alert.alert(
+                        '信息',
+                        '注册成功！是否要直接登录？',
+                        [
+                            {text: 'OK', onPress: () => this.navigate2Login()},
+                        ]
+                    )
+
+
+
+                    // var personId = json.data.userid;
+                    //
+                    // console.log('注册信息完成');
+                    // //TODO：完成身份证上传业务
+                    // if(this.state.portrait)
+                    // {
+                    //     var portrait = this.state.portrait.uri;
+                    //     console.log('下一步上传头像'+portrait);
+                    //     this.props.dispatch(uploadPersonIdCard(portrait,personId)).then((json)=>{
+                    //         console.log('上传头像成功')
+                    //     })
+                    // }
 
 
                     // Alert.alert(
@@ -176,7 +187,6 @@ class Register extends Component{
                 username:'',
                 password:'',
                 userType:0,
-                genderCode:1,
                 sportLevel:null,
             },
             portrait:null,
@@ -297,30 +307,30 @@ class Register extends Component{
                         backgroundColor:'#fff',marginTop:15,paddingBottom:10}}>
 
 
-                        {
-                            this.state.portrait==null?
-                                <TouchableOpacity style={{flex:1,backgroundColor:'#ddd',justifyContent:'center',alignItems: 'center',
-                                    margin:5,paddingTop:15,paddingBottom:15}}
-                                  onPress={
-                                        ()=>{
-                                           this.showImagePicker();
-                                        }
-                                    }
-                                >
-                                    <Icon size={40} name="camera-retro" color="#fff"></Icon>
-                                </TouchableOpacity>:
-                                <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
-                                    margin:5,paddingTop:15,paddingBottom:15}}
-                                                  onPress={
-                                    ()=>{
-                                       this.showImagePicker();
-                                    }
-                                }>
-                                    <Image resizeMode="stretch" source={this.state.portrait}
-                                           style={{width:75,height:80}}/>
-                                </TouchableOpacity>
+                        {/*{*/}
+                            {/*this.state.portrait==null?*/}
+                                {/*<TouchableOpacity style={{flex:1,backgroundColor:'#ddd',justifyContent:'center',alignItems: 'center',*/}
+                                    {/*margin:5,paddingTop:15,paddingBottom:15}}*/}
+                                  {/*onPress={*/}
+                                        {/*()=>{*/}
+                                           {/*this.showImagePicker();*/}
+                                        {/*}*/}
+                                    {/*}*/}
+                                {/*>*/}
+                                    {/*<Icon size={40} name="camera-retro" color="#fff"></Icon>*/}
+                                {/*</TouchableOpacity>:*/}
+                                {/*<TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',*/}
+                                    {/*margin:5,paddingTop:15,paddingBottom:15}}*/}
+                                                  {/*onPress={*/}
+                                    {/*()=>{*/}
+                                       {/*this.showImagePicker();*/}
+                                    {/*}*/}
+                                {/*}>*/}
+                                    {/*<Image resizeMode="stretch" source={this.state.portrait}*/}
+                                           {/*style={{width:75,height:80}}/>*/}
+                                {/*</TouchableOpacity>*/}
 
-                        }
+                        {/*}*/}
 
                         <View style={{flex:3,padding:5,}}>
                             <View style={{borderBottomWidth:1,borderColor:'#eee',flexDirection:'row'}}>
@@ -503,85 +513,49 @@ class Register extends Component{
                             </View>
 
 
-                            {/*渐入*/}
-                                <Animated.View style={{opacity:this.state.fadeSportsLevel,flexDirection:'row',
-                                        paddingLeft:15,paddingRight:2,paddingVertical:6}}>
+                            {/*/!*渐入*!/*/}
+                            {/*<Animated.View style={{opacity:this.state.fadeSportsLevel,flexDirection:'row',*/}
+                                    {/*paddingLeft:15,paddingRight:2,paddingVertical:6}}>*/}
 
-                                    <View style={{flexDirection:'row',alignItems:'center',flex:1}}>
-                                        <Text style={{color:'#999',fontSize:13}}>
-                                            选择运动水平
-                                        </Text>
-                                    </View>
+                                {/*<View style={{flexDirection:'row',alignItems:'center',flex:1}}>*/}
+                                    {/*<Text style={{color:'#999',fontSize:13}}>*/}
+                                        {/*选择运动水平*/}
+                                    {/*</Text>*/}
+                                {/*</View>*/}
 
-                                    <TouchableOpacity style={{flexDirection:'row',flex:2,justifyContent:'center',alignItems:'center',
-                                        }}
-                                                      onPress={()=>{
-                                      this.showActionSheet()
-                                    }}>
+                                {/*<TouchableOpacity style={{flexDirection:'row',flex:1,justifyContent:'center',alignItems:'center',*/}
+                                    {/*}}*/}
+                                                  {/*onPress={()=>{*/}
+                                  {/*this.showActionSheet()*/}
+                                {/*}}>*/}
 
 
-                                        {
-                                            this.state.info.sportLevel?
-                                                <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
-                                                        paddingHorizontal:6,}}>
-                                                    <Text style={{fontSize:12,color:'#333'}}>
-                                                        {this.state.sportLevelStr}
-                                                    </Text>
-                                                </View>:
-                                                <View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,
-                                                    paddingHorizontal:20,}}>
-                                                    <Text style={{fontSize:12,color:'#333'}}>无</Text>
-                                                </View>
-                                        }
+                                    {/*{*/}
+                                        {/*this.state.info.sportLevel?*/}
+                                            {/*<View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,*/}
+                                                    {/*paddingHorizontal:6,}}>*/}
+                                                {/*<Text style={{fontSize:12,color:'#333'}}>*/}
+                                                    {/*{this.state.sportLevelStr}*/}
+                                                {/*</Text>*/}
+                                            {/*</View>:*/}
+                                            {/*<View style={{borderColor:'#008B00',borderRadius:4,borderWidth:1,padding:5,*/}
+                                                {/*paddingHorizontal:20,}}>*/}
+                                                {/*<Text style={{fontSize:12,color:'#333'}}>无</Text>*/}
+                                            {/*</View>*/}
+                                    {/*}*/}
 
-                                    </TouchableOpacity>
+                                {/*</TouchableOpacity>*/}
 
-                                </Animated.View>
+                            {/*</Animated.View>*/}
 
                             <View style={{height:20,flexDirection:'row',flex:1}}>
 
                             </View>
 
 
-
-
-
                         </View>
                     </View>
 
-
-
-                    {
-                        this.state.info.genderCode==1?
-                            <View  style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                                    backgroundColor:'#fff',marginTop:15}}>
-                                <View style={{flex:1,padding:8,justifyContent:'center',alignItems: 'center',borderRightWidth:1,borderColor:'#eee'}}>
-                                    <Text style={{color:'#008B00'}}>男</Text>
-                                </View>
-                                <TouchableOpacity style={{flex:1,padding:8,justifyContent:'center',alignItems: 'center',}}
-                                onPress={()=>{
-                                    this.setState({info:Object.assign(this.state.info,{genderCode:2})});
-                                }
-                                }>
-                                    <Text style={{color:'#aaa'}}>女</Text>
-                                </TouchableOpacity>
-                            </View>:
-                            <View  style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                                   backgroundColor:'#fff',marginTop:15}}>
-                                <TouchableOpacity style={{flex:1,padding:8,justifyContent:'center',alignItems: 'center',
-                                    borderRightWidth:1,borderColor:'#eee'}}
-                                                  onPress={()=>{
-                                    this.setState({info:Object.assign(this.state.info,{genderCode:1})});
-                                }
-                                }>
-                                    <Text style={{color:'#aaa'}}>男</Text>
-                                </TouchableOpacity>
-                                <View style={{flex:1,padding:8,justifyContent:'center',alignItems: 'center',}}>
-                                    <Text style={{color:'#008B00'}}>女</Text>
-                                </View>
-                            </View>
-
-                    }
 
                     <TouchableOpacity style={{height:30,width:width*0.4,marginLeft:width*0.3,marginTop:20,justifyContent:'center',alignItems: 'center',
                         borderRadius:3,backgroundColor:'#66CDAA'}}

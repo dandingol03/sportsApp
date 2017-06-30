@@ -7,8 +7,15 @@ import PreferenceStore from '../utils/PreferenceStore';
 import {
     UPDATE_CERTIFICATE,
     UPDATE_PERSON_INFO,
-    ACCESS_TOKEN_ACK
+    UPDATE_USERTYPE,
+    ACCESS_TOKEN_ACK,
+    ON_USER_NAME_UPDATE,
+    ON_PER_NAME_UPDATE,
+    ON_WECHAT_UPDATE,
+    ON_PER_ID_CARD_UPDATE
 } from '../constants/UserConstants'
+
+
 
 export let updateCertificate=(payload)=>{
     return {
@@ -21,6 +28,15 @@ export let updatePersonInfo=(payload)=>{
     return {
         type:UPDATE_PERSON_INFO,
         payload:payload
+    }
+}
+
+export let updateUserType=(usertype)=>{
+    return {
+        type:UPDATE_USERTYPE,
+        payload:{
+            usertype
+        }
     }
 }
 
@@ -38,6 +54,180 @@ let getAccessToken= (accessToken)=>{
             auth:'failed'
         }
 }
+
+//用户名更改
+export let updateUsername=(username)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'updateUsername',
+                    info:{
+                        username:username
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let onUsernameUpdate=(username)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_USER_NAME_UPDATE,
+                payload: {
+                    username
+                }
+        })
+    }
+}
+
+//真实姓名更改
+export let updatePerName=(perName)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'updatePerName',
+                    info:{
+                        perName:perName
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+//微信号更改
+export let updateWeChat=(wechat)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'updateWeChat',
+                    info:{
+                        wechat:wechat
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+//身份证证件号更改
+export let updatePerIdCard=(perIdCard)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'updatePerIdCard',
+                    info:{
+                        perIdCard:perIdCard
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let onPerNameUpdate=(perName)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_PER_NAME_UPDATE,
+            payload: {
+                perName
+            }
+        })
+    }
+}
+
+export let onWeChatUpdate=(wechat)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_WECHAT_UPDATE,
+            payload: {
+                wechat
+            }
+        })
+    }
+}
+
+
+export let onPerIdCardUpdate=(perIdCard)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_PER_ID_CARD_UPDATE,
+            payload: {
+                perIdCard
+            }
+        })
+    }
+}
+
 
 //用户注册
 export let registerUser=(payload)=>{
@@ -96,9 +286,27 @@ export let doLogin=function(username,password){
                 dispatch(updateCertificate({username: username, password: password}));
 
 
-                PreferenceStore.put('username',username);
-                PreferenceStore.put('password',password);
+                PreferenceStore.put('username', username);
+                PreferenceStore.put('password', password);
 
+
+                return Proxy.postes({
+                    url: Config.server + '/svr/request',
+                    headers: {
+                        'Authorization': "Bearer " + accessToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: {
+                        request: 'getUserTypeByPersonId'
+                    }
+                });
+
+            }).then((json)=>{
+
+                if(json.re==1)
+                {
+                    dispatch(updateUserType(json.data))
+                }
 
                 return Proxy.postes({
                     url: Config.server + '/svr/request',

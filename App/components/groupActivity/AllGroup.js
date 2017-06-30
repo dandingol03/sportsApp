@@ -21,7 +21,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import GroupDetail from './GroupDetail';
 import {
-    fetchAllGroupList,disableAllGroupOnFresh
+    fetchAllGroupList,disableAllGroupOnFresh,joinGroup
 } from '../../action/ActivityActions';
 
 class AllGroup extends Component{
@@ -51,14 +51,16 @@ class AllGroup extends Component{
 
     }
 
-    navigate2GroupDetail(){
+    navigate2GroupDetail(group){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
                 name:'group_detail',
                 component: GroupDetail,
                 params: {
-
+                    groupInfo:group.groupInfo,
+                    memberList:group.memberList,
+                    flag:'其他组详情'
                 }
             })
         }
@@ -70,7 +72,7 @@ class AllGroup extends Component{
         var row=(
             <TouchableOpacity style={{flex:1,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,padding:10}}
                               onPress={()=>{
-                    this.navigate2GroupDetail();
+                    this.navigate2GroupDetail(rowData);
                 }}>
                 <View style={{flex:1,}}>
                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
@@ -84,13 +86,27 @@ class AllGroup extends Component{
                 </View>
                 <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',margin:10,borderWidth:1,borderColor:'#66CDAA',borderRadius:5}}
                                   onPress={()=>{
-                   alert('cc');
+                                      this.joinGroup(rowData.groupInfo.groupId);
                 }}>
                     <Text style={{color:'#66CDAA',fontSize:12,}}>加入</Text>
                 </TouchableOpacity>
             </TouchableOpacity>
         );
         return row;
+    }
+
+    joinGroup(groupId)
+    {
+        this.props.dispatch(joinGroup(groupId)).then((json)=> {
+           if(json.re==1){
+               alert('加入成功！');
+               this.props.setMyGroupList();
+               this.goBack();
+           }
+        }).catch((e)=>{
+            alert(e)
+        });
+
     }
 
     fetchData(){
@@ -214,7 +230,17 @@ class AllGroup extends Component{
                                      />
                                     }
                     >
+
+                        {
+                            groupListView==null?
+                                <View style={{justifyContent:'center',alignItems: 'center',marginTop:20}}>
+                                    <Text style={{color:'#343434'}}>还没有已创建的群组</Text>
+                                </View> :
+                               null
+                        }
+
                         {groupListView}
+
                     </ScrollView>
                 </Animated.View>
             </View>

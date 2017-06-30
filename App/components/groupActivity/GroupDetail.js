@@ -22,7 +22,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import GridView from 'react-native-grid-view';
 import GroupMemberModal from './GroupMemberModal';
 import {
-   searchMember,
+   searchMember,deleteGroup,exitGroup
 } from '../../action/ActivityActions';
 
 class GroupDetail extends Component{
@@ -61,7 +61,7 @@ class GroupDetail extends Component{
                         <Image resizeMode="stretch" style={{height:50,width:50,borderRadius:10,}} source={rowData.portrait}/>
                     </View>
                     <View>
-                        <Text numberOfLines={1}>{rowData.perName}</Text>
+                        <Text numberOfLines={1}>{rowData.username}</Text>
                     </View>
                 </View>
             );
@@ -75,6 +75,29 @@ class GroupDetail extends Component{
             }else{
                 alert('该用户未注册，是否邀请');
                 //TODO:微信分享邀请好友
+            }
+        });
+    }
+
+    deleteGroup(groupId)
+    {
+        this.props.dispatch(deleteGroup(groupId)).then((json)=>{
+            if(json.re==1){
+                alert('删除成功');
+                this.props.setMyGroupList();
+                this.goBack();
+            }
+        });
+
+    }
+
+    exitGroup(groupId)
+    {
+        this.props.dispatch(exitGroup(groupId)).then((json)=>{
+            if(json.re==1){
+                alert('退群成功');
+                this.props.setMyGroupList();
+                this.goBack();
             }
         });
     }
@@ -98,6 +121,8 @@ class GroupDetail extends Component{
         var memberList = this.state.memberList;
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         var dataSource=ds.cloneWithRows(memberList);
+        var flag = this.props.flag;
+        var {personInfo}=this.props;
 
         return (
             <View style={{flex:1, backgroundColor:'#eee',}}>
@@ -177,12 +202,29 @@ class GroupDetail extends Component{
                         </View>
                     </View>
 
+                    {
+
+                        (flag=='我的组详情'&&this.props.groupInfo.groupManager==personInfo.personId)?
                     <TouchableOpacity style={{height:30,backgroundColor:'#EE6A50',margin:20,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                       onPress={()=>{
-
+                                            this.deleteGroup(this.props.groupInfo.groupId);
                                       }}>
                         <Text style={{color:'#fff',fontSize:15}}>删除并退出</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>:null
+
+                    }
+
+                    {
+                        (flag=='我的组详情'&&this.props.groupInfo.groupManager!==personInfo.personId)?
+                            <TouchableOpacity style={{height:30,backgroundColor:'#EE6A50',margin:20,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
+                                              onPress={()=>{
+                                                  this.exitGroup(this.props.groupInfo.groupId);
+                                      }}>
+                                <Text style={{color:'#fff',fontSize:15}}>退出</Text>
+                            </TouchableOpacity>:null
+
+                    }
+
 
                 </ScrollView>
 
@@ -231,6 +273,7 @@ var styles = StyleSheet.create({
 
 module.exports = connect(state=>({
         accessToken:state.user.accessToken,
+        personInfo:state.user.personInfo,
         groupList:state.activity.groupList,
         groupOnFresh:state.activity.groupOnFresh
     })

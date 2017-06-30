@@ -23,7 +23,7 @@ import CreateGroup from './CreateGroup';
 import GroupDetail from './GroupDetail';
 import AllGroup from './AllGroup';
 import {
-    fetchMyGroupList,disableMyGroupOnFresh
+    fetchMyGroupList,disableMyGroupOnFresh,enableMyGroupOnFresh
 } from '../../action/ActivityActions';
 
 class MyGroup extends Component{
@@ -51,6 +51,8 @@ class MyGroup extends Component{
             ).start();
         }.bind(this), 500);
 
+        this.props.dispatch(enableMyGroupOnFresh());
+
     }
 
     showPopover(ref){
@@ -66,10 +68,8 @@ class MyGroup extends Component{
         this.setState({menuVisible: false});
     }
 
-    setMyGroupList(newGroup){
-        var groupList = this.state.groupList;
-        groupList.push(newGroup);
-        this.setState({groupList:groupList});
+    setMyGroupList(){
+        this.props.dispatch(enableMyGroupOnFresh());
     }
 
     navigate2CreateGroup(){
@@ -92,7 +92,7 @@ class MyGroup extends Component{
                 name: 'all_group',
                 component: AllGroup,
                 params: {
-
+                    setMyGroupList:this.setMyGroupList.bind(this),
                 }
             })
         }
@@ -105,8 +105,10 @@ class MyGroup extends Component{
                 name:'group_detail',
                 component: GroupDetail,
                 params: {
+                    setMyGroupList:this.setMyGroupList.bind(this),
                     groupInfo:group.groupInfo,
                     memberList:group.memberList,
+                    flag:'我的组详情'
                 }
             })
         }
@@ -147,9 +149,14 @@ class MyGroup extends Component{
     fetchData(){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
-        this.props.dispatch(fetchMyGroupList()).then(()=> {
-            this.props.dispatch(disableMyGroupOnFresh());
-            this.setState({doingFetch:false,isRefreshing:false})
+        this.props.dispatch(fetchMyGroupList()).then((json)=> {
+            if(json.re==1){
+                this.props.dispatch(disableMyGroupOnFresh());
+                this.setState({doingFetch:false,isRefreshing:false})
+            }else{
+                this.props.dispatch(disableMyGroupOnFresh());
+                this.setState({doingFetch:false,isRefreshing:false})
+            }
         }).catch((e)=>{
             this.props.dispatch(disableMyGroupOnFresh());
             this.setState({doingFetch:false,isRefreshing:false});
@@ -225,7 +232,15 @@ class MyGroup extends Component{
                                      />
                                     }
                     >
+                        {
+                            groupListView==null?
+                                <View style={{justifyContent:'center',alignItems: 'center',marginTop:20}}>
+                                    <Text style={{color:'#343434'}}>尚未加入任何群组</Text>
+                                </View> :null
+                        }
+
                         {groupListView}
+
                     </ScrollView>
                 </Animated.View>
 

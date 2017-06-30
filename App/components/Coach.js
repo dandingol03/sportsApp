@@ -237,7 +237,7 @@ class Coach extends Component {
                 </View>
 
 
-                {/*分类*/}
+                {/* 分类 */}
                 <View style={{padding:8,paddingHorizontal:4,width:width,flexDirection:'row',backgroundColor:'#eee'}}>
                     <View style={{flex:1,justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
                         <View style={{width:48,height:48 ,backgroundColor:'#0adc5e',justifyContent:'center',

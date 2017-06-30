@@ -7,6 +7,8 @@ import pageState from './PageStateReducer';
 import activityReducer from './ActivityReducer';
 import mapReducer from './MapReducer';
 import newsThemeReducer from './NewsThemeReducer';
+import courseReducer from './CourseReducer';
+
 
 export default rootReducer = combineReducers({
     tab:tabReducer,
@@ -14,5 +16,6 @@ export default rootReducer = combineReducers({
     page:pageState,
     activity:activityReducer,
     map:mapReducer,
-    newsTheme:newsThemeReducer
+    newsTheme:newsThemeReducer,
+    course:courseReducer
 })

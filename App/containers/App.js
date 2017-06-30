@@ -1,6 +1,4 @@
-/**
- * Created by dingyiming on 2017/5/26.
- */
+
 import React, { Component } from 'react';
 import {
     StyleSheet,
@@ -34,6 +32,10 @@ import Register from './Register';
 import {
     updateRootTab
 }  from '../action/TabActions';
+
+import ToastAndroid from '../native/ToastAndroid';
+import NotificationAndroid from '../native/NotificationAndroid'
+import UpdateAndroid from '../native/UpdateAndroid'
 
 class App extends Component {
 
@@ -140,6 +142,12 @@ class App extends Component {
     componentDidMount()
     {
         //TODO:fetch username and password in cache
+        if(Platform.OS=='android')
+        {
+            //ToastAndroid.show('Awesome', ToastAndroid.SHORT);
+            //NotificationAndroid.notify('你有新的apk版本等待更新')
+            UpdateAndroid.check()
+        }
     }
 }
 

@@ -32,7 +32,13 @@ class CourseTimeModal extends Component{
     }
 
     setTime(){
-        var time = {id:this.props.timeListLength+1,day:this.state.selectDay,startTime:this.state.startTime,endTime:this.state.endTime}
+        var dayMap=['周一','周二','周三','周四','周五','周六','周日']
+        var day=null
+        dayMap.map((item,i)=>{
+            if(item==this.state.selectDay)
+                day=i
+        })
+        var time = {id:this.props.timeListLength+1,day:day+1,startTime:this.state.startTime,endTime:this.state.endTime}
         this.close();
         if(this.props.setTime!==undefined&&this.props.setTime!==null)
         {
@@ -232,10 +238,9 @@ class CourseTimeModal extends Component{
                                         dateInput:{height:30,borderWidth:0},
                                         dateTouchBody:{marginRight:25,height:22,borderWidth:0},
                                     }}
-                                        mode="datetime"
+                                        mode="time"
                                         placeholder="选择"
-                                        format="YYYY-MM-DD HH:mm"
-                                        minDate={new Date()}
+                                        format="HH:mm"
                                         confirmBtnText="确认"
                                         cancelBtnText="取消"
                                         showIcon={true}
@@ -244,7 +249,7 @@ class CourseTimeModal extends Component{
                                         if(this.state.selectStartTime==false)
                                         {
                                             this.state.selectStartTime=true;
-                                            var startTime = DateFilter.filter(date,'hh:mm');
+                                            var startTime = date
                                             //var startTime = date.getHours().toString()+':'+date.getMinutes()().toString();
                                             this.setState({startTime:startTime,selectStartTime:false})
                                         }else{
@@ -280,10 +285,9 @@ class CourseTimeModal extends Component{
                                         dateInput:{height:30,borderWidth:0},
                                         dateTouchBody:{marginRight:25,height:22,borderWidth:0},
                                     }}
-                                        mode="datetime"
+                                        mode="time"
                                         placeholder="选择"
-                                        format="YYYY-MM-DD HH:mm"
-                                        minDate={new Date()}
+                                        format="HH:mm"
                                         confirmBtnText="确认"
                                         cancelBtnText="取消"
                                         showIcon={true}
@@ -292,7 +296,7 @@ class CourseTimeModal extends Component{
                                         if(this.state.selectEndTime==false)
                                         {
                                             this.state.selectEndTime=true;
-                                            var endTime = DateFilter.filter(date,'hh:mm');
+                                            var endTime = date
                                             //var startTime = date.getHours().toString()+':'+date.getMinutes()().toString();
                                             this.setState({endTime:endTime,selectEndTime:false})
                                         }else{

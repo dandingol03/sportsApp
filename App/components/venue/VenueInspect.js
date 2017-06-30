@@ -14,6 +14,7 @@ import {
     TouchableOpacity,
     RefreshControl,
     Animated,
+    DeviceEventEmitter,
     Easing,
 } from 'react-native';
 
@@ -43,14 +44,6 @@ class VenueInspect extends Component{
             navigator.pop();
         }
     }
-
-    goBack(){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.pop();
-        }
-    }
-
 
     constructor(props) {
         super(props);
@@ -167,12 +160,19 @@ class VenueInspect extends Component{
                                 </View>
                             </View>
 
-                            <View style={{width:60,marginLeft:15,marginRight:10,flexDirection:'row',alignItems:'center',borderRadius:3,padding:4,paddingHorizontal:6,
-                                        backgroundColor:'#008B00',justifyContent:'center'}}>
+                            <TouchableOpacity style={{width:60,marginLeft:15,marginRight:10,flexDirection:'row',alignItems:'center',borderRadius:3,padding:4,paddingHorizontal:6,
+                                        backgroundColor:'#008B00',justifyContent:'center'}}
+                                onPress={
+                                    ()=>{
+                                        DeviceEventEmitter.emit('on_venue_confirm',this.state.detail)
+                                        this.goBack();
+                                        this.props.setEventPlace(this.state.detail);
+                                    }}
+                            >
                                 <Text style={{color:'#fff',fontSize:13,fontWeight:'bold'}}>
-                                    去导航
+                                    确认
                                 </Text>
-                            </View>
+                            </TouchableOpacity>
 
 
 

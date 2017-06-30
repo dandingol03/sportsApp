@@ -75,15 +75,15 @@ class CustomCourse extends Component{
     render()
     {
 
-        var displayArea = {x: 5, y: 20, width:width, height: height - 25};
+        var displayArea = {x: 6, y: 4, width:width, height: height - 25};
         const shadowOpt = {
             width:width-13,
-            height:125,
+            height:124,
             color:"#000",
             border:2,
-            radius:3,
+            radius:0,
             opacity:0.2,
-            x:2,
+            x:4,
             y:1.5,
             style:{marginVertical:5}
         }
@@ -105,7 +105,8 @@ class CustomCourse extends Component{
 
                     <View style={{justifyContent:'center',padding:5}}>
                         <BoxShadow setting={shadowOpt}>
-                            <TouchableOpacity style={{width:width-8,padding:4,backgroundColor:'#fff',flexDirection:'column',paddingBottom:7}}
+                            <TouchableOpacity style={{width:width-8,padding:4,backgroundColor:'#fff',flexDirection:'column',
+                                    paddingBottom:7,borderWidth:1,borderColor:'#eee'}}
                                               onPress={()=>{
                                     this.navigate2MadeCustomCourseDetail()
                                 }}
