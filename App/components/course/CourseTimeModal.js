@@ -220,7 +220,7 @@ class CourseTimeModal extends Component{
                                 <Text style={{color:'#343434'}}>开始时间:</Text>
                             </View>
                             <View style={{flex:2,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
-                            backgroundColor:'#eee',borderRadius:10,margin:5}}>
+                                backgroundColor:'#eee',borderRadius:10,margin:5}}>
                                 {
                                     this.state.startTime==null?
                                         <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>

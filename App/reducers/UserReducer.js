@@ -8,7 +8,8 @@ import {
     ON_USER_NAME_UPDATE,
     ON_PER_NAME_UPDATE,
     ON_WECHAT_UPDATE,
-    ON_PER_ID_CARD_UPDATE
+    ON_PER_ID_CARD_UPDATE,
+    ON_RELATIVE_PERSON_UPDATE
 } from '../constants/UserConstants';
 
 const initialState = {
@@ -67,6 +68,11 @@ let user = (state = initialState, action) => {
             var  {perIdCard}=action.payload;
             return Object.assign({}, state, {
                 personInfo:Object.assign(state.personInfo,{perIdCard:perIdCard})
+            })
+        case ON_RELATIVE_PERSON_UPDATE:
+            var  {persons}=action.payload;
+            return Object.assign({}, state, {
+                relative:persons
             })
 
         default:
