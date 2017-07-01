@@ -33,15 +33,15 @@ import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 
 class Activity extends Component {
 
-    goBack(){
-        const { navigator } = this.props;
-        if(navigator) {
+    goBack() {
+        const {navigator} = this.props;
+        if (navigator) {
             navigator.pop();
         }
     }
 
     _onRefresh() {
-        this.setState({ isRefreshing: true, fadeAnim: new Animated.Value(0) });
+        this.setState({isRefreshing: true, fadeAnim: new Animated.Value(0)});
         setTimeout(function () {
             this.setState({
                 isRefreshing: false,
@@ -57,6 +57,11 @@ class Activity extends Component {
         }.bind(this), 500);
         this.props.dispatch(enableActivityOnFresh());
 
+    }
+
+    setMyActivityList()
+    {
+        this.props.dispatch(enableActivityOnFresh());
     }
 
     navigate2AddActivity(){

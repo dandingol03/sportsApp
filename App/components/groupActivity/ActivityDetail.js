@@ -25,6 +25,9 @@ var {height, width} = Dimensions.get('window');
 import DateFilter from '../../utils/DateFilter';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import GridView from 'react-native-grid-view';
+import {
+    deleteActivity,exitActivity,
+} from '../../action/ActivityActions';
 
 class ActivityDetail extends Component{
 
@@ -33,6 +36,29 @@ class ActivityDetail extends Component{
         if(navigator) {
             navigator.pop();
         }
+    }
+
+    deleteActivity(eventId)
+    {
+        this.props.dispatch(deleteActivity(eventId)).then((json)=>{
+            if(json.re==1){
+                alert('活动撤销成功！');
+                this.props.setMyActivityList();
+                this.goBack();
+            }
+        });
+
+    }
+
+    exitActivity(event)
+    {
+        this.props.dispatch(exitActivity(event)).then((json)=>{
+            if(json.re==1){
+                alert('已成功退出活动！');
+                this.props.setMyActivityList();
+                this.goBack();
+            }
+        });
     }
 
     renderRow(rowData)
@@ -186,17 +212,21 @@ class ActivityDetail extends Component{
 
                     {
                         flag=='我的活动'?
-                            <View style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
+                            <TouchableOpacity style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
+                            padding:10,borderTopWidth:1,borderColor:'#eee'}}
+                                              onPress={()=>{this.deleteActivity(activity.eventId);}}>
                                 <Text style={{color:'#66CDAA',}}>撤销</Text>
-                            </View>:null
+                            </TouchableOpacity>:null
 
                     }
 
                     {
                         flag=='我的报名'?
-                            <View style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
+                            <TouchableOpacity style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
+                            padding:10,borderTopWidth:1,borderColor:'#eee'}}
+                                              onPress={()=>{this.exitActivity(activity);}}>
                                 <Text style={{color:'#66CDAA',}}>退出</Text>
-                            </View>:null
+                            </TouchableOpacity>:null
 
                     }
 

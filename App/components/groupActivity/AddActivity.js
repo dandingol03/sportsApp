@@ -110,8 +110,8 @@ class AddActivity extends Component{
 
     release()
     {
-        var info = this.state.event;
-        this.props.dispatch(releaseActivity(info)).then((json)=>{
+        var event = this.state.event;
+        this.props.dispatch(releaseActivity(event)).then((json)=>{
             if(json.re==1){
                 console.log('发布新活动');
                 alert('新活动创建成功！');
@@ -174,17 +174,19 @@ class AddActivity extends Component{
                 this.navigate2CreateGroup();
             }else{
                 var groupId = null;
+                var groupNum = null;
                 var groupName = groupNameButtons[index];
                 var {myGroupList} = this.props;
                 if(myGroupList!==null&&myGroupList!==undefined){
                     myGroupList.map((group,i)=>{
-                        if(group.groupName==groupName){
-                            groupId = group.groupId;
+                        if(group.groupInfo.groupName==groupName){
+                            groupId = group.groupInfo.groupId;
+                            groupNum =  group.groupInfo.groupNowMemNum;
                         }
                     })
                 }
 
-                this.setState({event:Object.assign(this.state.event,{groupName:groupName,groupId:groupId})});
+                this.setState({event:Object.assign(this.state.event,{groupName:groupName,groupId:groupId,groupNum:groupNum})});
             }
         }
 
@@ -214,11 +216,9 @@ class AddActivity extends Component{
             selectTime:false,
             eventTime:null,
             event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
-                   memberLevel:null,hasCoach:0,hasSparring:0,groupName:null,groupId:null},
+                   memberLevel:null,hasCoach:0,hasSparring:0,groupName:null,groupId:null,groupNum:null},
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','私人'],
-            //groupNameButtons:['取消','宇宙无敌战队组','骑摩托的部长队组','新建群组'],
-            //myGroupList:this.props.myGroupList,
         }
     }
 
@@ -396,7 +396,7 @@ class AddActivity extends Component{
                                     {
                                         this.state.event.eventPlace==null?
                                             <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>:
-                                            <Text style={{color:'#888',fontSize:13}}>{this.state.event.eventPlace}</Text>
+                                            <Text style={{color:'#222',fontSize:13}}>{this.state.event.eventPlace}</Text>
                                     }
                                 </View>
                                 <View style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20}}>
