@@ -18,26 +18,33 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
+import _ from 'lodash'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Popover from 'react-native-popover'
-import TextInputWrapper from 'react-native-text-input-wrapper'
-import MadeCustomCourse from './MadeCustomCourse';
-import CreateBadmintonCourse from './CreateBadmintonCourse';
-import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
+
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
+import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
+const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+const scaleAnimation = new ScaleAnimation();
+const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
+
 import {BoxShadow,BorderShadow} from 'react-native-shadow';
+import AddRelativeModal from './AddRelativeModal';
+
+
 var { height, width } = Dimensions.get('window');
 
 const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = 1;
 import{
     fetchPersonRelative,
+    addBadmintonClassMermberInfo
 } from '../../action/CourseActions';
 import{
-    onRelativePersonsUpdate
+    onRelativePersonsUpdate,
+    addRelativePerson
 } from '../../action/UserActions';
 
 class BadmintonCourseSignUp extends Component {
@@ -60,10 +67,20 @@ class BadmintonCourseSignUp extends Component {
             filter: {
                 cost: 'ascend'
             },
-            relative:props.relative
+            relative:props.relative,
+            isSelfCheck:true
         };
     }
 
+    componentWillReceiveProps(nextProps)
+    {
+        this.setState(nextProps)
+    }
+
+
+    showScaleAnimationDialog() {
+        this.scaleAnimationDialog.show();
+    }
 
     render() {
 
@@ -79,7 +96,7 @@ class BadmintonCourseSignUp extends Component {
             style:{marginVertical:5}
         }
 
-        var {classInfo}=this.props
+        var {classInfo,username}=this.props
         var {relative}=this.state
 
         var schedules=[]
@@ -108,24 +125,63 @@ class BadmintonCourseSignUp extends Component {
         })
 
         var persons=[]
-        relative.map((person,i)=>{
-            persons.push(
-                <TouchableOpacity key={i} style={{flexDirection:'row',padding:4,paddingHorizontal:10,marginTop:4}}
-                    onPress={()=>{
-                        //TODO:选中
-                    }}
-                >
+        persons.push(
+            <TouchableOpacity key={-1} style={{flexDirection:'row',padding:4,paddingHorizontal:10,marginTop:4}}
+                              onPress={()=>{
+                                  if(this.state.isSelfCheck==true)
+                                      this.setState({isSelfCheck:false})
+                                  else
+                                      this.setState({isSelfCheck:true})
+                    }}>
 
-                    <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10}}>
-                        <Text>{person.username}</Text>
-                    </View>
-                    <View style={{flex:1}}></View>
-                    <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10,width:70}}>
-                        <Icon name={'square-o'} size={20} color="#666"/>
-                    </View>
-                </TouchableOpacity>
-            )
-        })
+                <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10}}>
+                    <Text>{username}</Text>
+                </View>
+                <View style={{flex:1}}></View>
+                <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10,width:70}}>
+                    {
+                        this.state.isSelfCheck==true?
+                            <Icon name={'check-square-o'} size={20} color="#666"/>:
+                            <Icon name={'square-o'} size={20} color="#666"/>
+                    }
+                </View>
+            </TouchableOpacity>
+        )
+        if(relative&&relative.length>0)
+        {
+            relative.map((person,i)=>{
+                persons.push(
+                    <TouchableOpacity key={i} style={{flexDirection:'row',padding:4,paddingHorizontal:10,marginTop:4}}
+                                      onPress={()=>{
+                         var _relative=_.cloneDeep(relative)
+                         _relative.map((_person,j)=>{
+                             if(_person.personId==person.personId)
+                             {
+                                 if(_person.checked==true)
+                                     _person.checked=false
+                                 else
+                                     _person.checked=true
+                             }
+                         })
+                         this.setState({relative:_relative})
+                    }}
+                    >
+
+                        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10}}>
+                            <Text>{person.username}</Text>
+                        </View>
+                        <View style={{flex:1}}></View>
+                        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10,width:70}}>
+                            {
+                                person.checked==true?
+                                    <Icon name={'check-square-o'} size={20} color="#666"/>:
+                                    <Icon name={'square-o'} size={20} color="#666"/>
+                            }
+                        </View>
+                    </TouchableOpacity>
+                )
+            })
+        }
 
         return(
             <View style={styles.container}>
@@ -223,8 +279,17 @@ class BadmintonCourseSignUp extends Component {
                         <View style={{flexDirection:'row',padding:10,alignItems:'center',
                             backgroundColor:'#00BCD4'}}>
                             <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                                <Text style={{color:'#fff',fontWeight:'bold'}}>关联人</Text>
+                                <Text style={{color:'#fff',fontWeight:'bold',fontSize:16}}>关联人</Text>
                             </View>
+                            <View style={{flex:1}}></View>
+                            <TouchableOpacity style={{flexDirection:'row',alignItems:'center',justifyContent:'center',backgroundColor:'#66CDAA',
+                                    padding:6,paddingHorizontal:8,borderRadius:13,marginRight:5}}
+                                onPress={()=>{
+                                    this.showScaleAnimationDialog()
+                                }}
+                            >
+                                <Icon name={'plus'} size={15} color="#fff"/>
+                            </TouchableOpacity>
                         </View>
 
 
@@ -247,13 +312,70 @@ class BadmintonCourseSignUp extends Component {
                         </View>
                         {persons}
 
+                    </View>
 
 
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:10}}>
+                        <TouchableOpacity style={{width:width/2,backgroundColor:'#00BCD4',padding:8,paddingHorizontal:12,borderRadius:2,
+                            flexDirection:'row',justifyContent:'center'}}
+                            onPress={()=>{
+                               var {relative,isSelfCheck}=this.state
+                               var presons=[]
+                               if(relative&&relative.length>0)
+                               {
+                                   relative.map((person,i)=>{
+                                       if(person.checked==true)
+                                           persons.push(person.personId)
+                                   })
+                               }
+                               //TODO:加入校验
+                               this.props.dispatch(addBadmintonClassMermberInfo({
+                                   isSelfCheck:isSelfCheck,
+                                   persons:persons,
+                                   classId:classInfo.classId,
+                                   creatorId:classInfo.creatorId
+                               })).then((json)=>{
+                                    console.log()
+                               })
 
+
+                            }}
+                        >
+                            <Text style={{color:'#fff',fontWeight:'bold'}}>报名</Text>
+                        </TouchableOpacity>
                     </View>
 
                 </View>
 
+
+                <PopupDialog
+                    ref={(popupDialog) => {
+                        this.scaleAnimationDialog = popupDialog;
+                    }}
+                    dialogAnimation={scaleAnimation}
+                    actions={[
+
+                    ]}
+                >
+                    <View style={{flex:1,padding:10}}>
+                        <AddRelativeModal
+                            onClose={()=>{
+                                this.scaleAnimationDialog.dismiss();
+                                // this.setState({modalVisible:false});
+                            }}
+
+                            onConfirm={(payload)=>{
+                                this.props.dispatch(addRelativePerson(payload)).then((json)=>{
+                                    if(json.re==1)
+                                    {
+                                        console.log()
+                                    }
+                                })
+                            }}
+
+                        />
+                    </View>
+                </PopupDialog>
 
             </View>
         )
@@ -297,7 +419,8 @@ const mapStateToProps = (state, ownProps) => {
 
     const props = {
         userType: parseInt(state.user.usertype),
-        relative:state.user.relative
+        relative:state.user.relative,
+        username:state.user.user.username
     }
     return props
 }

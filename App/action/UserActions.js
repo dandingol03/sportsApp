@@ -242,6 +242,34 @@ export let onRelativePersonsUpdate=(persons)=>{
     }
 }
 
+//新增用户关联人
+export let addRelativePerson=(payload)=> {
+    return (dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'addRelativePerson',
+                    info:payload
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+        })
+    }
+}
+
 
 //用户注册
 export let registerUser=(payload)=>{
