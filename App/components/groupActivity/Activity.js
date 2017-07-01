@@ -17,12 +17,13 @@ import {
 import {connect} from 'react-redux';
 var {height, width} = Dimensions.get('window');
 
+import DateFilter from '../../utils/DateFilter';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AddActivity from './AddActivity';
 import MyActivity from './MyActivity';
 import ActivityDetail from './ActivityDetail';
 import {
-    fetchActivityList,disableActivityOnFresh
+    fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity
 } from '../../action/ActivityActions';
 
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
@@ -54,6 +55,7 @@ class Activity extends Component {
                 },           // Configuration
             ).start();
         }.bind(this), 500);
+        this.props.dispatch(enableActivityOnFresh());
 
     }
 
@@ -70,20 +72,21 @@ class Activity extends Component {
         }
     }
 
-    navigate2MyActivity(){
+    navigate2MyActivity(myEvents,flag){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
                 name: 'my_activity',
                 component: MyActivity,
                 params: {
-
+                    myEvents:myEvents,
+                    flag:flag
                 }
             })
         }
     }
 
-    navigate2ActivityDetail(rowData){
+    navigate2ActivityDetail(rowData,flag){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
@@ -91,6 +94,22 @@ class Activity extends Component {
                 component: ActivityDetail,
                 params: {
                     activity:rowData,
+                    flag:flag,
+                    signUpActivity:this.signUpActivity.bind(this)
+                }
+            })
+        }
+    }
+
+    signUpActivity(event)
+    {
+        if(event.eventMaxMemNum<=event.eventNowMemNum){
+            alert('该活动人数已满！');
+
+        }else{
+            this.props.dispatch(signUpActivity(event)).then((ins)=>{
+                if(json.re==1){
+                    alert('报名成功');
                 }
             })
         }
@@ -106,19 +125,17 @@ class Activity extends Component {
                     </View>
                     <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:5}}>
                         <View>
-                            <Text>小鱼丁</Text>
-                        </View>
-                        <View style={{flexDirection:'row',marginTop:5}}>
-                            <Icon name={'venus'} size={14} color="pink"/>
-                            <Text style={{color:'#aaa',fontSize:11}}>25岁</Text>
+                            <Text>{rowData.eventManager.username}</Text>
                         </View>
                     </View>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-
+                        {rowData.groupId==null?null:
+                            <Text>（组活动）</Text>
+                        }
                     </View>
                     <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
                                       onPress={()=>{
-                                          this.navigate2ActivityDetail(rowData);
+                                          this.navigate2ActivityDetail(rowData,'公开活动');
                                       }}>
                         <Text style={{marginRight:5}}>详情</Text>
                         <Icon name={'angle-right'} size={25} color="#343434"/>
@@ -130,20 +147,22 @@ class Activity extends Component {
                             <Icon name={'star'} size={16} color="#66CDAA"/>
                         </View>
                         <View style={{flex:7}}>
-                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.type}</Text>
+                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventName}</Text>
                         </View>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlace}</Text>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlace.name}</Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>{rowData.eventTime}</Text>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {DateFilter.filter(rowData.eventTime,'yyyy-mm-dd hh:mm')}
+                            </Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
@@ -154,7 +173,7 @@ class Activity extends Component {
                 </View>
                 <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                        <Text style={{color:'#aaa',fontSize:13}}>0报名</Text>
+                        <Text style={{color:'#aaa',fontSize:13}}>{rowData.memberList.length}报名</Text>
                     </View>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
                         <Text style={{color:'#aaa',fontSize:13}}>0评论</Text>
@@ -162,7 +181,9 @@ class Activity extends Component {
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>
-                    <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center',borderRadius:6}}>
+                    <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}
+                                      onPress={()=>{this.signUpActivity(rowData)}}>
                         <Text style={{color:'#66CDAA',fontSize:12}}>我要报名</Text>
                     </TouchableOpacity>
                 </View>
@@ -195,43 +216,25 @@ class Activity extends Component {
 
     render() {
 
-        // var activityListView=null;
-        // var {activityList,activityOnFresh}=this.props;
-        //
-        // if(activityOnFresh==true)
-        // {
-        //     if(this.state.doingFetch==false)
-        //         this.fetchData();
-        // }else {
-        //     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        //     if (activityList !== undefined && activityList !== null && activityList.length > 0) {
-        //
-        //         activityListView = (
-        //             <ListView
-        //                 automaticallyAdjustContentInsets={false}
-        //                 dataSource={ds.cloneWithRows(activityList)}
-        //                 renderRow={this.renderRow.bind(this)}
-        //             />
-        //         );
-        //     }
-        // }
-
-        var activityList = [
-            {eventBrief:'love sports',type:'基础练习',eventTime:'2017-06-08 10:30',eventPlace:'山大软件园',eventMaxMemNum:5,memberLevel:'业余小白',hasCoach:0,hasSparring:0},
-            {eventBrief:'爱运动爱生活',type:'羽毛球单打',eventTime:'2017-06-08 10:30',eventPlace:'奥体中心羽毛球馆',eventMaxMemNum:3,memberLevel:'中级爱好者',hasCoach:0,hasSparring:0},
-        ]
         var activityListView=null;
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        if(activityList!==undefined&&activityList!==null&&activityList.length>0)
-        {
-            activityListView=(
+        var {activityList,activityOnFresh,visibleEvents,myEvents,myTakenEvents}=this.props;
 
-                <ListView
-                    automaticallyAdjustContentInsets={false}
-                    dataSource={ds.cloneWithRows(activityList)}
-                    renderRow={this.renderRow.bind(this)}
-                />
-            );
+        if(activityOnFresh==true)
+        {
+            if(this.state.doingFetch==false)
+                this.fetchData();
+        }else {
+            var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+            if (visibleEvents !== undefined && visibleEvents !== null && visibleEvents.length > 0) {
+
+                activityListView = (
+                    <ListView
+                        automaticallyAdjustContentInsets={false}
+                        dataSource={ds.cloneWithRows(visibleEvents)}
+                        renderRow={this.renderRow.bind(this)}
+                    />
+                );
+            }
         }
 
         return (
@@ -261,9 +264,15 @@ class Activity extends Component {
                             }
                             >
                                 {activityListView}
-                                <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
-                                    <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
-                                </View>
+
+                                {
+                                    activityListView==null?
+                                       null:
+                                        <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
+                                            <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
+                                        </View>
+                                }
+
                             </ScrollView>
 
                         </Animated.View>
@@ -272,14 +281,14 @@ class Activity extends Component {
                     <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
                             position:'absolute',bottom:3}}>
                         <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
-                            padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity();}}>
-                            <Text style={{color:'#66CDAA',}}>我的活动</Text>
+                            padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}>
+                            <Text style={{color:'#66CDAA',}}>我发起的活动</Text>
                         </TouchableOpacity>
 
-                        <View style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
-                            padding:10,margin:5}}>
-                            <Text style={{color:'#66CDAA',}}>我的报名</Text>
-                        </View>
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
+                            padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity(myTakenEvents,'我的报名');}}>
+                            <Text style={{color:'#66CDAA',}}>我报名的活动</Text>
+                        </TouchableOpacity>
                     </View>
 
 
@@ -310,7 +319,10 @@ module.exports = connect(state=>({
         accessToken:state.user.accessToken,
         personInfo:state.user.personInfo,
         activityList:state.activity.activityList,
-        activityOnFresh:state.activity.activityOnFresh
+        myEvents:state.activity.myEvents,
+        myTakenEvents:state.activity.myTakenEvents,
+        visibleEvents:state.activity.visibleEvents,
+        activityOnFresh:state.activity.activityOnFresh,
     })
 )(Activity);
 

@@ -45,14 +45,6 @@ class VenueInspect extends Component{
         }
     }
 
-    goBack(){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.pop();
-        }
-    }
-
-
     constructor(props) {
         super(props);
         this.state={
@@ -173,7 +165,8 @@ class VenueInspect extends Component{
                                 onPress={
                                     ()=>{
                                         DeviceEventEmitter.emit('on_venue_confirm',this.state.detail)
-                                        this.goBack()
+                                        this.goBack();
+                                        this.props.setEventPlace(this.state.detail);
                                     }}
                             >
                                 <Text style={{color:'#fff',fontSize:13,fontWeight:'bold'}}>

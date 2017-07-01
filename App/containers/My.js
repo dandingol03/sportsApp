@@ -17,8 +17,11 @@ import {
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+import MyProfile from './MyProfile';
 import MyGroup from '../components/groupActivity/MyGroup';
-import MyInformation from '../components/my/MyInformation'
+import MyInformation from '../components/my/MyInformation';
+
 import CustomCourse from '../components/course/CustomCourse';
 
 class Home extends Component{
@@ -29,6 +32,19 @@ class Home extends Component{
             navigator.push({
                 name: 'my_group',
                 component: MyGroup,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    navigate2MyProfile(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'my_group',
+                component: MyProfile,
                 params: {
 
                 }
@@ -106,6 +122,7 @@ class Home extends Component{
                             this.navigate2MyInformation();
                         }}
                         >
+
                             <View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:30,padding:5,margin:5,
                             justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'user'} size={20} color="#fff"/>

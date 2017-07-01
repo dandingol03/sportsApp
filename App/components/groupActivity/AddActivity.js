@@ -37,7 +37,7 @@ import CreateGroup from './CreateGroup';
 import Coach from '../../components/Coach';
 
 import {
-    fetchMyGroupList,disableMyGroupOnFresh
+    fetchMyGroupList,disableMyGroupOnFresh,enableActivityOnFresh
 } from '../../action/ActivityActions';
 
 
@@ -50,12 +50,20 @@ class AddActivity extends Component{
         const { navigator } = this.props;
         if(navigator) {
             navigator.pop();
+            this.props.dispatch(enableActivityOnFresh());
         }
     }
 
     componentWillReceiveProps(nextProps)
     {
         this.setState(nextProps)
+    }
+
+    setEventPlace(eventPlace)
+    {
+        this.setState({event:Object.assign(this.state.event,{eventPlace:eventPlace.name})});
+        this.setState({event:Object.assign(this.state.event,{unitId:eventPlace.unitId})});
+
     }
 
     navigate2VenueInspect()
@@ -66,7 +74,7 @@ class AddActivity extends Component{
                 name: 'VenueInspect',
                 component: VenueInspect,
                 params: {
-
+                    setEventPlace:this.setEventPlace.bind(this)
                 }
             })
         }
@@ -106,6 +114,8 @@ class AddActivity extends Component{
         this.props.dispatch(releaseActivity(info)).then((json)=>{
             if(json.re==1){
                 console.log('发布新活动');
+                alert('新活动创建成功！');
+                this.goBack();
             }
 
         });
@@ -203,7 +213,7 @@ class AddActivity extends Component{
             doingFetch: false,
             selectTime:false,
             eventTime:null,
-            event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:'1',eventMaxMemNum:null,
+            event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,groupName:null,groupId:null},
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','私人'],
@@ -382,7 +392,12 @@ class AddActivity extends Component{
                                   }}
                             >
                                 <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                    <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>
+
+                                    {
+                                        this.state.event.eventPlace==null?
+                                            <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>:
+                                            <Text style={{color:'#888',fontSize:13}}>{this.state.event.eventPlace}</Text>
+                                    }
                                 </View>
                                 <View style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20}}>
                                     <Icon name={'angle-right'} size={30} color="#fff"/>

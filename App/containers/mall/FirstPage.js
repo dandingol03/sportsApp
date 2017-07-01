@@ -99,7 +99,7 @@ class Home extends Component{
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>健康猫</Text>
+                        <Text style={{color:'#fff',fontSize:18}}>羽毛球热</Text>
                     </View>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{this.navigate2ShopCart();}}>

@@ -8,6 +8,9 @@ import {
     SET_MY_GROUP_LIST,
     SET_ALL_GROUP_LIST,
     SET_ACTIVITY_LIST,
+    SET_MY_EVENTS,
+    SET_MY_TAKEN_EVENTS,
+    SET_VISIBLE_EVENTS,
     ENABLE_ACTIVITY_ONFRESH,
     DISABLE_ACTIVITY_ONFRESH,
 } from '../constants/ActivityConstants';
@@ -18,7 +21,10 @@ const initialState = {
     activityList:null,
     myGroupOnFresh:true,
     allGroupOnFresh:true,
-    activityOnFresh:false,
+    activityOnFresh:true,
+    myEvents:null,
+    myTakenEvents:null,
+    visibleEvents:null,
 };
 
 let activity = (state = initialState, action) => {
@@ -48,6 +54,19 @@ let activity = (state = initialState, action) => {
         case SET_ALL_GROUP_LIST:
             return Object.assign({}, state, {
                 allGroupList:action.allGroupList
+            })
+        case SET_MY_EVENTS:
+            return Object.assign({}, state, {
+                myEvents:action.myEvents
+            })
+        case SET_MY_TAKEN_EVENTS:
+            return Object.assign({}, state, {
+                myTakenEvents:action.myTakenEvents
+            })
+
+        case SET_VISIBLE_EVENTS:
+            return Object.assign({}, state, {
+                visibleEvents:action.visibleEvents
             })
         case SET_ACTIVITY_LIST:
             return Object.assign({}, state, {

@@ -22,16 +22,9 @@ import {
 
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
-
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import ActionSheet from 'react-native-actionsheet';
-import DatePicker from 'react-native-datepicker';
 import DateFilter from '../../utils/DateFilter';
-import {
-    releaseActivity
-} from '../../action/ActivityActions';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import GridView from 'react-native-grid-view';
 
 class ActivityDetail extends Component{
 
@@ -42,6 +35,22 @@ class ActivityDetail extends Component{
         }
     }
 
+    renderRow(rowData)
+    {
+        return  (
+            <View>
+                <View style={{height:50,width:50,borderRadius:10,borderWidth:1,borderColor:'#eee',margin:5}}>
+                    <Image resizeMode="stretch" style={{height:50,width:50,borderRadius:10,}} source={rowData.portrait}/>
+                </View>
+                <View style={{justifyContent:'center',alignItems: 'center',}}>
+                    <Text numberOfLines={1} style={{color:'#343434',}}>{rowData.username}</Text>
+                </View>
+            </View>
+        );
+
+    }
+
+
     constructor(props) {
         super(props);
         this.state={
@@ -51,7 +60,17 @@ class ActivityDetail extends Component{
 
     render() {
 
+        var flag = this.props.flag;
+
         var activity = this.state.activity;
+        var {personInfo}=this.props;
+
+        var memberList = activity.memberList;
+        if(memberList!==null&&memberList!==undefined){
+            var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+            var dataSource=ds.cloneWithRows(memberList);
+        }
+
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
@@ -68,21 +87,23 @@ class ActivityDetail extends Component{
                     </TouchableOpacity>
                 </View>
 
-                <View style={{flex:5,backgroundColor:'#fff',marginTop:5,marginBottom:5,borderBottomWidth:1,borderColor:'#ddd'}}>
+                <View style={{flex:7,backgroundColor:'#fff',marginTop:5,marginBottom:5,borderBottomWidth:1,borderColor:'#ddd'}}>
                     <View style={{flex:1,padding:10,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
                         <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
                             <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                         </View>
                         <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:5}}>
                             <View>
-                                <Text>小鱼丁</Text>
-                            </View>
-                            <View style={{flexDirection:'row',marginTop:5}}>
-                                <Icon name={'venus'} size={14} color="pink"/>
-                                <Text style={{color:'#aaa',fontSize:11}}>25岁</Text>
+                                <Text>{activity.eventManager.username}</Text>
                             </View>
                         </View>
                         <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
+                            {
+                                (activity.group!==null&&activity.group!==undefined)?
+                                    <View>
+                                        <Text>{activity.group.groupName}</Text>
+                                    </View>:null
+                            }
 
                         </View>
                         <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
@@ -91,47 +112,57 @@ class ActivityDetail extends Component{
                                       }}>
                         </TouchableOpacity>
                     </View>
-                    <View style={{flex:2,padding:10}}>
-                        <View style={{flexDirection:'row',marginBottom:3}}>
+                    <View style={{flex:3,padding:10}}>
+                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'star'} size={16} color="#66CDAA"/>
                             </View>
                             <View style={{flex:7,color:'#343434'}}>
-                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.type}</Text>
+                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventName}</Text>
                             </View>
                         </View>
-                        <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlace}</Text>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlace.name}</Text>
                         </View>
-                        <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>{activity.eventTime}</Text>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlace.address}</Text>
                         </View>
-                        <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'circle'} size={10} color="#aaa"/>
+                            </View>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                                {DateFilter.filter(activity.eventTime,'yyyy-mm-dd hh:mm')}
+                                </Text>
+                        </View>
+                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
                             <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{activity.eventBrief}</Text>
                         </View>
                     </View>
-                    <View style={{flex:1,flexDirection:'row',padding:5,borderTopWidth:1,borderColor:'#ddd'}}>
-                        <View style={{flex:2,justifyContent:'center'}}>
+                    <View style={{flex:3,padding:5,borderTopWidth:1,borderColor:'#ddd'}}>
+                        <View style={{flex:1,justifyContent:'center'}}>
                             <Text style={{color:'#aaa',fontSize:13}}>已报名用户</Text>
+                        </View>
+                        <View style={{flex:4,backgroundColor:'#fff',padding:10}}>
+                            <GridView
+                                items={dataSource}
+                                itemsPerRow={5}
+                                renderItem={this.renderRow.bind(this)}
+                                style={styles.listView}
+                            />
                         </View>
                     </View>
                 </View>
 
-                <View style={{flex:7}}>
-                    <TouchableOpacity style={{flex:1,padding:5,justifyContent:'center',alignItems:'center',}}>
-                        <Text style={{color:'red',fontSize:12}}>撤销活动</Text>
-                    </TouchableOpacity>
-
-                </View>
 
                 <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
                 position:'absolute',bottom:3}}>
@@ -140,9 +171,35 @@ class ActivityDetail extends Component{
                         <Icon name={'comment-o'} size={14} color="#66CDAA"/>
                         <Text style={{color:'#66CDAA',}}>评论</Text>
                     </View>
-                    <View style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
-                        <Text style={{color:'#66CDAA',}}>报名管理</Text>
-                    </View>
+
+                    {
+                        flag=='公开活动'?
+                    <TouchableOpacity style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,
+                    borderTopWidth:1,borderColor:'#eee'}}
+                    onPress={()=>{
+                        this.props.signUpActivity(this.props.activity);
+                    }}>
+                        <Text style={{color:'#66CDAA',}}>报名</Text>
+                    </TouchableOpacity>:null
+
+                    }
+
+                    {
+                        flag=='我的活动'?
+                            <View style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
+                                <Text style={{color:'#66CDAA',}}>撤销</Text>
+                            </View>:null
+
+                    }
+
+                    {
+                        flag=='我的报名'?
+                            <View style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,borderTopWidth:1,borderColor:'#eee'}}>
+                                <Text style={{color:'#66CDAA',}}>退出</Text>
+                            </View>:null
+
+                    }
+
                 </View>
 
             </View>
@@ -156,13 +213,15 @@ var styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = (state, ownProps) => {
 
-    const props = {
+module.exports = connect(state=>({
+        accessToken:state.user.accessToken,
+        personInfo:state.user.personInfo,
+        activityList:state.activity.activityList,
+        myEvents:state.activity.myEvents,
+        visibleEvents:state.activity.visibleEvents,
+        activityOnFresh:state.activity.activityOnFresh,
+    })
+)(ActivityDetail);
 
-    }
-    return props
-}
-
-export default connect(mapStateToProps)(ActivityDetail);
 

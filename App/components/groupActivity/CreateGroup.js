@@ -66,8 +66,7 @@ class CreateGroup extends Component{
         this.props.dispatch(createGroup(info)).then((json)=>{
             if(json.re==1){
                 alert('创建成功！');
-                var newGroup = json.data;
-                this.props.dispatch(setMyGroupList(newGroup));
+                this.props.setMyGroupList();
                 this.goBack();
             }else{
                 alert('创建失败');
@@ -86,7 +85,7 @@ class CreateGroup extends Component{
                 <View style={{flex:3,marginLeft:5}}>
                     <View style={{flexDirection:'row',marginLeft:10}}>
                         <Icon name={'user'} size={15} color="pink"/>
-                        <Text style={{marginLeft:10,color:'#343434'}}>{rowData.perName}</Text>
+                        <Text style={{marginLeft:10,color:'#343434'}}>{rowData.username}</Text>
                     </View>
                     <View  style={{flexDirection:'row',marginLeft:10,marginTop:5}}>
                         <Icon name={'mobile'} size={15} color="#87CEFF"/>
@@ -111,13 +110,15 @@ class CreateGroup extends Component{
         super(props);
         this.state={
             modalVisible:false,
-            group:{groupName:null,groupBrief:null},
+            group:{groupName:null,groupBrief:null,groupMaxMemNum:null},
             doingFetch: false,
             isRefreshing: false,
             member:null,
             memberList:[]
-
         }
+        var person = this.props.personInfo;
+        person.username = this.props.user.username;
+        this.state.memberList.push(person);
     }
 
     render() {
@@ -199,6 +200,31 @@ class CreateGroup extends Component{
                                     }}
                                 onCancel={
                                     ()=>{this.setState({group:Object.assign(this.state.group,{groupBrief:null})});}
+                                }
+                            />
+                        </View>
+                    </View>
+
+                    {/*成员上限*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,
+                    marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text style={{color:'#343434'}}>成员上限：</Text>
+                        </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                placeholder="请输入成员上限"
+                                val={this.state.group.groupMaxMemNum==null?'':this.state.group.groupMaxMemNum}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({group:Object.assign(this.state.group,{groupMaxMemNum:value})})
+                                    }}
+                                onCancel={
+                                    ()=>{this.setState({group:Object.assign(this.state.group,{groupMaxMemNum:null})});}
                                 }
                             />
                         </View>
@@ -296,6 +322,7 @@ var styles = StyleSheet.create({
 module.exports = connect(state=>({
         accessToken:state.user.accessToken,
         personInfo:state.user.personInfo,
+        user:state.user.user,
         myGroupList:state.activity.myGroupList,
         groupOnFresh:state.activity.groupOnFresh
     })
