@@ -22,9 +22,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Popover from 'react-native-popover'
 import TextInputWrapper from 'react-native-text-input-wrapper'
-import { BoxShadow } from 'react-native-shadow';
-import ActionSheet from 'react-native-actionsheet';
-import DatePicker from 'react-native-datepicker';
 import MadeCustomCourse from './MadeCustomCourse';
 import CreateBadmintonCourse from './CreateBadmintonCourse';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
@@ -38,8 +35,11 @@ const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = 1;
 import{
     fetchCourses,
-    onCoursesUpdate
+    onCoursesUpdate,
+    fetchClassSchedule
 } from '../../action/CourseActions';
+
+import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 
 class BadmintonCourse extends Component {
 
@@ -68,7 +68,20 @@ class BadmintonCourse extends Component {
                 }
             })
         }
+    }
 
+    navigate2CourseSignUp(classInfo)
+    {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'BadmintonCourseSignUp',
+                component: BadmintonCourseSignUp,
+                params: {
+                    classInfo
+                }
+            })
+        }
     }
 
 
@@ -86,7 +99,21 @@ class BadmintonCourse extends Component {
 
 
         return (
-            <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}>
+            <TouchableOpacity style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
+                onPress={()=>{
+                    this.props.dispatch(fetchClassSchedule(rowData.classId)).then((json)=>{
+                       if(json.re==1)
+                       {
+                           var classInfo=rowData
+                           classInfo.shedules=json.data
+                           this.navigate2CourseSignUp(classInfo)
+                       }else{
+
+                       }
+                    })
+
+                }}
+            >
                 <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
                     <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
 
@@ -135,7 +162,7 @@ class BadmintonCourse extends Component {
                 <View style={{ width: 70, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Icon name={'angle-right'} size={34} color="#444" style={{ backgroundColor: 'transparent', marginTop: -10 }} />
                 </View>
-            </View>)
+            </TouchableOpacity>)
 
     }
 
@@ -210,8 +237,6 @@ class BadmintonCourse extends Component {
 
 
         var displayArea = { x: 5, y: 20, width: width, height: height - 25 };
-
-
 
 
         var courseList = null
