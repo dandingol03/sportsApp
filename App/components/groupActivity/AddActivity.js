@@ -74,7 +74,7 @@ class AddActivity extends Component{
                 name: 'VenueInspect',
                 component: VenueInspect,
                 params: {
-                    setEventPlace:this.setEventPlace.bind(this)
+                    setPlace:this.setEventPlace.bind(this)
                 }
             })
         }
@@ -113,9 +113,12 @@ class AddActivity extends Component{
         var event = this.state.event;
         this.props.dispatch(releaseActivity(event)).then((json)=>{
             if(json.re==1){
-                console.log('发布新活动');
-                alert('新活动创建成功！');
-                this.goBack();
+                Alert.alert('信息','新活动创建成功',[{text:'确认',onPress:()=>{
+                    this.goBack()
+                }}]);
+                // console.log('发布新活动');
+                // alert('新活动创建成功！');
+                // this.goBack();
             }
 
         });

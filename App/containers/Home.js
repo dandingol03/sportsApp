@@ -44,7 +44,6 @@ var IMGS = [
     require('../../img/banner4.jpeg'),
 ];
 
-
 class Home extends Component {
 
     navigate2NewsContentDetail(url){
@@ -115,24 +114,6 @@ class Home extends Component {
         }
     }
 
-    //导航至定制（for 教练）
-    navigate2BadmintonCourseForCoach()
-    {
-        const {navigator} =this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'CreateBadmintonCourse',
-                component: CreateBadmintonCourse,
-                params: {
-
-                }
-            })
-        }
-
-    }
-
-
-
     _renderPage(data, pageID) {
         return (
 
@@ -164,11 +145,7 @@ class Home extends Component {
         }.bind(this), 2000);
     }
 
-
     renderRow(rowData,sectionId,rowId){
-
-
-
         return(
             <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1,borderColor:'#ddd',marginTop:4}}
                 onPress={()=>{
@@ -208,7 +185,6 @@ class Home extends Component {
 
 
             </TouchableOpacity>)
-
     }
 
     constructor(props) {

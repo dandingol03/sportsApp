@@ -18,9 +18,9 @@ import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import MyProfile from './MyProfile';
 import MyGroup from '../components/groupActivity/MyGroup';
 import MyInformation from '../components/my/MyInformation';
+import Setting from '../components/my/Setting';
 
 import CustomCourse from '../components/course/CustomCourse';
 
@@ -39,12 +39,12 @@ class Home extends Component{
         }
     }
 
-    navigate2MyProfile(){
+    navigate2Setting(){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
-                name: 'my_group',
-                component: MyProfile,
+                name: 'setting',
+                component: Setting,
                 params: {
 
                 }
@@ -134,7 +134,7 @@ class Home extends Component{
                         </TouchableOpacity>
                         <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
                             onPress={()=>{
-                                this.navigate2CustomCourse()
+                                this.navigate2CustomCourse();
                             }}
                         >
                             <View style={{flex:1,backgroundColor:'#98FB98',flexDirection:'row',borderRadius:30,padding:5,margin:5,
@@ -142,10 +142,13 @@ class Home extends Component{
                                 <Icon name={'edit'} size={20} color="#fff"/>
                             </View>
                             <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
-                                <Text>我的课程定制</Text>
+                                <Text>我的课程</Text>
                             </View>
                         </TouchableOpacity>
-                        <View style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}>
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                                          onPress={()=>{
+                                this.navigate2Setting();
+                            }}>
                             <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
                             justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'gear'} size={20} color="#fff"/>
@@ -153,7 +156,7 @@ class Home extends Component{
                             <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                 <Text>设置</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={{flex:1,backgroundColor:'#eee'}}>

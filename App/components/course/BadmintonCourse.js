@@ -24,6 +24,7 @@ import Popover from 'react-native-popover'
 import TextInputWrapper from 'react-native-text-input-wrapper'
 import MadeCustomCourse from './MadeCustomCourse';
 import CreateBadmintonCourse from './CreateBadmintonCourse';
+import CreateCustomerPlan from './CreateCustomerPlan';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
@@ -64,11 +65,26 @@ class BadmintonCourse extends Component {
                 name: 'CreateBadmintonCourse',
                 component: CreateBadmintonCourse,
                 params: {
+                    setMyCourseList:this.setMyCourseList.bind(this)
+                }
+            })
+        }
+    }
+
+    //导航至定制（for 用户）
+    navigate2BadmintonCourseForUser() {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'CreateCustomerPlan',
+                component: CreateCustomerPlan,
+                params: {
 
                 }
             })
         }
     }
+
 
     navigate2CourseSignUp(classInfo)
     {
@@ -78,12 +94,12 @@ class BadmintonCourse extends Component {
                 name: 'BadmintonCourseSignUp',
                 component: BadmintonCourseSignUp,
                 params: {
-                    classInfo
+                    classInfo,
+                    setMyCourseList:this.setMyCourseList.bind(this)
                 }
             })
         }
     }
-
 
     goBack() {
         const { navigator } = this.props;
@@ -92,12 +108,17 @@ class BadmintonCourse extends Component {
         }
     }
 
+    setMyCourseList()
+    {
+        this.props.dispatch(fetchCourses()).then((json)=>{
+            if(json.re==1)
+            {
+                this.props.dispatch(onCoursesUpdate(json.data))
+            }
+        })
+    }
 
     renderRow(rowData, sectionId, rowId) {
-
-
-
-
         return (
             <TouchableOpacity style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
                 onPress={()=>{
@@ -166,7 +187,6 @@ class BadmintonCourse extends Component {
 
     }
 
-
     _onRefresh() {
         this.setState({ isRefreshing: true, fadeAnim: new Animated.Value(0) });
         setTimeout(function () {
@@ -198,7 +218,6 @@ class BadmintonCourse extends Component {
         this[actionSheet].show();
     }
 
-
     showPopover(ref) {
         this.refs[ref].measure((ox, oy, width, height, px, py) => {
             this.setState({
@@ -207,7 +226,6 @@ class BadmintonCourse extends Component {
             });
         });
     }
-
 
     closePopover() {
         this.setState({ menuVisible: false });
@@ -218,15 +236,11 @@ class BadmintonCourse extends Component {
      * @param props
      */
 
-
     constructor(props) {
         super(props);
         this.state = {
             isRefreshing: false,
-            event: {},
             menuVisible: false,
-            memberLevelButtons: ['取消', '无', '体育本科', '国家一级运动员', '国家二级运动员', '国家三级运动员'],
-            eventTypeButtons: ['取消', '羽毛球单打', '羽毛球双打', '羽毛球混双', '基础练习'],
             filter: {
                 cost: 'ascend'
             }
@@ -235,9 +249,7 @@ class BadmintonCourse extends Component {
 
     render() {
 
-
         var displayArea = { x: 5, y: 20, width: width, height: height - 25 };
-
 
         var courseList = null
         if (this.props.courses && this.props.courses.length > 0) {
@@ -260,7 +272,6 @@ class BadmintonCourse extends Component {
                         return 1;
                 });
             }
-
 
             courseList = (
                 <ScrollView
@@ -287,9 +298,13 @@ class BadmintonCourse extends Component {
 
         var actions=[]
         if(this.props.userType==0)//用户
+        {
             actions.push({value:'课程定制',show:OPTION_NEVER})
+        }
         else
-            actions.push({value:'创建课程',show:OPTION_NEVER})
+        {
+            actions.push({value:'创建课程',show:OPTION_NEVER});
+        }
 
         return (
             <View style={styles.container}>
@@ -298,10 +313,11 @@ class BadmintonCourse extends Component {
                 <Toolbar width={width} title="课程制定" navigator={this.props.navigator}
                          actions={actions}
                          onPress={(i)=>{
-                             if(this.props.userType==0)
-                                  this.navigate2MadeCustomCourse()
-                             else
-                                 this.navigate2BadmintonCourseForCoach()
+                             if(this.props.userType==1){
+                                this.navigate2BadmintonCourseForCoach();
+                             }else{
+                                 this.navigate2BadmintonCourseForUser()
+                             }
 
                          }}
                 >
@@ -372,7 +388,6 @@ class BadmintonCourse extends Component {
                         <Animated.View style={{ flex: 1, padding: 4, opacity: this.state.fadeAnim, backgroundColor: '#fff' }}>
                             {courseList}
                         </Animated.View>
-
 
                     </View>
                 </Toolbar>

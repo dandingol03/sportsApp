@@ -65,9 +65,15 @@ class CreateGroup extends Component{
     createGroup(info){
         this.props.dispatch(createGroup(info)).then((json)=>{
             if(json.re==1){
-                alert('创建成功！');
-                this.props.setMyGroupList();
-                this.goBack();
+
+                Alert.alert('信息','创建成功',[{text:'确认',onPress:()=>{
+                    this.props.setMyGroupList();
+                    this.goBack()
+                }}]);
+                //
+                // alert('创建成功！');
+                // this.props.setMyGroupList();
+                // this.goBack();
             }else{
                 alert('创建失败');
 

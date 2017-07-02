@@ -22,27 +22,38 @@ var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextInputWrapper from 'react-native-text-input-wrapper';
-import CourseTimeModal from './CourseTimeModal';
+import ActionSheet from 'react-native-actionsheet';
+import {BoxShadow} from 'react-native-shadow';
 import VenueInspect from '../../components/venue/VenueInspect';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
-import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
 
-const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
-const scaleAnimation = new ScaleAnimation();
-const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 
 import{
     distributeCourse
 } from '../../action/CourseActions';
 
 
-class CreateBadmintonCourse extends Component{
+class CreateCustomerPlan extends Component{
 
     goBack(){
         const { navigator } = this.props;
         if(navigator) {
             navigator.pop();
         }
+    }
+
+    _handlePress1(index) {
+
+        if(index!==0){
+            var memberLevel = this.state.memberLevelButtons[index];
+            var memberLevelCode = index;
+            this.setState({plan:Object.assign(this.state.plan,{memberLevel:memberLevelCode,memberLevelName:memberLevel})});
+        }
+
+    }
+
+    show(actionSheet) {
+        this[actionSheet].show();
     }
 
     setCoursePlace(coursePlace)
@@ -130,201 +141,225 @@ class CreateBadmintonCourse extends Component{
         this.state={
             dialogShow: false,
             modalVisible:false,
-            course:{courseName:null,courseBrief:null,coursePlace:null,unitId:null,courseTime:null,memberCount:null,fee:null},
+            plan:{planItem:null,planPlace:null,unitId:null,planTime:null,phoneNum:null,memberLevel:null,memberLevelName:null,hasCoach:0},
             doingFetch: false,
             isRefreshing: false,
-            time:null,
-            timeList:[]
+            memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
         }
-        this.showScaleAnimationDialog = this.showScaleAnimationDialog.bind(this);
-    }
-
-    showScaleAnimationDialog() {
-        this.scaleAnimationDialog.show();
     }
 
 
     render() {
+        const CANCEL_INDEX = 0;
+        const DESTRUCTIVE_INDEX = 1;
+        const memberLevelButtons=['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'];
 
-        var timeList = this.state.timeList;
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        if(timeList!==undefined&&timeList!==null&&timeList.length>0)
-        {
-            timeList=(
-                <ListView
-                    automaticallyAdjustContentInsets={false}
-                    dataSource={ds.cloneWithRows(timeList)}
-                    renderRow={this.renderRow.bind(this)}
-                />
-            );
+        const shadowOpt = {
+            width:224*width/320,
+            height:25*height/568,
+            color:"#000",
+            border:0.5,
+            radius:1,
+            opacity:0.2,
+            x:-0.5,
+            y:1,
+            style:{marginVertical:8}
         }
-
 
         return (
             <View style={{flex:1}}>
-                <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
-                backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
-                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
-                                      onPress={()=>{this.goBack();}}>
-                        <Icon name={'angle-left'} size={30} color="#fff"/>
-                    </TouchableOpacity>
-                    <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>创建课程</Text>
-                    </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
-                    </View>
-                </View>
+                <Toolbar width={width} title="定制课程" navigator={this.props.navigator}
+                         actions={[]}
+                         onPress={(i)=>{
+                         }}
+                >
 
                 <View style={{flex:5,backgroundColor:'#fff'}}>
 
-                    {/*课程名称*/}
+                    {/*计划时间*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
                     ,margin:10,marginTop:10,marginBottom:5}}>
                         <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>课程名称：</Text>
+                            <Text style={{color:'#343434'}}>计划时间：</Text>
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
                             <TextInputWrapper
                                 placeholderTextColor='#888'
                                 textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入课程名"
-                                val={this.state.course.className}
+                                placeholder="请输入计划时间，如7月中旬..."
+                                val={this.state.plan.planTime}
                                 onChangeText={
                                     (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{className:value})})
+                                        this.setState({plan:Object.assign(this.state.plan,{planTime:value})})
                                     }}
                                 onCancel={
-                                    ()=>{this.setState({course:Object.assign(this.state.course,{className:null})});}
+                                    ()=>{this.setState({plan:Object.assign(this.state.plan,{planTime:null})});}
                                 }
                             />
                         </View>
                     </View>
 
-                    {/*课程人数*/}
+                    {/*训练项目*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
                     ,margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>课程人数：</Text>
+                            <Text style={{color:'#343434'}}>训练项目：</Text>
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
                             <TextInputWrapper
                                 placeholderTextColor='#888'
                                 textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入课程人数"
-                                val={this.state.course.maxNumber}
+                                placeholder="请输入训练项目"
+                                val={this.state.plan.planItem}
                                 onChangeText={
                                     (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{maxNumber:value})})
+                                        this.setState({plan:Object.assign(this.state.plan,{planItem:value})})
                                     }}
                                 onCancel={
-                                    ()=>{this.setState({course:Object.assign(this.state.course,{maxNumber:null})});}
+                                    ()=>{this.setState({plan:Object.assign(this.state.plan,{planItem:null})});}
                                 }
                             />
                         </View>
                     </View>
 
-                    {/*课程花费*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>课程花费：</Text>
-                        </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
-                            <TextInputWrapper
-                                placeholderTextColor='#888'
-                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入课程花费"
-                                val={this.state.course.cost}
-                                onChangeText={
-                                    (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{cost:value})})
-                                    }}
-                                onCancel={
-                                    ()=>{this.setState({course:Object.assign(this.state.course,{cost:null})});}
-                                }
-                            />
-                        </View>
-                    </View>
-
-                    {/*课程说明*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>课程说明：</Text>
-                        </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
-                            <TextInputWrapper
-                                placeholderTextColor='#888'
-                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入课程说明"
-                                val={this.state.course.detail}
-                                onChangeText={
-                                    (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{detail:value})})
-                                    }}
-                                onCancel={
-                                    ()=>{this.setState({course:Object.assign(this.state.course,{detail:null})});}
-                                }
-                            />
-                        </View>
-                    </View>
-
-                    {/*课程场馆*/}
+                    {/*训练地点*/}
                     <TouchableOpacity style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,
                         marginTop:5,marginBottom:5}}
                                       onPress={()=>{
-                                //this.setState({modalVisible:true});
                                 this.navigate2VenueInspect();
                             }}
                     >
                         <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>课程场馆：</Text>
+                            <Text style={{color:'#343434'}}>训练地点：</Text>
                         </View>
                         <View style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
-
                             {
                                 this.state.venue?
                                     <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
                                         {this.state.venue.name}
                                     </Text>:
                                     <Text style={{marginLeft:20,fontSize:13,color:'#888'}}>
-                                        请选择课程场馆
+                                        请选择训练地点
                                     </Text>
                             }
 
                         </View>
                     </TouchableOpacity>
 
-                    {/*添加细项*/}
+                    {/*自身水平*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
                     ,margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>添加细项：</Text>
+                            <Text>自身水平：</Text>
                         </View>
-                        <View style={{flex:3,}}>
-                            <TouchableOpacity onPress={()=>{
-                                //this.setState({modalVisible:true});
-                                this.showScaleAnimationDialog();
-                            }}>
-                                <Ionicons name='md-add-circle'  size={22} color="#66CDAA"/>
-                            </TouchableOpacity>
+                        <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                          onPress={()=>{ this.show('actionSheet1'); }}>
+
+                            {
+                                this.state.plan.memberLevel==null?
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#888',fontSize:13}}>请选择自身水平：</Text>
+                                    </View> :
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#444',fontSize:13}}>{this.state.plan.memberLevelName}</Text>
+                                    </View>
+                            }
+                            <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                <Icon name={'angle-right'} size={30} color="#fff"/>
+                            </View>
+                            <ActionSheet
+                                ref={(o) => {
+                                        this.actionSheet1 = o;
+                                    }}
+                                title="请选择自身水平"
+                                options={memberLevelButtons}
+                                cancelButtonIndex={CANCEL_INDEX}
+                                destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                onPress={
+                                        (data)=>{ this._handlePress1(data); }
+                                    }
+                            />
+                        </TouchableOpacity>
+                    </View>
+
+
+                    {/*联系方式*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
+                    ,margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text style={{color:'#343434'}}>联系方式：</Text>
+                        </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                placeholder="请输入联系方式"
+                                val={this.state.plan.phoneNum}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({plan:Object.assign(this.state.plan,{phoneNum:value})})
+                                    }}
+                                onCancel={
+                                    ()=>{this.setState({plan:Object.assign(this.state.plan,{phoneNum:null})});}
+                                }
+                            />
                         </View>
                     </View>
 
-                    <View style={{height:100,width:width,padding:5,backgroundColor:'#eee'}}>
-                        {
-                            (this.state.timeList==null||this.state.timeList==undefined||this.state.timeList.length==0)?
-                                null:
-                                <View>
-                                    {timeList}
-                                </View>
-                        }
+
+                    {/*选择教练*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
+                    ,margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text>选择教练：</Text>
+                        </View>
+
+                        <BoxShadow setting={shadowOpt}>
+                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
+                                }}>
+
+                                {
+                                    this.state.plan.hasCoach==1?
+                                        <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
+                                        ,borderWidth:1,borderColor:'#66CDAA'}}>
+                                            <Text style={{color:'#fff'}}>是</Text>
+                                        </View>:
+                                        <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                        }}
+                                                          onPress={()=>{
+                                            this.setState({plan:Object.assign(this.state.plan,{hasCoach:1})});
+
+                                        }}
+                                        >
+                                            <Text style={{color:'#666'}}>是</Text>
+                                        </TouchableOpacity>
+                                }
+
+                                {
+                                    this.state.plan.hasCoach==0?
+                                        <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
+                                        ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
+                                            <Text style={{color:'#fff'}}>否</Text>
+                                        </View>:
+                                        <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
+                                        marginRight:1}}
+                                                          onPress={()=>{
+                                              this.setState({plan:Object.assign(this.state.plan,{hasCoach:0})});
+                                          }}
+                                        >
+                                            <Text style={{color:'#888'}}>否</Text>
+                                        </TouchableOpacity>
+
+                                }
+
+                            </View>
+                        </BoxShadow>
 
                     </View>
 
@@ -353,62 +388,7 @@ class CreateBadmintonCourse extends Component{
                     </TouchableOpacity>
                 </View>
 
-
-                {/* Add CourseTime Modal*/}
-                <Modal
-                    animationType={"slide"}
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        console.log("Modal has been closed.");
-                    }}
-                >
-                    <CourseTimeModal
-                        onClose={()=>{
-                            this.setState({modalVisible:false});
-                        }}
-                        accessToken={this.props.accessToken}
-                        setTime={(time)=>{
-                            if(this.state.timeList!==null&&this.state.timeList!==undefined){
-                                var timeList = this.state.timeList;
-                                timeList.push(time);
-                                this.setState({timeList:timeList});
-                            }
-                        }}
-                        timeListLength={(this.state.timeList!==null&&this.state.timeList!==undefined)?this.state.timeList.length:0}
-
-                    />
-                </Modal>
-
-                <PopupDialog
-                    ref={(popupDialog) => {
-                        this.scaleAnimationDialog = popupDialog;
-                    }}
-                    dialogAnimation={scaleAnimation}
-                    actions={[
-
-                    ]}
-                >
-                    <View style={styles.dialogContentView}>
-                        <CourseTimeModal
-                            onClose={()=>{
-                                this.scaleAnimationDialog.dismiss();
-                           // this.setState({modalVisible:false});
-                        }}
-                            accessToken={this.props.accessToken}
-                            setTime={(time)=>{
-                            if(this.state.timeList!==null&&this.state.timeList!==undefined){
-                                var timeList = this.state.timeList;
-                                timeList.push(time);
-                                this.setState({timeList:timeList});
-                                this.scaleAnimationDialog.dismiss();
-                            }
-                        }}
-                            timeListLength={(this.state.timeList!==null&&this.state.timeList!==undefined)?this.state.timeList.length:0}
-
-                        />
-                    </View>
-                </PopupDialog>
+                </Toolbar>
 
             </View>
         );
@@ -445,6 +425,6 @@ module.exports = connect(state=>({
         myGroupList:state.activity.myGroupList,
         groupOnFresh:state.activity.groupOnFresh
     })
-)(CreateBadmintonCourse);
+)(CreateCustomerPlan);
 
 

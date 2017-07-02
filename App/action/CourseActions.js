@@ -7,7 +7,8 @@ import PreferenceStore from '../utils/PreferenceStore';
 import {
     DISTRIBUTE_COURSE,
     ON_COURSE_UPDATE,
-    ON_COURSES_UPDATE
+    ON_COURSES_UPDATE,
+
 } from '../constants/CourseConstants'
 
 //拉取课程
@@ -142,7 +143,7 @@ export let fetchPersonRelative =()=>{
 }
 
 //课程报名
-export let addBadmintonClassMermberInfo=(payload)=>{
+export let addBadmintonClassMermberInfo=(info)=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
@@ -155,8 +156,18 @@ export let addBadmintonClassMermberInfo=(payload)=>{
                     'Content-Type': 'application/json'
                 },
                 body: {
+
                     request: 'addBadmintonClassMermberInfo',
-                    info:payload
+                    info:{
+                        isSelfCheck:info.isSelfCheck,
+                        persons:info.persons,
+                        classId:info.classId,
+                        creatorId:info.creatorId,
+                        signNumber:info.signNumber,
+                        maxNumber:info.maxNumber,
+                    }
+
+
                 }
             }).then((json)=>{
                 resolve(json)

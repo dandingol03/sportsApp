@@ -108,7 +108,7 @@ class CustomCourse extends Component{
                             <TouchableOpacity style={{width:width-8,padding:4,backgroundColor:'#fff',flexDirection:'column',
                                     paddingBottom:7,borderWidth:1,borderColor:'#eee'}}
                                               onPress={()=>{
-                                    this.navigate2MadeCustomCourseDetail()
+                                    this.navigate2MadeCustomCourseDetail();
                                 }}
                             >
                                 <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center'}}>
