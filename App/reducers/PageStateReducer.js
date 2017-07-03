@@ -1,9 +1,7 @@
 import {
     PAGE_REGISTER,
     PAGE_LOGIN,
-    PAGE_PASSWORDFORGET,
     UPDATE_PAGE_STATE,
-    UPDATE_NAVIGATOR
 } from '../constants/PageStateConstants';
 
 const initialState = {

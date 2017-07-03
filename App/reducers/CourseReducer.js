@@ -1,10 +1,14 @@
 
 import {
-    ON_COURSES_UPDATE
+    ON_COURSES_UPDATE,
+    DISABLE_MY_COURSES_ONFRESH,
+    ON_MY_COURSES_UPDATE,
 } from '../constants/CourseConstants';
 
 const initialState = {
-    courses:null
+    courses:null,
+    myCourses:null,
+    myCoursesOnFresh:true,
 };
 
 let course = (state = initialState, action) => {
@@ -16,7 +20,15 @@ let course = (state = initialState, action) => {
             return Object.assign({}, state, {
                 courses:courses
             })
-
+        case DISABLE_MY_COURSES_ONFRESH:
+            return Object.assign({},state,{
+                myCoursesOnFresh:false
+            })
+        case ON_MY_COURSES_UPDATE:
+            var {myCourses}=action.payload
+            return Object.assign({},state,{
+                myCourses:myCourses
+            })
         default:
             return state;
     }

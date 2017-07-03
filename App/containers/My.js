@@ -17,8 +17,9 @@ import {
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MyGroup from '../components/groupActivity/MyGroup';
+import MyCourses from '../components/course/MyCourses';
 import MyInformation from '../components/my/MyInformation';
 import Setting from '../components/my/Setting';
 
@@ -52,12 +53,27 @@ class Home extends Component{
         }
     }
 
+    //导航-我的定制
     navigate2CustomCourse(){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
                 name: 'CustomCourse',
                 component: CustomCourse,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    //导航进我的课程
+    navigate2MyCourse(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'MyCourses',
+                component: MyCourses,
                 params: {
 
                 }
@@ -133,6 +149,19 @@ class Home extends Component{
 
                         </TouchableOpacity>
                         <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                                          onPress={()=>{
+                                this.navigate2MyCourse();
+                            }}
+                        >
+                            <View style={{flex:1,backgroundColor:'#98FB98',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                                justifyContent:'center',alignItems: 'center'}}>
+                                <CommIcon name="library" size={22} color="#fff" style={{backgroundColor:'transparent',}}/>
+                            </View>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                                <Text>我的课程</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
                             onPress={()=>{
                                 this.navigate2CustomCourse();
                             }}
@@ -142,7 +171,7 @@ class Home extends Component{
                                 <Icon name={'edit'} size={20} color="#fff"/>
                             </View>
                             <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
-                                <Text>我的课程</Text>
+                                <Text>我的定制</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}

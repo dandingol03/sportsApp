@@ -200,7 +200,7 @@ class BadmintonCourseSignUp extends Component {
                                       onPress={()=>{
                       }}
                     >
-                        {/*<Ionicons name={'md-more'} size={25} color="#fff"/>*/}
+
                     </TouchableOpacity>
                 </View>
 

@@ -8,8 +8,56 @@ import {
     DISTRIBUTE_COURSE,
     ON_COURSE_UPDATE,
     ON_COURSES_UPDATE,
-
+    ON_MY_COURSES_UPDATE,
+    DISABLE_MY_COURSES_ONFRESH
 } from '../constants/CourseConstants'
+
+//拉取个人已报名课程
+export let fetchMyCourses=()=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'fetchMyCourses'
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+
+export let onMyCoursesUpdate=(myCourses)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_MY_COURSES_UPDATE,
+            payload:{
+                myCourses
+            }
+        })
+    }
+}
+
+export let disableMyCoursesOnFresh=()=>{
+    return {
+        type:DISABLE_MY_COURSES_ONFRESH,
+    }
+}
 
 //拉取课程
 export let fetchCourses=()=>{
