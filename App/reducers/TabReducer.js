@@ -3,11 +3,14 @@
  */
 
 import {
-    UPDATE_ROOT_TAB
+    UPDATE_ROOT_TAB,
+    MAKE_TABS_HIDDEN,
+    MAKE_TABS_SHOWN
 } from '../constants/TabConstants';
 
 const initialState = {
     rootTab:'首页',
+    hidden:false
 };
 
 let car = (state = initialState, action) => {
@@ -18,6 +21,16 @@ let car = (state = initialState, action) => {
             var {tab}=action.payload;
             return Object.assign({}, state, {
                 rootTab:tab
+            })
+            break;
+        case MAKE_TABS_HIDDEN:
+            return Object.assign({},state,{
+                hidden:true
+            })
+            break;
+        case MAKE_TABS_SHOWN:
+            return Object.assign({},state,{
+                hidden:false
             })
             break;
         default:

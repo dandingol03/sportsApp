@@ -109,12 +109,32 @@ class App extends Component {
 
         var props=this.props;
         let auth=this.props.auth;
+        var {tab}=this.props
         if(auth==true)
         {
 
+            var defaultStyle={
+                backgroundColor:'#eeecf3',
+                paddingBottom:5,
+                paddingTop:5,
+                height:55
+            }
+
+            var defaultSceneStyle={
+            }
+
+            if(tab.hidden==true)
+            {
+                defaultStyle.height=0
+                defaultStyle.paddingBottom=0
+                defaultStyle.paddingTop=0
+                defaultSceneStyle.paddingBottom=0
+            }
+
+
             return (
 
-                <TabNavigator  tabBarStyle={{backgroundColor:'#eeecf3',paddingBottom:5,paddingTop:5,height:55}}>
+                <TabNavigator  tabBarStyle={defaultStyle} sceneStyle={defaultSceneStyle}>
                     {this._createNavigatorItem('首页','home')}
                     {this._createNavigatorItem('消息','comment-o')}
                     {this._createNavigatorItem('发现','search')}

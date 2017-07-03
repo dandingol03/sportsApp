@@ -8,7 +8,8 @@ import {
     DISTRIBUTE_COURSE,
     ON_COURSE_UPDATE,
     ON_COURSES_UPDATE,
-
+    ON_MY_COURSES_UPDATE,
+    DISABLE_MY_COURSES_ONFRESH
 } from '../constants/CourseConstants'
 
 //拉取个人已报名课程
@@ -26,7 +27,7 @@ export let fetchMyCourses=()=>{
                     'Content-Type': 'application/json'
                 },
                 body: {
-                    request: 'fetchCourses'
+                    request: 'fetchMyCourses'
                 }
             }).then((json)=>{
                 resolve(json)
@@ -37,6 +38,24 @@ export let fetchMyCourses=()=>{
             })
 
         })
+    }
+}
+
+
+export let onMyCoursesUpdate=(myCourses)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_MY_COURSES_UPDATE,
+            payload:{
+                myCourses
+            }
+        })
+    }
+}
+
+export let disableMyCoursesOnFresh=()=>{
+    return {
+        type:DISABLE_MY_COURSES_ONFRESH,
     }
 }
 
