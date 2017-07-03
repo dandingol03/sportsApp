@@ -196,10 +196,9 @@ class BadmintonCourseSignUp extends Component {
                     </View>
                     <TouchableOpacity ref="menu"  style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{
-                          this.showPopover('menu')
+
                       }}
                     >
-                        <Ionicons name={'md-more'} size={25} color="#fff"/>
                     </TouchableOpacity>
                 </View>
 
