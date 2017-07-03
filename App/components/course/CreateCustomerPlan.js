@@ -25,11 +25,12 @@ import TextInputWrapper from 'react-native-text-input-wrapper';
 import ActionSheet from 'react-native-actionsheet';
 import {BoxShadow} from 'react-native-shadow';
 import VenueInspect from '../../components/venue/VenueInspect';
-import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
+import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper';
+import Coach from '../../components/Coach';
 
 
 import{
-    distributeCourse
+    distributeCustomerPlan
 } from '../../action/CourseActions';
 
 
@@ -71,6 +72,30 @@ class CreateCustomerPlan extends Component{
                 component: VenueInspect,
                 params: {
                     setPlace:this.setCoursePlace.bind(this)
+                }
+            })
+        }
+    }
+
+    setCoach(type,coach)
+    {
+        if(type=='coach'){
+            this.setState({plan:Object.assign(this.state.plan,{coachId:coach.trainerInfo.trainerId,coachName:coach.perName})});
+        }else{
+            this.setState({plan:Object.assign(this.state.plan,{sparringId:coach.trainerInfo.trainerId,sparringName:coach.perName})});
+        }
+    }
+
+    navigate2Coach(flag)
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'coach',
+                component: Coach,
+                params: {
+                    setCoach:this.setCoach.bind(this),
+                    flag:flag
                 }
             })
         }
@@ -141,7 +166,8 @@ class CreateCustomerPlan extends Component{
         this.state={
             dialogShow: false,
             modalVisible:false,
-            plan:{planItem:null,planPlace:null,unitId:null,planTime:null,phoneNum:null,memberLevel:null,memberLevelName:null,hasCoach:0},
+            plan:{planItem:null,planPlace:null,unitId:null,planTime:null,phoneNum:null,memberLevel:null,memberLevelName:null,hasCoach:0,
+            coachId:null,coachName:null},
             doingFetch: false,
             isRefreshing: false,
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
@@ -296,19 +322,28 @@ class CreateCustomerPlan extends Component{
                         </View>
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
-                            <TextInputWrapper
-                                placeholderTextColor='#888'
-                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入联系方式"
-                                val={this.state.plan.phoneNum}
-                                onChangeText={
+                            {
+                                this.props.personInfo.mobilePhone!==null?
+
+                                    <View style={{height:30,marginLeft:20,justifyContent:'center',alignItems: 'center',}}>
+                                        <Text style={{color:'#222'}}>
+                                            {this.props.personInfo.mobilePhone}
+                                        </Text>
+                                    </View>:
+                                    <TextInputWrapper
+                                        placeholderTextColor='#888'
+                                        textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                        placeholder="请输入联系方式"
+                                        val={this.state.plan.phoneNum}
+                                        onChangeText={
                                     (value)=>{
                                         this.setState({plan:Object.assign(this.state.plan,{phoneNum:value})})
                                     }}
-                                onCancel={
+                                        onCancel={
                                     ()=>{this.setState({plan:Object.assign(this.state.plan,{phoneNum:null})});}
                                 }
-                            />
+                                    />
+                            }
                         </View>
                     </View>
 
@@ -320,47 +355,64 @@ class CreateCustomerPlan extends Component{
                             <Text>选择教练：</Text>
                         </View>
 
-                        <BoxShadow setting={shadowOpt}>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
+                        {
+                            this.state.plan.coachId==null?
+                                <BoxShadow setting={shadowOpt}>
+                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
-                                {
-                                    this.state.plan.hasCoach==1?
-                                        <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
+                                        {
+                                            this.state.plan.hasCoach==1?
+                                                <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
                                         ,borderWidth:1,borderColor:'#66CDAA'}}>
-                                            <Text style={{color:'#fff'}}>是</Text>
-                                        </View>:
-                                        <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                                    <Text style={{color:'#fff'}}>是</Text>
+                                                </View>:
+                                                <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
-                                                          onPress={()=>{
+                                                                  onPress={()=>{
                                             this.setState({plan:Object.assign(this.state.plan,{hasCoach:1})});
-
+                                            this.navigate2Coach('coach');
                                         }}
-                                        >
-                                            <Text style={{color:'#666'}}>是</Text>
-                                        </TouchableOpacity>
-                                }
+                                                >
+                                                    <Text style={{color:'#666'}}>是</Text>
+                                                </TouchableOpacity>
+                                        }
 
-                                {
-                                    this.state.plan.hasCoach==0?
-                                        <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
+                                        {
+                                            this.state.plan.hasCoach==0?
+                                                <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
                                         ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
-                                            <Text style={{color:'#fff'}}>否</Text>
-                                        </View>:
-                                        <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
+                                                    <Text style={{color:'#fff'}}>否</Text>
+                                                </View>:
+                                                <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
-                                                          onPress={()=>{
+                                                                  onPress={()=>{
                                               this.setState({plan:Object.assign(this.state.plan,{hasCoach:0})});
                                           }}
-                                        >
-                                            <Text style={{color:'#888'}}>否</Text>
-                                        </TouchableOpacity>
+                                                >
+                                                    <Text style={{color:'#888'}}>否</Text>
+                                                </TouchableOpacity>
 
-                                }
+                                        }
 
-                            </View>
-                        </BoxShadow>
+                                    </View>
+                                </BoxShadow>:
+                                <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                                    <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
+                                        {this.state.plan.coachName}
+                                    </Text>
 
+                                    <TouchableOpacity style={{marginLeft:120,fontSize:13,color:'#222'}}
+                                                      onPress={()=>{
+                                                              var plan = this.state.plan;
+                                                              plan.coachId=null;
+                                                              this.setState({plan:plan});
+                                                          }}>
+                                        <Ionicons name={'md-close-circle'} size={18} color={'red'}/>
+                                    </TouchableOpacity>
+                                </View>
+                        }
                     </View>
 
                     <View style={{backgroundColor:'#fff',padding:10}}>
@@ -374,12 +426,12 @@ class CreateCustomerPlan extends Component{
                     <TouchableOpacity style={{width:width*2/3,backgroundColor:'#66CDAA',borderRadius:10,padding:10,flexDirection:'row',
                         justifyContent:'center'}}
                                       onPress={()=>{
-                            this.props.dispatch(distributeCourse(this.state.course,this.state.timeList,this.state.venue)).then((json)=>{
+                            this.props.dispatch(distributeCustomerPlan(this.state.plan,this.state.venue)).then((json)=>{
                                 if(json.re==1)
                                 {
-                                       Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
+                                       Alert.alert('信息','定制课程已发布成功',[{text:'确认',onPress:()=>{
                                             this.goBack();
-                                            this.props.setMyCourseList();
+
                                        }}]);
                                 }
                             })

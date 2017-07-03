@@ -66,6 +66,15 @@ class AddActivity extends Component{
 
     }
 
+    setCoach(type,coach)
+    {
+        if(type=='coach'){
+            this.setState({event:Object.assign(this.state.event,{coachId:coach.trainerInfo.trainerId,coachName:coach.perName})});
+        }else{
+            this.setState({event:Object.assign(this.state.event,{sparringId:coach.trainerInfo.trainerId,sparringName:coach.perName})});
+        }
+    }
+
     navigate2VenueInspect()
     {
         const { navigator } = this.props;
@@ -80,7 +89,7 @@ class AddActivity extends Component{
         }
     }
 
-    navigate2Coach()
+    navigate2Coach(flag)
     {
         const { navigator } = this.props;
         if(navigator) {
@@ -88,7 +97,8 @@ class AddActivity extends Component{
                 name: 'coach',
                 component: Coach,
                 params: {
-
+                    setCoach:this.setCoach.bind(this),
+                    flag:flag
                 }
             })
         }
@@ -219,7 +229,8 @@ class AddActivity extends Component{
             selectTime:false,
             eventTime:null,
             event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
-                   memberLevel:null,hasCoach:0,hasSparring:0,groupName:null,groupId:null,groupNum:null},
+                   memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
+                   groupName:null,groupId:null,groupNum:null},
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','私人'],
         }
@@ -432,7 +443,6 @@ class AddActivity extends Component{
                                         />
                                     </View>
                                 </View>:null
-
                         }
 
                         {
@@ -474,6 +484,7 @@ class AddActivity extends Component{
                                 </View>:null
                         }
 
+                        {/*邀请群组*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>邀请群组：</Text>
@@ -509,100 +520,138 @@ class AddActivity extends Component{
                             </TouchableOpacity>
                         </View>
 
-
+                        {/*邀请教练*/}
                         <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>邀请教练：</Text>
                             </View>
 
-                            <BoxShadow setting={shadowOpt}>
-                                <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
+                            {
+                                this.state.event.coachId==null?
+                                    <BoxShadow setting={shadowOpt}>
+                                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
-                                    {
-                                        this.state.event.hasCoach==1?
-                                            <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
+                                            {
+                                                this.state.event.hasCoach==1?
+                                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
                                         ,borderWidth:1,borderColor:'#66CDAA'}}>
-                                                <Text style={{color:'#fff'}}>是</Text>
-                                            </View>:
-                                            <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                                        <Text style={{color:'#fff'}}>是</Text>
+                                                    </View>:
+                                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
-                                                              onPress={()=>{
+                                                                      onPress={()=>{
                                             this.setState({event:Object.assign(this.state.event,{hasCoach:1})});
-                                            this.navigate2Coach();
+                                            this.navigate2Coach('coach');
                                         }}
-                                            >
-                                                <Text style={{color:'#666'}}>是</Text>
-                                            </TouchableOpacity>
-                                    }
+                                                    >
+                                                        <Text style={{color:'#666'}}>是</Text>
+                                                    </TouchableOpacity>
+                                            }
 
-                                    {
-                                        this.state.event.hasCoach==0?
-                                            <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
+                                            {
+                                                this.state.event.hasCoach==0?
+                                                    <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
                                         ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
-                                                <Text style={{color:'#fff'}}>否</Text>
-                                            </View>:
-                                            <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
+                                                        <Text style={{color:'#fff'}}>否</Text>
+                                                    </View>:
+                                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
-                                                              onPress={()=>{
+                                                                      onPress={()=>{
                                               this.setState({event:Object.assign(this.state.event,{hasCoach:0})});
                                           }}
-                                            >
-                                                <Text style={{color:'#888'}}>否</Text>
-                                            </TouchableOpacity>
+                                                    >
+                                                        <Text style={{color:'#888'}}>否</Text>
+                                                    </TouchableOpacity>
 
-                                    }
+                                            }
 
-                                </View>
-                            </BoxShadow>
+                                        </View>
+                                    </BoxShadow>:
+                                    <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                                        <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
+                                            {this.state.event.coachName}
+                                        </Text>
+
+                                        <TouchableOpacity style={{marginLeft:120,fontSize:13,color:'#222'}}
+                                                          onPress={()=>{
+                                                              var event = this.state.event;
+                                                              event.coachId=null;
+                                                              this.setState({event:event});
+                                                          }}>
+                                            <Ionicons name={'md-close-circle'} size={18} color={'red'}/>
+                                        </TouchableOpacity>
+                                    </View>
+                            }
+
 
                         </View>
 
-
+                        {/*邀请陪练*/}
                         <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>邀请陪练：</Text>
                             </View>
 
-                            <BoxShadow setting={shadowOpt}>
-                                <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
+                            {
+                                this.state.event.sparringId==null?
+                                    <BoxShadow setting={shadowOpt}>
+                                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
-                                    {
-                                        this.state.event.hasSparring==1?
-                                            <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
+                                            {
+                                                this.state.event.hasSparring==1?
+                                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
                                         ,borderWidth:1,borderColor:'#66CDAA'}}>
-                                                <Text style={{color:'#fff'}}>是</Text>
-                                            </View>:
-                                            <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                                        <Text style={{color:'#fff'}}>是</Text>
+                                                    </View>:
+                                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
-                                                              onPress={()=>{
+                                                                      onPress={()=>{
                                             this.setState({event:Object.assign(this.state.event,{hasSparring:1})});
-                                            this.navigate2Coach();
+                                            this.navigate2Coach('sparring');
                                         }}
-                                            >
-                                                <Text style={{color:'#666'}}>是</Text>
-                                            </TouchableOpacity>
-                                    }
+                                                    >
+                                                        <Text style={{color:'#666'}}>是</Text>
+                                                    </TouchableOpacity>
+                                            }
 
-                                    {
-                                        this.state.event.hasSparring==0?
-                                            <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
+                                            {
+                                                this.state.event.hasSparring==0?
+                                                    <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
                                         ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
-                                                <Text style={{color:'#fff'}}>否</Text>
-                                            </View>:
-                                            <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
+                                                        <Text style={{color:'#fff'}}>否</Text>
+                                                    </View>:
+                                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
-                                                              onPress={()=>{
+                                                                      onPress={()=>{
                                               this.setState({event:Object.assign(this.state.event,{hasSparring:0})})
                                           }}
-                                            >
-                                                <Text style={{color:'#888'}}>否</Text>
-                                            </TouchableOpacity>
-                                    }
+                                                    >
+                                                        <Text style={{color:'#888'}}>否</Text>
+                                                    </TouchableOpacity>
+                                            }
 
-                                </View>
-                            </BoxShadow>
+                                        </View>
+                                    </BoxShadow>:
+                                    <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                                        <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
+                                            {this.state.event.sparringName}
+                                        </Text>
+
+                                        <TouchableOpacity style={{marginLeft:120,fontSize:13,color:'#222'}}
+                                                          onPress={()=>{
+                                                              var event = this.state.event;
+                                                              event.sparringId=null;
+                                                              this.setState({event:event});
+                                                          }}>
+                                            <Ionicons name={'md-close-circle'} size={18} color={'red'}/>
+                                        </TouchableOpacity>
+                                    </View>
+
+                            }
 
                         </View>
 

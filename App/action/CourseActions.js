@@ -179,3 +179,36 @@ export let addBadmintonClassMermberInfo=(info)=>{
         })
     }
 }
+
+//发布用户定制课程
+export let distributeCustomerPlan=(plan,venue)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'distributeCustomerPlan',
+                    info:{
+                        plan,
+                        venue
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}

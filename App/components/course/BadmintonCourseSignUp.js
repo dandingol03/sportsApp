@@ -19,10 +19,10 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import _ from 'lodash'
+import _ from 'lodash';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
@@ -31,7 +31,6 @@ const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 const scaleAnimation = new ScaleAnimation();
 const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 
-import {BoxShadow,BorderShadow} from 'react-native-shadow';
 import AddRelativeModal from './AddRelativeModal';
 
 
@@ -310,6 +309,7 @@ class BadmintonCourseSignUp extends Component {
                             </View>
 
                         </View>
+
                         {persons}
 
                     </View>

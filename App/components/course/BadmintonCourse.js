@@ -384,7 +384,6 @@ class BadmintonCourse extends Component {
                         </View>
 
                         {/*课程列表*/}
-
                         <Animated.View style={{ flex: 1, padding: 4, opacity: this.state.fadeAnim, backgroundColor: '#fff' }}>
                             {courseList}
                         </Animated.View>
