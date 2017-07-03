@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import {
+    Alert,
     Dimensions,
     ListView,
     ScrollView,
@@ -42,6 +43,7 @@ import{
     fetchPersonRelative,
     addBadmintonClassMermberInfo
 } from '../../action/CourseActions';
+
 import{
     onRelativePersonsUpdate,
     addRelativePerson
@@ -184,6 +186,7 @@ class BadmintonCourseSignUp extends Component {
         }
 
         return(
+
             <View style={styles.container}>
                 <View style={{height:70,width:width,paddingTop:30,flexDirection:'row',justifyContent:'center',
                     backgroundColor:'#66CDAA'}}>
@@ -196,81 +199,79 @@ class BadmintonCourseSignUp extends Component {
                     </View>
                     <TouchableOpacity ref="menu"  style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{
-
                       }}
                     >
+
                     </TouchableOpacity>
                 </View>
 
 
                 <View style={{justifyContent:'center',padding:5}}>
-                    <BoxShadow setting={shadowOpt}>
-                        <TouchableOpacity style={{width:width-8,padding:4,backgroundColor:'#fff',flexDirection:'column',
+
+                    <View style={{width:width-8,padding:4,backgroundColor:'#fff',flexDirection:'column',
                                     paddingBottom:7,borderWidth:1,borderColor:'#eee'}}
-                                          onPress={()=>{
-                                    this.navigate2MadeCustomCourseDetail()
+                                      onPress={()=>{
+
                                 }}
-                        >
-                            <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center'}}>
-                                <Text style={{fontSize:16,color:'#222',fontWeight:'bold'}}>
-                                    {classInfo.className}
+                    >
+                        <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center'}}>
+                            <Text style={{fontSize:16,color:'#222',fontWeight:'bold'}}>
+                                {classInfo.className}
+                            </Text>
+
+
+
+                            <View style={{flex:1}}></View>
+
+                            <Text style={{fontSize:13,color:'#008B00',fontWeight:'bold'}}>
+                                {classInfo.venueName}
+                            </Text>
+
+                        </View>
+
+
+                        {schedules}
+
+                        <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center',marginTop:10}}>
+                            <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Icon name={'users'} size={15} color="#666"/>
+                            </View>
+
+                            <View style={{flexDirection:'row',alignItems:'center',marginLeft:9}}>
+                                <Text style={{color:'#222',fontSize:13}}>最大人数{classInfo.maxNumber}</Text>
+                            </View>
+
+                        </View>
+
+                        <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center',marginTop:10}}>
+                            <View style={{flexDirection:'row',alignItems:'center',marginLeft:3}}>
+                                <Icon name={'user'} size={15} color="#666"/>
+                            </View>
+
+                            <View style={{flexDirection:'row',alignItems:'center',marginLeft:12}}>
+                                <Text style={{color:'#222',fontSize:13}}>已报名人数{classInfo.signNumber}</Text>
+                            </View>
+
+                        </View>
+
+
+                        <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center',justifyContent:'flex-end'}}>
+
+                            <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center',marginRight:5}}>
+                                <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
+                                <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
+                                    {classInfo.perName}
                                 </Text>
+                            </View>
 
-
-
-                                <View style={{flex:1}}></View>
-
-                                <Text style={{fontSize:13,color:'#008B00',fontWeight:'bold'}}>
-                                    {classInfo.venueName}
+                            <View style={{backgroundColor:'#f00',borderRadius:3,padding:4,marginLeft:5}}>
+                                <Text style={{color:'#fff',fontSize:13}}>
+                                    ￥{classInfo.cost}
                                 </Text>
-
                             </View>
+                        </View>
 
-
-                            {schedules}
-
-                            <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center',marginTop:10}}>
-                                <View style={{flexDirection:'row',alignItems:'center'}}>
-                                    <Icon name={'users'} size={15} color="#666"/>
-                                </View>
-
-                                <View style={{flexDirection:'row',alignItems:'center',marginLeft:9}}>
-                                    <Text style={{color:'#222',fontSize:13}}>最大人数{classInfo.maxNumber}</Text>
-                                </View>
-
-                            </View>
-
-                            <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center',marginTop:10}}>
-                                <View style={{flexDirection:'row',alignItems:'center',marginLeft:3}}>
-                                    <Icon name={'user'} size={15} color="#666"/>
-                                </View>
-
-                                <View style={{flexDirection:'row',alignItems:'center',marginLeft:12}}>
-                                    <Text style={{color:'#222',fontSize:13}}>已报名人数{classInfo.signNumber}</Text>
-                                </View>
-
-                            </View>
-
-
-                            <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center',justifyContent:'flex-end'}}>
-
-                                <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center',marginRight:5}}>
-                                    <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
-                                    <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-                                        {classInfo.perName}
-                                    </Text>
-                                </View>
-
-                                <View style={{backgroundColor:'#f00',borderRadius:3,padding:4,marginLeft:5}}>
-                                    <Text style={{color:'#fff',fontSize:13}}>
-                                        ￥{classInfo.cost}
-                                    </Text>
-                                </View>
-                            </View>
-
-
-                        </TouchableOpacity>
-                    </BoxShadow>
+                    </View>
 
 
                     <View style={{flexDirection:'column',marginTop:20,borderWidth:2,borderColor:'#00BCD4',
@@ -318,8 +319,12 @@ class BadmintonCourseSignUp extends Component {
                         <TouchableOpacity style={{width:width/2,backgroundColor:'#00BCD4',padding:8,paddingHorizontal:12,borderRadius:2,
                             flexDirection:'row',justifyContent:'center'}}
                             onPress={()=>{
+
+
                                var {relative,isSelfCheck}=this.state
-                               var presons=[]
+
+                               var persons=[];
+
                                if(relative&&relative.length>0)
                                {
                                    relative.map((person,i)=>{
@@ -327,17 +332,35 @@ class BadmintonCourseSignUp extends Component {
                                            persons.push(person.personId)
                                    })
                                }
+
                                //TODO:加入校验
-                               this.props.dispatch(addBadmintonClassMermberInfo({
-                                   isSelfCheck:isSelfCheck,
-                                   persons:persons,
-                                   classId:classInfo.classId,
-                                   creatorId:classInfo.creatorId
-                               })).then((json)=>{
+                               if(classInfo.signNumber+persons.length>=classInfo.maxNumber){
+
+                                  Alert.alert('信息','人数已满，请选择其他课程',[{text:'确认',onPress:()=>{
+                                                 console.log();
+                                            }}]);
+
+                               }else{
+                                   var info = {
+                                        isSelfCheck:isSelfCheck,
+                                        persons:persons,
+                                        classId:classInfo.classId,
+                                        creatorId:classInfo.creatorId,
+                                        signNumber:classInfo.signNumber,
+                                        maxNumber:classInfo.maxNumber,
+                                        };
+                                   this.props.dispatch(addBadmintonClassMermberInfo(info))
+                                   .then((json)=>{
+                                       if(json.re==1){
+                                            Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
+                                                  this.goBack();
+                                                   this.props.setMyCourseList();
+                                            }}]);
+
+                                       }
                                     console.log()
                                })
-
-
+                               }
                             }}
                         >
                             <Text style={{color:'#fff',fontWeight:'bold'}}>报名</Text>
@@ -367,8 +390,25 @@ class BadmintonCourseSignUp extends Component {
                                 this.props.dispatch(addRelativePerson(payload)).then((json)=>{
                                     if(json.re==1)
                                     {
-                                        console.log()
+                                         Alert.alert('信息','关联成功,新帐号密码为000000',[{text:'确认',onPress:()=>{
+                                            this.props.dispatch(fetchPersonRelative()).then((json)=>{
+                                               if(json.re==1)
+                                               {
+                                                   this.scaleAnimationDialog.dismiss();
+                                                   this.props.dispatch(onRelativePersonsUpdate(json.data))
+                                               }
+                                            })
+                                         console.log()
+
+                                         }}]);
+                                    }else{
+                                        if(json.re==2){
+                                            Alert.alert('信息','该用户已存在，请登录报名',[{text:'确认',onPress:()=>{
+                                                 console.log();
+                                            }}]);
+                                        }
                                     }
+
                                 })
                             }}
 

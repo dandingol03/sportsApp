@@ -260,7 +260,13 @@ export let addRelativePerson=(payload)=> {
                     info:payload
                 }
             }).then((json)=>{
-                resolve(json)
+                if(json.re==1){
+                    resolve(json)
+                }else{
+                    if(json.re==2){
+                        resolve(json)
+                    }
+                }
 
             }).catch((e)=>{
                 alert(e);

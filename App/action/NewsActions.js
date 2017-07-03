@@ -62,7 +62,6 @@ export let getNewsContentUrl=(themeId)=>{
                 reject(e);
             })
 
-
         });
     }
 }

@@ -166,7 +166,7 @@ class VenueInspect extends Component{
                                     ()=>{
                                         DeviceEventEmitter.emit('on_venue_confirm',this.state.detail)
                                         this.goBack();
-                                        this.props.setEventPlace(this.state.detail);
+                                        this.props.setPlace(this.state.detail);
                                     }}
                             >
                                 <Text style={{color:'#fff',fontSize:13,fontWeight:'bold'}}>

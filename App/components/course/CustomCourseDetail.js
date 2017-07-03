@@ -44,7 +44,6 @@ class CustomCourseDetail extends Component{
         });
     }
 
-
     closePopover(){
         this.setState({menuVisible: false});
     }

@@ -91,9 +91,9 @@ class GroupDetail extends Component{
 
     }
 
-    exitGroup(groupId)
+    exitGroup(group)
     {
-        this.props.dispatch(exitGroup(groupId)).then((json)=>{
+        this.props.dispatch(exitGroup(group)).then((json)=>{
             if(json.re==1){
                 alert('退群成功');
                 this.props.setMyGroupList();
@@ -218,7 +218,7 @@ class GroupDetail extends Component{
                         (flag=='我的组详情'&&this.props.groupInfo.groupManager!==personInfo.personId)?
                             <TouchableOpacity style={{height:30,backgroundColor:'#EE6A50',margin:20,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                               onPress={()=>{
-                                                  this.exitGroup(this.props.groupInfo.groupId);
+                                                  this.exitGroup(this.props.groupInfo);
                                       }}>
                                 <Text style={{color:'#fff',fontSize:15}}>退出</Text>
                             </TouchableOpacity>:null

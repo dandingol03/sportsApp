@@ -17,7 +17,12 @@ import {
 } from '../constants/ActivityConstants';
 
 //发布群活动
-export let releaseActivity=(payload)=>{
+export let releaseActivity=(event)=>{
+
+    if(event.type=='私人'&&event.groupNum!==null&&event.groupNum!==undefined){
+        event.eventMaxMemNum = event.groupNum;
+    }
+
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
@@ -32,7 +37,7 @@ export let releaseActivity=(payload)=>{
                 body: {
                     request: 'addActivity',
                     info:{
-                       event:payload
+                       event:event
                     }
                 }
             }).then((json)=>{
@@ -317,43 +322,52 @@ export let fetchActivityList=()=>{
                     var visibleEvents=[];
                     var myEvents=[];
                     var myTakenEvents=[];
+                    var today = new Date();
 
                     if (allActivityList!== undefined && allActivityList !== null &&allActivityList.length > 0) {
                         dispatch(setActivityList(allActivityList));
                         allActivityList.map((activity,i)=>{
-                            var isMember=0;
-                            activity.memberList.map((member)=>{
-                                if(member.personId==state.user.personInfo.personId)
-                                {
-                                    isMember++;
-                                }
-                            })
-                            //我发起的活动
-                            if(activity.eventManager.personId==state.user.personInfo.personId){
-                                myEvents.push(activity);
-                            }else{
-                                //我报名的活动
-                                if(isMember!==0){
-                                    myTakenEvents.push(activity);
+
+                            var date = new Date(activity.eventTime);
+                            if(((date-today)>0&&today.getDate()!=date.getDate())||
+                                (today.getDate()==date.getDate()&&(date.getHours()-today.getHours()>0)))
+                            {
+
+                                var isMember=0;
+                                activity.memberList.map((member)=>{
+                                    if(member.personId==state.user.personInfo.personId)
+                                    {
+                                        isMember++;
+                                    }
+                                })
+                                //我发起的活动
+                                if(activity.eventManager.personId==state.user.personInfo.personId){
+                                    myEvents.push(activity);
                                 }else{
-                                    //我可选的活动
-                                    if(activity.eventType==0){
-                                        visibleEvents.push(activity);
+                                    //我报名的活动
+                                    if(isMember!==0){
+                                        myTakenEvents.push(activity);
                                     }else{
-                                        var myGroupList = state.activity.myGroupList;
-                                        if(myGroupList==null){
-                                            dispatch(fetchMyGroupList()).then(()=>{
-                                                if(activity.groupId!==null){
-                                                    myGroupList.map((group,i)=>{
-                                                        if(group.groupId==activity.groupId){
-                                                            visibleEvents.push(activity);
-                                                        }
-                                                    })
-                                                }
-                                            });
+                                        //我可选的活动
+                                        if(activity.eventType==0){
+                                            visibleEvents.push(activity);
+                                        }else{
+                                            var myGroupList = state.activity.myGroupList;
+                                            if(myGroupList==null){
+                                                dispatch(fetchMyGroupList()).then(()=>{
+                                                    if(activity.groupId!==null){
+                                                        myGroupList.map((group,i)=>{
+                                                            if(group.groupId==activity.groupId){
+                                                                visibleEvents.push(activity);
+                                                            }
+                                                        })
+                                                    }
+                                                });
+                                            }
                                         }
                                     }
                                 }
+
                             }
 
                         });
@@ -478,7 +492,7 @@ export let deleteGroup=(groupId)=>{
     }
 }
 
-export let exitGroup=(groupId)=>{
+export let exitGroup=(group)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
@@ -493,7 +507,7 @@ export let exitGroup=(groupId)=>{
                 body: {
                     request: 'exitGroup',
                     info:{
-                        groupId:groupId
+                        group:group
                     }
                 }
             }).then((json)=>{
@@ -534,6 +548,72 @@ export let signUpActivity=(event)=>{
                     resolve({re:1,data:'报名成功'});
                 }else{
                     resolve({re:-1,data:'报名不成功'});
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+export let deleteActivity=(eventId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'deleteActivity',
+                    info:{
+                        eventId:eventId
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:' 撤销成功'});
+                }else{
+                    resolve({re:-1,data:'撤销不成功'});
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+export let exitActivity=(event)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'exitActivity',
+                    info:{
+                        event:event
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:'退出成功'});
+                }else{
+                    resolve({re:-1,data:'退出不成功'});
                 }
             }).catch((e)=>{
                 alert(e);

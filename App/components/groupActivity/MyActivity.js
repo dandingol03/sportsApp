@@ -18,9 +18,12 @@ import {connect} from 'react-redux';
 var {height, width} = Dimensions.get('window');
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import ActivityDetail from './ActivityDetail';
 import DateFilter from '../../utils/DateFilter';
+import {
+    enableActivityOnFresh,
+} from '../../action/ActivityActions';
+
 
 class MyActivity extends Component {
 
@@ -49,6 +52,12 @@ class MyActivity extends Component {
 
     }
 
+    setMyActivityList()
+    {
+        this.props.dispatch(enableActivityOnFresh());
+        this.goBack();
+    }
+
     navigate2ActivityDetail(rowData,flag){
         const { navigator } = this.props;
         if(navigator) {
@@ -58,6 +67,7 @@ class MyActivity extends Component {
                 params: {
                     activity:rowData,
                     flag:this.props.flag,
+                    setMyActivityList:this.setMyActivityList.bind(this),
                 }
             })
         }
