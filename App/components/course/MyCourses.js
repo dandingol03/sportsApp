@@ -1,5 +1,4 @@
-
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {
     Dimensions,
     ListView,
@@ -12,21 +11,24 @@ import {
     TouchableOpacity,
     RefreshControl,
     Animated,
+    Alert,
     Easing
 } from 'react-native';
 
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import _ from 'lodash'
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
+import {Toolbar, OPTION_SHOW, OPTION_NEVER} from 'react-native-toolbar-wrapper'
 var Popover = require('react-native-popover');
 
 import {
     fetchMyCourses,
     disableMyCoursesOnFresh,
-    onMyCoursesUpdate
+    onMyCoursesUpdate,
+    dropoutMyCourses
 } from '../../action/CourseActions';
 
 import {
@@ -34,17 +36,17 @@ import {
     makeTabsShown
 } from '../../action/TabActions';
 
-class MyCourses extends Component{
+class MyCourses extends Component {
 
-    goBack(){
-        const { navigator } = this.props;
-        if(navigator) {
+    goBack() {
+        const {navigator} = this.props;
+        if (navigator) {
             navigator.pop();
         }
     }
 
     _onRefresh() {
-        this.setState({ isRefreshing: true, fadeAnim: new Animated.Value(0) });
+        this.setState({isRefreshing: true, fadeAnim: new Animated.Value(0)});
         setTimeout(function () {
             this.setState({
                 isRefreshing: false,
@@ -63,59 +65,71 @@ class MyCourses extends Component{
 
     }
 
-    showPopover(ref){
+    showPopover(ref) {
         this.refs[ref].measure((ox, oy, width, height, px, py) => {
             this.setState({
                 menuVisible: true,
-                buttonRect: {x: px+5, y: py+10, width: 200, height: height}
+                buttonRect: {x: px + 5, y: py + 10, width: 200, height: height}
             });
         });
     }
 
-    closePopover(){
+    closePopover() {
         this.setState({menuVisible: false});
     }
 
-    setMyGroupList(){
+    setMyGroupList() {
         this.props.dispatch(enableMyGroupOnFresh());
     }
 
-    navigate2CreateGroup(){
-        const { navigator } = this.props;
-        if(navigator) {
+    navigate2CreateGroup() {
+        const {navigator} = this.props;
+        if (navigator) {
             navigator.push({
                 name: 'create_group',
                 component: CreateGroup,
                 params: {
-                    setMyGroupList:this.setMyGroupList.bind(this),
+                    setMyGroupList: this.setMyGroupList.bind(this),
                 }
             })
         }
     }
 
-    navigate2AllGroup(){
-        const { navigator } = this.props;
-        if(navigator) {
+    navigate2AllGroup() {
+        const {navigator} = this.props;
+        if (navigator) {
             navigator.push({
                 name: 'all_group',
                 component: AllGroup,
                 params: {
-                    setMyGroupList:this.setMyGroupList.bind(this),
+                    setMyGroupList: this.setMyGroupList.bind(this),
                 }
             })
         }
     }
 
 
+    renderRow(rowData, sectionId, rowId) {
 
-    renderRow(rowData,sectionId,rowId){
-
-        var row=(
+        var row = (
             <TouchableOpacity style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
                               onPress={()=>{
-                              alert('press')
-
-                }}
+                                  if(this.state.onLongPressed==true)//处于设置状态
+                                  {
+                                       var {myCourses}=this.state
+                                       var _myCourses=_.cloneDeep(myCourses)
+                                       _myCourses.map((course,i)=>{
+                                           if(course.classInfo.classId==rowData.classInfo.classId)
+                                           {
+                                               if(course.checked==true)
+                                                   course.checked=false
+                                               else
+                                                   course.checked=true
+                                           }
+                                       })
+                                       this.setState({myCourses:_myCourses})
+                                  }
+                              }}
                               onLongPress={()=>{
                                 this.props.dispatch(makeTabsHidden());
                                Animated.timing(this.state.detailPosition, {
@@ -123,7 +137,19 @@ class MyCourses extends Component{
                                     duration: 200, // 动画时间
                                     easing: Easing.linear // 缓动函数
                                 }).start();
-                               this.setState({title:'已选择',goBackIcon:'md-close'})
+                               //TODO:设置选中
+                               var {myCourses}=this.state
+                               var _myCourses=_.cloneDeep(myCourses)
+                               _myCourses.map((course,i)=>{
+                                   if(course.classInfo.classId==rowData.classInfo.classId)
+                                   {
+                                       if(course.checked==true)
+                                           course.checked=false
+                                       else
+                                           course.checked=true
+                                   }
+                               })
+                               this.setState({title:'已选择',goBackIcon:'md-close',onLongPressed:true,myCourses:_myCourses})
                               }}
             >
                 <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -137,11 +163,28 @@ class MyCourses extends Component{
 
 
                         <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
-                            <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
+                            <CommIcon name="account-check" size={24} color="#0adc5e"
+                                      style={{backgroundColor:'transparent',}}/>
                             <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
                                 {rowData.classInfo.creator.perName}
                             </Text>
                         </View>
+
+
+                        {
+                            this.state.onLongPressed == true ?
+                                rowData.checked == true ?
+                                    <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
+                                        <Ionicons name={'md-checkmark-circle'} size={24} color="#6bd2ff"
+                                                  style={{ backgroundColor: 'transparent'}}/>
+                                    </View> :
+                                    <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
+                                        <Ionicons name={'ios-checkmark-circle-outline'} size={24} color="#6bd2ff"
+                                                  style={{ backgroundColor: 'transparent'}}/>
+                                    </View> :
+                                null
+
+                        }
                     </View>
 
                     <View style={{ padding: 3, paddingHorizontal: 12 }}>
@@ -150,18 +193,21 @@ class MyCourses extends Component{
                         </Text>
                     </View>
 
-                    <View style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
+                    <View
+                        style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ color: '#f00', fontSize: 12, width: 50 }}>
                             ￥{rowData.classInfo.cost}
                         </Text>
 
-                        <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
+                        <View
+                            style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
                             <Text style={{ color: '#fff', fontSize: 12 }}>
                                 {rowData.classInfo.classCount}课次
                             </Text>
                         </View>
 
-                        <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
+                        <View
+                            style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
                             <Text style={{ color: '#fff', fontSize: 12 }}>
                                 {rowData.classInfo.venue.name}
                             </Text>
@@ -171,59 +217,62 @@ class MyCourses extends Component{
                     </View>
                 </View>
 
-                <View style={{ width: 70, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Icon name={'angle-right'} size={34} color="#444" style={{ backgroundColor: 'transparent', marginTop: -10 }} />
-                </View>
             </TouchableOpacity>
         );
         return row;
     }
 
-    fetchData(){
-        this.state.doingFetch=true;
-        this.state.isRefreshing=true;
-        this.props.dispatch(fetchMyCourses()).then((json)=> {
-            if(json.re==1){
+    fetchData() {
+        this.state.doingFetch = true;
+        this.state.isRefreshing = true;
+        this.props.dispatch(fetchMyCourses()).then((json) => {
+            if (json.re == 1) {
                 this.props.dispatch(onMyCoursesUpdate(json.data))
                 this.props.dispatch(disableMyCoursesOnFresh())
 
-                this.setState({doingFetch:false,isRefreshing:false})
-            }else{
+                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+            } else {
                 this.props.dispatch(disableMyCoursesOnFresh())
-                this.setState({doingFetch:false,isRefreshing:false})
+                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
             }
-        }).catch((e)=>{
+        }).catch((e) => {
             this.props.dispatch(disableMyCoursesOnFresh())
-            this.setState({doingFetch:false,isRefreshing:false});
+            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false});
             alert(e)
         });
     }
 
     constructor(props) {
         super(props);
-        this.state= {
+        this.state = {
             doingFetch: false,
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
             detailPosition: new Animated.Value(0),
             title: '已报名课程',
+            myCourses: props.myCourses,
+            onLongPressed: false
         }
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState(nextProps)
+    }
+
     render() {
 
-        var displayArea = {x:5, y:10, width:width-20, height: height - 10};
+        var displayArea = {x: 5, y: 10, width: width - 20, height: height - 10};
 
-        var myCoursesListView=null;
-        var {myCourses,myCoursesOnFresh}=this.props;
-        var {title,goBackIcon}=this.state
+        var myCoursesListView = null;
+        var {myCoursesOnFresh}=this.props;
+        var {myCourses}=this.state
+        var {title, goBackIcon}=this.state
 
-        if(myCoursesOnFresh==true&&(myCourses==undefined||myCourses==null))
-        {
-            if(this.state.doingFetch==false)
+        if (myCoursesOnFresh == true && (myCourses == undefined || myCourses == null)) {
+            if (this.state.doingFetch == false)
                 this.fetchData();
-        }else {
+        } else {
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             if (myCourses && myCourses.length > 0) {
                 myCoursesListView = (
@@ -237,7 +286,6 @@ class MyCourses extends Component{
         }
 
 
-
         return (
             <View style={{flex:1, backgroundColor:'#eee',}}>
 
@@ -249,14 +297,14 @@ class MyCourses extends Component{
 
                              }
                         }}
-                        onCancel={
+                         onCancel={
                             ()=>{
                                  Animated.timing(this.state.detailPosition, {
                                     toValue: 0, // 目标值
                                     duration: 200, // 动画时间
                                     easing: Easing.linear // 缓动函数
                                 }).start();
-                                    this.setState({goBackIcon:null,title:'已报名课程'})
+                                    this.setState({goBackIcon:null,title:'已报名课程',onLongPressed:false})
                                     setTimeout(()=>{
                                         this.props.dispatch(makeTabsShown());
                                     },200)
@@ -265,7 +313,8 @@ class MyCourses extends Component{
                 >
 
 
-                    <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,borderTopWidth:1,borderColor:'#eee'}}>
+                    <Animated.View
+                        style={{opacity: this.state.fadeAnim,height:height-150,borderTopWidth:1,borderColor:'#eee'}}>
                         <ScrollView
                             refreshControl={
                                      <RefreshControl
@@ -280,21 +329,20 @@ class MyCourses extends Component{
                                     }
                         >
                             {
-                                myCoursesListView==null?
-                                    this.state.doingFetch==true?
+                                myCoursesListView == null ?
+                                    this.state.doingFetch == true ?
                                         <View style={{justifyContent:'center',alignItems: 'center',marginTop:20}}>
                                             <Text style={{color:'#343434'}}>正在拉取已报名的课程</Text>
-                                        </View>:
+                                        </View> :
                                         <View style={{justifyContent:'center',alignItems: 'center',marginTop:20}}>
                                             <Text style={{color:'#343434'}}>尚未有报名参加的课程</Text>
-                                        </View> :null
+                                        </View> : null
                             }
 
                             {myCoursesListView}
 
                         </ScrollView>
                     </Animated.View>
-
 
 
                     {/*popover part*/}
@@ -308,8 +356,9 @@ class MyCourses extends Component{
                         placement="bottom"
                     >
 
-                        <TouchableOpacity style={[styles.popoverContent,{borderBottomWidth:1,borderBottomColor:'#ddd',flexDirection:'row',justifyContent:'flex-start'}]}
-                                          onPress={()=>{
+                        <TouchableOpacity
+                            style={[styles.popoverContent,{borderBottomWidth:1,borderBottomColor:'#ddd',flexDirection:'row',justifyContent:'flex-start'}]}
+                            onPress={()=>{
                                               this.closePopover();
                                               setTimeout(()=>{
                                                    this.navigate2AllGroup();
@@ -320,8 +369,9 @@ class MyCourses extends Component{
                             <Text style={[styles.popoverText]}>添加群</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.popoverContent,{borderBottomWidth:1,borderBottomColor:'#ddd',flexDirection:'row'}]}
-                                          onPress={()=>{
+                        <TouchableOpacity
+                            style={[styles.popoverContent,{borderBottomWidth:1,borderBottomColor:'#ddd',flexDirection:'row'}]}
+                            onPress={()=>{
                                               this.closePopover();
                                                  setTimeout(()=>{
                                                   this.navigate2CreateGroup();
@@ -334,8 +384,6 @@ class MyCourses extends Component{
                     </Popover>
 
 
-
-
                 </Toolbar>
 
 
@@ -345,10 +393,36 @@ class MyCourses extends Component{
                                     inputRange: [0,1],
                                     outputRange: [45, 0]
                                 })}]}>
-                    <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+                    <TouchableOpacity style={{flexDirection:'column',alignItems:'center',justifyContent:'center'}}
+                                      onPress={()=>{
+
+                                          var courses=[]
+                                          var {myCourses}=this.state
+                                          myCourses.map((course,i)=>{
+                                              if(course.checked==true)
+                                                  courses.push(course.classInfo.classId)
+                                          })
+                                          if(courses.length>0)
+                                          {
+                                            this.props.dispatch(dropoutMyCourses(courses)).then((json)=>{
+                                                if(json.re==1)
+                                                {
+                                                    //TODO:拉取新的课程列表
+                                                    this.fetchData()
+                                                    Alert.alert('信息','取消课程报名成功',[{text:'确认',onPress:()=>{
+                                                      console.log();
+                                                    }}]);
+
+                                                }
+                                            })
+                                          }
+
+
+                                      }}
+                    >
                         <Ionicons name='ios-trash' size={28} color="#555"/>
-                        <Text style={{color:'#555',fontSize:11,fontWeight:'bold'}}>删除</Text>
-                    </View>
+                        <Text style={{color:'#555',fontSize:11,fontWeight:'bold'}}>取消报名</Text>
+                    </TouchableOpacity>
                 </Animated.View>
 
             </View>
@@ -364,16 +438,16 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    popoverText:{
-        color:'#444',
-        marginLeft:14,
-        fontWeight:'bold'
+    popoverText: {
+        color: '#444',
+        marginLeft: 14,
+        fontWeight: 'bold'
     },
 
 });
 
-module.exports = connect(state=>({
-        myCourses:state.course.myCourses,
-        myCoursesOnFresh:state.course.myCoursesOnFresh
+module.exports = connect(state => ({
+        myCourses: state.course.myCourses,
+        myCoursesOnFresh: state.course.myCoursesOnFresh
     })
 )(MyCourses);

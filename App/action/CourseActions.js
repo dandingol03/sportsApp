@@ -227,3 +227,34 @@ export let addBadmintonClassMermberInfo=(info)=>{
         })
     }
 }
+
+//取消已有课程报名
+export let dropoutMyCourses=(courses)=>{
+    return (dispatch,getState)=> {
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'dropoutCourseInBatch',
+                    info:{
+                        courses
+                    }
+
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+        })
+    }
+}
