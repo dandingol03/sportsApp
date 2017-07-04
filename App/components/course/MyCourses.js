@@ -21,7 +21,7 @@ var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import {Toolbar, OPTION_SHOW, OPTION_NEVER} from 'react-native-toolbar-wrapper'
+import {Toolbar, OPTION_SHOW, OPTION_NEVER,ACTION_REFRESH} from 'react-native-toolbar-wrapper'
 var Popover = require('react-native-popover');
 
 import {
@@ -223,8 +223,10 @@ class MyCourses extends Component {
     }
 
     fetchData() {
+
         this.state.doingFetch = true;
         this.state.isRefreshing = true;
+
         this.props.dispatch(fetchMyCourses()).then((json) => {
             if (json.re == 1) {
                 this.props.dispatch(onMyCoursesUpdate(json.data))
@@ -240,6 +242,7 @@ class MyCourses extends Component {
             this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false});
             alert(e)
         });
+
     }
 
     constructor(props) {
@@ -290,10 +293,27 @@ class MyCourses extends Component {
             <View style={{flex:1, backgroundColor:'#eee',}}>
 
                 <Toolbar width={width} title={title} cancelIcon={goBackIcon} navigator={this.props.navigator}
-                         actions={[{value:'取消报名',show:OPTION_NEVER}]}
+                         actions={[{icon:ACTION_REFRESH,show:OPTION_SHOW}]}
                          onPress={(i)=>{
                              if(i==0)
                              {
+                                  //刷新
+                                  this.setState({isRefreshing:true,doingFetch:true})
+                                  this.props.dispatch(fetchMyCourses()).then((json) => {
+                                        if (json.re == 1) {
+                                            this.props.dispatch(onMyCoursesUpdate(json.data))
+                                            this.props.dispatch(disableMyCoursesOnFresh())
+
+                                            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                                        } else {
+                                            this.props.dispatch(disableMyCoursesOnFresh())
+                                            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                                        }
+                                    }).catch((e) => {
+                                        this.props.dispatch(disableMyCoursesOnFresh())
+                                        this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false});
+                                        alert(e)
+                                    });
 
                              }
                         }}
@@ -408,9 +428,24 @@ class MyCourses extends Component {
                                                 if(json.re==1)
                                                 {
                                                     //TODO:拉取新的课程列表
-                                                    this.fetchData()
                                                     Alert.alert('信息','取消课程报名成功',[{text:'确认',onPress:()=>{
-                                                      console.log();
+                                                      this.setState({isRefreshing:true,doingFetch:true})
+                                                      this.props.dispatch(fetchMyCourses()).then((json) => {
+                                                            if (json.re == 1) {
+                                                                this.props.dispatch(onMyCoursesUpdate(json.data))
+                                                                this.props.dispatch(disableMyCoursesOnFresh())
+
+                                                                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                                                            } else {
+                                                                this.props.dispatch(disableMyCoursesOnFresh())
+                                                                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                                                            }
+                                                        }).catch((e) => {
+                                                            this.props.dispatch(disableMyCoursesOnFresh())
+                                                            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false});
+                                                            alert(e)
+                                                        });
+
                                                     }}]);
 
                                                 }
