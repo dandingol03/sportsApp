@@ -95,7 +95,7 @@ class CustomCourse extends Component{
 
                 <Toolbar width={width} title="我的定制" navigator={this.props.navigator}
                          actions={[
-                                    {icon:ACTION_ADD,value:'',show:OPTION_SHOW},
+                                    {icon:ACTION_ADD,value:'sss',show:OPTION_SHOW},
                                       {value:'发布定制',show:OPTION_NEVER},
                                     ]}
                          onPress={(i)=>{

@@ -27,6 +27,8 @@ import {BoxShadow} from 'react-native-shadow';
 import VenueInspect from '../../components/venue/VenueInspect';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper';
 import Coach from '../../components/Coach';
+import DatePicker from 'react-native-datepicker';
+import DateFilter from '../../utils/DateFilter';
 
 
 import{
@@ -101,6 +103,32 @@ class CreateCustomerPlan extends Component{
         }
     }
 
+    verifyDate(date)
+    {
+        this.state.selectTime=true;
+
+        var curDay=new Date();
+        var hour=date.getHours();
+        var day=date.getDay();
+
+        if(((date-curDay)>0&&curDay.getDate()!=date.getDate())||(curDay.getDate()==date.getDate()&&(hour-curDay.getHours()>2)))
+        {
+            var deadlineTime = DateFilter.filter(date,'yyyy-mm-dd hh:mm');
+            this.setState({plan:Object.assign(this.state.plan,{deadline:date,deadlineTime:deadlineTime}),selectTime:false});
+
+        }
+        else{
+
+            setTimeout(()=>{
+                Alert.alert('错误','您所选的日期必须在两小时之后,请重新选择',[{text:'确认',onPress:()=>{
+
+                }}]);
+            },800)
+            this.setState({selectTime:false});
+        }
+
+    }
+
     searchMember(info){
         this.props.dispatch(searchMember(info)).then((json)=>{
             if(json.re==1){
@@ -166,8 +194,9 @@ class CreateCustomerPlan extends Component{
         this.state={
             dialogShow: false,
             modalVisible:false,
+            selectTime:false,
             plan:{planItem:null,planPlace:null,unitId:null,planTime:null,phoneNum:null,memberLevel:null,memberLevelName:null,hasCoach:0,
-            coachId:null,coachName:null},
+            coachId:null,coachName:null,deadline:null,deadlineTime:null},
             doingFetch: false,
             isRefreshing: false,
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
@@ -346,6 +375,61 @@ class CreateCustomerPlan extends Component{
                             }
                         </View>
                     </View>
+
+                    {/*活动时间*/}
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
+                        margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text>有效期至</Text>
+                        </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                            backgroundColor:'#eee',borderRadius:10}}>
+                            {
+                                this.state.plan.deadlineTime==null?
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#888',fontSize:13}}>请选择有效期至：</Text>
+                                    </View> :
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#444',fontSize:13}}>{this.state.plan.deadlineTime}</Text>
+                                    </View>
+                            }
+
+                            <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
+                                <DatePicker
+                                    style={{width:60,marginLeft:0,borderWidth:0}}
+                                    customStyles={{
+                                        placeholderText:{color:'transparent',fontSize:12},
+                                        dateInput:{height:30,borderWidth:0},
+                                        dateTouchBody:{marginRight:25,height:22,borderWidth:0},
+                                    }}
+                                    mode="datetime"
+                                    placeholder="选择"
+                                    format="YYYY-MM-DD HH:mm"
+                                    minDate={new Date()}
+                                    confirmBtnText="确认"
+                                    cancelBtnText="取消"
+                                    showIcon={true}
+                                    iconComponent={<Icon name={'angle-right'} size={30} color="#fff"/>}
+                                    onDateChange={(date) => {
+                                        if(this.state.selectTime==false)
+                                        {
+                                            //TODO:校检date的合法性
+                                            var reg=/([\d]{4})-([\d]{2})-([\d]{2})\s([\d]{2})\:([\d]{2})/;
+                                            var re=reg.exec(date);
+                                            if(re)
+                                            {
+                                                var tmpDate=new Date(re[1],parseInt(re[2])-1,re[3],re[4],re[5])
+                                                this.verifyDate(tmpDate);
+                                            }
+                                        }else{
+                                        }
+
+                                    }}
+                                />
+                            </View>
+                        </View>
+                    </View>
+
 
 
                     {/*选择教练*/}

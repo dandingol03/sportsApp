@@ -1,15 +1,13 @@
 
 import Config from '../../config'
 import Proxy from '../utils/Proxy'
-import PreferenceStore from '../utils/PreferenceStore';
-
 
 import {
     DISTRIBUTE_COURSE,
-    ON_COURSE_UPDATE,
     ON_COURSES_UPDATE,
     ON_MY_COURSES_UPDATE,
-    DISABLE_MY_COURSES_ONFRESH
+    DISABLE_MY_COURSES_ONFRESH,
+    ON_CUSTOM_COURSE_UPDATE,
 } from '../constants/CourseConstants'
 
 //拉取个人已报名课程
@@ -40,7 +38,6 @@ export let fetchMyCourses=()=>{
         })
     }
 }
-
 
 export let onMyCoursesUpdate=(myCourses)=>{
     return (dispatch,getState)=>{
@@ -88,7 +85,6 @@ export let fetchCourses=()=>{
     }
 }
 
-
 export let onCoursesUpdate=(courses)=>{
     return (dispatch,getState)=>{
         dispatch({
@@ -99,6 +95,60 @@ export let onCoursesUpdate=(courses)=>{
         })
     }
 }
+
+//拉取定制
+export let fetchCustomCourse=()=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+            var accessToken = state.user.accessToken;
+            var today = new Date();
+            var customCourse = [];
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'fetchCustomCourse'
+                }
+            }).then((json)=>{
+                var allCustomCourse = json.data;
+                if (allCustomCourse!== undefined && allCustomCourse !== null &&allCustomCourse.length > 0) {
+                    allCustomCourse.map((customCourse,i)=>{
+                        var date = new Date(customCourse.deadline);
+                        if(((date-today)>0&&today.getDate()!=date.getDate())||
+                            (today.getDate()==date.getDate()&&(date.getHours()-today.getHours()>0)))
+                        {
+                            if(customCourse.hasCoach==0||(customCourse.hasCoach==1&&customCourse.coachId==state.user.personInfo.personId))
+                            customCourse.push(customCourse);
+                        }
+                    })
+                    resolve({re:json.re,data:customCourse})
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let onCustomCourseUpdate=(customCourse)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_CUSTOM_COURSE_UPDATE,
+            payload:{
+                customCourse
+            }
+        })
+    }
+}
+
 
 //发布课程
 export let distributeCourse=(course,timeList,venue)=>{

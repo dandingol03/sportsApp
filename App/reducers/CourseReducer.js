@@ -3,12 +3,14 @@ import {
     ON_COURSES_UPDATE,
     DISABLE_MY_COURSES_ONFRESH,
     ON_MY_COURSES_UPDATE,
+    ON_CUSTOM_COURSE_UPDATE,
 } from '../constants/CourseConstants';
 
 const initialState = {
     courses:null,
     myCourses:null,
     myCoursesOnFresh:true,
+    customCourse:null,
 };
 
 let course = (state = initialState, action) => {
@@ -28,6 +30,11 @@ let course = (state = initialState, action) => {
             var {myCourses}=action.payload
             return Object.assign({},state,{
                 myCourses:myCourses
+            })
+        case ON_CUSTOM_COURSE_UPDATE:
+            var {customCourse}=action.payload
+            return Object.assign({},state,{
+                customCourse:customCourse
             })
         default:
             return state;
