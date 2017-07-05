@@ -371,3 +371,71 @@ export let dropoutMyCourses=(courses)=>{
         })
     }
 }
+
+//完成定制
+export let finishCustomCourse=(courseId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'finishCustomCourse',
+                    info:{
+                        courseId:courseId
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:'成功'});
+                }else{
+                    resolve({re:-1,data:'不成功'});
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+//取消定制
+export let cancleCustomCourse=(courseId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'cancleCustomCourse',
+                    info:{
+                        courseId:courseId
+                    }
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:'成功'});
+                }else{
+                    resolve({re:-1,data:'不成功'});
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}

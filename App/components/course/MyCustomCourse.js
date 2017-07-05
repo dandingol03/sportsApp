@@ -1,6 +1,7 @@
 
 import React, {Component} from 'react';
 import {
+    Alert,
     Dimensions,
     ListView,
     ScrollView,
@@ -18,18 +19,17 @@ import {connect} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import  Popover from  'react-native-popover';
-import {BoxShadow,BorderShadow} from 'react-native-shadow';
-import CustomCourseDetail from './CustomCourseDetail';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 
 var {height, width} = Dimensions.get('window');
 import DateFilter from '../../utils/DateFilter';
 import{
     fetchCustomCourse,
-    onCustomCourseUpdate,
     enableMyCustomCoursesOnFresh,
-    disableMyCustomCoursesOnFresh
+    disableMyCustomCoursesOnFresh,
+    finishCustomCourse,
+    cancleCustomCourse
+
 } from '../../action/CourseActions';
 
 class CustomCourse extends Component{
@@ -38,19 +38,6 @@ class CustomCourse extends Component{
         const { navigator } = this.props;
         if(navigator) {
             navigator.pop();
-        }
-    }
-
-    navigate2MadeCustomCourseDetail(){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'MadeCustomCourse',
-                component: CustomCourseDetail,
-                params: {
-
-                }
-            })
         }
     }
 
@@ -99,7 +86,7 @@ class CustomCourse extends Component{
                             <Text style={{fontSize:13,color:'#008B00',fontWeight:'bold'}}>
                                 进行中
                             </Text>:
-                            <Text style={{fontSize:13,color:'#008B00',fontWeight:'bold'}}>
+                            <Text style={{fontSize:13,color:'#aaa',fontWeight:'bold'}}>
                                 已完成
                             </Text>
                     }
@@ -133,18 +120,44 @@ class CustomCourse extends Component{
                 <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,marginTop:10}}>
 
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-
+                        {
+                            rowData.hasCoach==1?
+                                <Text>
+                                    指定教练：{rowData.coach.perName}
+                                </Text>
+                                :null
+                        }
                     </View>
                     <View style={{flex:1}}></View>
                     {
                         rowData.status==0?
                             <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center'}}>
-                                <View style={{padding:5,borderWidth:1,borderColor:'red',borderRadius:5,justifyContent:'center',alignItems: 'center',marginRight:20}}>
+                                <TouchableOpacity style={{padding:5,borderWidth:1,borderColor:'red',borderRadius:5,justifyContent:'center',alignItems: 'center',marginRight:20}}
+                                                  onPress={()=>{
+                                                       this.props.dispatch(cancleCustomCourse(rowData.courseId)).then((json)=> {
+                                                           if(json.re==1){
+                                                             Alert.alert('信息','取消成功',[{text:'确认',onPress:()=>{
+                                                             this.props.dispatch(enableMyCustomCoursesOnFresh());
+                                                                }}]);
+                                                           }
+                                                               })
+
+                                }}>
                                     <Text style={{color:'red',}}>取消</Text>
-                                </View>
-                                <View style={{padding:5,borderWidth:1,borderColor:'#66CDAA',borderRadius:5,justifyContent:'center',alignItems: 'center',}}>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{padding:5,borderWidth:1,borderColor:'#66CDAA',borderRadius:5,justifyContent:'center',alignItems: 'center',}}
+                                                  onPress={()=>{
+                                                       this.props.dispatch(finishCustomCourse(rowData.courseId)).then((json)=> {
+                                                            if(json.re==1){
+                                                             Alert.alert('信息','取消成功',[{text:'确认',onPress:()=>{
+                                                             this.props.dispatch(enableMyCustomCoursesOnFresh());
+                                                                }}]);
+                                                           }
+                                                               })
+
+                                }}>
                                     <Text style={{color:'#66CDAA',}}>完成</Text>
-                                </View>
+                                </TouchableOpacity>
                             </View>
                             :null
                     }
