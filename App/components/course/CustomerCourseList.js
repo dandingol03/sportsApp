@@ -125,20 +125,6 @@ class CustomerCourseList extends Component {
         }.bind(this), 2000);
     }
 
-    _handlePress2(index) {
-
-        if (index !== 0) {
-            var eventType = this.state.eventTypeButtons[index];
-            var eventTypeCode = index;
-            this.setState({ event: Object.assign(this.state.event, { type: eventType }) });
-        }
-
-    }
-
-    show(actionSheet) {
-        this[actionSheet].show();
-    }
-
     constructor(props) {
         super(props);
         this.state = {

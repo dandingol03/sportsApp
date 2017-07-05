@@ -8,6 +8,10 @@ import {
     ON_MY_COURSES_UPDATE,
     DISABLE_MY_COURSES_ONFRESH,
     ON_CUSTOM_COURSE_UPDATE,
+
+    ENABLE_MY_CUSTOM_COURSES_ONFRESH,
+    DISABLE_MY_CUSTOM_COURSES_ONFRESH,
+    SET_MY_CUSTOM_COURSES
 } from '../constants/CourseConstants'
 
 //拉取个人已报名课程
@@ -97,6 +101,25 @@ export let onCoursesUpdate=(courses)=>{
 }
 
 //拉取定制
+export let setMyCustomCourses=(myCustomCourses)=>{
+    return {
+        type:SET_MY_CUSTOM_COURSES,
+        myCustomCourses:myCustomCourses
+    }
+}
+
+export let enableMyCustomCoursesOnFresh=()=>{
+    return {
+        type:ENABLE_MY_CUSTOM_COURSES_ONFRESH,
+    }
+}
+
+export let disableMyCustomCoursesOnFresh=()=>{
+    return {
+        type:DISABLE_MY_CUSTOM_COURSES_ONFRESH,
+    }
+}
+
 export let fetchCustomCourse=()=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
@@ -105,6 +128,7 @@ export let fetchCustomCourse=()=>{
             var accessToken = state.user.accessToken;
             var today = new Date();
             var customCourseList = [];
+            var myCustomCourses = [];
 
             Proxy.postes({
                 url: Config.server + '/svr/request',
@@ -123,10 +147,17 @@ export let fetchCustomCourse=()=>{
                         if(((date-today)>0&&today.getDate()!=date.getDate())||
                             (today.getDate()==date.getDate()&&(date.getHours()-today.getHours()>0)))
                         {
-                            if(customCourse.hasCoach==0||(customCourse.hasCoach==1&&customCourse.coach.personId==state.user.personInfo.personId))
+                            if((customCourse.hasCoach==0&&customCourse.status==0)||(customCourse.hasCoach==1&&customCourse.coach.personId==state.user.personInfo.personId&&customCourse.status==0))
                                 customCourseList.push(customCourse);
+
+                            if(customCourse.courseManager==state.user.personInfo.personId){
+                                myCustomCourses.push(customCourse);
+                            }
+
                         }
                     })
+
+                    dispatch(setMyCustomCourses(myCustomCourses));
                     resolve({re:json.re,data:customCourseList})
                 }
             }).catch((e)=>{

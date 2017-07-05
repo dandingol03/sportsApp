@@ -23,7 +23,7 @@ import MyCourses from '../components/course/MyCourses';
 import MyInformation from '../components/my/MyInformation';
 import Setting from '../components/my/Setting';
 
-import CustomCourse from '../components/course/CustomCourse';
+import CustomCourse from '../components/course/MyCustomCourse';
 
 class Home extends Component{
 
