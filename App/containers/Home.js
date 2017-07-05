@@ -216,16 +216,21 @@ class Home extends Component {
     render() {
 
 
-        if(this.props.modalVisible==true&&this.mobilePhoneDialog&&this.validateMyInformationDialog)
+        if(this.props.mobilePhoneValidateFailed==true&&this.mobilePhoneDialog&&this.validateMyInformationDialog)
         {
             if(this.props.userType==0)//用户
             {
                 this.mobilePhoneDialog.show()
             }else{
-                //教练
+                //针对教练,需要完成运动水平、真实姓名、身份证
                 this.validateMyInformationDialog.show()
             }
+        }else if((this.props.sportLevelValidateFailed==true||this.props.perNameValidateFailed==true||this.props.perIdCardValidateFailed==true)&&
+            this.validateMyInformationDialog)
+        {
+            this.validateMyInformationDialog.show()
         }
+
 
         var newsList=null
         if(this.props.news&&this.props.news.length>0)
@@ -486,16 +491,31 @@ const mapStateToProps = (state, ownProps) => {
 
     var personInfo=state.user.personInfo
     var mobilePhone=personInfo.mobilePhone
+    var trainerInfo=state.user.trainer
 
     const props = {
         news:state.newsTheme.news,
         mobilePhone:mobilePhone,
-        userType:parseInt(state.user.userType)
+        userType:parseInt(state.user.usertype),
+        perName:personInfo.perName,
+        perIdCard:personInfo.perIdCard,
+
     }
+    if(trainerInfo)
+    {
+        props.sportLevelValidateFailed=(!trainerInfo.sportLevel!==undefined&&trainerInfo.sportLevel!==null)
+        props.perNameValidateFailed=(!(personInfo.perName&&personInfo.perName!=''))
+        props.perIdCardValidateFailed=(!(personInfo.perIdCard&&personInfo.perIdCard!=''))
+    }
+
+
     if(mobilePhone&&mobilePhone!='')
-        props.modalVisible=false
+        props.mobilePhoneValidateFailed=false
     else
-        props.modalVisible=true
+        props.mobilePhoneValidateFailed=true
+
+
+
 
     return props
 }

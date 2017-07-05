@@ -21,14 +21,15 @@ var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import {Toolbar, OPTION_SHOW, OPTION_NEVER,ACTION_REFRESH} from 'react-native-toolbar-wrapper'
+import {Toolbar, OPTION_SHOW, OPTION_NEVER, ACTION_REFRESH} from 'react-native-toolbar-wrapper'
 var Popover = require('react-native-popover');
 
 import {
     fetchMyCourses,
     disableMyCoursesOnFresh,
     onMyCoursesUpdate,
-    dropoutMyCourses
+    dropoutMyCourses,
+    verifyCoursesCancelable
 } from '../../action/CourseActions';
 
 import {
@@ -65,15 +66,6 @@ class MyCourses extends Component {
 
     }
 
-    showPopover(ref) {
-        this.refs[ref].measure((ox, oy, width, height, px, py) => {
-            this.setState({
-                menuVisible: true,
-                buttonRect: {x: px + 5, y: py + 10, width: 200, height: height}
-            });
-        });
-    }
-
     closePopover() {
         this.setState({menuVisible: false});
     }
@@ -106,6 +98,36 @@ class MyCourses extends Component {
                 }
             })
         }
+    }
+
+    dropoutMyCourses(courses)
+    {
+        this.props.dispatch(dropoutMyCourses(courses)).then((json)=>{
+            if(json.re==1)
+            {
+                //TODO:拉取新的课程列表
+                Alert.alert('信息','取消课程报名成功',[{text:'确认',onPress:()=>{
+                    this.setState({isRefreshing:true,doingFetch:true})
+                    this.props.dispatch(fetchMyCourses()).then((json) => {
+                        if (json.re == 1) {
+                            this.props.dispatch(onMyCoursesUpdate(json.data))
+                            this.props.dispatch(disableMyCoursesOnFresh())
+
+                            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                        } else {
+                            this.props.dispatch(disableMyCoursesOnFresh())
+                            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                        }
+                    }).catch((e) => {
+                        this.props.dispatch(disableMyCoursesOnFresh())
+                        this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false});
+                        alert(e)
+                    });
+
+                }}]);
+
+            }
+        })
     }
 
 
@@ -232,14 +254,14 @@ class MyCourses extends Component {
                 this.props.dispatch(onMyCoursesUpdate(json.data))
                 this.props.dispatch(disableMyCoursesOnFresh())
 
-                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                this.setState({doingFetch: false, isRefreshing: false, onLongPressed: false})
             } else {
                 this.props.dispatch(disableMyCoursesOnFresh())
-                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                this.setState({doingFetch: false, isRefreshing: false, onLongPressed: false})
             }
         }).catch((e) => {
             this.props.dispatch(disableMyCoursesOnFresh())
-            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false});
+            this.setState({doingFetch: false, isRefreshing: false, onLongPressed: false});
             alert(e)
         });
 
@@ -424,32 +446,34 @@ class MyCourses extends Component {
                                           })
                                           if(courses.length>0)
                                           {
-                                            this.props.dispatch(dropoutMyCourses(courses)).then((json)=>{
-                                                if(json.re==1)
-                                                {
-                                                    //TODO:拉取新的课程列表
-                                                    Alert.alert('信息','取消课程报名成功',[{text:'确认',onPress:()=>{
-                                                      this.setState({isRefreshing:true,doingFetch:true})
-                                                      this.props.dispatch(fetchMyCourses()).then((json) => {
-                                                            if (json.re == 1) {
-                                                                this.props.dispatch(onMyCoursesUpdate(json.data))
-                                                                this.props.dispatch(disableMyCoursesOnFresh())
+                                              if(this.props.userType==1)
+                                              {
+                                                  //教练
+                                                  //检查课程是否有报名
+                                                  this.props.dispatch(verifyCoursesCancelable(courses)).then((json)=>{
+                                                      if(json.re==1)
+                                                      {
+                                                          var flag=json.data
+                                                          if(flag==true)//如果可以删除
+                                                          {
 
-                                                                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
-                                                            } else {
-                                                                this.props.dispatch(disableMyCoursesOnFresh())
-                                                                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
-                                                            }
-                                                        }).catch((e) => {
-                                                            this.props.dispatch(disableMyCoursesOnFresh())
-                                                            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false});
-                                                            alert(e)
-                                                        });
+                                                              Alert.alert('错误','所选课程已有用户报名，不能删除',[{text:'确认',onPress:()=>{
+                                                                  this.setState({onLongPressed:false})
+                                                              }}]);
 
-                                                    }}]);
+                                                          }else{
+                                                              this.dropoutMyCourses(courses)
+                                                          }
+                                                      }
+                                                  })
+                                              }else{
+                                                  //用户
+                                                  this.dropoutMyCourses(courses)
 
-                                                }
-                                            })
+                                              }
+
+
+
                                           }
 
 
@@ -483,6 +507,7 @@ var styles = StyleSheet.create({
 
 module.exports = connect(state => ({
         myCourses: state.course.myCourses,
-        myCoursesOnFresh: state.course.myCoursesOnFresh
+        myCoursesOnFresh: state.course.myCoursesOnFresh,
+        userType: parseInt(state.user.usertype)
     })
 )(MyCourses);

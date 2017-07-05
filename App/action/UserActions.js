@@ -7,11 +7,14 @@ import PreferenceStore from '../utils/PreferenceStore';
 import {
     UPDATE_CERTIFICATE,
     UPDATE_PERSON_INFO,
+    UPDATE_TRAINER_INFO,
+    UPDATE_PERSON_INFO_AUXILIARY,
     UPDATE_USERTYPE,
     ACCESS_TOKEN_ACK,
     ON_USER_NAME_UPDATE,
     ON_MOBILE_PHONE_UPDATE,
     ON_SELF_LEVEL_UPDATE,
+    ON_SPORT_LEVEL_UPDATE,
     ON_PER_NAME_UPDATE,
     ON_WECHAT_UPDATE,
     ON_PER_ID_CARD_UPDATE,
@@ -27,9 +30,23 @@ export let updateCertificate=(payload)=>{
     }
 }
 
+export let updateTrainerInfo=(payload)=>{
+    return {
+        type:UPDATE_TRAINER_INFO,
+        payload:payload
+    }
+}
+
 export let updatePersonInfo=(payload)=>{
     return {
         type:UPDATE_PERSON_INFO,
+        payload:payload
+    }
+}
+
+export let updatePersonInfoAuxiliary=(payload)=>{
+    return {
+        type:UPDATE_PERSON_INFO_AUXILIARY,
         payload:payload
     }
 }
@@ -87,6 +104,37 @@ export let updateSelfLevel=(selfLevel)=>{
         })
     }
 }
+
+//运动水平更改
+export let updateSportLevel=(sportLevel)=>{
+    return (dispatch,getState)=> {
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'updateSportLevel',
+                    info:{
+                        sportLevel
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+        })
+    }
+}
+
 
 //用户名更改
 export let updateUsername=(username)=>{
@@ -146,11 +194,21 @@ export let onUsernameUpdate=(username)=>{
 
 export let onSelfLevelUpdate=(selfLevel)=>{
     return (dispatch,getState)=>{
-
         dispatch({
             type:ON_SELF_LEVEL_UPDATE,
             payload: {
                 selfLevel
+            }
+        })
+    }
+}
+
+export let onSportLevelUpdate=(sportLevel)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_SPORT_LEVEL_UPDATE,
+            payload: {
+                sportLevel
             }
         })
     }
@@ -462,12 +520,36 @@ export let doLogin=function(username,password){
                     }
                 });
 
-            }).then((json)=>{
+            }).then((json)=> {
 
-                if(json.re==1)
-                {
+                if (json.re == 1) {
                     dispatch(updateUserType(json.data))
                 }
+                var userType = json.data
+                if (parseInt(userType) == 0)//用户
+                {
+                    return {re: 1}
+                } else {
+                    //教练,获取教练信息
+                    return Proxy.postes({
+                        url: Config.server + '/svr/request',
+                        headers: {
+                            'Authorization': "Bearer " + accessToken,
+                            'Content-Type': 'application/json'
+                        },
+                        body: {
+                            request: 'fetchBadmintonTrainerInfo'
+                        }
+                    });
+                }
+            }).then((json)=>{
+
+                if(json.re==1&&json.data)
+                {
+                    dispatch(updateTrainerInfo({data:json.data}))
+                }
+
+
 
                 return Proxy.postes({
                     url: Config.server + '/svr/request',
@@ -481,9 +563,27 @@ export let doLogin=function(username,password){
                 });
             }).then((json) => {
 
-                if (json.re == 1) {
+                if (json.re == 1)
                     dispatch(updatePersonInfo({data: json.data}));
-                }
+
+
+                return Proxy.postes({
+                    url: Config.server + '/svr/request',
+                    headers: {
+                        'Authorization': "Bearer " + accessToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: {
+                        request: 'getPersonInfoAuxiliaryByPersonId'
+                    }
+                })
+
+            }).then((json)=>{
+                if(json.re==1)
+                    dispatch(updatePersonInfoAuxiliary({data: json.data}));
+
+
+
 
                 dispatch(getAccessToken(accessToken));
                 resolve(json)
