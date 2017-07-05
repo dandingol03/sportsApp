@@ -15,10 +15,9 @@ import {
     ON_PER_NAME_UPDATE,
     ON_WECHAT_UPDATE,
     ON_PER_ID_CARD_UPDATE,
-    ON_RELATIVE_PERSON_UPDATE
+    ON_RELATIVE_PERSON_UPDATE,
+    UPDATE_PORTRAIT
 } from '../constants/UserConstants'
-
-
 
 export let updateCertificate=(payload)=>{
     return {
@@ -130,7 +129,6 @@ export let onMobilePhoneUpdate=(mobilePhone)=>{
         })
     }
 }
-
 
 export let onUsernameUpdate=(username)=>{
     return (dispatch,getState)=>{
@@ -329,7 +327,6 @@ export let onWeChatUpdate=(wechat)=>{
     }
 }
 
-
 export let onPerIdCardUpdate=(perIdCard)=>{
     return (dispatch,getState)=>{
 
@@ -389,7 +386,6 @@ export let addRelativePerson=(payload)=> {
     }
 }
 
-
 //用户注册
 export let registerUser=(payload)=>{
     return (dispatch,getState)=>{
@@ -423,7 +419,6 @@ export let registerUser=(payload)=>{
         });
     }
 }
-
 
 //用户登录
 export let doLogin=function(username,password){
@@ -521,5 +516,134 @@ export let uploadPersonIdCard=(path,personId)=> {
 
 
         })
+    }
+}
+
+
+export let updatePortrait=(payload)=>{
+    return {
+        type:UPDATE_PORTRAIT,
+        payload:payload
+    }
+}
+
+//测试下载头像
+export let downloadPortrait=()=>{
+    return (dispatch,getState)=> {
+        return new Promise((resolve, reject) => {
+            var state=getState();
+
+            var accessToken=state.user.accessToken;
+            var portrait='';
+
+            //检查头像是否存在
+            Proxy.post({
+
+                url:Config.server+'/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request:'checkPortrait',
+                }
+            },(json)=> {
+                for(var field in json) {
+                    console.log('field=' + field + '\r\n' + json[field]);
+                }
+                if(json.re==1)
+                {
+                    var portrait=json.data;
+
+                    var url =  Config.server+ '/svr/request?request=downloadPortrait&filePath='+portrait;
+                    var dirs = RNFetchBlob.fs.dirs
+
+                    RNFetchBlob.fs.exists(dirs.DocumentDir + '/portrait.png')
+                        .then((exist) => {
+                            console.log(`file ${exist ? '' : 'not'} exists`);
+                            if(exist==true){
+                                RNFetchBlob.fs.unlink(dirs.DocumentDir + '/portrait.png').then(() => {
+                                    RNFetchBlob
+                                        .config({
+                                            fileCache : true,
+                                            appendExt : 'png',
+                                            path : dirs.DocumentDir + '/portrait.png'
+                                        })
+                                        .fetch('POST',url, {
+                                                Authorization : 'Bearer '+accessToken,
+                                                "Content-Type":"application/json"
+                                            },
+
+                                        ).then((res)=>{
+                                        //alert('portrait filePath='+res.path());
+                                        resolve({re:1,data:'file://' + res.path()});
+                                    });
+                                })
+
+                            }else{
+
+                                RNFetchBlob
+                                    .config({
+                                        fileCache : true,
+                                        appendExt : 'png',
+                                        path : dirs.DocumentDir + '/portrait.png'
+                                    })
+                                    .fetch('POST',url, {
+                                            Authorization : 'Bearer '+accessToken,
+                                            "Content-Type":"application/json"
+                                        },
+                                    ).then((res)=>{
+                                    //alert('portrait filePath='+res.path());
+                                    resolve({re:1,data:'file://' + res.path()});
+                                });
+                            }
+
+
+                        })
+                        .catch(() => {console.log('判断文件是否存在出错');})
+
+
+                }
+                else{
+                    resolve({re:2,data:''});
+                }
+
+            }, (err) =>{
+                Alert.alert(
+                    'error',
+                    err
+                );
+            });
+
+        });
+    }
+}
+
+//上传头像
+export let uploadPortrait=(portrait,personId)=>{
+    return (dispatch,getState)=> {
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken=state.user.accessToken;
+
+            // Create the form data object
+            var data = new FormData();
+            data.append('file', {uri: portrait, name: 'portrait.jpg', type: 'multipart/form-data'});
+
+            //限定为jpg后缀
+            Proxy.post({
+                url:Config.server+'/svr/request?request=uploadBadmintonPortrait&suffix=jpg&personId='+personId.toString(),
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type':'multipart/form-data',
+                },
+                body: data,
+            },(json)=> {
+                resolve(json)
+
+            }, (err) =>{
+                reject(err)
+            });
+        });
     }
 }

@@ -11,7 +11,8 @@ import {
     ON_PER_ID_CARD_UPDATE,
     ON_RELATIVE_PERSON_UPDATE,
     ON_SELF_LEVEL_UPDATE,
-    ON_MOBILE_PHONE_UPDATE
+    ON_MOBILE_PHONE_UPDATE,
+    UPDATE_PORTRAIT,
 } from '../constants/UserConstants';
 
 const initialState = {
@@ -86,6 +87,12 @@ let user = (state = initialState, action) => {
             return Object.assign({}, state, {
                 personInfo:Object.assign(state.personInfo,{mobilePhone:mobilePhone})
             })
+        case UPDATE_PORTRAIT:
+            var data=action.payload;
+            return Object.assign({}, state, {
+                portrait:data
+            })
+            break;
 
         default:
             return state;

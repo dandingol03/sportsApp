@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {
+    Alert,
     Dimensions,
     ListView,
     ScrollView,
@@ -22,10 +23,18 @@ import MyGroup from '../components/groupActivity/MyGroup';
 import MyCourses from '../components/course/MyCourses';
 import MyInformation from '../components/my/MyInformation';
 import Setting from '../components/my/Setting';
-
 import CustomCourse from '../components/course/MyCustomCourse';
+import PortraitModal from '../components/my/modal/PortraitModal';
+import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
+const scaleAnimation = new ScaleAnimation();
 
-class Home extends Component{
+import {
+    downloadPortrait,
+    updatePortrait,
+    uploadPortrait
+} from '../action/UserActions';
+
+class My extends Component{
 
     navigate2MyGroup(){
         const { navigator } = this.props;
@@ -95,24 +104,66 @@ class Home extends Component{
         }
     }
 
+    showPortraitDialog() {
+        this.portraitDialog.show();
+    }
+
+    setPortrait(portrait){
+        this.setState({portrait:portrait});
+    }
+
+    getPortrait(){
+        this.props.dispatch(downloadPortrait())
+            .then((json)=>{
+                if(json.re==1){
+                    var portrait=json.data;
+                    this.setState({portrait:portrait});
+                    this.props.dispatch(updatePortrait(portrait));
+
+                }else{
+
+                }
+
+            });
+    }
+
     constructor(props) {
         super(props);
         this.state={
-            doingFetch: false,
-            isRefreshing: false,
-            fadeAnim: new Animated.Value(1)
+           portrait:null
         }
     }
 
-    render() {
+    componentWillMount(){
 
+        this.getPortrait();
+    }
+
+    render() {
         return (
             <View style={{flex:1}}>
                 <View style={{flex:2}}>
                     <Image style={{flex:2,width:width,position:'relative'}} source={require('../../img/my_banner.jpeg')} >
                         <View style={{marginTop:30,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                            <Image resizeMode="stretch" style={{height:height*90/736,width:height*90/736,
-                            borderRadius:height*45/736}} source={require('../../img/portrait.jpg')}/>
+
+                            {
+                                this.state.portrait!==undefined&&this.state.portrait!==null?
+
+                                <TouchableOpacity style={{height:height*90/736,width:height*90/736,borderRadius:height*45/736}}
+                                                  onPress={()=>{
+                                         this.showPortraitDialog();
+                                    }}>
+                                    <Image resizeMode="stretch" style={{height:height*90/736,width:height*90/736,
+                            borderRadius:height*45/736}} source={{uri:this.state.portrait}}/>
+                                </TouchableOpacity> :
+                                    <TouchableOpacity style={{height:height*90/736,width:height*90/736,borderRadius:height*45/736}}
+                                    onPress={()=>{
+                                         this.showPortraitDialog();
+                                    }}>
+                                        <Image resizeMode="stretch" style={{height:height*90/736,width:height*90/736,borderRadius:height*45/736}}
+                                               source={require('../../img/portrait.jpg')}/>
+                                    </TouchableOpacity>
+                            }
                         </View>
                         <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:15}}>
                             <Text style={{color:'#fff',fontSize:18}}>小鱼丁</Text>
@@ -192,6 +243,45 @@ class Home extends Component{
 
                     </View>
                 </View>
+
+                <PopupDialog
+                    ref={(popupDialog) => {
+                        this.portraitDialog = popupDialog;
+                    }}
+                    dialogAnimation={scaleAnimation}
+                    actions={[]}
+                    width={0.8}
+                    height={0.4}
+                >
+
+                    <PortraitModal
+                        val={this.props.username}
+                        onClose={()=>{
+                                this.portraitDialog.dismiss();
+                            }}
+                        onConfirm={(portrait)=>{
+                             if (portrait) {
+                                this.props.dispatch(uploadPortrait(portrait,this.props.personInfo.personId)).then((json)=>{
+                                    if(json.re==1){
+                                        alert('上传成功');
+                                        this.portraitDialog.dismiss();
+                                        this.setPortrait(portrait);
+                                    }
+                                })
+
+                             }else{
+                                Alert.alert(
+                                    '错误',
+                                    '请先进行拍照'
+                                );
+                             }
+
+                        }}
+                    />
+
+                </PopupDialog>
+
+
             </View>
         );
     }
@@ -203,12 +293,10 @@ var styles = StyleSheet.create({
 
 });
 
-const mapStateToProps = (state, ownProps) => {
 
-    const props = {
+module.exports = connect(state=>({
+        accessToken:state.user.accessToken,
+        personInfo:state.user.personInfo,
 
-    }
-    return props
-}
-
-export default connect(mapStateToProps)(Home);
+    })
+)(My);
