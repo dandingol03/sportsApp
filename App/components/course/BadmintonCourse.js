@@ -20,13 +20,11 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Popover from 'react-native-popover'
 import TextInputWrapper from 'react-native-text-input-wrapper'
-import MadeCustomCourse from './MadeCustomCourse';
 import CreateBadmintonCourse from './CreateBadmintonCourse';
 import CreateCustomerPlan from './CreateCustomerPlan';
+import CustomerCourseList from './CustomerCourseList';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
-
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
 
@@ -43,19 +41,6 @@ import{
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 
 class BadmintonCourse extends Component {
-
-    navigate2MadeCustomCourse() {
-        const { navigator } = this.props;
-        if (navigator) {
-            navigator.push({
-                name: 'MadeCustomCourse',
-                component: MadeCustomCourse,
-                params: {
-
-                }
-            })
-        }
-    }
 
     //导航至定制（for 教练）
     navigate2BadmintonCourseForCoach() {
@@ -85,6 +70,19 @@ class BadmintonCourse extends Component {
         }
     }
 
+    //导航至定制列表（for 教练）
+    navigate2CustomCourseList(){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name:'CustomerCourseList',
+                component:CustomerCourseList,
+                params: {
+
+                }
+            })
+        }
+    }
 
     navigate2CourseSignUp(classInfo)
     {
@@ -305,6 +303,7 @@ class BadmintonCourse extends Component {
         else
         {
             actions.push({value:'创建课程',show:OPTION_NEVER});
+            actions.push({value:'查看定制列表',show:OPTION_NEVER});
         }
 
         return (
@@ -315,7 +314,15 @@ class BadmintonCourse extends Component {
                          actions={actions}
                          onPress={(i)=>{
                              if(this.props.userType==1){
-                                this.navigate2BadmintonCourseForCoach();
+                                 if(i==0)
+                                 {
+                                     this.navigate2BadmintonCourseForCoach();
+                                 }
+                                 if(i==1)
+                                {
+                                     this.navigate2CustomCourseList();
+                                }
+
                              }else{
                                  this.navigate2BadmintonCourseForUser()
                              }
@@ -385,7 +392,6 @@ class BadmintonCourse extends Component {
                         </View>
 
                         {/*课程列表*/}
-
                         <Animated.View style={{ flex: 1, padding: 4, opacity: this.state.fadeAnim, backgroundColor: '#fff' }}>
                             {courseList}
                         </Animated.View>

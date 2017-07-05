@@ -298,7 +298,8 @@ class Activity extends Component {
 
 
                     <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:3,left:width*0.5-25}}>
-                        <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,borderWidth:1,borderColor:'#eee',borderRadius:50}}
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,
+                        borderWidth:1,borderColor:'#eee',borderRadius:50}}
                                           onPress={()=>{this.navigate2AddActivity();}}>
                             <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
                         </TouchableOpacity>
