@@ -13,6 +13,7 @@ import {
     Animated,
     Easing,
     TextInput,
+    Alert
 } from 'react-native';
 import {connect} from 'react-redux';
 
@@ -32,6 +33,7 @@ import ActionSheet from 'react-native-actionsheet';
 import UsernameModal from './modal/UsernameModal';
 import PerNameModal from './modal/PerNameModal';
 import MobilePhoneModal from './modal/MobilePhoneModal';
+import ValidateMobilePhoneModal from './modal/ValidateMobilePhoneModal';
 import WxModal from './modal/WxModal';
 import IdCardModal from './modal/IdCardModal';
 
@@ -45,7 +47,10 @@ import{
     updateWeChat,
     onWeChatUpdate,
     updatePerIdCard,
-    onPerIdCardUpdate
+    onPerIdCardUpdate,
+    onMobilePhoneUpdate,
+    verifyMobilePhone,
+    updateMobilePhone
 } from '../../action/UserActions';
 
 class MyInformation extends Component{
@@ -381,14 +386,37 @@ class MyInformation extends Component{
                         dialogAnimation={scaleAnimation}
                         actions={[]}
                         width={0.8}
-                        height={0.3}
+                        height={0.4}
                     >
 
-                        <MobilePhoneModal
+                        <ValidateMobilePhoneModal
+                            val={this.props.mobilePhone}
+                            onVerify={(data)=>{
+                                this.props.dispatch(verifyMobilePhone(data)).then((json)=>{
+                                    if(json.re==1)
+                                    {
+                                        this.state.verifyCode=json.data
+                                    }
+                                })
+                            }}
                             onClose={()=>{
                                 this.mobilePhoneDialog.dismiss();
                             }}
-                            onConfirm={(val)=>{
+                            onConfirm={(data)=>{
+                                var {mobilePhone,verifyCode}=data
+                                if(this.state.verifyCode==verifyCode)
+                                {
+                                      this.props.dispatch(updateMobilePhone(mobilePhone)).then((json)=>{
+                                        if(json.re==1)
+                                        {
+                                            this.props.dispatch(onMobilePhoneUpdate(mobilePhone))
+                                        }
+                                        this.mobilePhoneDialog.dismiss();
+                                        Alert.alert('信息','手机号验证通过',[{text:'确认',onPress:()=>{
+                                             console.log();
+                                        }}]);
+                                    })
+                                }
 
                             }}
                         />
