@@ -1,4 +1,5 @@
 
+
 import React,{Component} from 'react';
 
 import  {
@@ -17,12 +18,12 @@ import TextInputWrapper from 'react-native-text-input-wrapper';
 import DateFilter from '../../../utils/DateFilter';
 import DatePicker from 'react-native-datepicker';
 import ActionSheet from 'react-native-actionsheet';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 var {height, width} = Dimensions.get('window');
 
 
-class MobilePhoneModal extends Component{
+class CompulseMobilePhoneModal extends Component{
 
     close(){
         if(this.props.onClose!==undefined&&this.props.onClose!==null)
@@ -34,17 +35,9 @@ class MobilePhoneModal extends Component{
     confirm()
     {
         if(this.props.onConfirm)
-            this.props.onConfirm()
+            this.props.onConfirm({mobilePhone:this.state.val,verifyCode:this.state.verifyCode})
     }
 
-    setTime(){
-        var time = {id:this.props.timeListLength+1,day:this.state.selectDay,startTime:this.state.startTime,endTime:this.state.endTime}
-        this.close();
-        if(this.props.setTime!==undefined&&this.props.setTime!==null)
-        {
-            this.props.setTime(time);
-        }
-    }
 
     componentWillReceiveProps(nextProps)
     {
@@ -79,12 +72,15 @@ class MobilePhoneModal extends Component{
     constructor(props)
     {
         super(props);
-        this.state={
 
+        this.state={
+            val:props.val,
+            verifyCode:null
         }
     }
 
     render(){
+
 
 
         return (
@@ -92,17 +88,56 @@ class MobilePhoneModal extends Component{
             <View style={styles.container}>
 
                 <View style={{padding:10}}>
-                    <View style={{flexDirection:'row',alignItems:'center',padding:4}}>
-                        <Text style={{color:'#222',fontSize:17,fontWeight:'bold'}}>手机号</Text>
+                    <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',padding:4}}>
+                        <Text style={{color:'#222',fontSize:17,fontWeight:'bold'}}>手机号验证</Text>
                     </View>
                     <View style={{flexDirection:'row',alignItems:'center',padding:4,paddingTop:15,borderBottomWidth:1,borderColor:'#66CDAA'}}>
+
+                        <View stye={{flexDirection:'row',alignItems:'center',}}>
+                            <Ionicons name='md-phone-portrait' size={20} color="#666" style={{marginRight:25}}/>
+                        </View>
+                        <View style={{flexDirection:'row',flex:1}}>
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:4,color:'#222',fontSize:15,height:20}}
+                                placeholder=""
+                                val={this.state.val}
+                                disableCancel={true}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({val:value})
+                                    }}
+                                onCancel={
+                                    ()=>{
+
+                                    }}
+                            />
+                        </View>
+                        <TouchableOpacity style={{flexDirection:'row',backgroundColor:'#63B8FF',padding:5,paddingHorizontal:6,borderRadius:3}}
+                            onPress={()=>{
+                                //进行验证
+                                if(this.props.onVerify)
+                                    this.props.onVerify(this.state.val)
+                            }}
+                        >
+                            <Text style={{fontSize:12,color:'#fff'}}>获取验证码</Text>
+                        </TouchableOpacity>
+
+                    </View>
+
+
+                    <View style={{flexDirection:'row',alignItems:'center',padding:4,paddingTop:15,borderBottomWidth:1,borderColor:'#66CDAA'}}>
+                        <View stye={{flexDirection:'row',alignItems:'center'}}>
+                            <Text style={{color:'#666',fontWeight:'bold',fontSize:12,marginRight:2}}>验证码</Text>
+                        </View>
                         <TextInputWrapper
                             placeholderTextColor='#888'
                             textInputStyle={{marginLeft:4,color:'#222',fontSize:15}}
                             placeholder=""
+                            val={this.state.verifyCode}
                             onChangeText={
                                     (value)=>{
-
+                                        this.setState({verifyCode:value})
                                     }}
                             onCancel={
                                     ()=>{
@@ -121,11 +156,6 @@ class MobilePhoneModal extends Component{
 
 
                 <View style={{flex:1,padding:2,margin:4,flexDirection:'row',justifyContent:'center',alignItems:'flex-end'}}>
-                    <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
-                            backgroundColor:'#fff',borderRadius:6,borderWidth:1,borderColor:'#66CDAA'}}
-                                      onPress={()=>{ this.close(); }}>
-                        <Text style={{color:'#66CDAA',padding:5}}>取消</Text>
-                    </TouchableOpacity>
 
                     <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
                                 backgroundColor:'#66CDAA',borderRadius:6}}
@@ -166,5 +196,5 @@ var styles = StyleSheet.create({
 });
 
 
-module.exports = MobilePhoneModal;
+module.exports = CompulseMobilePhoneModal;
 
