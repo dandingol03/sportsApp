@@ -40,6 +40,8 @@ import IdCardModal from './modal/IdCardModal';
 import{
     updateUsername,
     updateSelfLevel,
+    updateSportLevel,
+    onSportLevelUpdate,
     onUsernameUpdate,
     onSelfLevelUpdate,
     updatePerName,
@@ -111,6 +113,30 @@ class MyInformation extends Component{
             })
         }else{}
 
+    }
+
+    //运动水平设置
+    _handlePress2(index)
+    {
+        if(index>1){
+            var sportLevel = this.state.memberLevelButtons[index];
+            var sportLevelCode = index-1;
+            this.setState({sportLevel:sportLevel,selfLevelCode:sportLevelCode});
+            //TODO:make a dispatch
+            this.props.dispatch(updateSportLevel(sportLevelCode)).then((json)=>{
+                if(json.re==1)
+                    this.props.dispatch(onSportLevelUpdate(sportLevelCode))
+            })
+        }else if(index==1)
+        {
+            //设置'无'
+            //TODO:make a dispatch
+            this.setState({selfLevel:null,selfLevelCode:null});
+            this.props.dispatch(updateSportLevel(null)).then((json)=>{
+                if(json.re==1)
+                    this.props.dispatch(onSportLevelUpdate(null))
+            })
+        }else{}
     }
 
 
@@ -274,42 +300,88 @@ class MyInformation extends Component{
                         </TouchableOpacity>
 
                         {/*自身水平*/}
-                        <View style={{flexDirection:'row',alignItems: 'center',paddingHorizontal:10,padding:12,paddingBottom:4}}>
-                            <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
-                                <Text style={{color:'#555',fontWeight:'bold',fontSize:15}}>自身水平</Text>
-                            </View>
-                            <TouchableOpacity style={{flex:2,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                                borderRadius:10}}
-                                              onPress={()=>{ this.show('actionSheet1'); }}>
+                        {
+                            this.props.userType==0?
+                                <View style={{flexDirection:'row',alignItems: 'center',paddingHorizontal:10,padding:12,paddingBottom:4}}>
+                                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                                        <Text style={{color:'#555',fontWeight:'bold',fontSize:15}}>自身水平</Text>
+                                    </View>
+                                    <TouchableOpacity style={{flex:2,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                                        borderRadius:10}}
+                                                      onPress={()=>{ this.show('actionSheet1'); }}>
 
-                                {
-                                    this.props.selfLevel==null?
-                                        <View style={{flex:3,marginLeft:15,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#888',fontSize:13}}>请选择自身水平：</Text>
-                                        </View> :
-                                        <View style={{flex:3,marginLeft:15,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#444',fontSize:13,fontWeight:'bold'}}>
-                                                {this.state.memberLevelButtons[parseInt(this.props.selfLevel)+1]}
-                                                </Text>
+                                        {
+                                            this.props.selfLevel==null?
+                                                <View style={{flex:3,marginLeft:15,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#888',fontSize:13}}>请选择自身水平：</Text>
+                                                </View> :
+                                                <View style={{flex:3,marginLeft:15,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#444',fontSize:13,fontWeight:'bold'}}>
+                                                        {this.state.memberLevelButtons[parseInt(this.props.selfLevel)+1]}
+                                                    </Text>
+                                                </View>
+                                        }
+                                        <View style={{width:40,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                            <Icon name={'angle-down'} size={30} color="#fff"/>
                                         </View>
-                                }
-                                <View style={{width:40,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                    <Icon name={'angle-down'} size={30} color="#fff"/>
-                                </View>
-                                <ActionSheet
-                                    ref={(o) => {
+                                        <ActionSheet
+                                            ref={(o) => {
                                         this.actionSheet1 = o;
                                     }}
-                                    title="请选择自身水平"
-                                    options={this.state.memberLevelButtons}
-                                    cancelButtonIndex={CANCEL_INDEX}
-                                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
-                                    onPress={
+                                            title="请选择自身水平"
+                                            options={this.state.memberLevelButtons}
+                                            cancelButtonIndex={CANCEL_INDEX}
+                                            destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                            onPress={
                                         (data)=>{ this._handlePress1(data); }
                                     }
-                                />
-                            </TouchableOpacity>
-                        </View>
+                                        />
+                                    </TouchableOpacity>
+                                </View>:null
+                        }
+
+                        {/*运动水平*/}
+                        {
+                            this.props.userType==1?
+                                <View style={{flexDirection:'row',alignItems: 'center',paddingHorizontal:10,padding:12,paddingBottom:4}}>
+                                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                                        <Text style={{color:'#555',fontWeight:'bold',fontSize:15}}>运动水平</Text>
+                                    </View>
+                                    <TouchableOpacity style={{flex:2,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                                        borderRadius:10}}
+                                                      onPress={()=>{ this.show('actionSheet1'); }}>
+
+                                        {
+                                            this.props.sportLevel==null?
+                                                <View style={{flex:3,marginLeft:15,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#888',fontSize:13}}>请选择运动水平：</Text>
+                                                </View> :
+                                                <View style={{flex:3,marginLeft:15,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#444',fontSize:13,fontWeight:'bold'}}>
+                                                        {this.state.memberLevelButtons[parseInt(this.props.sportLevel)+1]}
+                                                    </Text>
+                                                </View>
+                                        }
+                                        <View style={{width:40,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                            <Icon name={'angle-down'} size={30} color="#fff"/>
+                                        </View>
+                                        <ActionSheet
+                                            ref={(o) => {
+                                                this.actionSheet1 = o;
+                                            }}
+                                            title="请选择运动水平"
+                                            options={this.state.memberLevelButtons}
+                                            cancelButtonIndex={CANCEL_INDEX}
+                                            destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                            onPress={
+                                                (data)=>{ this._handlePress2(data); }
+                                            }
+                                        />
+                                    </TouchableOpacity>
+                                </View>:null
+                        }
+
+
                     </View>
 
 
@@ -514,14 +586,20 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => {
 
     var personInfo=state.user.personInfo
+    var trainerInfo=state.user.trainer
+    var personInfoAuxiliary=state.user.personInfoAuxiliary
     const props = {
         username:state.user.user.username,
         perName:personInfo.perName,
         mobilePhone:personInfo.mobilePhone,
         wechat:personInfo.wechat,
         perIdCard:personInfo.perIdCard,
-        selfLevel:personInfo.selfLevel
+        selfLevel:personInfoAuxiliary.selfLevel,
+        userType:parseInt(state.user.usertype),
     }
+
+    if(trainerInfo)
+        props.sportLevel=trainerInfo.sportLevel
     return props
 }
 

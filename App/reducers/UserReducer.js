@@ -2,6 +2,8 @@
 
 import {
     UPDATE_PERSON_INFO,
+    UPDATE_TRAINER_INFO,
+    UPDATE_PERSON_INFO_AUXILIARY,
     ACCESS_TOKEN_ACK,
     UPDATE_CERTIFICATE,
     UPDATE_USERTYPE,
@@ -11,8 +13,10 @@ import {
     ON_PER_ID_CARD_UPDATE,
     ON_RELATIVE_PERSON_UPDATE,
     ON_SELF_LEVEL_UPDATE,
-    ON_MOBILE_PHONE_UPDATE,
     UPDATE_PORTRAIT,
+    ON_SPORT_LEVEL_UPDATE,
+    ON_MOBILE_PHONE_UPDATE
+
 } from '../constants/UserConstants';
 
 const initialState = {
@@ -20,7 +24,8 @@ const initialState = {
     auth:false,
     personInfo:null,
     portrait:null,
-    user:{}
+    user:{},
+    trainer:{}
 };
 
 let user = (state = initialState, action) => {
@@ -38,6 +43,17 @@ let user = (state = initialState, action) => {
             return Object.assign({}, state, {
                 personInfo:data
             })
+        case UPDATE_TRAINER_INFO:
+            var  {data}=action.payload;
+            return Object.assign({}, state, {
+                trainer:data
+            })
+        case UPDATE_PERSON_INFO_AUXILIARY:
+            var  {data}=action.payload;
+            return Object.assign({}, state, {
+                personInfoAuxiliary:data
+            })
+
         case UPDATE_USERTYPE:
             var  {usertype}=action.payload;
             return Object.assign({}, state, {
@@ -80,8 +96,14 @@ let user = (state = initialState, action) => {
         case ON_SELF_LEVEL_UPDATE:
             var  {selfLevel}=action.payload;
             return Object.assign({}, state, {
-                personInfo:Object.assign(state.personInfo,{selfLevel:selfLevel})
+                personInfoAuxiliary:Object.assign(state.personInfoAuxiliary,{selfLevel:selfLevel})
             })
+        case ON_SPORT_LEVEL_UPDATE:
+            var  {sportLevel}=action.payload;
+            return Object.assign({}, state, {
+                trainer:Object.assign(state.trainer,{sportLevel:sportLevel})
+            })
+
         case ON_MOBILE_PHONE_UPDATE:
             var  {mobilePhone}=action.payload;
             return Object.assign({}, state, {
