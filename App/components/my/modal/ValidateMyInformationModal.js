@@ -1,4 +1,5 @@
 
+
 import React,{Component} from 'react';
 
 import  {
@@ -22,7 +23,7 @@ import ActionSheet from 'react-native-actionsheet';
 var {height, width} = Dimensions.get('window');
 
 
-class MobilePhoneModal extends Component{
+class ValidateMyInformationModal extends Component{
 
     close(){
         if(this.props.onClose!==undefined&&this.props.onClose!==null)
@@ -91,48 +92,34 @@ class MobilePhoneModal extends Component{
 
             <View style={styles.container}>
 
-                <View style={{padding:10}}>
+                <View style={{padding:10,alignItems:'center'}}>
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',padding:4}}>
+                        <Text style={{color:'#222',fontSize:17,fontWeight:'bold'}}>个人信息填写</Text>
+                    </View>
+
                     <View style={{flexDirection:'row',alignItems:'center',padding:4}}>
-                        <Text style={{color:'#222',fontSize:17,fontWeight:'bold'}}>手机号</Text>
+                        <Text style={{color:'#333',fontSize:13}}>
+                            请跳转至
+                        </Text>
+                        <Text style={{color:'#66CDAA',fontSize:14,fontWeight:'bold'}}>
+                            '我'
+                        </Text>
                     </View>
-                    <View style={{flexDirection:'row',alignItems:'center',padding:4,paddingTop:15,borderBottomWidth:1,borderColor:'#66CDAA'}}>
-                        <TextInputWrapper
-                            placeholderTextColor='#888'
-                            textInputStyle={{marginLeft:4,color:'#222',fontSize:15}}
-                            placeholder=""
-                            onChangeText={
-                                    (value)=>{
-
-                                    }}
-                            onCancel={
-                                    ()=>{
-
-                                    }}
-                        />
-                    </View>
-
-                    <View style={{flexDirection:'row',alignItems:'center',padding:6}}>
-                        <Text style={{color:'#777',fontSize:12}}>
-                            输入正确的手机号，以便接收消息和通过验证
+                    <View style={{flexDirection:'row',alignItems:'center',padding:3}}>
+                        <Text style={{color:'#333',fontSize:13}}>
+                            完成
+                        </Text>
+                        <Text style={{color:'#66CDAA',fontSize:14,fontWeight:'bold'}}>
+                            '我的资料'
+                        </Text>
+                        <Text style={{color:'#333',fontSize:13}}>
+                            的信息填写和手机验证
                         </Text>
 
                     </View>
                 </View>
 
 
-                <View style={{flex:1,padding:2,margin:4,flexDirection:'row',justifyContent:'center',alignItems:'flex-end'}}>
-                    <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
-                            backgroundColor:'#fff',borderRadius:6,borderWidth:1,borderColor:'#66CDAA'}}
-                                      onPress={()=>{ this.close(); }}>
-                        <Text style={{color:'#66CDAA',padding:5}}>取消</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
-                                backgroundColor:'#66CDAA',borderRadius:6}}
-                                      onPress={()=>{this.confirm()}}>
-                        <Text style={{color:'#fff',padding:5}}>确定</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
         );
     }
@@ -166,5 +153,5 @@ var styles = StyleSheet.create({
 });
 
 
-module.exports = MobilePhoneModal;
+module.exports = ValidateMyInformationModal;
 

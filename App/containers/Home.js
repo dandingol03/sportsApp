@@ -12,6 +12,7 @@ import {
     RefreshControl,
     Animated,
     Easing,
+    Alert,
     InteractionManager
 } from 'react-native';
 
@@ -31,11 +32,25 @@ import NewsContentDetail from '../components/news/NewsContentDetail';
 import DateFilter from '../utils/DateFilter';
 import CreateBadmintonCourse from '../components/course/CreateBadmintonCourse';
 
+import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
+const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+const scaleAnimation = new ScaleAnimation();
+const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
+
+import MobilePhoneModal from '../components/my/modal/ValidateMobilePhoneModal';
+import ValidateMyInformationModal from '../components/my/modal/ValidateMyInformationModal';
+
 import {
     fetchNewsTheme,
     updateNewsTheme,
     getNewsContentUrl
 } from '../action/NewsActions';
+
+import {
+    updateMobilePhone,
+    onMobilePhoneUpdate,
+    verifyMobilePhone
+} from '../action/UserActions';
 
 var IMGS = [
     require('../../img/banner1.jpeg'),
@@ -196,7 +211,21 @@ class Home extends Component {
         }
     }
 
+
+
     render() {
+
+
+        if(this.props.modalVisible==true&&this.mobilePhoneDialog&&this.validateMyInformationDialog)
+        {
+            if(this.props.userType==0)//用户
+            {
+                this.mobilePhoneDialog.show()
+            }else{
+                //教练
+                this.validateMyInformationDialog.show()
+            }
+        }
 
         var newsList=null
         if(this.props.news&&this.props.news.length>0)
@@ -346,6 +375,79 @@ class Home extends Component {
                                 </View>
 
                             </View>
+
+
+                             <PopupDialog
+                                    ref={(popupDialog) => {
+                                    this.mobilePhoneDialog = popupDialog;
+                                }}
+                                    dialogAnimation={scaleAnimation}
+                                    dismissOnTouchOutside={false}
+                                    actions={[]}
+                                    width={0.8}
+                                    height={0.4}
+                                >
+
+                                    <MobilePhoneModal
+                                        val={this.props.mobilePhone}
+                                        onVerify={(data)=>{
+                                            this.props.dispatch(verifyMobilePhone(data)).then((json)=>{
+                                                if(json.re==1)
+                                                {
+                                                    this.state.verifyCode=json.data
+                                                }
+                                            })
+                                        }}
+                                        onClose={()=>{
+                                            this.mobilePhoneDialog.dismiss();
+                                        }}
+                                        onConfirm={(data)=>{
+                                            var {mobilePhone,verifyCode}=data
+                                            if(this.state.verifyCode==verifyCode)
+                                            {
+                                                  this.props.dispatch(updateMobilePhone(mobilePhone)).then((json)=>{
+                                                    if(json.re==1)
+                                                    {
+                                                        this.props.dispatch(onMobilePhoneUpdate(mobilePhone))
+                                                    }
+                                                    this.mobilePhoneDialog.dismiss();
+                                                    Alert.alert('信息','手机号验证通过',[{text:'确认',onPress:()=>{
+                                                         console.log();
+                                                    }}]);
+                                                })
+                                            }
+
+                                        }}
+                                    />
+
+                                </PopupDialog>
+
+
+                                <PopupDialog
+                                    ref={(popupDialog) => {
+                                    this.validateMyInformationDialog = popupDialog;
+                                }}
+                                    dialogAnimation={scaleAnimation}
+                                    dismissOnTouchOutside={false}
+                                    actions={[]}
+                                    width={0.8}
+                                    height={0.2}
+                                >
+
+                                    <ValidateMyInformationModal
+                                        val=''
+
+                                        onClose={()=>{
+                                        }}
+                                        onConfirm={(data)=>{
+
+                                        }}
+                                    />
+
+                                </PopupDialog>
+
+
+
                         </View>
                     )}
                 >
@@ -382,9 +484,19 @@ var styles = StyleSheet.create({
 
 const mapStateToProps = (state, ownProps) => {
 
+    var personInfo=state.user.personInfo
+    var mobilePhone=personInfo.mobilePhone
+
     const props = {
-        news:state.newsTheme.news
+        news:state.newsTheme.news,
+        mobilePhone:mobilePhone,
+        userType:parseInt(state.user.userType)
     }
+    if(mobilePhone&&mobilePhone!='')
+        props.modalVisible=false
+    else
+        props.modalVisible=true
+
     return props
 }
 

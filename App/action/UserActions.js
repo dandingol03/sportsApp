@@ -10,6 +10,7 @@ import {
     UPDATE_USERTYPE,
     ACCESS_TOKEN_ACK,
     ON_USER_NAME_UPDATE,
+    ON_MOBILE_PHONE_UPDATE,
     ON_SELF_LEVEL_UPDATE,
     ON_PER_NAME_UPDATE,
     ON_WECHAT_UPDATE,
@@ -118,6 +119,19 @@ export let updateUsername=(username)=>{
     }
 }
 
+export let onMobilePhoneUpdate=(mobilePhone)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_MOBILE_PHONE_UPDATE,
+            payload: {
+                mobilePhone
+            }
+        })
+    }
+}
+
+
 export let onUsernameUpdate=(username)=>{
     return (dispatch,getState)=>{
 
@@ -138,6 +152,62 @@ export let onSelfLevelUpdate=(selfLevel)=>{
             payload: {
                 selfLevel
             }
+        })
+    }
+}
+
+//手机号更改
+export let updateMobilePhone=(mobilePhone)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'updateMobilePhone',
+                    info:{
+                        mobilePhone
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+        })
+    }
+}
+
+//手机验证
+export let verifyMobilePhone=(mobilePhone)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            Proxy.postes({
+                url: Config.server + '/securityCode',
+                headers: {
+                    'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    phoneNum:mobilePhone
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
         })
     }
 }
