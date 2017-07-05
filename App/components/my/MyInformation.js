@@ -27,6 +27,7 @@ const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 
 var {height, width} = Dimensions.get('window');
 import TextInputWrapper from 'react-native-text-input-wrapper';
+import ActionSheet from 'react-native-actionsheet';
 
 import UsernameModal from './modal/UsernameModal';
 import PerNameModal from './modal/PerNameModal';
@@ -36,7 +37,9 @@ import IdCardModal from './modal/IdCardModal';
 
 import{
     updateUsername,
+    updateSelfLevel,
     onUsernameUpdate,
+    onSelfLevelUpdate,
     updatePerName,
     onPerNameUpdate,
     updateWeChat,
@@ -77,22 +80,54 @@ class MyInformation extends Component{
         this.idCardDialog.show()
     }
 
+    show(actionSheet) {
+        this[actionSheet].show();
+    }
+
+    _handlePress1(index) {
+
+        if(index>1){
+            var selfLevel = this.state.memberLevelButtons[index];
+            var selfLevelCode = index-1;
+            this.setState({selfLevel:selfLevel,selfLevelCode:selfLevelCode});
+            //TODO:make a dispatch
+            this.props.dispatch(updateSelfLevel(selfLevelCode)).then((json)=>{
+                if(json.re==1)
+                    this.props.dispatch(onSelfLevelUpdate(selfLevelCode))
+            })
+        }else if(index==1)
+        {
+            //设置'无'
+            //TODO:make a dispatch
+            this.setState({selfLevel:null,selfLevelCode:null});
+            this.props.dispatch(updateSelfLevel(null)).then((json)=>{
+                if(json.re==1)
+                    this.props.dispatch(onSelfLevelUpdate(null))
+            })
+        }else{}
+
+    }
+
+
     constructor(props) {
         super(props);
         this.state={
             isRefreshing:false,
-
+            memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员']
         };
     }
 
     render(){
+
+        const CANCEL_INDEX = 0;
+        const DESTRUCTIVE_INDEX = 1;
 
         return (
             <View style={styles.container}>
                 <Toolbar width={width} title="我的资料" actions={[]} navigator={this.props.navigator}>
 
                     <View style={{flexDirection:'row',padding:10,paddingHorizontal:20}}>
-                        <Text style={{color:'#444',fontSize:13}}>帐号</Text>
+                        <Text style={{color:'#444',fontSize:13,fontWeight:'bold'}}>帐号</Text>
                     </View>
 
                     <View style={{backgroundColor:'#fff',padding:10}}>
@@ -179,7 +214,7 @@ class MyInformation extends Component{
                     </View>
 
                     <View style={{flexDirection:'row',padding:10,paddingHorizontal:18}}>
-                        <Text style={{color:'#444',fontSize:13}}>验证</Text>
+                        <Text style={{color:'#444',fontSize:13,fontWeight:'bold'}}>验证</Text>
                     </View>
 
                     <View style={{backgroundColor:'#fff',padding:10}}>
@@ -195,15 +230,21 @@ class MyInformation extends Component{
                                 </Text>
                             </View>
                             <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'flex-end'}}>
-                                <Text style={{color:'#777',fontSize:15}}>
-                                    未设置
-                                </Text>
+                                {
+                                    this.props.mobilePhone&&this.props.mobilePhone!=''?
+                                        <Text style={{color:'#444',fontSize:15}}>
+                                            {this.props.mobilePhone}
+                                        </Text>:
+                                        <Text style={{color:'#777',fontSize:15}}>
+                                            未设置
+                                        </Text>
+                                }
 
                             </View>
                         </TouchableOpacity>
 
                         {/*身份证*/}
-                        <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10}}
+                        <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}
                                           onPress={()=>{
                                                   this.showIdCardDialog();
                                               }}
@@ -226,6 +267,44 @@ class MyInformation extends Component{
 
                             </View>
                         </TouchableOpacity>
+
+                        {/*自身水平*/}
+                        <View style={{flexDirection:'row',alignItems: 'center',paddingHorizontal:10,padding:12,paddingBottom:4}}>
+                            <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                                <Text style={{color:'#555',fontWeight:'bold',fontSize:15}}>自身水平</Text>
+                            </View>
+                            <TouchableOpacity style={{flex:2,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                                borderRadius:10}}
+                                              onPress={()=>{ this.show('actionSheet1'); }}>
+
+                                {
+                                    this.props.selfLevel==null?
+                                        <View style={{flex:3,marginLeft:15,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                            <Text style={{color:'#888',fontSize:13}}>请选择自身水平：</Text>
+                                        </View> :
+                                        <View style={{flex:3,marginLeft:15,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                            <Text style={{color:'#444',fontSize:13,fontWeight:'bold'}}>
+                                                {this.state.memberLevelButtons[parseInt(this.props.selfLevel)+1]}
+                                                </Text>
+                                        </View>
+                                }
+                                <View style={{width:40,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                    <Icon name={'angle-down'} size={30} color="#fff"/>
+                                </View>
+                                <ActionSheet
+                                    ref={(o) => {
+                                        this.actionSheet1 = o;
+                                    }}
+                                    title="请选择自身水平"
+                                    options={this.state.memberLevelButtons}
+                                    cancelButtonIndex={CANCEL_INDEX}
+                                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                    onPress={
+                                        (data)=>{ this._handlePress1(data); }
+                                    }
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
 
@@ -410,8 +489,10 @@ const mapStateToProps = (state, ownProps) => {
     const props = {
         username:state.user.user.username,
         perName:personInfo.perName,
+        mobilePhone:personInfo.mobilePhone,
         wechat:personInfo.wechat,
-        perIdCard:personInfo.perIdCard
+        perIdCard:personInfo.perIdCard,
+        selfLevel:personInfo.selfLevel
     }
     return props
 }

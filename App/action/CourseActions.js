@@ -104,7 +104,7 @@ export let fetchCustomCourse=()=>{
             var state=getState();
             var accessToken = state.user.accessToken;
             var today = new Date();
-            var customCourse = [];
+            var customCourseList = [];
 
             Proxy.postes({
                 url: Config.server + '/svr/request',
@@ -123,11 +123,11 @@ export let fetchCustomCourse=()=>{
                         if(((date-today)>0&&today.getDate()!=date.getDate())||
                             (today.getDate()==date.getDate()&&(date.getHours()-today.getHours()>0)))
                         {
-                            if(customCourse.hasCoach==0||(customCourse.hasCoach==1&&customCourse.coachId==state.user.personInfo.personId))
-                            customCourse.push(customCourse);
+                            if(customCourse.hasCoach==0||(customCourse.hasCoach==1&&customCourse.coach.personId==state.user.personInfo.personId))
+                                customCourseList.push(customCourse);
                         }
                     })
-                    resolve({re:json.re,data:customCourse})
+                    resolve({re:json.re,data:customCourseList})
                 }
             }).catch((e)=>{
                 alert(e);
@@ -282,7 +282,6 @@ export let addBadmintonClassMermberInfo=(info)=>{
 export let distributeCustomerPlan=(plan,venue)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
-
             var state=getState();
             var accessToken = state.user.accessToken;
 
@@ -297,6 +296,37 @@ export let distributeCustomerPlan=(plan,venue)=>{
                     info:{
                         plan,
                         venue
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+//取消已有课程报名
+export let dropoutMyCourses=(courses)=>{
+    return (dispatch,getState)=> {
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+             request: 'dropoutCourseInBatch',
+                    info:{
+                        courses
                     }
                 }
             }).then((json)=>{

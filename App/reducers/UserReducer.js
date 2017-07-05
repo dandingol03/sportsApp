@@ -9,7 +9,8 @@ import {
     ON_PER_NAME_UPDATE,
     ON_WECHAT_UPDATE,
     ON_PER_ID_CARD_UPDATE,
-    ON_RELATIVE_PERSON_UPDATE
+    ON_RELATIVE_PERSON_UPDATE,
+    ON_SELF_LEVEL_UPDATE
 } from '../constants/UserConstants';
 
 const initialState = {
@@ -73,6 +74,11 @@ let user = (state = initialState, action) => {
             var  {persons}=action.payload;
             return Object.assign({}, state, {
                 relative:persons
+            })
+        case ON_SELF_LEVEL_UPDATE:
+            var  {selfLevel}=action.payload;
+            return Object.assign({}, state, {
+                personInfo:Object.assign(state.personInfo,{selfLevel:selfLevel})
             })
 
         default:

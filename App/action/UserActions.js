@@ -10,6 +10,7 @@ import {
     UPDATE_USERTYPE,
     ACCESS_TOKEN_ACK,
     ON_USER_NAME_UPDATE,
+    ON_SELF_LEVEL_UPDATE,
     ON_PER_NAME_UPDATE,
     ON_WECHAT_UPDATE,
     ON_PER_ID_CARD_UPDATE,
@@ -56,6 +57,36 @@ let getAccessToken= (accessToken)=>{
         }
 }
 
+//自身水平更改
+export let updateSelfLevel=(selfLevel)=>{
+    return (dispatch,getState)=> {
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'updateSelfLevel',
+                    info:{
+                        selfLevel
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+        })
+    }
+}
+
 //用户名更改
 export let updateUsername=(username)=>{
     return (dispatch,getState)=>{
@@ -95,6 +126,18 @@ export let onUsernameUpdate=(username)=>{
                 payload: {
                     username
                 }
+        })
+    }
+}
+
+export let onSelfLevelUpdate=(selfLevel)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_SELF_LEVEL_UPDATE,
+            payload: {
+                selfLevel
+            }
         })
     }
 }

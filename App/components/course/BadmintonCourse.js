@@ -24,8 +24,7 @@ import TextInputWrapper from 'react-native-text-input-wrapper'
 import CreateBadmintonCourse from './CreateBadmintonCourse';
 import CreateCustomerPlan from './CreateCustomerPlan';
 import CustomerCourseList from './CustomerCourseList';
-import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
-
+import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
 
@@ -298,6 +297,7 @@ class BadmintonCourse extends Component {
         var actions=[]
         if(this.props.userType==0)//用户
         {
+            // actions.push({icon:ACTION_ADD,value:'xxx',show:OPTION_SHOW})
             actions.push({value:'课程定制',show:OPTION_NEVER})
         }
         else

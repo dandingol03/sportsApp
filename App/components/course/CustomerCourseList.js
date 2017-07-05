@@ -59,20 +59,22 @@ class CustomerCourseList extends Component {
                     <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
                         <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                     </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:5}}>
+                    <View style={{flex:2,justifyContent:'center',alignItems: 'flex-start',marginLeft:5}}>
                         <View>
                             <Text>{rowData.creator.username}</Text>
                         </View>
                     </View>
-                    <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
 
-                    </View>
-                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
+                    <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-end',alignItems: 'center'}}
                                       onPress={()=>{
 
                                       }}>
-                        <Text style={{marginRight:5}}>详情</Text>
-                        <Icon name={'angle-right'} size={25} color="#343434"/>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'phone'} size={13} color="#aaa"/>
+                        </View>
+                        <View style={{flex:7}}>
+                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.creator.mobilePhone}</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{flex:3,padding:10}}>
@@ -81,24 +83,19 @@ class CustomerCourseList extends Component {
                             <Icon name={'star'} size={16} color="#66CDAA"/>
                         </View>
                         <View style={{flex:7}}>
-                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.creator.mobilePhone}</Text>
+                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.courseName}</Text>
                         </View>
                     </View>
+
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'circle'} size={10} color="#aaa"/>
-                        </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{rowData.courseBrief}</Text>
-                    </View>
-                    <View style={{flexDirection:'row',marginBottom:3}}>
-                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'circle'} size={10} color="#aaa"/>
+                            <Icon name={'map-marker'} size={13} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.venue.name}</Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'circle'} size={10} color="#aaa"/>
+                            <Icon name={'calendar'} size={13} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
                             {rowData.courseTime}
@@ -159,7 +156,7 @@ class CustomerCourseList extends Component {
         if (this.props.customCourse && this.props.customCourse.length > 0) {
             var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
-            courseList = (
+            customCourseList = (
                 <ScrollView
                     refreshControl={
                         <RefreshControl
@@ -216,7 +213,7 @@ class CustomerCourseList extends Component {
                         </View>
 
                         {/*课程列表*/}
-                        <Animated.View style={{ flex: 1, padding: 4, opacity: this.state.fadeAnim, backgroundColor: '#fff' }}>
+                        <Animated.View style={{ flex: 1, padding: 4, opacity: this.state.fadeAnim, backgroundColor: '#eee' }}>
                             {customCourseList}
                         </Animated.View>
 
@@ -262,7 +259,8 @@ const mapStateToProps = (state, ownProps) => {
 
     const props = {
         userType: parseInt(state.user.usertype),
-        courses:state.course.courses
+        courses:state.course.courses,
+        customCourse:state.course.customCourse,
     }
     return props
 }
