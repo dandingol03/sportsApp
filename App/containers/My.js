@@ -25,6 +25,7 @@ import MyInformation from '../components/my/MyInformation';
 import Setting from '../components/my/Setting';
 import CustomCourse from '../components/course/MyCustomCourse';
 import PortraitModal from '../components/my/modal/PortraitModal';
+
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
 const scaleAnimation = new ScaleAnimation();
 
@@ -226,17 +227,18 @@ class My extends Component{
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
-                                          onPress={()=>{
+                                                              onPress={()=>{
                                 this.navigate2Setting();
                             }}>
-                            <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                        <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
                             justifyContent:'center',alignItems: 'center'}}>
-                                <Icon name={'gear'} size={20} color="#fff"/>
-                            </View>
-                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
-                                <Text>设置</Text>
-                            </View>
-                        </TouchableOpacity>
+                            <Icon name={'gear'} size={20} color="#fff"/>
+                        </View>
+                        <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                            <Text>设置</Text>
+                        </View>
+                    </TouchableOpacity>
+
                     </View>
 
                     <View style={{flex:1,backgroundColor:'#eee'}}>

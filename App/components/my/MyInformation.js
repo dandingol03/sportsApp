@@ -285,7 +285,7 @@ class MyInformation extends Component{
                                     身份证
                                 </Text>
                             </View>
-                            <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'flex-end'}}>
+                            <View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'flex-end'}}>
                                 {
                                     this.props.perIdCard&&this.props.perIdCard!=''?
                                         <Text style={{color:'#444',fontSize:15}}>

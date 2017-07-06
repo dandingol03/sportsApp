@@ -225,7 +225,8 @@ class Home extends Component {
                 //针对教练,需要完成运动水平、真实姓名、身份证
                 this.validateMyInformationDialog.show()
             }
-        }else if((this.props.sportLevelValidateFailed==true||this.props.perNameValidateFailed==true||this.props.perIdCardValidateFailed==true)&&
+        }
+        else if((this.props.sportLevelValidateFailed==true||this.props.perNameValidateFailed==true||this.props.perIdCardValidateFailed==true)&&
             this.validateMyInformationDialog)
         {
             this.validateMyInformationDialog.show()
@@ -503,7 +504,7 @@ const mapStateToProps = (state, ownProps) => {
     }
     if(trainerInfo)
     {
-        props.sportLevelValidateFailed=(!trainerInfo.sportLevel!==undefined&&trainerInfo.sportLevel!==null)
+        props.sportLevelValidateFailed=(!(trainerInfo.sportLevel!==undefined&&trainerInfo.sportLevel!==null))
         props.perNameValidateFailed=(!(personInfo.perName&&personInfo.perName!=''))
         props.perIdCardValidateFailed=(!(personInfo.perIdCard&&personInfo.perIdCard!=''))
     }
