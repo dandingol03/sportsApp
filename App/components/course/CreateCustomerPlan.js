@@ -29,7 +29,7 @@ import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper';
 import Coach from '../../components/Coach';
 import DatePicker from 'react-native-datepicker';
 import DateFilter from '../../utils/DateFilter';
-
+import SelectVenue from '../../components/venue/SelectVenue';
 
 import{
     distributeCustomerPlan
@@ -63,6 +63,20 @@ class CreateCustomerPlan extends Component{
     {
         this.setState({venue:coursePlace});
 
+    }
+
+    navigate2SelectVenue()
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'VenueInspect',
+                component: SelectVenue,
+                params: {
+                    setPlace:this.setCoursePlace.bind(this)
+                }
+            })
+        }
     }
 
     navigate2VenueInspect()
@@ -281,29 +295,59 @@ class CreateCustomerPlan extends Component{
                     </View>
 
                     {/*训练地点*/}
-                    <TouchableOpacity style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,
-                        marginTop:5,marginBottom:5}}
-                                      onPress={()=>{
-                                this.navigate2VenueInspect();
-                            }}
-                    >
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,
+                        marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
                             <Text style={{color:'#343434'}}>训练地点：</Text>
                         </View>
-                        <View style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
-                            {
-                                this.state.venue?
-                                    <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
-                                        {this.state.venue.name}
-                                    </Text>:
+
+                        {
+                            this.state.venue==null?
+                                <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                                  onPress={()=>{
+                                //this.navigate2VenueInspect();
+                                 this.navigate2SelectVenue();
+                            }}>
                                     <Text style={{marginLeft:20,fontSize:13,color:'#888'}}>
                                         请选择训练地点
                                     </Text>
-                            }
+                                </TouchableOpacity>:
+                                <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#222',fontSize:13}}>{this.state.venue.name}</Text>
+                                    </View>
+                                    <TouchableOpacity style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20,padding:5}}
+                                                      onPress={()=>{
+                                                              var venue = null;
+                                                              this.setState({venue:venue});
+                                                          }}>
+                                        <Ionicons name={'md-close-circle'} size={20} color={'red'}/>
+                                    </TouchableOpacity>
 
-                        </View>
-                    </TouchableOpacity>
+                                </TouchableOpacity>
+
+                        }
+
+                        {/*<TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
+                            {/*borderRadius:10}}*/}
+                                          {/*onPress={()=>{*/}
+                                {/*//this.navigate2VenueInspect();*/}
+                                 {/*this.navigate2SelectVenue();*/}
+                            {/*}}>*/}
+                            {/*{*/}
+                                {/*this.state.venue?*/}
+                                    {/*<Text style={{marginLeft:20,fontSize:13,color:'#222'}}>*/}
+                                        {/*{this.state.venue.name}*/}
+                                    {/*</Text>:*/}
+                                    {/*<Text style={{marginLeft:20,fontSize:13,color:'#888'}}>*/}
+                                        {/*请选择训练地点*/}
+                                    {/*</Text>*/}
+                            {/*}*/}
+
+                        {/*</TouchableOpacity>*/}
+                    </View>
 
                     {/*自身水平*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'

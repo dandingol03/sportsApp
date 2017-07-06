@@ -208,6 +208,11 @@ class VenueInspect extends Component{
             }
         })
 
+        // var venues = [{unitId:3,unitNum:'U000002',name:'佳兴羽毛球馆',province:'山东省',city:'济南市',town:'高新区',phone:null,manager:null,address:'解放路8号院内(近二环东路)',
+        // remark:'',latitude:'36.687979',longitude:'117.094643'}];
+        // var markers = [{ latitude: parseFloat('36.687979'), longitude: parseFloat('117.094643'), title:'佳兴羽毛球馆',}];
+        // this.setState({markers:markers,venues:venues});
+
         // setTimeout(()=>{
         //
         //     Animated.timing(this.state.detailPosition, {

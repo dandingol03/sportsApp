@@ -35,7 +35,7 @@ import TextInputWrapper from '../../encrypt/TextInputWrapper';
 import VenueInspect from '../../components/venue/VenueInspect';
 import CreateGroup from './CreateGroup';
 import Coach from '../../components/Coach';
-
+import SelectVenue from '../../components/venue/SelectVenue';
 import {
     fetchMyGroupList,disableMyGroupOnFresh,enableActivityOnFresh
 } from '../../action/ActivityActions';
@@ -61,8 +61,7 @@ class AddActivity extends Component{
 
     setEventPlace(eventPlace)
     {
-        this.setState({event:Object.assign(this.state.event,{eventPlace:eventPlace.name})});
-        this.setState({event:Object.assign(this.state.event,{unitId:eventPlace.unitId})});
+        this.setState({event:Object.assign(this.state.event,{eventPlace:eventPlace.name,unitId:eventPlace.unitId})});
 
     }
 
@@ -82,6 +81,20 @@ class AddActivity extends Component{
             navigator.push({
                 name: 'VenueInspect',
                 component: VenueInspect,
+                params: {
+                    setPlace:this.setEventPlace.bind(this)
+                }
+            })
+        }
+    }
+
+    navigate2SelectVenue()
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'VenueInspect',
+                component: SelectVenue,
                 params: {
                     setPlace:this.setEventPlace.bind(this)
                 }
@@ -233,6 +246,7 @@ class AddActivity extends Component{
                    groupName:null,groupId:null,groupNum:null},
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','私人'],
+
         }
     }
 
@@ -398,31 +412,61 @@ class AddActivity extends Component{
                                 <Text>活动地点：</Text>
                             </View>
 
-                            <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            {
+                                this.state.event.unitId==null?
+                                    <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
-                                              onPress={
+                                                      onPress={
                                   ()=>{
-                                      this.navigate2VenueInspect()
+                                      //this.navigate2VenueInspect()
+                                      this.navigate2SelectVenue()
                                   }}
-                            >
-                                <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                    >
+                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
 
-                                    {
-                                        this.state.event.eventPlace==null?
-                                            <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>:
-                                            <Text style={{color:'#222',fontSize:13}}>{this.state.event.eventPlace}</Text>
-                                    }
-                                </View>
-                                <View style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20}}>
-                                    <Icon name={'angle-right'} size={30} color="#fff"/>
-                                </View>
-                            </TouchableOpacity>
+                                            {
+                                                this.state.event.eventPlace==null?
+                                                    <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>:
+                                                    <Text style={{color:'#222',fontSize:13}}>{this.state.event.eventPlace}</Text>
+                                            }
+                                        </View>
+                                        <View style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20}}>
+                                            <Icon name={'angle-right'} size={30} color="#fff"/>
+                                        </View>
+                                    </TouchableOpacity> :
+
+                                    <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                    >
+                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+
+                                            {
+                                                this.state.event.eventPlace==null?
+                                                    <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>:
+                                                    <Text style={{color:'#222',fontSize:13}}>{this.state.event.eventPlace}</Text>
+                                            }
+                                        </View>
+
+                                        <TouchableOpacity style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20,padding:5}}
+                                                          onPress={()=>{
+                                                              var event = this.state.event;
+                                                              event.unitId=null;
+                                                              event.eventPlace=null;
+                                                              this.setState({event:event});
+                                                          }}>
+                                            <Ionicons name={'md-close-circle'} size={20} color={'red'}/>
+                                        </TouchableOpacity>
+
+                                    </TouchableOpacity>
+
+                            }
+
                         </View>
 
 
                         {
                             (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
-                                <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                                <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>
                                     <View style={{flex:1}}>
                                         <Text>活动人数：</Text>
                                     </View>
