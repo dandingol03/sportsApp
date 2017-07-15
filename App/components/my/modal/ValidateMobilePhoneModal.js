@@ -94,7 +94,7 @@ class CompulseMobilePhoneModal extends Component{
                     <View style={{flexDirection:'row',alignItems:'center',padding:4,paddingTop:15,borderBottomWidth:1,borderColor:'#66CDAA'}}>
 
                         <View stye={{flexDirection:'row',alignItems:'center',}}>
-                            <Ionicons name='md-phone-portrait' size={20} color="#666" style={{marginRight:25}}/>
+                            <Ionicons name='md-phone-portrait' size={20} color="#666" style={{marginRight:15}}/>
                         </View>
                         <View style={{flexDirection:'row',flex:1}}>
                             <TextInputWrapper

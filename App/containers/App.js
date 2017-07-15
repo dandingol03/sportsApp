@@ -37,6 +37,8 @@ import ToastAndroid from '../native/ToastAndroid';
 import NotificationAndroid from '../native/NotificationAndroid'
 import UpdateAndroid from '../native/UpdateAndroid'
 
+var WeChat = require('react-native-wechat');
+
 class App extends Component {
 
     _createNavigatorItem(route,icon)
@@ -168,6 +170,17 @@ class App extends Component {
             //NotificationAndroid.notify('你有新的apk版本等待更新')
             UpdateAndroid.check()
         }
+
+        WeChat.registerApp('wx9068ac0e88c09e7a').then(function (res) {
+            console.log("羽毛球热微信注册成功！！！！！");
+
+        })
+        // WeChat.registerApp('wxd9ec3fad60f0fd2a').then(function (res) {
+        //     console.log("保险微信注册成功！！！！！");
+        //
+        // })
+
+
     }
 }
 

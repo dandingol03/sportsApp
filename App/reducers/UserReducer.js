@@ -25,7 +25,8 @@ const initialState = {
     personInfo:null,
     portrait:null,
     user:{},
-    trainer:{}
+    trainer:{},
+    personInfoAuxiliary:null,
 };
 
 let user = (state = initialState, action) => {
@@ -33,7 +34,6 @@ let user = (state = initialState, action) => {
     switch (action.type) {
 
         case ACCESS_TOKEN_ACK:
-
             return Object.assign({}, state, {
                 accessToken: action.accessToken,
                 auth:action.auth

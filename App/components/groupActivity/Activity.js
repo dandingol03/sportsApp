@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    Alert,
     Dimensions,
     ListView,
     ScrollView,
@@ -22,6 +23,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AddActivity from './AddActivity';
 import MyActivity from './MyActivity';
 import ActivityDetail from './ActivityDetail';
+import ActivityPay from './ActivityPay';
 import {
     fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity
 } from '../../action/ActivityActions';
@@ -106,15 +108,38 @@ class Activity extends Component {
         }
     }
 
+    navigate2ActivityPay(activity)
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'ActivityPay',
+                component: ActivityPay,
+                params: {
+                    activity:activity
+                }
+            })
+        }
+    }
+
     signUpActivity(event)
     {
         if(event.eventMaxMemNum<=event.eventNowMemNum){
             alert('该活动人数已满！');
 
         }else{
-            this.props.dispatch(signUpActivity(event)).then((ins)=>{
+            this.props.dispatch(signUpActivity(event)).then((json)=>{
                 if(json.re==1){
-                    alert('报名成功');
+                    Alert.alert('信息','报名成功,是否立即支付？',[{text:'是',onPress:()=>{
+                        this.setMyActivityList();
+                        this.navigate2ActivityPay();
+                    }},
+                        {text:'否',onPress:()=>{
+                            this.goBack();
+                            this.setMyActivityList();
+                        }},
+                    ]);
+
                 }
             })
         }
@@ -135,9 +160,17 @@ class Activity extends Component {
                     </View>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
                         {rowData.groupId==null?null:
-                            <Text>（组活动）</Text>
+                            <Text>{'('+rowData.group.groupName+'组活动'+')'}</Text>
                         }
                     </View>
+
+
+                    {rowData.meCoach!==undefined&&rowData.meCoach!==null?
+                    <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
+                        <Text>{'(指定您为教练)'}</Text>
+                    </View> :null
+                    }
+
                     <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
                                       onPress={()=>{
                                           this.navigate2ActivityDetail(rowData,'公开活动');
@@ -173,7 +206,9 @@ class Activity extends Component {
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{rowData.eventBrief}</Text>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'人均费用：'+rowData.cost}
+                        </Text>
                     </View>
                 </View>
                 <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
@@ -324,6 +359,7 @@ var styles = StyleSheet.create({
 module.exports = connect(state=>({
         accessToken:state.user.accessToken,
         personInfo:state.user.personInfo,
+        trainer:state.user.trainer,
         activityList:state.activity.activityList,
         myEvents:state.activity.myEvents,
         myTakenEvents:state.activity.myTakenEvents,

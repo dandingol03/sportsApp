@@ -22,7 +22,8 @@ import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper';
+import SelectVenue from './SelectVenue';
 
 import {
     MapView,
@@ -44,6 +45,21 @@ class VenueInspect extends Component{
             navigator.pop();
         }
     }
+
+    navigate2SelectVenue()
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'VenueInspect',
+                component: SelectVenue,
+                params: {
+                    setPlace:this.props.setPlace
+                }
+            })
+        }
+    }
+
 
     constructor(props) {
         super(props);
@@ -67,22 +83,18 @@ class VenueInspect extends Component{
 
     render()
     {
+        var actions=[]
+        actions.push({value:'场馆列表',show:OPTION_NEVER});
+
         return(
             <View style={styles.container}>
-                <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',
-                    backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
 
-                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
-                                      onPress={()=>{this.goBack();}}>
-                        <Icon name={'angle-left'} size={30} color="#fff"/>
-                    </TouchableOpacity>
-                    <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>附近球馆</Text>
-                    </View>
-                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
-
-                    </TouchableOpacity>
-                </View>
+                <Toolbar width={width} title="选择场馆" navigator={this.props.navigator}
+                         actions={actions}
+                         onPress={(i)=>{
+                             this.navigate2SelectVenue();
+                         }}
+                >
 
                 <View style={{flex:1}}>
                     <MapView
@@ -107,7 +119,6 @@ class VenueInspect extends Component{
                                 }
                             })
 
-
                             if(this.state.detail)//已经显示poi详情
                             {
                                 Animated.timing(this.state.detailPosition, {
@@ -131,55 +142,55 @@ class VenueInspect extends Component{
 
                             }
 
-
-
                           }}
                     >
-                        <Animated.View style={[{flexDirection:'row',width:width,height:70,alignItems:'center',
-                                backgroundColor:'#fff',borderTopWidth:1,borderColor:'#ddd'},
-                                {top:this.state.detailPosition.interpolate({
-                                    inputRange: [0,1],
-                                    outputRange: [70, 0]
-                                })}]}>
-                            <View style={{flex:1,flexDirection:'column'}}>
-                                <View style={{flex:1,flexDirection:'row',padding:4,paddingHorizontal:4,paddingBottom:2}}>
-                                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
-                                        <Text style={{fontSize:13,fontWeight:'bold'}}>
-                                            {this.state.detail.name}
-                                        </Text>
+
+                    </MapView>
+
+                    {
+                        this.state.detail.name!==null&&this.state.detail.name!==undefined?
+
+                            <View style={[{flexDirection:'row',width:width,height:70,alignItems:'center',
+                                backgroundColor:'#fff',borderTopWidth:1,borderColor:'#ddd',position:'absolute',bottom:3},
+                               ]}>
+                                <View style={{flex:1,flexDirection:'column'}}>
+                                    <View style={{flex:1,flexDirection:'row',padding:4,paddingHorizontal:4,paddingBottom:2}}>
+                                        <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                                            <Text style={{fontSize:13,fontWeight:'bold'}}>
+                                                {this.state.detail.name}
+                                            </Text>
+                                        </View>
+
                                     </View>
 
+                                    <View style={{flexDirection:'row',padding:3,marginBottom:10,alignItems:'center'}}>
+
+                                        <Icon name={'map-marker'} size={18} color="#444" style={{marginRight:5}}/>
+                                        <Text style={{fontSize:13,color:'#888'}}>
+                                            {this.state.detail.address}
+                                        </Text>
+                                    </View>
                                 </View>
 
-                                <View style={{flexDirection:'row',padding:3,marginBottom:10,alignItems:'center'}}>
-
-                                    <Icon name={'map-marker'} size={18} color="#444" style={{marginRight:5}}/>
-                                    <Text style={{fontSize:13,color:'#888'}}>
-                                        {this.state.detail.address}
-                                    </Text>
-                                </View>
-                            </View>
-
-                            <TouchableOpacity style={{width:60,marginLeft:15,marginRight:10,flexDirection:'row',alignItems:'center',borderRadius:3,padding:4,paddingHorizontal:6,
+                                <TouchableOpacity style={{width:60,marginLeft:15,marginRight:10,flexDirection:'row',alignItems:'center',borderRadius:3,padding:4,paddingHorizontal:6,
                                         backgroundColor:'#008B00',justifyContent:'center'}}
-                                onPress={
+                                                  onPress={
                                     ()=>{
                                         DeviceEventEmitter.emit('on_venue_confirm',this.state.detail)
                                         this.goBack();
                                         this.props.setPlace(this.state.detail);
                                     }}
-                            >
-                                <Text style={{color:'#fff',fontSize:13,fontWeight:'bold'}}>
-                                    确认
-                                </Text>
-                            </TouchableOpacity>
+                                >
+                                    <Text style={{color:'#fff',fontSize:13,fontWeight:'bold'}}>
+                                        确认
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>:null
 
+                    }
 
-
-                        </Animated.View>
-
-                    </MapView>
                 </View>
+                </Toolbar>
 
             </View>
         )
@@ -207,11 +218,6 @@ class VenueInspect extends Component{
                 this.setState({markers:markers,venues:venues});
             }
         })
-
-        // var venues = [{unitId:3,unitNum:'U000002',name:'佳兴羽毛球馆',province:'山东省',city:'济南市',town:'高新区',phone:null,manager:null,address:'解放路8号院内(近二环东路)',
-        // remark:'',latitude:'36.687979',longitude:'117.094643'}];
-        // var markers = [{ latitude: parseFloat('36.687979'), longitude: parseFloat('117.094643'), title:'佳兴羽毛球馆',}];
-        // this.setState({markers:markers,venues:venues});
 
         // setTimeout(()=>{
         //

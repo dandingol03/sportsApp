@@ -31,7 +31,10 @@ var { height, width } = Dimensions.get('window');
 import{
     fetchCustomCourse,
     onCustomCourseUpdate,
+    fetchCourses,
+    onCoursesUpdate,
 } from '../../action/CourseActions';
+import CreateBadmintonCourse from './CreateBadmintonCourse';
 
 class CustomerCourseList extends Component {
 
@@ -39,6 +42,27 @@ class CustomerCourseList extends Component {
         const { navigator } = this.props;
         if (navigator) {
             navigator.pop();
+        }
+    }
+
+    navigate2BadmintonCourseForCoach(memberId) {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'CreateBadmintonCourse',
+                component: CreateBadmintonCourse,
+                params: {
+                    setMyCourseList:()=>{
+                        this.props.dispatch(fetchCourses()).then((json)=>{
+                            if(json.re==1)
+                            {
+                                this.props.dispatch(onCoursesUpdate(json.data))
+                            }
+                        })
+                    },
+                    memberId:memberId,
+                }
+            })
         }
     }
 
@@ -77,30 +101,41 @@ class CustomerCourseList extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={{flex:3,padding:10}}>
-                    <View style={{flexDirection:'row',marginBottom:3}}>
-                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'star'} size={16} color="#66CDAA"/>
+                <View style={{flex:3,padding:10,flexDirection:'row',}}>
+
+                    <View style={{flex:3}}>
+                        <View style={{flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'star'} size={16} color="#66CDAA"/>
+                            </View>
+                            <View style={{flex:7}}>
+                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.courseName}</Text>
+                            </View>
                         </View>
-                        <View style={{flex:7}}>
-                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.courseName}</Text>
+
+                        <View style={{flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'map-marker'} size={13} color="#aaa"/>
+                            </View>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.venue.name}</Text>
+                        </View>
+
+                        <View style={{flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'calendar'} size={13} color="#aaa"/>
+                            </View>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                                {rowData.courseTime}
+                            </Text>
                         </View>
                     </View>
 
-                    <View style={{flexDirection:'row',marginBottom:3}}>
-                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'map-marker'} size={13} color="#aaa"/>
+                    <TouchableOpacity style={{flex:1,justifyContent:'flex-end',alignItems: 'center'}}
+                                      onPress={()=>{this.navigate2BadmintonCourseForCoach(rowData.courseManager)}}>
+                        <View style={{borderWidth:1,borderColor:'#66CDAA',borderRadius:5,padding:3}}>
+                            <Text style={{color:'#66CDAA',}}>为Ta建课</Text>
                         </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.venue.name}</Text>
-                    </View>
-                    <View style={{flexDirection:'row',marginBottom:3}}>
-                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                            <Icon name={'calendar'} size={13} color="#aaa"/>
-                        </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {rowData.courseTime}
-                        </Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );

@@ -91,6 +91,7 @@ class MyInformation extends Component{
         this[actionSheet].show();
     }
 
+    //个人水平设置
     _handlePress1(index) {
 
         if(index>1){
@@ -250,7 +251,7 @@ class MyInformation extends Component{
 
                     <View style={{backgroundColor:'#fff',padding:10}}>
                         {/*手机号*/}
-                        <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}
+                        <TouchableOpacity style={{flexDirection:'row',padding:8,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}
                                           onPress={()=>{
                                                   this.showMobilePhoneDialog();
                                               }}
@@ -260,7 +261,7 @@ class MyInformation extends Component{
                                     手机号
                                 </Text>
                             </View>
-                            <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'flex-end'}}>
+                            <View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'flex-end'}}>
                                 {
                                     this.props.mobilePhone&&this.props.mobilePhone!=''?
                                         <Text style={{color:'#444',fontSize:15}}>
@@ -272,6 +273,7 @@ class MyInformation extends Component{
                                 }
 
                             </View>
+
                         </TouchableOpacity>
 
                         {/*身份证*/}
@@ -457,7 +459,7 @@ class MyInformation extends Component{
                     }}
                         dialogAnimation={scaleAnimation}
                         actions={[]}
-                        width={0.8}
+                        width={0.85}
                         height={0.4}
                     >
 
@@ -476,7 +478,7 @@ class MyInformation extends Component{
                             }}
                             onConfirm={(data)=>{
                                 var {mobilePhone,verifyCode}=data
-                                if(this.state.verifyCode==verifyCode)
+                                if(this.state.verifyCode!==null&&this.state.verifyCode!==undefined&&this.state.verifyCode==verifyCode)
                                 {
                                       this.props.dispatch(updateMobilePhone(mobilePhone)).then((json)=>{
                                         if(json.re==1)
@@ -488,6 +490,10 @@ class MyInformation extends Component{
                                              console.log();
                                         }}]);
                                     })
+                                }else{
+                                    Alert.alert('信息','验证码输入错误',[{text:'确认',onPress:()=>{
+                                             console.log();
+                                        }}]);
                                 }
 
                             }}
@@ -596,6 +602,7 @@ const mapStateToProps = (state, ownProps) => {
         perIdCard:personInfo.perIdCard,
         selfLevel:personInfoAuxiliary.selfLevel,
         userType:parseInt(state.user.usertype),
+        checkedMobile:personInfoAuxiliary.checkedMobile,
     }
 
     if(trainerInfo)

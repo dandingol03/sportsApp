@@ -213,7 +213,7 @@ export let onCustomCourseUpdate=(customCourse)=>{
 
 
 //发布课程
-export let distributeCourse=(course,timeList,venue)=>{
+export let distributeCourse=(course,timeList,venue,memberId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
@@ -231,7 +231,8 @@ export let distributeCourse=(course,timeList,venue)=>{
                     info:{
                         course,
                         timeList,
-                        venue
+                        venue,
+                        memberId
                     }
                 }
             }).then((json)=>{
@@ -290,6 +291,41 @@ export let fetchPersonRelative =()=>{
                 },
                 body: {
                     request: 'fetchPersonRelative',
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+        })
+    }
+}
+
+//看是否已经报名
+export let checkPersonIsMember=(info)=>{
+    return (dispatch,getState)=> {
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+
+                    request: 'checkPersonIsMember',
+                    info:{
+                        isSelfCheck:info.isSelfCheck,
+                        persons:info.persons,
+                        classId:info.classId,
+                        creatorId:info.creatorId,
+                    }
+
                 }
             }).then((json)=>{
                 resolve(json)

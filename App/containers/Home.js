@@ -24,18 +24,14 @@ import ViewPager from 'react-native-viewpager';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Coach from '../components/Coach';
 import BadmintonCourse from '../components/course/BadmintonCourse';
 import Mall from './mall/FirstPage';
 import Activity from '../components/groupActivity/Activity';
 import NewsContentDetail from '../components/news/NewsContentDetail';
 import DateFilter from '../utils/DateFilter';
-import CreateBadmintonCourse from '../components/course/CreateBadmintonCourse';
 
-import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
-const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+import PopupDialog,{ScaleAnimation} from 'react-native-popup-dialog';
 const scaleAnimation = new ScaleAnimation();
-const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 
 import MobilePhoneModal from '../components/my/modal/ValidateMobilePhoneModal';
 import ValidateMyInformationModal from '../components/my/modal/ValidateMyInformationModal';
@@ -100,21 +96,7 @@ class Home extends Component {
         }
     }
 
-    navigate2Coach()
-    {
-        const {navigator} =this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'Coach',
-                component: Coach,
-                params: {
-
-                }
-            })
-        }
-    }
-
-    //导航至定制（for 用户）
+    //课程定制
     navigate2BadmintonCourse()
     {
         const {navigator} =this.props;
@@ -215,21 +197,25 @@ class Home extends Component {
 
     render() {
 
-
-        if(this.props.mobilePhoneValidateFailed==true&&this.mobilePhoneDialog&&this.validateMyInformationDialog)
-        {
-            if(this.props.userType==0)//用户
+        //针对教练,需要完成手机号，运动水平、真实姓名、身份证的验证
+        if(this.props.userType==1){
+            if(this.props.mobilePhoneValidateFailed==true&&this.mobilePhoneDialog&&this.validateMyInformationDialog)
             {
-                this.mobilePhoneDialog.show()
-            }else{
-                //针对教练,需要完成运动水平、真实姓名、身份证
+                this.validateMyInformationDialog.show()
+            }
+            else if((this.props.sportLevelValidateFailed==true||this.props.perNameValidateFailed==true||this.props.perIdCardValidateFailed==true)&&
+                this.validateMyInformationDialog)
+            {
                 this.validateMyInformationDialog.show()
             }
         }
-        else if((this.props.sportLevelValidateFailed==true||this.props.perNameValidateFailed==true||this.props.perIdCardValidateFailed==true)&&
-            this.validateMyInformationDialog)
-        {
-            this.validateMyInformationDialog.show()
+
+        //针对用户,需要完成手机号的验证
+        if(this.props.userType==0){
+            if(this.props.mobilePhoneValidateFailed==true&&this.mobilePhoneDialog&&this.validateMyInformationDialog)
+            {
+                this.mobilePhoneDialog.show()
+            }
         }
 
 
@@ -276,7 +262,7 @@ class Home extends Component {
 
                             </View>
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:20}}>
-                                <Text style={{color:'#fff',fontSize:18}}>SportsHot</Text>
+                                <Text style={{color:'#fff',fontSize:18}}>羽毛球热</Text>
                             </View>
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center',paddingRight:20}}>
 
@@ -490,8 +476,12 @@ var styles = StyleSheet.create({
 
 const mapStateToProps = (state, ownProps) => {
 
-    var personInfo=state.user.personInfo
-    var mobilePhone=personInfo.mobilePhone
+    var personInfo=state.user.personInfo;
+    var mobilePhone=personInfo.mobilePhone;
+
+    var personInfoAuxiliary = state.user.personInfoAuxiliary;
+    var checkedMobile = personInfoAuxiliary.checkedMobile;
+
     var trainerInfo=state.user.trainer
 
     const props = {
@@ -502,21 +492,19 @@ const mapStateToProps = (state, ownProps) => {
         perIdCard:personInfo.perIdCard,
 
     }
+
     if(trainerInfo)
     {
-        props.sportLevelValidateFailed=(!(trainerInfo.sportLevel!==undefined&&trainerInfo.sportLevel!==null))
-        props.perNameValidateFailed=(!(personInfo.perName&&personInfo.perName!=''))
-        props.perIdCardValidateFailed=(!(personInfo.perIdCard&&personInfo.perIdCard!=''))
+        props.sportLevelValidateFailed=(!(trainerInfo.sportLevel!==undefined&&trainerInfo.sportLevel!==null))//运动水平没验证
+        props.perNameValidateFailed=(!(personInfo.perName&&personInfo.perName!=''))//真实姓名没验证
+        props.perIdCardValidateFailed=(!(personInfo.perIdCard&&personInfo.perIdCard!=''))//身份证没验证
     }
 
-
-    if(mobilePhone&&mobilePhone!='')
+    //手机号没验证
+    if(mobilePhone&&mobilePhone!=''&&checkedMobile==true)
         props.mobilePhoneValidateFailed=false
     else
         props.mobilePhoneValidateFailed=true
-
-
-
 
     return props
 }

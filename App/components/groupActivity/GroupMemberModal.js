@@ -69,7 +69,7 @@ class GroupMemberModal extends Component{
                                       this.setState({searchInfo:searchInfo});
                                     }}
                                 value={this.state.searchInfo==null?'':this.state.searchInfo}
-                                placeholder='请输入手机号'
+                                placeholder='请输入用户名搜索'
                                 placeholderTextColor="#aaa"
                                 underlineColorAndroid="transparent"
                             />

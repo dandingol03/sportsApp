@@ -19,7 +19,7 @@ import {
 //发布群活动
 export let releaseActivity=(event)=>{
 
-    if(event.type=='私人'&&event.groupNum!==null&&event.groupNum!==undefined){
+    if(event.type=='组内'&&event.groupNum!==null&&event.groupNum!==undefined){
         event.eventMaxMemNum = event.groupNum;
     }
 
@@ -231,7 +231,7 @@ export let fetchMyGroupList=()=>{
                     if (myGroupList !== undefined && myGroupList !== null &&myGroupList.length > 0) {
                         dispatch(setMyGroupList(myGroupList));
                         dispatch(disableMyGroupOnFresh());
-                        resolve({re:1});
+                        resolve({re:1,data:myGroupList});
                     }
                 }else{
                     resolve({re:-1,data:'目前未加入任何群组'});
@@ -320,8 +320,8 @@ export let fetchActivityList=()=>{
                 if (json.re == 1) {
                     allActivityList = json.data;
                     var visibleEvents=[];
-                    var myEvents=[];
-                    var myTakenEvents=[];
+                    var myEvents=[];//我发起的活动
+                    var myTakenEvents=[];//我报名的活动
                     var today = new Date();
 
                     if (allActivityList!== undefined && allActivityList !== null &&allActivityList.length > 0) {
@@ -340,6 +340,14 @@ export let fetchActivityList=()=>{
                                         isMember++;
                                     }
                                 })
+
+
+                                //我发起的活动
+                                if(activity.coachId==state.user.trainer.trainerId&&activity.coachId!==null){
+                                    activity.meCoach = true
+                                    visibleEvents.push(activity);
+                                }
+
                                 //我发起的活动
                                 if(activity.eventManager.personId==state.user.personInfo.personId){
                                     myEvents.push(activity);
@@ -353,16 +361,25 @@ export let fetchActivityList=()=>{
                                             visibleEvents.push(activity);
                                         }else{
                                             var myGroupList = state.activity.myGroupList;
-                                            if(myGroupList==null){
-                                                dispatch(fetchMyGroupList()).then(()=>{
+                                            if(myGroupList==null||myGroupList==undefined){
+                                                dispatch(fetchMyGroupList()).then((json)=>{
                                                     if(activity.groupId!==null){
+                                                        myGroupList = json.data;
                                                         myGroupList.map((group,i)=>{
-                                                            if(group.groupId==activity.groupId){
+                                                            if(group.groupInfo.groupId==activity.groupId){
                                                                 visibleEvents.push(activity);
                                                             }
                                                         })
                                                     }
                                                 });
+                                            }else{
+                                                if(activity.groupId!==null){
+                                                    myGroupList.map((group,i)=>{
+                                                        if(group.groupInfo.groupId==activity.groupId){
+                                                            visibleEvents.push(activity);
+                                                        }
+                                                    })
+                                                }
                                             }
                                         }
                                     }

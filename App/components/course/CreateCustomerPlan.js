@@ -306,15 +306,19 @@ class CreateCustomerPlan extends Component{
                                 <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
                                                   onPress={()=>{
-                                //this.navigate2VenueInspect();
-                                 this.navigate2SelectVenue();
+                                this.navigate2VenueInspect();
+                                 //this.navigate2SelectVenue();
                             }}>
                                     <Text style={{marginLeft:20,fontSize:13,color:'#888'}}>
                                         请选择训练地点
                                     </Text>
                                 </TouchableOpacity>:
                                 <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
+                            borderRadius:10}}
+                                                  onPress={()=>{
+                                this.navigate2VenueInspect();
+                                 //this.navigate2SelectVenue();
+                            }}>
                                     <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                         <Text style={{color:'#222',fontSize:13}}>{this.state.venue.name}</Text>
                                     </View>
@@ -330,23 +334,6 @@ class CreateCustomerPlan extends Component{
 
                         }
 
-                        {/*<TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
-                            {/*borderRadius:10}}*/}
-                                          {/*onPress={()=>{*/}
-                                {/*//this.navigate2VenueInspect();*/}
-                                 {/*this.navigate2SelectVenue();*/}
-                            {/*}}>*/}
-                            {/*{*/}
-                                {/*this.state.venue?*/}
-                                    {/*<Text style={{marginLeft:20,fontSize:13,color:'#222'}}>*/}
-                                        {/*{this.state.venue.name}*/}
-                                    {/*</Text>:*/}
-                                    {/*<Text style={{marginLeft:20,fontSize:13,color:'#888'}}>*/}
-                                        {/*请选择训练地点*/}
-                                    {/*</Text>*/}
-                            {/*}*/}
-
-                        {/*</TouchableOpacity>*/}
                     </View>
 
                     {/*自身水平*/}

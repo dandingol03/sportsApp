@@ -25,6 +25,7 @@ var {height, width} = Dimensions.get('window');
 import DateFilter from '../../utils/DateFilter';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import GridView from 'react-native-grid-view';
+import ActivityPay from './ActivityPay';
 import {
     deleteActivity,exitActivity,
 } from '../../action/ActivityActions';
@@ -76,6 +77,19 @@ class ActivityDetail extends Component{
 
     }
 
+    navigate2ActivityPay(activity)
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'ActivityPay',
+                component: ActivityPay,
+                params: {
+                    activity:activity
+                }
+            })
+        }
+    }
 
     constructor(props) {
         super(props);
@@ -171,6 +185,14 @@ class ActivityDetail extends Component{
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                                {'人均费用：'+activity.cost}
+                            </Text>
+                        </View>
+                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'circle'} size={10} color="#aaa"/>
+                            </View>
                             <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{activity.eventBrief}</Text>
                         </View>
                     </View>
@@ -192,11 +214,21 @@ class ActivityDetail extends Component{
 
                 <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
                 position:'absolute',bottom:3}}>
-                    <View style={{flex:3,flexDirection:'row',backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,
-                    borderTopWidth:1,borderRightWidth:1,borderColor:'#eee'}}>
-                        <Icon name={'comment-o'} size={14} color="#66CDAA"/>
-                        <Text style={{color:'#66CDAA',}}>评论</Text>
-                    </View>
+
+
+                    {
+                        flag=='公开活动'?null:
+                            <TouchableOpacity style={{flex:3,flexDirection:'row',backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,
+                    borderTopWidth:1,borderRightWidth:1,borderColor:'#eee'}}
+                                              onPress={()=>{
+                                            this.navigate2ActivityPay(activity)
+                                      }}>
+                                <Icon name={'comment-o'} size={14} color="#66CDAA"/>
+                                <Text style={{color:'#66CDAA',}}>支付</Text>
+                            </TouchableOpacity>
+
+                    }
+
 
                     {
                         flag=='公开活动'?

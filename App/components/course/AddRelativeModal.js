@@ -18,8 +18,6 @@ import TextInputWrapper from 'react-native-text-input-wrapper';
 import DateFilter from '../../utils/DateFilter';
 import DatePicker from 'react-native-datepicker';
 import ActionSheet from 'react-native-actionsheet';
-import GridView from 'react-native-grid-view';
-
 var {height, width} = Dimensions.get('window');
 
 

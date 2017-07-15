@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {
+    Alert,
     Dimensions,
     ListView,
     ScrollView,
@@ -22,7 +23,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import GroupMemberModal from './GroupMemberModal';
 import {
-    createGroup,searchMember,setMyGroupList
+    createGroup,searchMember,enableMyGroupOnFresh
 } from '../../action/ActivityActions';
 
 
@@ -67,13 +68,9 @@ class CreateGroup extends Component{
             if(json.re==1){
 
                 Alert.alert('信息','创建成功',[{text:'确认',onPress:()=>{
-                    this.props.setMyGroupList();
+                    this.props.dispatch(enableMyGroupOnFresh());
                     this.goBack()
                 }}]);
-                //
-                // alert('创建成功！');
-                // this.props.setMyGroupList();
-                // this.goBack();
             }else{
                 alert('创建失败');
 
@@ -273,7 +270,6 @@ class CreateGroup extends Component{
 
                 <TouchableOpacity style={{height:35,backgroundColor:'#66CDAA',margin:20,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                   onPress={()=>{
-                                      this.state.memberList.push(this.props.personInfo);
                                       var info ={group:this.state.group,memberList:this.state.memberList};
                                       this.createGroup(info);
                                       }}>

@@ -39,6 +39,7 @@ class SelectVenue extends Component {
         if(navigator) {
             navigator.pop();
         }
+        this.props.dispatch(makeTabsShown());
     }
 
     _onRefresh() {
@@ -105,7 +106,6 @@ class SelectVenue extends Component {
                                         });
                                        this.setState({venues:venues})
                                        this.goBack();
-                                        this.props.dispatch(makeTabsShown());
                                        this.props.setPlace(rowData);
                 }}>
                     {

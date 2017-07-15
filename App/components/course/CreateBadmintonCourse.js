@@ -302,8 +302,8 @@ class CreateBadmintonCourse extends Component{
                                 <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
                                                   onPress={()=>{
-                               this.navigate2SelectVenue();
-                                //this.navigate2VenueInspect();
+                               //this.navigate2SelectVenue();
+                                this.navigate2VenueInspect();
                             }}>
                                     <Text style={{marginLeft:20,fontSize:13,color:'#888'}}>
                                         请选择课程场馆
@@ -311,7 +311,10 @@ class CreateBadmintonCourse extends Component{
                                 </TouchableOpacity>:
                                 <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
-                                >
+                                                  onPress={()=>{
+                               //this.navigate2SelectVenue();
+                                this.navigate2VenueInspect();
+                            }}>
                                     <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                         <Text style={{color:'#222',fontSize:13}}>{this.state.venue.name}</Text>
                                     </View>
@@ -328,20 +331,6 @@ class CreateBadmintonCourse extends Component{
 
                         }
 
-                        {/*<View style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
-                            {/*borderRadius:10}}>*/}
-
-                            {/*{*/}
-                                {/*this.state.venue?*/}
-                                    {/*<Text style={{marginLeft:20,fontSize:13,color:'#222'}}>*/}
-                                        {/*{this.state.venue.name}*/}
-                                    {/*</Text>:*/}
-                                    {/*<Text style={{marginLeft:20,fontSize:13,color:'#888'}}>*/}
-                                        {/*请选择课程场馆*/}
-                                    {/*</Text>*/}
-                            {/*}*/}
-
-                        {/*</View>*/}
                     </View>
 
                     {/*添加细项*/}
@@ -382,15 +371,28 @@ class CreateBadmintonCourse extends Component{
                     <TouchableOpacity style={{width:width*2/3,backgroundColor:'#66CDAA',borderRadius:10,padding:10,flexDirection:'row',
                         justifyContent:'center'}}
                                       onPress={()=>{
-                            this.props.dispatch(distributeCourse(this.state.course,this.state.timeList,this.state.venue)).then((json)=>{
-                                if(json.re==1)
-                                {
-                                       Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
-                                            this.goBack();
-                                            this.props.setMyCourseList();
-                                       }}]);
-                                }
-                            })
+                                          if(this.props.memberId!==null&&this.props.memberId!==undefined){
+                                                this.props.dispatch(distributeCourse(this.state.course,this.state.timeList,this.state.venue,this.props.memberId))
+                                                .then((json)=>{
+                                                     if(json.re==1){
+                                                         Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
+                                                            this.goBack();
+                                                            this.props.setMyCourseList();
+                                                            }}]);
+                                                     }
+                                                })
+                                          }else{
+                                              this.props.dispatch(distributeCourse(this.state.course,this.state.timeList,this.state.venue,null))
+                                                .then((json)=>{
+                                                     if(json.re==1){
+                                                         Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
+                                                            this.goBack();
+                                                            this.props.setMyCourseList();
+                                                            }}]);
+                                                     }
+                                                })
+                                          }
+
                       }}>
                         <Text style={{color:'#fff',fontSize:15}}>发布</Text>
                     </TouchableOpacity>

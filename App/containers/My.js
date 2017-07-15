@@ -28,6 +28,7 @@ import PortraitModal from '../components/my/modal/PortraitModal';
 import VenueInspect from '../components/venue/VenueInspect';
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
 const scaleAnimation = new ScaleAnimation();
+var WeChat = require('react-native-wechat');
 
 import {
     downloadPortrait,
@@ -119,6 +120,31 @@ class My extends Component{
         }
     }
 
+    wechatPay(){
+        var timeStamp = new Date().getTime();
+
+        var wechatPayData=
+            {
+            partnerId: '1483033812',  // 商家向财付通申请的商家id
+            prepayId: '',   // 预支付订单
+            nonceStr: '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',   // 随机串，防重发
+            timeStamp: timeStamp,  // 时间戳，防重发
+            package: 'Sign=WXPay',    // 商家根据财付通文档填写的数据和签名
+            sign: '5849b34a8da6f54a24c860e82153dc48'        // 商家根据微信开放平台文档对数据做的签名
+        };
+
+        WeChat.pay(wechatPayData).then(
+            (result)=>{
+                console.log(result);
+
+            },
+            (error)=>{
+                console.log(error);
+            }
+        )
+
+
+    }
 
     showPortraitDialog() {
         this.portraitDialog.show();
@@ -182,7 +208,7 @@ class My extends Component{
                             }
                         </View>
                         <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:15}}>
-                            <Text style={{color:'#fff',fontSize:18}}>小鱼丁</Text>
+                            <Text style={{color:'#fff',fontSize:18}}>{this.props.username}</Text>
                         </View>
                     </Image>
                 </View>
@@ -254,19 +280,20 @@ class My extends Component{
                              </View>
                         </TouchableOpacity>
 
-
                         <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
                                           onPress={()=>{
-                                this.navigate2VenueInspect();
+                                this.wechatPay();
                             }}>
                             <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
                                             justifyContent:'center',alignItems: 'center'}}>
                                 <Icon name={'gear'} size={20} color="#fff"/>
                             </View>
                             <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
-                                <Text>测试地图</Text>
+                                <Text>微信支付测试</Text>
                             </View>
                         </TouchableOpacity>
+
+
                     </View>
 
                     <View style={{flex:1,backgroundColor:'#eee'}}>
@@ -327,6 +354,7 @@ var styles = StyleSheet.create({
 module.exports = connect(state=>({
         accessToken:state.user.accessToken,
         personInfo:state.user.personInfo,
+        username:state.user.user.username,
 
     })
 )(My);

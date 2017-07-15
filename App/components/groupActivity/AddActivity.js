@@ -226,10 +226,19 @@ class AddActivity extends Component{
         this.state.doingFetch=true;
         this.props.dispatch(fetchMyGroupList()).then(()=> {
             this.props.dispatch(disableMyGroupOnFresh());
-            this.setState({doingFetch:false,})
+
+            var groupNameButtons=['取消','新建群组'];
+            var {myGroupList} = this.props;
+            if(myGroupList!==null&&myGroupList!==undefined){
+                myGroupList.map((group,i)=>{
+                    groupNameButtons.push(group.groupInfo.groupName);
+                })
+            }
+            this.setState({doingFetch:false,groupNameButtons:groupNameButtons});
+
         }).catch((e)=>{
             this.props.dispatch(disableMyGroupOnFresh());
-            this.setState({doingFetch:false,});
+            this.setState({doingFetch:false,groupNameButtons:groupNameButtons});
             alert(e)
         });
 
@@ -243,10 +252,10 @@ class AddActivity extends Component{
             eventTime:null,
             event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
-                   groupName:null,groupId:null,groupNum:null},
+                   groupName:null,groupId:null,groupNum:null,cost:null},
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
-            eventTypeButtons:['取消','公开','私人'],
-
+            eventTypeButtons:['取消','公开','组内'],
+            groupNameButtons:['取消','新建群组'],
         }
     }
 
@@ -254,20 +263,15 @@ class AddActivity extends Component{
 
         const CANCEL_INDEX = 0;
         const DESTRUCTIVE_INDEX = 1;
-        const groupNameButtons=['取消','新建群组'];
 
-        var {myGroupList} = this.props;
-        if(myGroupList!==null&&myGroupList!==undefined){
-            myGroupList.map((group,i)=>{
-                groupNameButtons.push(group.groupInfo.groupName);
-            })
-        }else{
-            if(this.state.doingFetch==false)
+        var {myGroupOnFresh} = this.props;
+        if(myGroupOnFresh==true) {
+            if (this.state.doingFetch == false)
                 this.fetchMyGroupList();
         }
 
         const memberLevelButtons=['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'];
-        const eventTypeButtons=['取消','公开','私人'];
+        const eventTypeButtons=['取消','公开','组内'];
 
         const shadowOpt = {
             width:224*width/320,
@@ -419,16 +423,11 @@ class AddActivity extends Component{
                                                       onPress={
                                   ()=>{
                                       //this.navigate2VenueInspect()
-                                      this.navigate2SelectVenue()
+                                      this.navigate2VenueInspect()
                                   }}
                                     >
                                         <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-
-                                            {
-                                                this.state.event.eventPlace==null?
-                                                    <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>:
-                                                    <Text style={{color:'#222',fontSize:13}}>{this.state.event.eventPlace}</Text>
-                                            }
+                                            <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>
                                         </View>
                                         <View style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20}}>
                                             <Icon name={'angle-right'} size={30} color="#fff"/>
@@ -437,14 +436,14 @@ class AddActivity extends Component{
 
                                     <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
+                                                      onPress={
+                                  ()=>{
+                                      //this.navigate2VenueInspect()
+                                      this.navigate2VenueInspect()
+                                  }}
                                     >
                                         <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-
-                                            {
-                                                this.state.event.eventPlace==null?
-                                                    <Text style={{color:'#888',fontSize:13}}>请选择活动地点：</Text>:
-                                                    <Text style={{color:'#222',fontSize:13}}>{this.state.event.eventPlace}</Text>
-                                            }
+                                            <Text style={{color:'#222',fontSize:13}}>{this.state.event.eventPlace}</Text>
                                         </View>
 
                                         <TouchableOpacity style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20,padding:5}}
@@ -463,6 +462,64 @@ class AddActivity extends Component{
 
                         </View>
 
+                        {/*邀请群组*/}
+                        <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                            <View style={{flex:1}}>
+                                <Text>邀请群组：</Text>
+                            </View>
+                            <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                              onPress={()=>{ this.show('actionSheet3'); }}>
+
+                                {
+                                    this.state.event.groupName==null?
+                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                            <Text style={{color:'#888',fontSize:13}}>请选择群组：</Text>
+                                        </View> :
+                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                            <Text style={{color:'#444',fontSize:13}}>{this.state.event.groupName}</Text>
+                                        </View>
+                                }
+                                <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                    <Icon name={'angle-right'} size={30} color="#fff"/>
+                                </View>
+                                <ActionSheet
+                                    ref={(o) => {
+                                        this.actionSheet3 = o;
+                                    }}
+                                    title="请选择对象水平"
+                                    options={this.state.groupNameButtons}
+                                    cancelButtonIndex={CANCEL_INDEX}
+                                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                    onPress={
+                                        (data)=>{ this._handlePress3(data,this.state.groupNameButtons); }
+                                    }
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                        {/*人均费用*/}
+                        <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                            <View style={{flex:1}}>
+                                <Text>人均费用：</Text>
+                            </View>
+                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                                <TextInputWrapper
+                                    placeholderTextColor='#888'
+                                    textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                    placeholder="请输入人均费用"
+                                    val={this.state.event.cost}
+                                    onChangeText={
+                                    (value)=>{
+                                        this.setState({event:Object.assign(this.state.event,{cost:value})})
+                                    }}
+                                    onCancel={
+                                    ()=>{this.setState({event:Object.assign(this.state.event,{cost:null})});}
+                                }
+                                />
+                            </View>
+                        </View>
 
                         {
                             (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
@@ -528,41 +585,6 @@ class AddActivity extends Component{
                                 </View>:null
                         }
 
-                        {/*邀请群组*/}
-                        <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
-                            <View style={{flex:1}}>
-                                <Text>邀请群组：</Text>
-                            </View>
-                            <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}
-                                              onPress={()=>{ this.show('actionSheet3'); }}>
-
-                                {
-                                    this.state.event.groupName==null?
-                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#888',fontSize:13}}>请选择群组：</Text>
-                                        </View> :
-                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#444',fontSize:13}}>{this.state.event.groupName}</Text>
-                                        </View>
-                                }
-                                <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                    <Icon name={'angle-right'} size={30} color="#fff"/>
-                                </View>
-                                <ActionSheet
-                                    ref={(o) => {
-                                        this.actionSheet3 = o;
-                                    }}
-                                    title="请选择对象水平"
-                                    options={groupNameButtons}
-                                    cancelButtonIndex={CANCEL_INDEX}
-                                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
-                                    onPress={
-                                        (data)=>{ this._handlePress3(data,groupNameButtons); }
-                                    }
-                                />
-                            </TouchableOpacity>
-                        </View>
 
                         {/*邀请教练*/}
                         <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
@@ -699,7 +721,7 @@ class AddActivity extends Component{
 
                         </View>
 
-
+                        {/*活动说明*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动说明：</Text>
@@ -758,6 +780,7 @@ module.exports = connect(state=>({
         accessToken:state.user.accessToken,
         personInfo:state.user.personInfo,
         myGroupList:state.activity.myGroupList,
+        myGroupOnFresh:state.activity.myGroupOnFresh
     })
 )(AddActivity);
 

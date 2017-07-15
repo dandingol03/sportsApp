@@ -25,12 +25,26 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 var {height, width} = Dimensions.get('window');
 import PreferenceStore from '../../utils/PreferenceStore';
+import AboutUs from './AboutUs';
 
 class Setting extends Component{
     goBack(){
         const { navigator } = this.props;
         if(navigator) {
             navigator.pop();
+        }
+    }
+
+    navigate2AboutUs()
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'AboutUs',
+                component: AboutUs,
+                params: {
+                }
+            })
         }
     }
 
@@ -54,12 +68,10 @@ class Setting extends Component{
 
                     <View style={{backgroundColor:'#fff',padding:10}}>
 
-
-
                         {/*用户名*/}
                         <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,paddingTop:4,borderBottomWidth:1,borderColor:'#eee'}}
                                           onPress={()=>{
-
+                                             this.navigate2AboutUs();
                                               }}
                         >
                             <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
@@ -68,7 +80,6 @@ class Setting extends Component{
                                 </Text>
                             </View>
                         </TouchableOpacity>
-
 
                         {/*退出*/}
                         <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,}}
