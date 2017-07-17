@@ -23,7 +23,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import ActionSheet from 'react-native-actionsheet';
-import {BoxShadow} from 'react-native-shadow';
 import VenueInspect from '../../components/venue/VenueInspect';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper';
 import Coach from '../../components/Coach';
@@ -472,7 +471,7 @@ class CreateCustomerPlan extends Component{
 
                         {
                             this.state.plan.coachId==null?
-                                <BoxShadow setting={shadowOpt}>
+
                                     <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
@@ -510,8 +509,7 @@ class CreateCustomerPlan extends Component{
 
                                         }
 
-                                    </View>
-                                </BoxShadow>:
+                                    </View> :
                                 <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
                                     <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>

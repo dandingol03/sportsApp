@@ -24,7 +24,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ActionSheet from 'react-native-actionsheet';
 import DatePicker from 'react-native-datepicker';
-import {BoxShadow} from 'react-native-shadow';
 import DateFilter from '../../utils/DateFilter';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 import {
@@ -594,7 +593,7 @@ class AddActivity extends Component{
 
                             {
                                 this.state.event.coachId==null?
-                                    <BoxShadow setting={shadowOpt}>
+
                                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
@@ -632,8 +631,7 @@ class AddActivity extends Component{
 
                                             }
 
-                                        </View>
-                                    </BoxShadow>:
+                                        </View> :
                                     <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
                                         <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
@@ -662,7 +660,7 @@ class AddActivity extends Component{
 
                             {
                                 this.state.event.sparringId==null?
-                                    <BoxShadow setting={shadowOpt}>
+
                                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
@@ -700,7 +698,7 @@ class AddActivity extends Component{
                                             }
 
                                         </View>
-                                    </BoxShadow>:
+                                    :
                                     <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
                                         <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
