@@ -134,7 +134,6 @@ export let updateSportLevel=(sportLevel)=>{
     }
 }
 
-
 //用户名更改
 export let updateUsername=(username)=>{
     return (dispatch,getState)=>{
@@ -619,7 +618,6 @@ export let uploadPersonIdCard=(path,personId)=> {
     }
 }
 
-
 export let updatePortrait=(payload)=>{
     return {
         type:UPDATE_PORTRAIT,
@@ -745,5 +743,47 @@ export let uploadPortrait=(portrait,personId)=>{
                 reject(err)
             });
         });
+    }
+}
+
+//微信统一下单
+export let wechatPay=()=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+
+           var nonce_str = Math.random().toString(36).substr(2, 15);
+
+            Proxy.postes({
+                url: Config.server + '/svr/request',
+                headers: {
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    request: 'wechatPay',
+                    info:{
+                        app_id:'wx9068ac0e88c09e7a',//应用ID
+                        mch_id:'1485755962',//商户号
+                        nonce_str:'5K8264ILTKCH16CQ2502SI8ZNMTM67VS',//随机字符串
+                        notify_url:'http://192.168.1.111:3011/wechatPayBack',
+                        out_trade_no:'201707180002',
+                        total_fee:1,
+                        attach:'软件园分店',
+                        body:'测试商品',
+
+                    }
+
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
     }
 }

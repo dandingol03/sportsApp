@@ -110,7 +110,8 @@ let Proxy={
                 method:'POST',
                 headers:params.headers!==undefined&&params.headers!==null?params.headers:null,
                 cache:'default',
-                body:params.body
+                body:params.body,
+                data:params.data!==undefined&&params.data!==null?params.data:null,
             };
 
             return new Promise((resolve,reject) => {

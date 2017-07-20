@@ -175,11 +175,6 @@ class App extends Component {
             console.log("羽毛球热微信注册成功！！！！！");
 
         })
-        // WeChat.registerApp('wxd9ec3fad60f0fd2a').then(function (res) {
-        //     console.log("保险微信注册成功！！！！！");
-        //
-        // })
-
 
     }
 }

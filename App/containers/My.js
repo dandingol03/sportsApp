@@ -33,7 +33,8 @@ var WeChat = require('react-native-wechat');
 import {
     downloadPortrait,
     updatePortrait,
-    uploadPortrait
+    uploadPortrait,
+    wechatPay,
 } from '../action/UserActions';
 
 class My extends Component{
@@ -121,30 +122,41 @@ class My extends Component{
     }
 
     wechatPay(){
-        var timeStamp = new Date().getTime();
 
-        var wechatPayData=
-            {
-            partnerId: '1483033812',  // 商家向财付通申请的商家id
-            prepayId: '',   // 预支付订单
-            nonceStr: '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',   // 随机串，防重发
-            timeStamp: timeStamp,  // 时间戳，防重发
-            package: 'Sign=WXPay',    // 商家根据财付通文档填写的数据和签名
-            sign: '5849b34a8da6f54a24c860e82153dc48'        // 商家根据微信开放平台文档对数据做的签名
-        };
+        this.props.dispatch(wechatPay()).then((json)=>{
+            if(json.re==1){
+                var prepayId = json.data.prepayid;
+                var sign = json.data.sign;
+                var timeStamp = json.data.timestamp;
+                var noncestr = json.data.noncestr;
 
-        WeChat.pay(wechatPayData).then(
-            (result)=>{
-                console.log(result);
+                var wechatPayData=
+                    {
+                        partnerId: '1485755962',  // 商家向财付通申请的商家id
+                        prepayId: prepayId,   // 预支付订单
+                        nonceStr: noncestr,   // 随机串，防重发
+                        timeStamp: timeStamp,  // 时间戳，防重发
+                        package: 'Sign=WXPay',    // 商家根据财付通文档填写的数据和签名
+                        sign: sign // 商家根据微信开放平台文档对数据做的签名
+                    };
 
-            },
-            (error)=>{
-                console.log(error);
+                WeChat.pay(wechatPayData).then(
+                    (result)=>{
+                        console.log(result);
+
+                    },
+                    (error)=>{
+                        console.log(error);
+                    }
+                )
+
             }
-        )
+
+        })
 
 
     }
+
 
     showPortraitDialog() {
         this.portraitDialog.show();
@@ -283,6 +295,8 @@ class My extends Component{
                         <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
                                           onPress={()=>{
                                 this.wechatPay();
+                                //this.showTimeLine();
+
                             }}>
                             <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
                                             justifyContent:'center',alignItems: 'center'}}>

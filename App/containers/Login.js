@@ -42,8 +42,6 @@ var  Login =React.createClass({
         this.props.dispatch(updatePageState({state:PAGE_REGISTER}))
     },
 
-
-
     getInitialState:function(){
         return ({
             user:{},
@@ -85,7 +83,7 @@ var  Login =React.createClass({
                             justifyContent:'center',
                             flexDirection:'row',
                             overflow:"hidden"}}>
-                            <Image style={styles.logo} source={require('../../img/logo.jpg')} resizeMode="center" />
+                            <Image style={styles.logo} source={require('../../img/logo80.png')} resizeMode="cover" />
                         </View>
 
                     </View>
