@@ -66,7 +66,7 @@ class Coach extends Component {
 
             }}>
                 <View style={{width:50,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                    <Image source={require('../../img/person.jpg')} style={{ width: 46, height: 46,borderRadius:23 }}
+                    <Image source={require('../../img/portrait.jpg')} style={{ width: 46, height: 46,borderRadius:23 }}
                            resizeMode="stretch" />
                 </View>
 

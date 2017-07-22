@@ -55,43 +55,20 @@ var  Login =React.createClass({
 
     render:function () {
 
-        var username = this.state.user.username;
-        const shadowOpt = {
-            width:width-20,
-            height:200,
-            color:"#000",
-            border:2,
-            radius:3,
-            opacity:0.2,
-            x:0,
-            y:1.5,
-            style:{marginVertical:5}
-        }
-
         return (
             <View style={[styles.container,{backgroundColor:'#eee'}]}>
 
+                <Image resizeMode="stretch" source={require('../../img/beijing@2x.png')} style={{width:width,height:height}}>
 
-                    <View style={{justifyContent:'center',flexDirection:'row',padding:0,marginTop:40,}}>
-
-                        <View style={{
-                            position:"relative",
-                            width: width,
-                            backgroundColor: "transparent",
-                            borderRadius:3,
-                            height:120,
-                            justifyContent:'center',
-                            flexDirection:'row',
-                            overflow:"hidden"}}>
-                            <Image style={styles.logo} source={require('../../img/logo80.png')} resizeMode="cover" />
-                        </View>
+                    <View style={{backgroundColor:'transparent',flex:1}}>
 
                     </View>
 
-                    <View style={{paddingVertical:2,backgroundColor:'#eee',flex:1}}>
+                    <View style={{paddingVertical:2,backgroundColor:'transparent',flex:1}} >
 
                         {/*输入用户名*/}
-                        <View style={[styles.row,{borderBottomWidth:0,height:42,marginBottom:1,backgroundColor:'#fff'}]}>
+                        <View style={{flexDirection:'row',height:45,marginBottom:10,backgroundColor:'transparent',margin:10,
+                        borderWidth:1,borderColor:"#66CDAA",borderRadius:20,padding:3}}>
 
 
                             <View style={{flex:6}}>
@@ -105,6 +82,7 @@ var  Login =React.createClass({
 
                                     <View style={{flex:6,flexDirection:'row',alignItems:'center',justifyContent:'flex-start'}}>
                                         <TextInputWrapper
+                                            textInputStyle={{color:'#aaa'}}
                                             placeholder="帐号/手机号"
                                             val={this.state.user.username}
                                             onChangeText={(value)=>{
@@ -122,7 +100,8 @@ var  Login =React.createClass({
                         </View>
 
                         {/*输入密码*/}
-                        <View style={[styles.row,{borderBottomWidth:0,height:42,marginBottom:0,backgroundColor:'#fff'}]}>
+                        <View style={{flexDirection:'row',height:42,marginTop:10,backgroundColor:'transparent',margin:10,
+                        borderWidth:1,borderColor:"#66CDAA",borderRadius:20}}>
 
 
                             <View style={{flex:6}}>
@@ -135,7 +114,7 @@ var  Login =React.createClass({
 
                                     <View style={{flex:6,flexDirection:'row',alignItems:'center',justifyContent:'flex-start'}}>
                                         <TextInput
-                                            style={{height: 42,flex:1,paddingLeft:0,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:16}}
+                                            style={{height: 42,flex:1,paddingLeft:0,paddingRight:10,paddingTop:2,paddingBottom:2,fontSize:16,color:'#aaa'}}
                                             onChangeText={(password) => {
 
                                               if( password&&password!='')//不为空
@@ -191,12 +170,12 @@ var  Login =React.createClass({
                         </View>
 
 
-
+                        {/*登录注册按钮*/}
                         <View style={{flexDirection:'row',justifyContent:'center',marginBottom:10,marginTop:20}}>
 
                                 <View style={{flexDirection:'row',width:width*5/6,alignItems:'center',}}>
                                     <TouchableOpacity style={{justifyContent:'center',flexDirection:'row',width:width/3
-                                    ,backgroundColor:'#66CDAA',padding:8,borderRadius:4}}
+                                    ,backgroundColor:'#66CDAA',padding:8,borderRadius:20}}
                                                       onPress={()=>{
                                         this.navigate2Register();
                                     }}>
@@ -206,7 +185,7 @@ var  Login =React.createClass({
                                     <View style={{flex:1}}></View>
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'center',flexDirection:'row',width:width/3,
-                                     borderColor:'#66CDAA',padding:8,paddingHorizontal:16,borderRadius:4,borderWidth:1,}}
+                                     borderColor:'#66CDAA',padding:8,paddingHorizontal:16,borderRadius:20,borderWidth:1,}}
                                       onPress={()=>{
                                           if(this.state.user&&
                                           this.state.user.username&&this.state.user.username!=''&&
@@ -230,13 +209,6 @@ var  Login =React.createClass({
 
                         </View>
 
-                        {/*<View style={{flexDirection:'row',height:400}}>*/}
-                            {/*<Markdown styles={markdownStyles}>*/}
-                                {/*下面是一个发布*/}
-                                 {/*![Some GIF](https://media.giphy.com/media/dkGhBWE3SyzXW/giphy.gif){'\n'}*/}
-                            {/*</Markdown>*/}
-
-                        {/*</View>*/}
                         {/*loading模态框*/}
                         <Modal animationType={"fade"} transparent={true} visible={this.state.showProgress}>
 
@@ -265,7 +237,7 @@ var  Login =React.createClass({
                         </Modal>
 
                     </View>
-
+                </Image>
 
             </View>
         );
@@ -322,27 +294,10 @@ export default connect(
     })
 )(Login);
 
-
-const markdownStyles = {
-    heading1: {
-        fontSize: 24,
-        color: 'purple',
-    },
-    link: {
-        color: 'pink',
-    },
-    mailTo: {
-        color: 'orange',
-    },
-    text: {
-        color: '#555555',
-    },
-}
-
 var styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor:'#fff',
+        backgroundColor:'transparent',
         margin:0,
         padding:0
     },
@@ -360,45 +315,12 @@ var styles = StyleSheet.create({
         resizeMode:'cover',
         backgroundColor:'transparent',
     },
-    heading: {
-        fontSize: 30,
-        marginTop: 10
-    },
-    input: {
-        width:240,
-        justifyContent:'center',
-        height: 42,
-        marginTop: 10,
-        padding: 4,
-        fontSize: 12,
-        borderWidth: 1,
-        borderColor: '#48bbec',
-        color: '#48bbec',
-        borderBottomWidth:0
-    },
-    title: {
-        fontSize: 38,
-        backgroundColor: 'transparent'
-    },
-    button: {
-        marginRight: 10
-    },
-    buttonText: {
-        fontSize: 18,
-        color: 'white',
-        alignSelf: 'center'
-    },
     loader: {
         marginTop: 10
-    },
-    error: {
-        color: 'red',
-        paddingTop: 10,
-        fontWeight: 'bold'
     },
     row:{
         flexDirection:'row',
         borderBottomWidth:1,
         borderBottomColor:'#222'
-    }
+    },
 });

@@ -873,6 +873,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = BY3A7B54BR;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1450,9 +1451,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Li Xueqing (BY3A7B54BR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Li Xueqing (BY3A7B54BR)";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = BY3A7B54BR;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/lib";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1466,7 +1470,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries",
 				);
 				INFOPLIST_FILE = sportsApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib";
 				OTHER_LDFLAGS = (
@@ -1476,6 +1480,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.codery.sportsHot;
 				PRODUCT_NAME = sportsApp;
+				PROVISIONING_PROFILE = "043071a2-6b8a-4779-9d50-8f73ddb94db5";
+				PROVISIONING_PROFILE_SPECIFIER = sportsHot;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1484,8 +1490,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Li Xueqing (BY3A7B54BR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Li Xueqing (BY3A7B54BR)";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BY3A7B54BR;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/lib";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1499,7 +1508,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries",
 				);
 				INFOPLIST_FILE = sportsApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib";
 				OTHER_LDFLAGS = (
@@ -1509,6 +1518,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.codery.sportsHot;
 				PRODUCT_NAME = sportsApp;
+				PROVISIONING_PROFILE = "043071a2-6b8a-4779-9d50-8f73ddb94db5";
+				PROVISIONING_PROFILE_SPECIFIER = sportsHot;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

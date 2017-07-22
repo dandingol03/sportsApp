@@ -146,11 +146,6 @@ class ActivityDetail extends Component{
                             }
 
                         </View>
-                        <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
-                                          onPress={()=>{
-
-                                      }}>
-                        </TouchableOpacity>
                     </View>
                     <View style={{flex:3,padding:10}}>
                         <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
@@ -213,7 +208,7 @@ class ActivityDetail extends Component{
 
 
                 <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',
-                position:'absolute',bottom:3}}>
+                position:'absolute',bottom:8}}>
 
 
                     {

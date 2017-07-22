@@ -386,7 +386,7 @@ class MyInformation extends Component{
 
                     </View>
 
-
+                    {/*保存用户名*/}
                     <PopupDialog
                         ref={(popupDialog) => {
                         this.usernameDialog = popupDialog;
@@ -419,7 +419,7 @@ class MyInformation extends Component{
 
                     </PopupDialog>
 
-
+                    {/*保存真实姓名*/}
                     <PopupDialog
                         ref={(popupDialog) => {
                         this.perNameDialog = popupDialog;
@@ -451,7 +451,6 @@ class MyInformation extends Component{
                         />
 
                     </PopupDialog>
-
 
                     <PopupDialog
                         ref={(popupDialog) => {

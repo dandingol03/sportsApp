@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import {
+    Dimensions,
     StyleSheet,
     Text,
     View,
@@ -33,9 +34,8 @@ import {
     updateRootTab
 }  from '../action/TabActions';
 
-import ToastAndroid from '../native/ToastAndroid';
-import NotificationAndroid from '../native/NotificationAndroid'
 import UpdateAndroid from '../native/UpdateAndroid'
+var {height, width,scale} = Dimensions.get('window');
 
 var WeChat = require('react-native-wechat');
 
@@ -64,9 +64,9 @@ class App extends Component {
             <TabNavigator.Item
                 selected={this.state.selectedTab === route}
                 title={route}
-                titleStyle={{color:'#9e9ca3',fontSize:13}}
-                selectedTitleStyle={{color:'#66CDAA'}}
-                renderIcon={() => <Icon name={icon} size={26} color="#aaa"/>}
+                titleStyle={{color:'#C6C5CA',fontSize:13}}
+                selectedTitleStyle={{color:'#34C87A'}}
+                renderIcon={() => <Icon name={icon} size={26} color="#C6C5CA" />}
                 renderSelectedIcon={() => <Icon name={icon} size={26} color='#66CDAA' />}
                 onPress={() => {
                     this.setState({ selectedTab: route });
@@ -119,7 +119,7 @@ class App extends Component {
                 backgroundColor:'#eeecf3',
                 paddingBottom:5,
                 paddingTop:5,
-                height:55
+                height:60
             }
 
             var defaultSceneStyle={

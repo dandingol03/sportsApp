@@ -49,10 +49,10 @@ import {
 } from '../action/UserActions';
 
 var IMGS = [
-    require('../../img/banner1.jpeg'),
-    require('../../img/banner2.jpeg'),
-    require('../../img/banner3.jpeg'),
-    require('../../img/banner4.jpeg'),
+    require('../../img/tt1@2x.png'),
+    require('../../img/tt2@2x.jpeg'),
+    require('../../img/tt3@2x.jpeg'),
+    require('../../img/tt4@2x.jpeg'),
 ];
 
 class Home extends Component {
@@ -144,7 +144,7 @@ class Home extends Component {
 
     renderRow(rowData,sectionId,rowId){
         return(
-            <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1,borderColor:'#ddd',marginTop:4}}
+            <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1,borderColor:'#ddd',marginTop:4,padding:5}}
                 onPress={()=>{
                     this.props.dispatch(getNewsContentUrl(rowData.themeId)).then((json)=>{
                         if(json.re==1)
@@ -165,15 +165,14 @@ class Home extends Component {
                 <View style={{flex:1,flexDirection:'column',alignItems:'flex-start'}}>
                     <View style={{padding:4,paddingHorizontal:12}}>
 
-                        <Text style={{color:'#222',fontWeight:'bold',fontSize:14}}>
+                        <Text style={{color:'#646464',fontWeight:'bold',fontSize:15}}>
                             {rowData.title}
                         </Text>
                     </View>
 
-
                     <View style={{paddingTop:12,paddingBottom:4,paddingHorizontal:12,flexDirection:'row',alignItems:'center'}}>
-                        <View style={{backgroundColor:'#66CDAA',borderRadius:6,padding:4,paddingHorizontal:6,marginLeft:10}}>
-                            <Text style={{color:'#fff',fontSize:12}}>
+                        <View style={{padding:4,paddingHorizontal:6,}}>
+                            <Text style={{color:'#323232',fontSize:13}}>
                                 { DateFilter.filter(rowData.createTime,'yyyy-mm-dd hh:mm')}
                             </Text>
                         </View>
@@ -318,9 +317,10 @@ class Home extends Component {
                                              //this.navigate2BadmintonCourseForCoach();
 
                                           }}>
-                                        <CommIcon name="tag-plus" size={32} color="#0adc5e" style={{backgroundColor:'transparent'}}/>
-                                        <View style={{marginTop:0,paddingTop:6}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>课程制定</Text>
+                                        {/*<CommIcon name="tag-plus" size={32} color="#0adc5e" style={{backgroundColor:'transparent'}}/>*/}
+                                        <Image resizeMode="stretch" source={require('../../img/dingzhi@2x.png')} />
+                                        <View style={{marginTop:0,paddingTop:15}}>
+                                            <Text style={{fontSize:13,color:'#646464'}}>课程制定</Text>
                                         </View>
                                     </TouchableOpacity>
 
@@ -328,20 +328,23 @@ class Home extends Component {
                                       onPress={ ()=>{
                                         this.navigate2Activity();
                                       }}>
-                                        <Icon name="group" size={30} color="#66CDAA" />
-                                        <View style={{marginTop:0,paddingTop:10}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>群活动</Text>
+                                        {/*<Icon name="group" size={30} color="#66CDAA" />*/}
+                                         <Image resizeMode="stretch" source={require('../../img/dd@2x.png')} />
+                                        <View style={{marginTop:0,paddingTop:15}}>
+                                            <Text style={{fontSize:13,color:'#646464'}}>群活动</Text>
                                         </View>
                                     </TouchableOpacity>
 
                                      <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                       onPress={ ()=>{
-                                         this.navigate2Market(vegetable);
+                                         //this.navigate2Market(vegetable);
+                                         alert('暂未开通');
                                          console.log('找教练');
                                        }}>
-                                        <Icon name="video-camera" size={30} color="#8968CD" />
-                                        <View style={{marginTop:0,paddingTop:10}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>直播间</Text>
+                                        {/*<Icon name="video-camera" size={30} color="#8968CD" />*/}
+                                         <Image resizeMode="stretch" source={require('../../img/zhibo-@2x.png')} />
+                                        <View style={{marginTop:0,paddingTop:15}}>
+                                            <Text style={{fontSize:13,color:'#646464'}}>直播间</Text>
                                         </View>
                                     </TouchableOpacity>
 
@@ -350,14 +353,14 @@ class Home extends Component {
                                           this.navigate2Mall();
                                       }}>
 
-                                        <Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>
-                                        <View style={{marginTop:0,paddingTop:6}}>
-                                            <Text style={{fontSize:13,color:'#343434'}}>商城</Text>
+                                        {/*<Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>*/}
+                                         <Image resizeMode="stretch" source={require('../../img/shangc-@2x.png')} />
+                                        <View style={{marginTop:0,paddingTop:15}}>
+                                            <Text style={{fontSize:13,color:'#646464'}}>商城</Text>
                                         </View>
                                     </TouchableOpacity>
 
                                     </View>
-
 
                                 </View>
 
@@ -415,7 +418,7 @@ class Home extends Component {
                                 </PopupDialog>
 
 
-                                <PopupDialog
+                             <PopupDialog
                                     ref={(popupDialog) => {
                                     this.validateMyInformationDialog = popupDialog;
                                 }}

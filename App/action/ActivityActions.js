@@ -341,7 +341,6 @@ export let fetchActivityList=()=>{
                                     }
                                 })
 
-
                                 //我发起的活动
                                 if(activity.coachId==state.user.trainer.trainerId&&activity.coachId!==null){
                                     activity.meCoach = true

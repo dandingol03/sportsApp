@@ -108,7 +108,7 @@ class Activity extends Component {
         }
     }
 
-    navigate2ActivityPay(activity)
+    navigate2ActivityPay(event)
     {
         const { navigator } = this.props;
         if(navigator) {
@@ -116,7 +116,7 @@ class Activity extends Component {
                 name: 'ActivityPay',
                 component: ActivityPay,
                 params: {
-                    activity:activity
+                    activity:event
                 }
             })
         }
@@ -131,8 +131,8 @@ class Activity extends Component {
             this.props.dispatch(signUpActivity(event)).then((json)=>{
                 if(json.re==1){
                     Alert.alert('信息','报名成功,是否立即支付？',[{text:'是',onPress:()=>{
-                        this.setMyActivityList();
-                        this.navigate2ActivityPay();
+                      // this.setMyActivityList();
+                        this.navigate2ActivityPay(event);
                     }},
                         {text:'否',onPress:()=>{
                             this.goBack();
@@ -200,23 +200,20 @@ class Activity extends Component {
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
                             {DateFilter.filter(rowData.eventTime,'yyyy-mm-dd hh:mm')}
-                            </Text>
+                        </Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'人均费用：'+rowData.cost}
+                            {'人均费用：'+rowData.cost+'元'}
                         </Text>
                     </View>
                 </View>
                 <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
                         <Text style={{color:'#aaa',fontSize:13}}>{rowData.memberList.length}报名</Text>
-                    </View>
-                    <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                        <Text style={{color:'#aaa',fontSize:13}}>0评论</Text>
                     </View>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center'}}>
 
@@ -319,7 +316,7 @@ class Activity extends Component {
                     </View>
 
                     <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
-                            position:'absolute',bottom:3}}>
+                            position:'absolute',bottom:8}}>
                         <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
                             padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}>
                             <Text style={{color:'#66CDAA',}}>我发起的活动</Text>
@@ -332,7 +329,7 @@ class Activity extends Component {
                     </View>
 
 
-                    <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:3,left:width*0.5-25}}>
+                    <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:8,left:width*0.5-25}}>
                         <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,
                         borderWidth:1,borderColor:'#eee',borderRadius:50}}
                                           onPress={()=>{this.navigate2AddActivity();}}>

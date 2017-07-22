@@ -292,20 +292,20 @@ class My extends Component{
                              </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
-                                          onPress={()=>{
-                                this.wechatPay();
-                                //this.showTimeLine();
+                        {/*<TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}*/}
+                                          {/*onPress={()=>{*/}
+                                {/*this.wechatPay();*/}
+                                {/*//this.showTimeLine();*/}
 
-                            }}>
-                            <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
-                                            justifyContent:'center',alignItems: 'center'}}>
-                                <Icon name={'gear'} size={20} color="#fff"/>
-                            </View>
-                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
-                                <Text>微信支付测试</Text>
-                            </View>
-                        </TouchableOpacity>
+                            {/*}}>*/}
+                            {/*<View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,*/}
+                                            {/*justifyContent:'center',alignItems: 'center'}}>*/}
+                                {/*<Icon name={'gear'} size={20} color="#fff"/>*/}
+                            {/*</View>*/}
+                            {/*<View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>*/}
+                                {/*<Text>微信支付测试</Text>*/}
+                            {/*</View>*/}
+                        {/*</TouchableOpacity>*/}
 
 
                     </View>

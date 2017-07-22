@@ -575,14 +575,9 @@ export let doLogin=function(username,password){
             }).then((json)=>{
                 if(json.re==1)
                     dispatch(updatePersonInfoAuxiliary({data: json.data}));
-
-
-
-
                 dispatch(getAccessToken(accessToken));
                 resolve(json)
             }).catch((err)=> {
-
                 dispatch(getAccessToken(null));
                 reject(err)
             });
@@ -747,13 +742,11 @@ export let uploadPortrait=(portrait,personId)=>{
 }
 
 //微信统一下单
-export let wechatPay=()=>{
+export let wechatPay=(pay,eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-
-           var nonce_str = Math.random().toString(36).substr(2, 15);
 
             Proxy.postes({
                 url: Config.server + '/svr/request',
@@ -762,27 +755,65 @@ export let wechatPay=()=>{
                     'Content-Type': 'application/json'
                 },
                 body: {
-                    request: 'wechatPay',
+                    request: 'addPaymentInfo',
                     info:{
-                        app_id:'wx9068ac0e88c09e7a',//应用ID
-                        mch_id:'1485755962',//商户号
-                        nonce_str:'5K8264ILTKCH16CQ2502SI8ZNMTM67VS',//随机字符串
-                        notify_url:'http://192.168.1.111:3011/wechatPayBack',
-                        out_trade_no:'201707180002',
-                        total_fee:1,
-                        attach:'软件园分店',
-                        body:'测试商品',
-
+                        pay:pay,
+                        eventId:eventId
                     }
-
                 }
             }).then((json)=>{
-                resolve(json)
+                if(json.re==1){
+
+                    var total_fee = pay.payment*100;
+                    var nonce_str = Math.random().toString(36).substr(2, 15);
+                    var out_trade_no = json.data;
+
+                    if(pay.payType=='微信'){
+                        Proxy.postes({
+                            url: Config.server + '/svr/request',
+                            headers: {
+                                'Authorization': "Bearer " + accessToken,
+                                'Content-Type': 'application/json'
+                            },
+                            body: {
+                                request: 'wechatPay',
+                                info:{
+                                    app_id:'wx9068ac0e88c09e7a',//应用ID
+                                    mch_id:'1485755962',//商户号
+                                    nonce_str:nonce_str,//随机字符串
+                                    notify_url:'http://192.168.1.111:3011/wechatPayBack',
+                                    out_trade_no:out_trade_no,
+                                    total_fee:total_fee,
+                                    attach:'山东体育热科技有限公司',
+                                    body:'群活动费用',
+
+                                }
+
+                            }
+                        }).then((json)=>{
+                            resolve(json)
+
+                        }).catch((e)=>{
+                            alert(e);
+                            reject(e);
+                        })
+
+                    }
+                    else{
+                        resolve(json);
+                    }
+                }
+                else{
+                    console.log('添加支付订单信息不完整');
+
+                }
+
 
             }).catch((e)=>{
                 alert(e);
                 reject(e);
             })
+
 
         })
     }
