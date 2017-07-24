@@ -47,7 +47,7 @@ import {
     onMobilePhoneUpdate,
     verifyMobilePhone
 } from '../action/UserActions';
-
+import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 var IMGS = [
     require('../../img/tt1@2x.png'),
     require('../../img/tt2@2x.jpeg'),
@@ -193,7 +193,6 @@ class Home extends Component {
     }
 
 
-
     render() {
 
         //针对教练,需要完成手机号，运动水平、真实姓名、身份证的验证
@@ -246,73 +245,53 @@ class Home extends Component {
         }
 
         return (
-            <View style={styles.container}>
+            <View style={{flex:1,backgroundColor:'#fff'}}>
 
-                <ParallaxScrollView
-                    backgroundColor="#fff"
-                    contentBackgroundColor="#fff"
-                    backgroundSpeed={10}
-                    parallaxHeaderHeight={height}
-                    renderStickyHeader={() => (
-                        <View key="sticky-header" style={{height:55,width:width,paddingTop:20,flexDirection:'row',
-                                alignItems: 'center',backgroundColor:'#66CDAA'}}>
+                    <View style={{flex:1}}>
 
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                        {/*<View style={{width:width,flex:2}}>*/}
+                            {/*<ViewPager*/}
+                                {/*style={this.props.style}*/}
+                                {/*dataSource={this.state.dataSource}*/}
+                                {/*renderPage={this._renderPage}*/}
+                                {/*isLoop={true}*/}
+                                {/*autoPlay={true}*/}
+                            {/*/>*/}
+                        {/*</View>*/}
 
+                        <View style={{width:width,flex:2}}>
+                            <Image
+                                source={ require('../../img/tt1@2x.png')}
+                                style={{width:width,flex:3}}
+                                resizeMode={"stretch"}
+                            >
+                            <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
+                backgroundColor:'transparent',borderBottomWidth:1,borderColor:'transparent',}}>
+                                <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}
+                                      onPress={()=>{this.goBack();}}>
+
+                                </View>
+                                <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
+                                    <Text style={{color:'#fff',fontSize:18}}>羽毛球热</Text>
+                                </View>
+                                <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+
+                                </View>
                             </View>
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:20}}>
-                                <Text style={{color:'#fff',fontSize:18}}>羽毛球热</Text>
-                            </View>
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',paddingRight:20}}>
 
-                            </View>
-
-
+                            </Image>
                         </View>
-                    )}
-
-                    renderFixedHeader={() => (
-                        <View key="sticky-header" style={{height:55,width:width,paddingTop:20,flexDirection:'row',
-                            justifyContent:'center',alignItems: 'center',backgroundColor:'transparent'}}>
-
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
-                            </View>
-
-                            <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:20}}>
-                                <Text style={{color:'#fff',fontSize:18}}>羽毛球热</Text>
-                            </View>
-                            <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'flex-end',paddingRight:20,
-                                alignItems: 'center',}}
-                                onPress={()=>{
-                                    alert('hi')
-                                }}>
-                                <Ionicons name='md-more' size={26} color="#fff"/>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-
-                    renderForeground={() => (
-                         <View style={{flex:1}}>
-
-                            <View style={{width:width,flex:2}}>
-                                <ViewPager
-                                    style={this.props.style}
-                                    dataSource={this.state.dataSource}
-                                    renderPage={this._renderPage}
-                                    isLoop={true}
-                                    autoPlay={true}
-                                />
-                            </View>
 
 
-                            {/*内容区*/}
-                            <View style={{flex:5,justifyContent:'center',backgroundColor:'#eee'}}>
 
-                                <View style={{flex:2,backgroundColor:'#fff',padding:0,marginBottom:10}}>
-                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                        {/*内容区*/}
+                        <View style={{flex:5,justifyContent:'center',backgroundColor:'#eee'}}>
 
-                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
-                                          onPress={ ()=>{
+                            <View style={{flex:2,backgroundColor:'#fff',padding:0,marginBottom:10}}>
+                                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:8}}
+                                                      onPress={ ()=>{
                                              this.navigate2BadmintonCourse();
                                              //this.navigate2BadmintonCourseForCoach();
 
@@ -325,67 +304,67 @@ class Home extends Component {
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
-                                      onPress={ ()=>{
+                                                      onPress={ ()=>{
                                         this.navigate2Activity();
                                       }}>
                                         {/*<Icon name="group" size={30} color="#66CDAA" />*/}
-                                         <Image resizeMode="stretch" source={require('../../img/dd@2x.png')} />
+                                        <Image resizeMode="stretch" source={require('../../img/dd@2x.png')} />
                                         <View style={{marginTop:0,paddingTop:15}}>
                                             <Text style={{fontSize:13,color:'#646464'}}>群活动</Text>
                                         </View>
                                     </TouchableOpacity>
 
-                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
-                                      onPress={ ()=>{
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
+                                                      onPress={ ()=>{
                                          //this.navigate2Market(vegetable);
                                          alert('暂未开通');
                                          console.log('找教练');
                                        }}>
                                         {/*<Icon name="video-camera" size={30} color="#8968CD" />*/}
-                                         <Image resizeMode="stretch" source={require('../../img/zhibo-@2x.png')} />
+                                        <Image resizeMode="stretch" source={require('../../img/zhibo-@2x.png')} />
                                         <View style={{marginTop:0,paddingTop:15}}>
                                             <Text style={{fontSize:13,color:'#646464'}}>直播间</Text>
                                         </View>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
-                                      onPress={ ()=>{
+                                                      onPress={ ()=>{
                                           this.navigate2Mall();
                                       }}>
 
                                         {/*<Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>*/}
-                                         <Image resizeMode="stretch" source={require('../../img/shangc-@2x.png')} />
+                                        <Image resizeMode="stretch" source={require('../../img/shangc-@2x.png')} />
                                         <View style={{marginTop:0,paddingTop:15}}>
                                             <Text style={{fontSize:13,color:'#646464'}}>商城</Text>
                                         </View>
                                     </TouchableOpacity>
 
-                                    </View>
-
-                                </View>
-
-
-                                <View style={{flex:5,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',marginBottom:10}}>
-                                     {newsList}
                                 </View>
 
                             </View>
 
 
-                             <PopupDialog
-                                    ref={(popupDialog) => {
+                            <View style={{flex:5,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',marginBottom:10}}>
+                                {newsList}
+                            </View>
+
+                        </View>
+
+
+                        <PopupDialog
+                            ref={(popupDialog) => {
                                     this.mobilePhoneDialog = popupDialog;
                                 }}
-                                    dialogAnimation={scaleAnimation}
-                                    dismissOnTouchOutside={false}
-                                    actions={[]}
-                                    width={0.8}
-                                    height={0.4}
-                                >
+                            dialogAnimation={scaleAnimation}
+                            dismissOnTouchOutside={false}
+                            actions={[]}
+                            width={0.8}
+                            height={0.4}
+                        >
 
-                                    <MobilePhoneModal
-                                        val={this.props.mobilePhone}
-                                        onVerify={(data)=>{
+                            <MobilePhoneModal
+                                val={this.props.mobilePhone}
+                                onVerify={(data)=>{
                                             this.props.dispatch(verifyMobilePhone(data)).then((json)=>{
                                                 if(json.re==1)
                                                 {
@@ -393,10 +372,10 @@ class Home extends Component {
                                                 }
                                             })
                                         }}
-                                        onClose={()=>{
+                                onClose={()=>{
                                             this.mobilePhoneDialog.dismiss();
                                         }}
-                                        onConfirm={(data)=>{
+                                onConfirm={(data)=>{
                                             var {mobilePhone,verifyCode}=data
                                             if(this.state.verifyCode==verifyCode)
                                             {
@@ -413,41 +392,37 @@ class Home extends Component {
                                             }
 
                                         }}
-                                    />
+                            />
 
-                                </PopupDialog>
+                        </PopupDialog>
 
 
-                             <PopupDialog
-                                    ref={(popupDialog) => {
+                        <PopupDialog
+                            ref={(popupDialog) => {
                                     this.validateMyInformationDialog = popupDialog;
                                 }}
-                                    dialogAnimation={scaleAnimation}
-                                    dismissOnTouchOutside={false}
-                                    actions={[]}
-                                    width={0.8}
-                                    height={0.2}
-                                >
+                            dialogAnimation={scaleAnimation}
+                            dismissOnTouchOutside={false}
+                            actions={[]}
+                            width={0.8}
+                            height={0.2}
+                        >
 
-                                    <ValidateMyInformationModal
-                                        val=''
+                            <ValidateMyInformationModal
+                                val=''
 
-                                        onClose={()=>{
+                                onClose={()=>{
                                         }}
-                                        onConfirm={(data)=>{
+                                onConfirm={(data)=>{
 
                                         }}
-                                    />
+                            />
 
-                                </PopupDialog>
+                        </PopupDialog>
 
 
 
-                        </View>
-                    )}
-                >
-
-                </ParallaxScrollView>
+                    </View>
 
             </View>
         );

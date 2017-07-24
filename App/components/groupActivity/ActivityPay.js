@@ -102,127 +102,131 @@ class ActivityPay extends Component{
             <View style={styles.container}>
                 <Toolbar width={width} title="支付" actions={[]} navigator={this.props.navigator}>
 
-                    <View style={{flex:4,padding:10,margin:5,backgroundColor:'#fff'}}>
-                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
-                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                                <Icon name={'star'} size={16} color="#66CDAA"/>
+                    <ScrollView style={{height:height-200,width:width,backgroundColor:'#fff',padding:5}}>
+
+                        <View style={{flex:4,padding:10,margin:5,backgroundColor:'#fff'}}>
+                            <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
+                                <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                    <Icon name={'star'} size={16} color="#66CDAA"/>
+                                </View>
+                                <View style={{flex:7,color:'#343434'}}>
+                                    <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventName}</Text>
+                                </View>
                             </View>
-                            <View style={{flex:7,color:'#343434'}}>
-                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventName}</Text>
+                            <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
+                                <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                    <Icon name={'circle'} size={10} color="#aaa"/>
+                                </View>
+                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlace.name}</Text>
                             </View>
-                        </View>
-                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
-                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                                <Icon name={'circle'} size={10} color="#aaa"/>
+                            <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
+                                <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                    <Icon name={'circle'} size={10} color="#aaa"/>
+                                </View>
+                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlace.address}</Text>
                             </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlace.name}</Text>
-                        </View>
-                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
-                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                                <Icon name={'circle'} size={10} color="#aaa"/>
+                            <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
+                                <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                    <Icon name={'circle'} size={10} color="#aaa"/>
+                                </View>
+                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                                    {DateFilter.filter(activity.eventTime,'yyyy-mm-dd hh:mm')}
+                                </Text>
                             </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlace.address}</Text>
-                        </View>
-                        <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
-                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                                <Icon name={'circle'} size={10} color="#aaa"/>
+
+                            <View style={{flex:1,paddingBottom:5,marginTop:5}}>
+                                <Text style={{fontSize:13,color:'#aaa'}}>Tips:</Text>
+                                <Text  style={{fontSize:13,color:'#aaa'}}>每人15元/次,不限时间,球自备。</Text>
                             </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                {DateFilter.filter(activity.eventTime,'yyyy-mm-dd hh:mm')}
-                            </Text>
                         </View>
 
-                        <View style={{flex:1,paddingBottom:5,marginTop:5}}>
-                            <Text style={{fontSize:13,color:'#aaa'}}>Tips:</Text>
-                            <Text  style={{fontSize:13,color:'#aaa'}}>每人15元/次,不限时间,球自备。</Text>
-                        </View>
-                    </View>
-
-                    <View style={{flexDirection:'row',flex:1,padding:10,margin:5,backgroundColor:'#fff'}}>
-                        <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
-                            <Text style={{color:'#343434'}}>支付费用：</Text>
-                        </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                        <View style={{flexDirection:'row',flex:1,padding:10,margin:5,backgroundColor:'#fff'}}>
+                            <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
+                                <Text style={{color:'#343434'}}>支付费用：</Text>
+                            </View>
+                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
-                            <TextInputWrapper
-                                placeholderTextColor='#888'
-                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入待支付费用"
-                                val={this.state.pay.payment}
-                                onChangeText={
+                                <TextInputWrapper
+                                    placeholderTextColor='#888'
+                                    textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                    placeholder="请输入待支付费用"
+                                    val={this.state.pay.payment}
+                                    onChangeText={
                                     (value)=>{
                                         this.setState({pay:Object.assign(this.state.pay,{payment:value})})
                                     }}
-                                onCancel={
+                                    onCancel={
                                     ()=>{this.setState({pay:Object.assign(this.state.pay,{payment:null})});}
                                 }
-                            />
+                                />
+                            </View>
                         </View>
-                    </View>
 
-                    <View style={{flexDirection:'row',flex:2,padding:10,margin:5,backgroundColor:'#fff'}}>
-                        <Text>
-                            支付方式:
-                        </Text>
+                        <View style={{flexDirection:'row',flex:2,padding:10,margin:5,backgroundColor:'#fff'}}>
+                            <Text>
+                                支付方式:
+                            </Text>
 
-                        {
-                            this.state.pay.payType=='微信'?
-                        <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
-                                          onPress={()=>{
+                            {
+                                this.state.pay.payType=='微信'?
+                                    <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
+                                                      onPress={()=>{
                                               var pay = this.state.pay;
                                               pay.payType = null;
                                               this.setState({pay:pay});
                         }}>
-                            <Icon name={'dot-circle-o'} size={15} color="#66CDAA"/>
-                            <Text style={{marginLeft:10}}>微信支付</Text>
-                        </TouchableOpacity>:
-                        <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
-                                          onPress={()=>{
+                                        <Icon name={'dot-circle-o'} size={15} color="#66CDAA"/>
+                                        <Text style={{marginLeft:10}}>微信支付</Text>
+                                    </TouchableOpacity>:
+                                    <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
+                                                      onPress={()=>{
                                               var pay = this.state.pay;
                                               pay.payType = '微信';
                                               this.setState({pay:pay});
                         }}>
-                            <Icon name={'circle-o'} size={15} color="#66CDAA"/>
-                            <Text style={{marginLeft:10}}>微信支付</Text>
-                        </TouchableOpacity>
+                                        <Icon name={'circle-o'} size={15} color="#66CDAA"/>
+                                        <Text style={{marginLeft:10}}>微信支付</Text>
+                                    </TouchableOpacity>
 
-                        }
+                            }
 
-                        {
-                            this.state.pay.payType=='现金'?
-                        <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
-                                          onPress={()=>{
+                            {
+                                this.state.pay.payType=='现金'?
+                                    <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
+                                                      onPress={()=>{
                                               var pay = this.state.pay;
                                               pay.payType = null;
                                               this.setState({pay:pay});
                         }}>
-                            <Icon name={'dot-circle-o'} size={15} color="#66CDAA"/>
-                            <Text style={{marginLeft:10}}>现金支付</Text>
-                        </TouchableOpacity>:
-                        <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
-                                          onPress={()=>{
+                                        <Icon name={'dot-circle-o'} size={15} color="#66CDAA"/>
+                                        <Text style={{marginLeft:10}}>现金支付</Text>
+                                    </TouchableOpacity>:
+                                    <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
+                                                      onPress={()=>{
                                                var pay = this.state.pay;
                                               pay.payType = '现金';
                                               this.setState({pay:pay});
                         }}>
-                            <Icon name={'circle-o'} size={15} color="#66CDAA"/>
-                            <Text style={{marginLeft:10}}>现金支付</Text>
-                        </TouchableOpacity>
+                                        <Icon name={'circle-o'} size={15} color="#66CDAA"/>
+                                        <Text style={{marginLeft:10}}>现金支付</Text>
+                                    </TouchableOpacity>
 
-                        }
+                            }
 
-                    </View>
+                        </View>
 
-                    <TouchableOpacity style={{flexDirection:'row',flex:3,padding:10,justifyContent:'center',alignItems: 'center'}}
-                                      onPress={()=>{
+                        <TouchableOpacity style={{flexDirection:'row',flex:3,padding:10,justifyContent:'center',alignItems: 'center'}}
+                                          onPress={()=>{
                                 this.wechatPay(this.state.pay,this.state.activity.eventId);
                             }}>
-                        <View style={{backgroundColor:'#66CDAA',padding:5,paddingLeft:20,paddingRight:20,borderRadius:5}}>
-                            <Text style={{color:'#fff'}}>
-                                确认
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                            <View style={{backgroundColor:'#66CDAA',padding:5,paddingLeft:20,paddingRight:20,borderRadius:5}}>
+                                <Text style={{color:'#fff'}}>
+                                    确认
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+
+                    </ScrollView>
 
                 </Toolbar>
             </View>

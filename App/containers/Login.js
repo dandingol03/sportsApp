@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    ScrollView,
     Image,
     View,
     StyleSheet,
@@ -237,6 +238,7 @@ var  Login =React.createClass({
                         </Modal>
 
                     </View>
+
                 </Image>
 
             </View>
