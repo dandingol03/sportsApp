@@ -223,6 +223,7 @@ class Home extends Component {
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             newsList=(
                 <ScrollView
+                    ref={(scrollView) => { _scrollView = scrollView; }}
                     refreshControl={
                         <RefreshControl
                             refreshing={this.state.isRefreshing}
@@ -234,6 +235,11 @@ class Home extends Component {
                             progressBackgroundColor="#ffff00"
                         />
                     }
+                    onScrollEndDrag={(event)=>{
+                       var offsetY=event.nativeEvent.contentOffset.y
+                       var limitY=event.nativeEvent.layoutMeasurement.height
+                       console.log(offsetY+' , '+limitY)
+                    }}
                 >
                     <ListView
                         automaticallyAdjustContentInsets={false}
@@ -267,16 +273,18 @@ class Home extends Component {
                             >
                             <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
                 backgroundColor:'transparent',borderBottomWidth:1,borderColor:'transparent',}}>
-                                <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}
+                                <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                       onPress={()=>{this.goBack();}}>
 
-                                </View>
+                                </TouchableOpacity>
                                 <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
                                     <Text style={{color:'#fff',fontSize:18}}>羽毛球热</Text>
                                 </View>
-                                <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                                <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
+                                                  onPress={()=>{ _scrollView.scrollToEnd({animated: true});}}>
 
-                                </View>
+                                    <Text> 底部</Text>
+                                </TouchableOpacity>
                             </View>
 
                             </Image>
