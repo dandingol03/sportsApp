@@ -18,60 +18,96 @@ import {
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import ViewPager from 'react-native-viewpager';
-
-
-var IMGS = [
-    require('../../img/banner1.jpeg'),
-    require('../../img/banner2.jpeg'),
-    require('../../img/banner3.jpeg'),
-    require('../../img/banner4.jpeg'),
-];
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import CoachList from '../components/course/CoachList';
+import Venue from '../components/venue/SelectVenue';
 
 class Found extends Component{
 
-    _renderPage(data,pageID){
-        return (
+    navigate2CoachList(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'coachList',
+                component: CoachList,
+                params: {
 
-            <View style={{width:width}}>
-                <Image
-                    source={data}
-                    style={{width:width,flex:3}}
-                    resizeMode={"stretch"}
-                />
-            </View>
-
-        );
+                }
+            })
+        }
     }
+
+
+    navigate2Venue(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'venue',
+                component: Venue,
+                params: {
+
+                }
+            })
+        }
+    }
+
 
     constructor(props) {
         super(props);
-        var ds=new ViewPager.DataSource({pageHasChanged:(p1,p2)=>p1!==p2});
         this.state={
-            dataSource:ds.cloneWithPages(IMGS),
+
         }
     }
 
     render() {
 
         return (
-            <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+            <View style={{flex:1}}>
+                <View style={{flex:2}}>
+                    <Image style={{flex:2,width:width,position:'relative'}} source={require('../../img/my_banner.jpeg')} >
 
-                <View style={{width:width,flex:1}}>
-                    <ViewPager
-                        style={this.props.style}
-                        dataSource={this.state.dataSource}
-                        renderPage={this._renderPage}
-                        isLoop={true}
-                        autoPlay={true}
-                    />
+                    </Image>
                 </View>
 
-                <View style={{flex:2,justifyContent:'center',alignItems: 'center',}}>
-                    <Text>发现</Text>
+                <View style={{flex:5,backgroundColor:'#eee'}}>
+                    <View style={{flex:12,backgroundColor:'#eee'}}>
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                                          onPress={()=>{
+                            this.navigate2CoachList();
+                        }}>
+                            <View style={{flex:1,backgroundColor:'#FF69B4',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                            justifyContent:'center',alignItems: 'center'}}>
+                                <Icon name={'group'} size={18} color="#fff"/>
+                            </View>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                                <Text>教练列表</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                                          onPress={()=>{
+                            this.navigate2Venue();
+                        }}
+                        >
+
+                            <View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                            justifyContent:'center',alignItems: 'center'}}>
+                                <Icon name={'user'} size={20} color="#fff"/>
+                            </View>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                                <Text>场馆列表</Text>
+                            </View>
+
+                        </TouchableOpacity>
+
+
+                    </View>
+
+                    <View style={{flex:1,backgroundColor:'#eee'}}>
+
+                    </View>
                 </View>
+
             </View>
         );
     }

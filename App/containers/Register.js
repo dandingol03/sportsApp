@@ -157,6 +157,16 @@ class Register extends Component{
                     // )
 
                 }else{
+
+                    if(json.re==2){
+                        Alert.alert(
+                            '信息',
+                            '注册失败,该用户名已存在',
+                            [
+                                {text: 'OK', onPress: () =>console.log('注册失败，该用户名已存在') },
+                            ]
+                        )
+                    }
                     Alert.alert(
                         '错误',
                         '注册失败'

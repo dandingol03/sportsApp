@@ -61,6 +61,7 @@ class AddActivity extends Component{
     setEventPlace(eventPlace)
     {
         this.setState({event:Object.assign(this.state.event,{eventPlace:eventPlace.name,unitId:eventPlace.unitId})});
+        this.setState({feeDes:eventPlace.feeDes});
 
     }
 
@@ -252,6 +253,7 @@ class AddActivity extends Component{
             event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
                    groupName:null,groupId:null,groupNum:null,cost:null},
+            feeDes:null,
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','组内'],
             groupNameButtons:['取消','新建群组'],
@@ -519,6 +521,18 @@ class AddActivity extends Component{
                                 />
                             </View>
                         </View>
+
+                        {
+                            (this.state.feeDes!=null&&this.state.feeDes!=undefined)?
+                                <View style={{height:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',marginLeft:5}}>
+                                <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'}}>
+                                    <Text style={{fontSize:12,color:'#aaa'}}>
+                                        (Tips：{this.state.feeDes})
+                                    </Text>
+                                </View>
+                            </View>:null
+
+                        }
 
                         {
                             (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?

@@ -1,3 +1,6 @@
+/**
+ * Created by dingyiming on 2017/8/1.
+ */
 import React, {Component} from 'react';
 import {
     Dimensions,
@@ -16,37 +19,36 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import _ from 'lodash';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 var {height, width} = Dimensions.get('window');
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper';
-import {
-    fetchMaintainedVenue
-} from '../../action/MapActions';
-import {
-    makeTabsHidden,
-    makeTabsShown
-} from '../../action/TabActions';
-import VenueDetail from './VenueDetail';
+import{
+    fetchCoaches,
+    onCoachUpdate,
+} from '../../action/CoachActions';
+import CoachDetail from './CoachDetail'
 
-class SelectVenue extends Component {
-
-    navigate2VenueDetail(rowData){
-        this.props.dispatch(makeTabsShown());
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'venueDetail',
-                component: VenueDetail,
-                params: {
-                    venueDetail:rowData
-                }
-            })
-        }
-    }
+class CoachList extends Component {
 
     goBack(){
         const { navigator } = this.props;
         if(navigator) {
             navigator.pop();
+        }
+    }
+
+    navigate2CoachDetail(rowData){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'coachDetail',
+                component: CoachDetail,
+                params: {
+                    coachDetail:rowData
+                }
+            })
         }
     }
 
@@ -67,7 +69,7 @@ class SelectVenue extends Component {
         }.bind(this), 2000);
     }
 
-    renderVenue(rowData, sectionId, rowId) {
+    renderCoach(rowData, sectionId, rowId) {
 
         var lineStyle = {
             flex: 1, flexDirection: 'row', padding:5, paddingLeft: 0, paddingRight: 0,
@@ -76,25 +78,34 @@ class SelectVenue extends Component {
 
         var row = (
             <TouchableOpacity style={lineStyle} onPress={() => {
-                this.navigate2VenueDetail(rowData);
+                this.navigate2CoachDetail(rowData);
             }}>
+                <View style={{width:50,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                    <Image source={require('../../../img/portrait.jpg')} style={{ width: 46, height: 46,borderRadius:23 }}
+                           resizeMode="stretch" />
+                </View>
 
-                <View style={{flex:6,flexDirection:'column',borderBottomColor:'#eee',borderBottomWidth:1}}>
+                <View style={{flex:5,flexDirection:'column',borderBottomColor:'#eee',borderBottomWidth:1}}>
                     <View style={{flexDirection: 'row', alignItems: 'center', padding: 6, paddingTop: 2}}>
-                        <View style={{flex:4,flexDirection:'row'}}>
+                        <View style={{flex:1,flexDirection:'row'}}>
                             <Text style={{ fontSize: 14, justifyContent: 'flex-start', fontWeight: 'bold', alignItems: 'flex-start', color: '#222' }}>
-                                {rowData.name}
+                                {rowData.perName}
                             </Text>
-                        </View>
-                        <View style={{flex:1}}>
-
+                            <Icon name="mars" size={14} color="#00f" style={{marginLeft:10}}/>
                         </View>
                     </View>
 
                     <View style={{flexDirection: 'row', alignItems: 'center', padding: 6, paddingTop: 2}}>
-                        <View style={{flex:3}}>
+                        <View style={{width:90,flexDirection:'row',justifyContent:'flex-start',paddingRight:5}}>
+                            <Icon name="phone" size={14} color="#00f" style={{marginLeft:5}}/>
                             <Text style={{fontSize:12,color:'#222'}}>
-                                {rowData.address}
+                                {rowData.mobilePhone}
+                            </Text>
+                        </View>
+
+                        <View style={{flex:1,paddingLeft:20}}>
+                            <Text style={{fontSize:12,color:'#222'}}>
+                                {this.state.memberLevel[rowData.trainerInfo.coachlevel]}
                             </Text>
                         </View>
                     </View>
@@ -114,23 +125,25 @@ class SelectVenue extends Component {
     constructor(props) {
         super(props);
         this.state={
+            memberLevel:['','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             isRefreshing: false,
-            fadeAnim: new Animated.Value(1),
-            venues:[],
-            venue:null,
+            fadeAnim: new Animated.Value(1)
         };
     }
 
     render()
     {
 
-        var venueList = null;
-        var {venues}=this.state;
+        var state=this.state
+        var props=this.props
 
-        if(venues&&venues.length>0)
+        var coachList = null;
+        var {coaches}=this.props;
+        //var { coaches } = this.state;
+        if(coaches&&coaches.length>0)
         {
             var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-            venueList = (
+            coachList = (
                 <ScrollView
                     refreshControl={
                         <RefreshControl
@@ -146,8 +159,8 @@ class SelectVenue extends Component {
                 >
                     <ListView
                         automaticallyAdjustContentInsets={false}
-                        dataSource={ds.cloneWithRows(venues)}
-                        renderRow={this.renderVenue.bind(this)}
+                        dataSource={ds.cloneWithRows(coaches)}
+                        renderRow={this.renderCoach.bind(this)}
                     />
                 </ScrollView>)
 
@@ -156,15 +169,14 @@ class SelectVenue extends Component {
         return (
             <View style={styles.container}>
 
-                <Toolbar width={width} title="场馆列表" navigator={this.props.navigator}
+                <Toolbar width={width} title="教练列表" navigator={this.props.navigator}
                          actions={[]}
                          onPress={(i)=>{
                          }}>
                     <View style={{ flex: 1, width: width, backgroundColor: '#66CDAA' }}>
 
-                        <Animated.View style={{flex: 1, padding: 4,paddingTop:10,opacity: this.state.fadeAnim,backgroundColor:'#fff',
-                       paddingBottom:10 }}>
-                            {venueList}
+                        <Animated.View style={{flex: 1, padding: 4,paddingTop:10,opacity: this.state.fadeAnim,backgroundColor:'#fff' }}>
+                            {coachList}
                         </Animated.View>
 
                     </View>
@@ -179,15 +191,10 @@ class SelectVenue extends Component {
     componentDidMount()
     {
         InteractionManager.runAfterInteractions(() => {
-            this.props.dispatch(fetchMaintainedVenue()).then((json)=>{
+            this.props.dispatch(fetchCoaches()).then((json)=>{
                 if(json.re==1)
                 {
-                    var venues = json.data;
-                    venues.map((venue)=>{
-                        venue.checked = false;
-                    })
-                    this.setState({venues:venues});
-                    //this.props.dispatch(makeTabsHidden());
+                    this.props.dispatch(onCoachUpdate(json.data))
                 }
             })
         });
@@ -210,6 +217,5 @@ module.exports = connect(state=>({
         personInfo:state.user.personInfo,
         coaches:state.coach.coaches,
     })
-)(SelectVenue);
-
+)(CoachList);
 
