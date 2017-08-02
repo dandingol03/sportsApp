@@ -284,8 +284,7 @@ class AddActivity extends Component{
             eventTime:null,
             event:{eventBrief:'',type:null,isSchedule:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
-                   groupName:null,groupId:null,groupNum:null,cost:null},
-            feeDes:null,
+                   groupName:null,groupId:null,groupNum:null,cost:null,startTime:null,endTime:null,eventWeek:null,},
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','组内'],
             groupNameButtons:['取消','新建群组'],
@@ -407,7 +406,7 @@ class AddActivity extends Component{
                                     </View>:
                                 <View
                                     style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                    <Text style={{fontSize:13}}>{this.state.event.eventWeek} {this.state.event.startTime}-{this.state.event.endTime} </Text>
+                                    <Text style={{fontSize:13}}>{this.state.event.eventTime} {this.state.event.startTime}-{this.state.event.endTime} </Text>
                                 </View>
                                 }
 
