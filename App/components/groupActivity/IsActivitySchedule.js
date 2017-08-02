@@ -37,6 +37,8 @@ class IsActivitySchedule extends Component{
             endTime:null,
             time:{eventTime:null,type:'单次活动',startTime:null,endTime:null,eventWeek:null},
             eventTypeButtons:['取消','单次活动','周期活动'],
+            //Week:['取消','周一','周二','周三','周四','周五','周六','周天'],
+            Week:null,
         }
     }
 
@@ -63,6 +65,15 @@ class IsActivitySchedule extends Component{
             var eventType = this.state.eventTypeButtons[index];
             var eventTypeCode = index;
             this.setState({time:Object.assign(this.state.time,{type:eventType})});
+        }
+
+    }
+    _handlePress2(index) {
+
+        if(index!==0){
+            var eventType = this.state.Week[index];
+           // var eventTypeCode = index;
+            this.setState({time:Object.assign(this.state.time,{eventTime:eventType})});
         }
 
     }
@@ -105,6 +116,7 @@ class IsActivitySchedule extends Component{
 
 
     }
+
     verifyDate(date)
     {
         this.state.selectTime=true;
@@ -173,9 +185,49 @@ class IsActivitySchedule extends Component{
 
     render() {
         const CANCEL_INDEX = 0;
-        const DESTRUCTIVE_INDEX = 2;
+        const DESTRUCTIVE_INDEX = 1;
         const eventTypeButtons=['取消','单次活动','周期活动'];
+        //const Week=['取消','周一   (今天)','周二','周三','周四','周五','周六','周天']
 
+
+        const Today=new Date();
+
+        var myDay=new Array();
+
+        for(var i=0;i<7;i++){
+            var millsec=Today.getTime()+i*24*60*60*1000;
+            myDay[i]=millsec;
+                }
+
+        var setDay=new Array();
+        setDay[0]='取消';
+        for(var j=0;j<7;j++)
+        {
+            var day1=new Date(myDay[j]);
+            setDay[j+1]=day1;
+        }
+
+        const finalShow=new Array();
+        finalShow[0]='取消';
+        for(var k=1;k<8;k++){
+            var date=new Date(setDay[k]);
+            var month=date.getMonth();
+            var w=date.getDay();
+            var day=date.getDate();
+
+            switch(w){
+                case 0:var  a= '星期天';break;
+                case 1:a= '星期一';break;
+                case 2:a= '星期二';break;
+                case 3:a= '星期三';break;
+                case 4:a= '星期四';break;
+                case 5:a= '星期五';break;
+                case 6:a= '星期六';break;
+
+            }
+            finalShow[k]=a+'   '+month+'月'+day+'日';
+        }
+        this.state.Week=finalShow;
         return (
             <View style={{flex:1}}>
                 {/*标题栏*/}
@@ -246,51 +298,35 @@ class IsActivitySchedule extends Component{
                             </View>
                             <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
                             backgroundColor:'#eee',borderRadius:10}}>
+                                <TouchableOpacity style={{flex:3,height:30,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                            backgroundColor:'#eee',borderRadius:10}}
+                                                  onPress ={()=>{this.show('actionSheet2')}}>
                                 {
                                     this.state.time.eventTime==null?
                                         <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                             <Text style={{color:'#888',fontSize:13}}>请选择活动时间：</Text>
                                         </View> :
                                         <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#444',fontSize:13}}>{this.state.eventTime}</Text>
+                                            <Text style={{color:'#444',fontSize:13}}>{this.state.time.eventTime}</Text>
                                         </View>
                                 }
 
-                                <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
-                                    <DatePicker
-                                        style={{width:60,marginLeft:0,borderWidth:0}}
-                                        customStyles={{
-                                        placeholderText:{color:'transparent',fontSize:12},
-                                        dateInput:{height:30,borderWidth:0},
-                                        dateTouchBody:{marginRight:25,height:22,borderWidth:0},
-                                    }}
-                                        mode="date"
-                                        placeholder="选择"
-                                        format="YYYY-MM-DD HH:mm"
-                                        minDate={new Date()}
-                                        confirmBtnText="确认"
-                                        cancelBtnText="取消"
-                                        showIcon={true}
-                                        iconComponent={<Icon name={'angle-right'} size={30} color="#fff"/>}
-                                        onDateChange={(date) => {
-                                        if(this.state.selectTime==false)
-                                        {
-                                            //TODO:校检date的合法性
-                                            var reg=/([\d]{4})-([\d]{2})-([\d]{2})\s([\d]{2})\:([\d]{2})/;
-                                            //var  reg=/([\d]{4})-([\d]{2})-([\d]{2})\s/;
-                                            var re=reg.exec(date);
-                                            if(re)
-                                            {
-                                                var tmpDate=new Date(re[1],parseInt(re[2])-1,re[3],re[4],re[5])
-                                                this.verifyDate(tmpDate);
-                                                this.whichWeek(tmpDate);
-                                            }
-                                        }else{
-                                        }
 
-                                    }}
-                                    />
-                                </View>
+                                <ActionSheet
+                                    ref={(p)=>{
+                                this.actionSheet2=p;
+                            }}
+                                    title="请选择活动时间"
+                                    options={finalShow}
+                                    cancelButtonIndex={CANCEL_INDEX}
+                                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                    onPress={
+                                        (data)=>{ this._handlePress2(data); }
+                                    }
+                                >
+
+                                </ActionSheet>
+                                </TouchableOpacity>
                             </View>
                         </View>
 
@@ -361,7 +397,7 @@ class IsActivitySchedule extends Component{
                                                 <Text style={{color:'#888',fontSize:13}}>请选择结束时间：</Text>
                                             </View> :
                                             <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                                <Text style={{color:'#444',fontSize:13}}>{this.state.endTime}</Text>
+                                                <Text style={{color:'#444',fontSize:13}}>{this.state.time.endTime}</Text>
                                             </View>
                                     }
 
@@ -409,51 +445,36 @@ class IsActivitySchedule extends Component{
                                 </View>
                                 <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
                             backgroundColor:'#eee',borderRadius:10}}>
+                                    <TouchableOpacity style={{flex:3,height:30,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                            backgroundColor:'#eee',borderRadius:10}}
+                                                      onPress ={()=>{this.show('actionSheet2')}}>
                                     {
                                         this.state.time.eventTime==null?
                                             <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                                 <Text style={{color:'#888',fontSize:13}}>请选择活动时间：</Text>
                                             </View> :
                                             <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                                <Text style={{color:'#444',fontSize:13}}>{this.state.eventTime}</Text>
+                                                <Text style={{color:'#444',fontSize:13}}>{this.state.time.eventTime}</Text>
                                             </View>
                                     }
 
                                     <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
-                                        <DatePicker
-                                            style={{width:60,marginLeft:0,borderWidth:0}}
-                                            customStyles={{
-                                        placeholderText:{color:'transparent',fontSize:12},
-                                        dateInput:{height:30,borderWidth:0},
-                                        dateTouchBody:{marginRight:25,height:22,borderWidth:0},
-                                    }}
-                                            mode="date"
-                                            placeholder="选择"
-                                            format="YYYY-MM-DD HH:mm"
-                                            minDate={new Date()}
-                                            confirmBtnText="确认"
-                                            cancelBtnText="取消"
-                                            showIcon={true}
-                                            iconComponent={<Icon name={'angle-right'} size={30} color="#fff"/>}
-                                            onDateChange={(date) => {
-                                        if(this.state.selectTime==false)
-                                        {
-                                            //TODO:校检date的合法性
-                                            var reg=/([\d]{4})-([\d]{2})-([\d]{2})\s([\d]{2})\:([\d]{2})/;
-                                            //var  reg=/([\d]{4})-([\d]{2})-([\d]{2})\s/;
-                                            var re=reg.exec(date);
-                                            if(re)
-                                            {
-                                                var tmpDate=new Date(re[1],parseInt(re[2])-1,re[3],re[4],re[5])
-                                                this.verifyDate(tmpDate);
-                                                this.whichWeek(tmpDate);
-                                            }
-                                        }else{
-                                        }
+                                        <ActionSheet
+                                            ref={(p)=>{
+                                this.actionSheet2=p;
+                            }}
+                                            title="请选择活动时间"
+                                            options={finalShow}
+                                            cancelButtonIndex={CANCEL_INDEX}
+                                            destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                            onPress={
+                                        (data)=>{ this._handlePress2(data); }
+                                    }
+                                        >
 
-                                    }}
-                                        />
+                                        </ActionSheet>
                                     </View>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
 
@@ -519,12 +540,12 @@ class IsActivitySchedule extends Component{
                                 <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
                             backgroundColor:'#eee',borderRadius:10}}>
                                     {
-                                        this.state.time.eventWeek==null?
+                                        this.state.time.endTime==null?
                                             <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                                 <Text style={{color:'#888',fontSize:13}}>请选择结束时间：</Text>
                                             </View> :
                                             <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                                <Text style={{color:'#444',fontSize:13}}>{this.state.time.eventWeek}</Text>
+                                                <Text style={{color:'#444',fontSize:13}}>{this.state.time.endTime}</Text>
                                             </View>
                                     }
 
