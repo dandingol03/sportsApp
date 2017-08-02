@@ -144,7 +144,6 @@ class AddActivity extends Component{
         event.endTime = time.endTime;
         event.eventWeek = time.eventWeek;
         event.isSchedule = time.type;
-        //this.setState({event:Object.assign(this.state.event,{startTime:time})});
         this.setState({event:event});
 
     }
@@ -285,12 +284,8 @@ class AddActivity extends Component{
             eventTime:null,
             event:{eventBrief:'',type:null,isSchedule:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
-<<<<<<< HEAD
-                   groupName:null,groupId:null,groupNum:null,cost:null,startTime:null,endTime:null,eventWeek:null,},
-=======
                    groupName:null,groupId:null,groupNum:null,cost:null},
             feeDes:null,
->>>>>>> 89dfde9353bd69ce0e5f76d9b894b193de0817a1
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','组内'],
             groupNameButtons:['取消','新建群组'],

@@ -478,29 +478,135 @@ export let registerUser=(payload)=>{
 }
 
 //用户登录
+// export let doLogin=function(username,password){
+//
+//     return dispatch=> {
+//
+//         return new Promise((resolve, reject) => {
+//             var versionName = '1';
+//
+//             var personId=null;
+//
+//             Proxy.postes({
+//                 url: Config.server + '/func/auth/webLogin',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: {
+//                     loginName: username,
+//                     password: password,
+//                     loginType:1,
+//                     parameter:{appVersion:versionName}
+//                 }
+//             }).then((json)=> {
+//                 //accessToken = json.access_token;
+//                 personId = json.personId;
+//
+//                 //TODO:make a dispatch
+//                 dispatch(updateCertificate({username: username, password: password}));
+//
+//
+//                 PreferenceStore.put('username', username);
+//                 PreferenceStore.put('password', password);
+//
+//                 return Proxy.postes({
+//                     url:Config.server + '/func/node/getUserTypeByPersonId',
+//                     headers: {
+//                         'Content-Type': 'application/json'
+//                     },
+//                     body: {
+//                         personId:personId,
+//                     }
+//                 });
+//
+//             }).then((json)=> {
+//
+//                 if (json.re == 1) {
+//                     dispatch(updateUserType(json.data))
+//                 }
+//                 var userType = json.data
+//                 if (parseInt(userType) == 0)//用户
+//                 {
+//                     return {re: 1}
+//                 } else {
+//                     //教练,获取教练信息
+//                     return Proxy.postes({
+//                         url: Config.server + '/svr/request',
+//                         headers: {
+//                             'Authorization': "Bearer " + accessToken,
+//                             'Content-Type': 'application/json'
+//                         },
+//                         body: {
+//                             request: 'fetchBadmintonTrainerInfo'
+//                         }
+//                     });
+//                 }
+//             }).then((json)=>{
+//
+//                 if(json.re==1&&json.data)
+//                 {
+//                     dispatch(updateTrainerInfo({data:json.data}))
+//                 }
+//
+//
+//
+//                 return Proxy.postes({
+//                     url: Config.server + '/svr/request',
+//                     headers: {
+//                         'Authorization': "Bearer " + accessToken,
+//                         'Content-Type': 'application/json'
+//                     },
+//                     body: {
+//                         request: 'getPersonInfoByPersonId'
+//                     }
+//                 });
+//             }).then((json) => {
+//
+//                 if (json.re == 1)
+//                     dispatch(updatePersonInfo({data: json.data}));
+//
+//
+//                 return Proxy.postes({
+//                     url: Config.server + '/svr/request',
+//                     headers: {
+//                         'Authorization': "Bearer " + accessToken,
+//                         'Content-Type': 'application/json'
+//                     },
+//                     body: {
+//                         request: 'getPersonInfoAuxiliaryByPersonId'
+//                     }
+//                 })
+//
+//             }).then((json)=>{
+//                 if(json.re==1)
+//                     dispatch(updatePersonInfoAuxiliary({data: json.data}));
+//                 dispatch(getAccessToken(accessToken));
+//                 resolve(json)
+//             }).catch((err)=> {
+//                 dispatch(getAccessToken(null));
+//                 reject(err)
+//             });
+//         });
+//     }
+// }
+
+//用户登录（node）
 export let doLogin=function(username,password){
 
     return dispatch=> {
 
         return new Promise((resolve, reject) => {
-            var versionName = '1';
 
-            var personId=null;
-
+            var accessToken=null;
             Proxy.postes({
-                url: Config.server + '/func/auth/webLogin',
+                url: Config.server + '/login',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: {
-                    loginName: username,
-                    password: password,
-                    loginType:1,
-                    parameter:{appVersion:versionName}
-                }
+                body: "grant_type=password&password=" + password + "&username=" + username
             }).then((json)=> {
-                //accessToken = json.access_token;
-                personId = json.personId;
+                accessToken = json.access_token;
 
                 //TODO:make a dispatch
                 dispatch(updateCertificate({username: username, password: password}));
@@ -511,12 +617,13 @@ export let doLogin=function(username,password){
 
 
                 return Proxy.postes({
-                    url: Config.server + '/func/node/getUserTypeByPersonId',
+                    url: Config.server + '/svr/request',
                     headers: {
+                        'Authorization': "Bearer " + accessToken,
                         'Content-Type': 'application/json'
                     },
                     body: {
-                        personId:personId
+                        request: 'getUserTypeByPersonId'
                     }
                 });
 
@@ -587,6 +694,36 @@ export let doLogin=function(username,password){
                 dispatch(getAccessToken(null));
                 reject(err)
             });
+        });
+    }
+}
+
+//测试
+export let doGetType=function(){
+
+    return dispatch=> {
+
+        return new Promise((resolve, reject) => {
+
+            var personId=38;
+
+            Proxy.postes({
+                url:Config.server+'/func/commodity/getQueryDataListByInputStringMobile',
+                headers: {
+                    //'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
+                    //'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
+                },
+                //body: "codigo=" + codeNum + "&merchantId=" + merchantId
+                body: {
+                    codigo:codeNum,
+                    merchantId:merchantId
+                }
+            }).then((json)=>{
+                if(json.re==1){
+                    alert('xxx');
+                }
+            })
         });
     }
 }
