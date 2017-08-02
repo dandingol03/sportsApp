@@ -483,17 +483,24 @@ export let doLogin=function(username,password){
     return dispatch=> {
 
         return new Promise((resolve, reject) => {
+            var versionName = '1';
 
-            var accessToken=null;
+            var personId=null;
+
             Proxy.postes({
-                url: Config.server + '/login',
+                url: Config.server + '/func/auth/webLogin',
                 headers: {
-                    'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
-                body: "grant_type=password&password=" + password + "&username=" + username
+                body: {
+                    loginName: username,
+                    password: password,
+                    loginType:1,
+                    parameter:{appVersion:versionName}
+                }
             }).then((json)=> {
-                accessToken = json.access_token;
+                //accessToken = json.access_token;
+                personId = json.personId;
 
                 //TODO:make a dispatch
                 dispatch(updateCertificate({username: username, password: password}));
@@ -504,13 +511,12 @@ export let doLogin=function(username,password){
 
 
                 return Proxy.postes({
-                    url: Config.server + '/svr/request',
+                    url: Config.server + '/func/node/getUserTypeByPersonId',
                     headers: {
-                        'Authorization': "Bearer " + accessToken,
                         'Content-Type': 'application/json'
                     },
                     body: {
-                        request: 'getUserTypeByPersonId'
+                        personId:personId
                     }
                 });
 
