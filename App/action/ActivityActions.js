@@ -19,7 +19,7 @@ import {
 //发布群活动
 export let releaseActivity=(event)=>{
 
-    if(event.type=='组内'&&event.groupNum!==null&&event.groupNum!==undefined){
+    if(event.eventType=='组内'&&event.groupNum!==null&&event.groupNum!==undefined){
         event.eventMaxMemNum = event.groupNum;
     }
 
@@ -50,6 +50,50 @@ export let releaseActivity=(event)=>{
 
 
         });
+    }
+}
+
+//设置全部活动列表
+export let setActivityList=(activityList)=>{
+    return {
+        type:SET_ACTIVITY_LIST,
+        activityList:activityList
+    }
+}
+
+//设置可见活动列表
+export let setVisibleEvents=(visibleEvents)=>{
+    return {
+        type:SET_VISIBLE_EVENTS,
+        visibleEvents:visibleEvents
+    }
+}
+
+//设置我发起的活动列表
+export let setMyEvents=(myEvents)=>{
+    return {
+        type:SET_MY_EVENTS,
+        myEvents:myEvents
+    }
+}
+
+//设置我报名活动列表
+export let setMyTakenEvents=(myTakenEvents)=>{
+    return {
+        type:SET_MY_TAKEN_EVENTS,
+        myTakenEvents:myTakenEvents
+    }
+}
+
+export let enableActivityOnFresh=()=>{
+    return {
+        type:ENABLE_ACTIVITY_ONFRESH,
+    }
+}
+
+export let disableActivityOnFresh=()=>{
+    return {
+        type:DISABLE_ACTIVITY_ONFRESH,
     }
 }
 
@@ -165,7 +209,7 @@ export let fetchActivityList=()=>{
 }
 
 //报名群活动
-export let signUpActivity=(event)=>{
+export let signUpActivity=(eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
@@ -180,7 +224,7 @@ export let signUpActivity=(event)=>{
                 body: {
                     request: 'signUpActivity',
                     info:{
-                        event:event
+                        eventId:eventId
                     }
                 }
             }).then((json)=>{
@@ -198,7 +242,7 @@ export let signUpActivity=(event)=>{
     }
 }
 
-//删除群活动
+//撤销群活动
 export let deleteActivity=(eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
@@ -233,7 +277,7 @@ export let deleteActivity=(eventId)=>{
 }
 
 //退出群活动
-export let exitActivity=(event)=>{
+export let exitActivity=(eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
@@ -248,7 +292,7 @@ export let exitActivity=(event)=>{
                 body: {
                     request: 'exitActivity',
                     info:{
-                        event:event
+                        eventId:eventId
                     }
                 }
             }).then((json)=>{
@@ -265,6 +309,7 @@ export let exitActivity=(event)=>{
         });
     }
 }
+
 
 //用用户名搜索成员
 export let searchMember=(searchInfo)=>{
@@ -349,38 +394,6 @@ export let setAllGroupList=(allGroupList)=>{
     }
 }
 
-//设置全部活动列表
-export let setActivityList=(activityList)=>{
-    return {
-        type:SET_ACTIVITY_LIST,
-        activityList:activityList
-    }
-}
-
-//设置可见活动列表
-export let setVisibleEvents=(visibleEvents)=>{
-    return {
-        type:SET_VISIBLE_EVENTS,
-        visibleEvents:visibleEvents
-    }
-}
-
-//设置我发起的活动列表
-export let setMyEvents=(myEvents)=>{
-    return {
-        type:SET_MY_EVENTS,
-        myEvents:myEvents
-    }
-}
-
-//设置我报名活动列表
-export let setMyTakenEvents=(myTakenEvents)=>{
-    return {
-        type:SET_MY_TAKEN_EVENTS,
-        myTakenEvents:myTakenEvents
-    }
-}
-
 export let enableMyGroupOnFresh=()=>{
     return {
         type:ENABLE_MY_GROUP_ONFRESH,
@@ -402,18 +415,6 @@ export let enableAllGroupOnFresh=()=>{
 export let disableAllGroupOnFresh=()=>{
     return {
         type:DISABLE_ALL_GROUP_ONFRESH,
-    }
-}
-
-export let enableActivityOnFresh=()=>{
-    return {
-        type:ENABLE_ACTIVITY_ONFRESH,
-    }
-}
-
-export let disableActivityOnFresh=()=>{
-    return {
-        type:DISABLE_ACTIVITY_ONFRESH,
     }
 }
 

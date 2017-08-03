@@ -219,7 +219,7 @@ class AddActivity extends Component{
         if(index!==0){
             var eventType = this.state.eventTypeButtons[index];
             var eventTypeCode = index;
-            this.setState({event:Object.assign(this.state.event,{type:eventType})});
+            this.setState({event:Object.assign(this.state.event,{eventType:eventType})});
         }
 
     }
@@ -282,9 +282,10 @@ class AddActivity extends Component{
             doingFetch: false,
             selectTime:false,
             eventTime:null,
-            event:{eventBrief:'',type:null,isSchedule:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
+            event:{eventBrief:'',eventType:null,isSchedule:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
                    groupName:null,groupId:null,groupNum:null,cost:null,startTime:null,endTime:null,eventWeek:null,},
+
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','组内'],
             groupNameButtons:['取消','新建群组'],
@@ -338,12 +339,12 @@ class AddActivity extends Component{
                             borderRadius:10}}
                                               onPress={()=>{ this.show('actionSheet2'); }}>
                                 {
-                                    this.state.event.type==null?
+                                    this.state.event.eventType==null?
                                         <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                             <Text style={{color:'#888',fontSize:13}}>请选择活动类型：</Text>
                                         </View> :
                                         <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#444',fontSize:13}}>{this.state.event.type}</Text>
+                                            <Text style={{color:'#444',fontSize:13}}>{this.state.event.eventType}</Text>
                                         </View>
 
                                 }
@@ -538,7 +539,7 @@ class AddActivity extends Component{
                         }
 
                         {
-                            (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
+                            (this.state.event.eventType=='公开'||this.state.event.eventType==null||this.state.event.eventType==undefined)?
                                 <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>
                                     <View style={{flex:1}}>
                                         <Text>活动人数：</Text>
@@ -563,7 +564,7 @@ class AddActivity extends Component{
                         }
 
                         {
-                            (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
+                            (this.state.event.eventType=='公开'||this.state.event.eventType==null||this.state.event.eventType==undefined)?
 
                                 <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                                     <View style={{flex:1}}>

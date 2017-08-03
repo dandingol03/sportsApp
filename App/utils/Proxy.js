@@ -116,7 +116,9 @@ let Proxy={
 
             return new Promise((resolve,reject) => {
                 fetch(url,options)
-                    .then((response) => response.text())
+                    .then(
+                        (response) => response.text()
+                    )
                     .then((res) => {
                         resolve(JSON.parse(res));
                     })
@@ -131,6 +133,41 @@ let Proxy={
             throw new Error('lack of url field');
         }
     },
+
+    getSession:(params)=>{
+        var url=params.url;
+        if(url!==undefined&&url!==null)
+        {
+
+            if(Object.prototype.toString.call(params.body)=='[object Object]')
+                params.body = JSON.stringify(params.body);
+
+            var options={
+                method:'POST',
+                headers:params.headers!==undefined&&params.headers!==null?params.headers:null,
+                cache:'default',
+                body:params.body,
+                data:params.data!==undefined&&params.data!==null?params.data:null,
+            };
+
+            return new Promise((resolve,reject) => {
+                fetch(url,options)
+                    .then((res) => {
+                        resolve(res)
+                    })
+                    .catch((err) => {
+                        reject(new Error(err));
+                        console.warn(err);
+                    }).done();
+
+            });
+
+        }else{
+            throw new Error('lack of url field');
+        }
+    },
+
+
     fetch:(params)=>{
         var url=params.url;
         if(url!==undefined&&url!==null)

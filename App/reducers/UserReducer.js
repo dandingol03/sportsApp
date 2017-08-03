@@ -5,6 +5,7 @@ import {
     UPDATE_TRAINER_INFO,
     UPDATE_PERSON_INFO_AUXILIARY,
     ACCESS_TOKEN_ACK,
+    SESSION_ID,
     UPDATE_CERTIFICATE,
     UPDATE_USERTYPE,
     ON_USER_NAME_UPDATE,
@@ -22,11 +23,14 @@ import {
 const initialState = {
     accessToken: null,
     auth:false,
+    sessionId:null,
+
     personInfo:null,
     portrait:null,
     user:{},
     trainer:{},
     personInfoAuxiliary:null,
+
 };
 
 let user = (state = initialState, action) => {
@@ -36,6 +40,11 @@ let user = (state = initialState, action) => {
         case ACCESS_TOKEN_ACK:
             return Object.assign({}, state, {
                 accessToken: action.accessToken,
+                auth:action.auth
+            })
+        case SESSION_ID:
+            return Object.assign({}, state, {
+                sessionId: action.sessionId,
                 auth:action.auth
             })
         case UPDATE_PERSON_INFO:
@@ -65,7 +74,7 @@ let user = (state = initialState, action) => {
             return Object.assign({}, state, {
                 user:{
                     username,
-                    password
+                    password,
                 }
             })
         case ON_USER_NAME_UPDATE:

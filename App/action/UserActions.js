@@ -11,6 +11,7 @@ import {
     UPDATE_PERSON_INFO_AUXILIARY,
     UPDATE_USERTYPE,
     ACCESS_TOKEN_ACK,
+    SESSION_ID,
     ON_USER_NAME_UPDATE,
     ON_MOBILE_PHONE_UPDATE,
     ON_SELF_LEVEL_UPDATE,
@@ -63,13 +64,28 @@ let getAccessToken= (accessToken)=>{
     if(accessToken!==null)
         return {
             type: ACCESS_TOKEN_ACK,
-            accessToken: accessToken,
+            accessToken:accessToken,
             auth:true,
         };
     else
         return {
             type:ACCESS_TOKEN_ACK,
             accessToken:accessToken,
+            auth:'failed'
+        }
+}
+
+let setSessionId= (sessionId)=>{
+    if(sessionId!==null)
+        return {
+            type: SESSION_ID,
+            sessionId:sessionId,
+            auth:true,
+        };
+    else
+        return {
+            type: SESSION_ID,
+            sessionId: sessionId,
             auth:'failed'
         }
 }
@@ -110,18 +126,16 @@ export let updateSportLevel=(sportLevel)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updateSportLevel',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'updateSportLevel',
-                    info:{
-                        sportLevel
-                    }
+                    sportLevel: sportLevel
                 }
             }).then((json)=>{
                 resolve(json)
@@ -478,29 +492,156 @@ export let registerUser=(payload)=>{
 }
 
 //用户登录
+export let doLogin=function(username,password){
+
+    return dispatch=> {
+
+        return new Promise((resolve, reject) => {
+            var versionName = '1';
+
+            var personId = null;
+            var sessionId = null;
+
+            Proxy.getSession({
+                url: Config.server + '/func/auth/webLogin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    loginName: username,
+                    password: password,
+                    loginType:1,
+                    parameter:{appVersion:versionName}
+                }
+            }).then((response)=> {
+
+                // var sessionParams = response.headers.map['set-cookie'][0].split(';')
+                // sessionParams.map((params,i)=>{
+                //     if(params.indexOf('JSESSIONID')!=-1)
+                //     {
+                //         sessionId=params.replace('JSESSIONID=','')
+                //
+                //     }
+                // })
+
+                var json=response.text();
+                if(json.loginName!==null&&json.loginName!==undefined){
+
+                    personId = json.personId;
+                    sessionId = response.headers.map['set-cookie'][0];
+
+                    //TODO:make a dispatch
+                    dispatch(updateCertificate({username: username, password: password}));
+
+
+                    PreferenceStore.put('username', username);
+                    PreferenceStore.put('password', password);
+
+                    return Proxy.postes({
+                        url:Config.server + '/func/node/getUserTypeByPersonId',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Cookie':sessionId,
+
+                        },
+                        body: {
+                            personId:personId,
+                        }
+                    });
+
+                }else{
+                    alert('登录失败');
+                }
+
+            }).then((json)=> {
+
+                if (json.re == 1) {
+                    dispatch(updateUserType(json.data))
+                }
+                var userType = json.data
+                if (parseInt(userType) == 0)//用户
+                {
+                    return {re: 1}
+                } else {
+                    //教练,获取教练信息
+                    return Proxy.postes({
+                        url: Config.server + '/svr/request',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Cookie':sessionId,
+                        },
+                        body: {
+
+                        }
+                    });
+                }
+            }).then((json)=>{
+
+                if(json.re==1&&json.data)
+                {
+                    dispatch(updateTrainerInfo({data:json.data}))
+                }
+
+
+
+                return Proxy.postes({
+                    url: Config.server + '/svr/request',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cookie':sessionId,
+                    },
+                    body: {
+
+                    }
+                });
+            }).then((json) => {
+
+                if (json.re == 1)
+                    dispatch(updatePersonInfo({data: json.data}));
+
+
+                return Proxy.postes({
+                    url: Config.server + '/svr/request',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cookie':sessionId,
+                    },
+                    body: {
+
+                    }
+                })
+
+            }).then((json)=>{
+                if(json.re==1)
+                    dispatch(updatePersonInfoAuxiliary({data: json.data}));
+                //dispatch(getAccessToken(accessToken));
+                dispatch(setSessionId(sessionId));
+                resolve(json)
+            }).catch((err)=> {
+                //dispatch(getAccessToken(null));
+                dispatch(setSessionId(sessionId));
+                reject(err)
+            });
+        });
+    }
+}
+
+//用户登录（node）
 // export let doLogin=function(username,password){
-//
 //     return dispatch=> {
 //
 //         return new Promise((resolve, reject) => {
-//             var versionName = '1';
 //
-//             var personId=null;
-//
+//             var accessToken=null;
 //             Proxy.postes({
-//                 url: Config.server + '/func/auth/webLogin',
+//                 url: Config.server + '/login',
 //                 headers: {
-//                     'Content-Type': 'application/json'
+//                     'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
+//                     'Content-Type': 'application/x-www-form-urlencoded'
 //                 },
-//                 body: {
-//                     loginName: username,
-//                     password: password,
-//                     loginType:1,
-//                     parameter:{appVersion:versionName}
-//                 }
+//                 body: "grant_type=password&password=" + password + "&username=" + username
 //             }).then((json)=> {
-//                 //accessToken = json.access_token;
-//                 personId = json.personId;
+//                 accessToken = json.access_token;
 //
 //                 //TODO:make a dispatch
 //                 dispatch(updateCertificate({username: username, password: password}));
@@ -509,13 +650,15 @@ export let registerUser=(payload)=>{
 //                 PreferenceStore.put('username', username);
 //                 PreferenceStore.put('password', password);
 //
+//
 //                 return Proxy.postes({
-//                     url:Config.server + '/func/node/getUserTypeByPersonId',
+//                     url: Config.server + '/svr/request',
 //                     headers: {
+//                         'Authorization': "Bearer " + accessToken,
 //                         'Content-Type': 'application/json'
 //                     },
 //                     body: {
-//                         personId:personId,
+//                         request: 'getUserTypeByPersonId'
 //                     }
 //                 });
 //
@@ -589,114 +732,6 @@ export let registerUser=(payload)=>{
 //         });
 //     }
 // }
-
-//用户登录（node）
-export let doLogin=function(username,password){
-
-    return dispatch=> {
-
-        return new Promise((resolve, reject) => {
-
-            var accessToken=null;
-            Proxy.postes({
-                url: Config.server + '/login',
-                headers: {
-                    'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: "grant_type=password&password=" + password + "&username=" + username
-            }).then((json)=> {
-                accessToken = json.access_token;
-
-                //TODO:make a dispatch
-                dispatch(updateCertificate({username: username, password: password}));
-
-
-                PreferenceStore.put('username', username);
-                PreferenceStore.put('password', password);
-
-
-                return Proxy.postes({
-                    url: Config.server + '/svr/request',
-                    headers: {
-                        'Authorization': "Bearer " + accessToken,
-                        'Content-Type': 'application/json'
-                    },
-                    body: {
-                        request: 'getUserTypeByPersonId'
-                    }
-                });
-
-            }).then((json)=> {
-
-                if (json.re == 1) {
-                    dispatch(updateUserType(json.data))
-                }
-                var userType = json.data
-                if (parseInt(userType) == 0)//用户
-                {
-                    return {re: 1}
-                } else {
-                    //教练,获取教练信息
-                    return Proxy.postes({
-                        url: Config.server + '/svr/request',
-                        headers: {
-                            'Authorization': "Bearer " + accessToken,
-                            'Content-Type': 'application/json'
-                        },
-                        body: {
-                            request: 'fetchBadmintonTrainerInfo'
-                        }
-                    });
-                }
-            }).then((json)=>{
-
-                if(json.re==1&&json.data)
-                {
-                    dispatch(updateTrainerInfo({data:json.data}))
-                }
-
-
-
-                return Proxy.postes({
-                    url: Config.server + '/svr/request',
-                    headers: {
-                        'Authorization': "Bearer " + accessToken,
-                        'Content-Type': 'application/json'
-                    },
-                    body: {
-                        request: 'getPersonInfoByPersonId'
-                    }
-                });
-            }).then((json) => {
-
-                if (json.re == 1)
-                    dispatch(updatePersonInfo({data: json.data}));
-
-
-                return Proxy.postes({
-                    url: Config.server + '/svr/request',
-                    headers: {
-                        'Authorization': "Bearer " + accessToken,
-                        'Content-Type': 'application/json'
-                    },
-                    body: {
-                        request: 'getPersonInfoAuxiliaryByPersonId'
-                    }
-                })
-
-            }).then((json)=>{
-                if(json.re==1)
-                    dispatch(updatePersonInfoAuxiliary({data: json.data}));
-                dispatch(getAccessToken(accessToken));
-                resolve(json)
-            }).catch((err)=> {
-                dispatch(getAccessToken(null));
-                reject(err)
-            });
-        });
-    }
-}
 
 //测试
 export let doGetType=function(){
