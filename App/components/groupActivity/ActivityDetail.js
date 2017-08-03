@@ -51,9 +51,9 @@ class ActivityDetail extends Component{
 
     }
 
-    exitActivity(event)
+    exitActivity(eventId)
     {
-        this.props.dispatch(exitActivity(event)).then((json)=>{
+        this.props.dispatch(exitActivity(eventId)).then((json)=>{
             if(json.re==1){
                 alert('已成功退出活动！');
                 this.props.setMyActivityList();
@@ -251,7 +251,7 @@ class ActivityDetail extends Component{
                         flag=='我的报名'?
                             <TouchableOpacity style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
                             padding:10,borderTopWidth:1,borderColor:'#eee'}}
-                                              onPress={()=>{this.exitActivity(activity);}}>
+                                              onPress={()=>{this.exitActivity(activity.eventId);}}>
                                 <Text style={{color:'#66CDAA',}}>退出</Text>
                             </TouchableOpacity>:null
 

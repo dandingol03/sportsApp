@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 var Proxy = require('../utils/Proxy');
 import {
-    doLogin,
+    doLogin,doGetType
 } from '../action/UserActions';
 
 import PreferenceStore from '../utils/PreferenceStore';
@@ -183,7 +183,9 @@ var  Login =React.createClass({
                                         <Text style={{color:'#fff',fontSize:16,fontWeight:'bold'}}>注册</Text>
                                     </TouchableOpacity>
 
-                                    <View style={{flex:1}}></View>
+                                    <View style={{flex:1}}>
+
+                                    </View>
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'center',flexDirection:'row',width:width/3,
                                      borderColor:'#66CDAA',padding:8,paddingHorizontal:16,borderRadius:20,borderWidth:1,}}

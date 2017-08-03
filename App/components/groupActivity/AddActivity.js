@@ -4,8 +4,8 @@ import {
     Alert,
     Dimensions,
     TextInput,
-    ListView,
     ScrollView,
+    ListView,
     Image,
     View,
     StyleSheet,
@@ -35,6 +35,8 @@ import VenueInspect from '../../components/venue/VenueInspect';
 import CreateGroup from './CreateGroup';
 import Coach from '../../components/Coach';
 import SelectVenue from '../../components/venue/SelectVenue';
+import ActivitySchedule from './IsActivitySchedule';
+import MyGroup from './MyGroup';
 import {
     fetchMyGroupList,disableMyGroupOnFresh,enableActivityOnFresh
 } from '../../action/ActivityActions';
@@ -73,6 +75,8 @@ class AddActivity extends Component{
             this.setState({event:Object.assign(this.state.event,{sparringId:coach.trainerInfo.trainerId,sparringName:coach.perName})});
         }
     }
+
+
 
     navigate2VenueInspect()
     {
@@ -126,8 +130,36 @@ class AddActivity extends Component{
                 component: CreateGroup,
                 params: {
 
+
                 }
             })
+        }
+    }
+
+    setScheduleTime(time){
+       // this.state.event.type=event.type;
+        var event = this.state.event;
+        event.eventTime = time.eventTime;
+        event.startTime= time.startTime;
+        event.endTime = time.endTime;
+        event.eventWeek = time.eventWeek;
+        event.isSchedule = time.type;
+        this.setState({event:event});
+
+    }
+
+    navigate2ActivitySchedule()
+    {
+        const { navigator} =this.props;
+        if(navigator){
+            navigator.push({
+                name:'activity_schedule',
+                component:ActivitySchedule,
+                params: {
+                    setScheduleTime: this.setScheduleTime.bind(this)
+                }
+        })
+
         }
     }
 
@@ -187,7 +219,7 @@ class AddActivity extends Component{
         if(index!==0){
             var eventType = this.state.eventTypeButtons[index];
             var eventTypeCode = index;
-            this.setState({event:Object.assign(this.state.event,{type:eventType})});
+            this.setState({event:Object.assign(this.state.event,{eventType:eventType})});
         }
 
     }
@@ -250,10 +282,10 @@ class AddActivity extends Component{
             doingFetch: false,
             selectTime:false,
             eventTime:null,
-            event:{eventBrief:'',type:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
+            event:{eventBrief:'',eventType:null,isSchedule:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
-                   groupName:null,groupId:null,groupNum:null,cost:null},
-            feeDes:null,
+                   groupName:null,groupId:null,groupNum:null,cost:null,startTime:null,endTime:null,eventWeek:null,},
+
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
             eventTypeButtons:['取消','公开','组内'],
             groupNameButtons:['取消','新建群组'],
@@ -297,6 +329,7 @@ class AddActivity extends Component{
                 >
                     <ScrollView style={{height:height-200,width:width,backgroundColor:'#fff',padding:5}}>
 
+
                         {/*活动类型*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
@@ -306,12 +339,12 @@ class AddActivity extends Component{
                             borderRadius:10}}
                                               onPress={()=>{ this.show('actionSheet2'); }}>
                                 {
-                                    this.state.event.type==null?
+                                    this.state.event.eventType==null?
                                         <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                             <Text style={{color:'#888',fontSize:13}}>请选择活动类型：</Text>
                                         </View> :
                                         <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#444',fontSize:13}}>{this.state.event.type}</Text>
+                                            <Text style={{color:'#444',fontSize:13}}>{this.state.event.eventType}</Text>
                                         </View>
 
                                 }
@@ -357,57 +390,28 @@ class AddActivity extends Component{
                         </View>
 
                         {/*活动时间*/}
-                        <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                        <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动时间：</Text>
                             </View>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
-                            backgroundColor:'#eee',borderRadius:10}}>
+                            <TouchableOpacity style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                            backgroundColor:'#eee',borderRadius:10 }}
+                                               onPress={()=>{this.navigate2ActivitySchedule();}}>
                                 {
-                                    this.state.event.eventTime==null?
-                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#888',fontSize:13}}>请选择活动时间：</Text>
-                                        </View> :
-                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#444',fontSize:13}}>{this.state.eventTime}</Text>
-                                        </View>
+
+                                    this.state.event.isSchedule==null?
+
+                                    <View
+                                        style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#888',fontSize:13}}>请选择活动时间：</Text>
+                                    </View>:
+                                <View
+                                    style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                    <Text style={{fontSize:13}}>{this.state.event.eventTime} {this.state.event.startTime}-{this.state.event.endTime} </Text>
+                                </View>
                                 }
 
-                                <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
-                                    <DatePicker
-                                        style={{width:60,marginLeft:0,borderWidth:0}}
-                                        customStyles={{
-                                        placeholderText:{color:'transparent',fontSize:12},
-                                        dateInput:{height:30,borderWidth:0},
-                                        dateTouchBody:{marginRight:25,height:22,borderWidth:0},
-                                    }}
-                                        mode="datetime"
-                                        placeholder="选择"
-                                        format="YYYY-MM-DD HH:mm"
-                                        minDate={new Date()}
-                                        confirmBtnText="确认"
-                                        cancelBtnText="取消"
-                                        showIcon={true}
-                                        iconComponent={<Icon name={'angle-right'} size={30} color="#fff"/>}
-                                        onDateChange={(date) => {
-                                        if(this.state.selectTime==false)
-                                        {
-                                            //TODO:校检date的合法性
-                                            var reg=/([\d]{4})-([\d]{2})-([\d]{2})\s([\d]{2})\:([\d]{2})/;
-                                            var re=reg.exec(date);
-                                            if(re)
-                                            {
-                                                var tmpDate=new Date(re[1],parseInt(re[2])-1,re[3],re[4],re[5])
-                                                this.verifyDate(tmpDate);
-                                            }
-                                        }else{
-                                        }
-
-                                    }}
-                                    />
-                                </View>
-                            </View>
-
+                            </TouchableOpacity>
 
                         </View>
 
@@ -535,7 +539,7 @@ class AddActivity extends Component{
                         }
 
                         {
-                            (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
+                            (this.state.event.eventType=='公开'||this.state.event.eventType==null||this.state.event.eventType==undefined)?
                                 <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>
                                     <View style={{flex:1}}>
                                         <Text>活动人数：</Text>
@@ -560,7 +564,7 @@ class AddActivity extends Component{
                         }
 
                         {
-                            (this.state.event.type=='公开'||this.state.event.type==null||this.state.event.type==undefined)?
+                            (this.state.event.eventType=='公开'||this.state.event.eventType==null||this.state.event.eventType==undefined)?
 
                                 <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                                     <View style={{flex:1}}>

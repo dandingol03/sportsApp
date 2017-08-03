@@ -128,7 +128,7 @@ class Activity extends Component {
             alert('该活动人数已满！');
 
         }else{
-            this.props.dispatch(signUpActivity(event)).then((json)=>{
+            this.props.dispatch(signUpActivity(event.eventId)).then((json)=>{
                 if(json.re==1){
                     Alert.alert('信息','报名成功,是否立即支付？',[{text:'是',onPress:()=>{
                       // this.setMyActivityList();
