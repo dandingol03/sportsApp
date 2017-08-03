@@ -101,14 +101,6 @@ class CourseTimeModal extends Component{
 
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
                         <View style={{flex:2,margin:5,marginTop:20}}>
-                            {/*<View style={{backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:3}}>*/}
-                                {/*<GridView*/}
-                                    {/*items={dataSource}*/}
-                                    {/*itemsPerRow={4}*/}
-                                    {/*renderItem={this.renderRow.bind(this)}*/}
-                                    {/*style={styles.listView}*/}
-                                {/*/>*/}
-                            {/*</View>*/}
                             <View style={{flexDirection:'row',}}>
                                 {
                                     this.state.selectDay!=='周一'?
