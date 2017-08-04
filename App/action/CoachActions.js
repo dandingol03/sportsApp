@@ -26,7 +26,7 @@ export let fetchCoaches=()=>{
             var accessToken = state.user.accessToken;
             var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/fetchCoaches',
                 headers: {
 
                     'Content-Type': 'application/json',

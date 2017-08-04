@@ -98,7 +98,7 @@ export let updateSelfLevel=(selfLevel)=>{
             var accessToken = state.user.accessToken;
             var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updateSelfLevel',
                 headers: {
 
                     'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ export let updateUsername=(username)=>{
             var accessToken = state.user.accessToken;
             var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updateUsername',
                 headers: {
 
                     'Content-Type': 'application/json',
@@ -235,7 +235,7 @@ export let updateMobilePhone=(mobilePhone)=>{
             var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updateMobilePhone',
                 headers: {
                     'Content-Type': 'application/json',
                     'Cookie':sessionId,
@@ -261,7 +261,7 @@ export let verifyMobilePhone=(mobilePhone)=>{
         return new Promise((resolve, reject) => {
             var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/securityCode',
+                url: Config.server + '/func/node/securityCode',
                 headers: {
                     'Content-Type': 'application/json',
                     'Cookie':sessionId,
@@ -289,7 +289,7 @@ export let updatePerName=(perName)=>{
             var accessToken = state.user.accessToken;
             var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updatePerName',
                 headers: {
                     'Content-Type': 'application/json',
                     'Cookie':sessionId,
@@ -317,7 +317,7 @@ export let updateWeChat=(wechat)=>{
             var accessToken = state.user.accessToken;
             var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updateWeChat',
                 headers: {
 
                     'Content-Type': 'application/json',
@@ -348,7 +348,7 @@ export let updatePerIdCard=(perIdCard)=>{
             var accessToken = state.user.accessToken;
             var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updatePerIdCard',
                 headers: {
 
                     'Content-Type': 'application/json',
@@ -426,7 +426,7 @@ export let addRelativePerson=(payload)=> {
             var accessToken = state.user.accessToken;
             var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/addRelativePerson',
                 headers: {
 
                     'Content-Type': 'application/json',

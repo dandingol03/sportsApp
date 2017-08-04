@@ -88,7 +88,7 @@ export let fetchMaintainedVenue=()=>{
             var accessToken = state.user.accessToken;
             var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/getMaintainedVenue',
                 headers: {
 
                     'Content-Type': 'application/json',
