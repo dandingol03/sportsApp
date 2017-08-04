@@ -96,18 +96,18 @@ export let updateSelfLevel=(selfLevel)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
-                    selfLevel:selfLevel
-
+                    request: 'updateSelfLevel',
+                    info:{
+                        selfLevel
+                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -154,18 +154,18 @@ export let updateUsername=(username)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'updateUsername',
+                    info:{
                         username:username
-
+                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -232,17 +232,17 @@ export let updateMobilePhone=(mobilePhone)=>{
             var state=getState();
             var accessToken = state.user.accessToken;
 
-            var sessionId = state.user.sessionId;
-
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
-
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-                    mobilePhone:mobilePhone
+                    request: 'updateMobilePhone',
+                    info:{
+                        mobilePhone
+                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -259,12 +259,12 @@ export let updateMobilePhone=(mobilePhone)=>{
 export let verifyMobilePhone=(mobilePhone)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/securityCode',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
+                    'Content-Type': 'application/json'
                 },
                 body: {
                     phoneNum:mobilePhone
@@ -287,15 +287,18 @@ export let updatePerName=(perName)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
+                    request: 'updatePerName',
+                    info:{
                         perName:perName
+                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -315,18 +318,18 @@ export let updateWeChat=(wechat)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'updateWeChat',
+                    info:{
                         wechat:wechat
-
+                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -346,16 +349,18 @@ export let updatePerIdCard=(perIdCard)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
+                    request: 'updatePerIdCard',
+                    info:{
                         perIdCard:perIdCard
+                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -424,16 +429,16 @@ export let addRelativePerson=(payload)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-                    payload:payload
+                    request: 'addRelativePerson',
+                    info:payload
                 }
             }).then((json)=>{
                 if(json.re==1){
@@ -510,24 +515,14 @@ export let doLogin=function(username,password){
                 }
             }).then((response)=> {
 
-                // var sessionParams = response.headers.map['set-cookie'][0].split(';')
-                // sessionParams.map((params,i)=>{
-                //     if(params.indexOf('JSESSIONID')!=-1)
-                //     {
-                //         sessionId=params.replace('JSESSIONID=','')
-                //
-                //     }
-                // })
+                //var json=JSON.parse(response.text());
 
-                var json=response.text();
-                if(json.loginName!==null&&json.loginName!==undefined){
+                sessionId = response.headers.map['set-cookie'][0];
 
-                    personId = json.personId;
-                    sessionId = response.headers.map['set-cookie'][0];
+                if(sessionId!==null&&sessionId!==undefined){
 
                     //TODO:make a dispatch
                     dispatch(updateCertificate({username: username, password: password}));
-
 
                     PreferenceStore.put('username', username);
                     PreferenceStore.put('password', password);
@@ -540,7 +535,7 @@ export let doLogin=function(username,password){
 
                         },
                         body: {
-                            personId:personId,
+
                         }
                     });
 
@@ -560,7 +555,7 @@ export let doLogin=function(username,password){
                 } else {
                     //教练,获取教练信息
                     return Proxy.postes({
-                        url: Config.server + '/svr/request',
+                        url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
                         headers: {
                             'Content-Type': 'application/json',
                             'Cookie':sessionId,
@@ -580,7 +575,7 @@ export let doLogin=function(username,password){
 
 
                 return Proxy.postes({
-                    url: Config.server + '/svr/request',
+                    url: Config.server + '/func/node/getPersonInfoByPersonId',
                     headers: {
                         'Content-Type': 'application/json',
                         'Cookie':sessionId,
@@ -596,7 +591,7 @@ export let doLogin=function(username,password){
 
 
                 return Proxy.postes({
-                    url: Config.server + '/svr/request',
+                    url: Config.server + '/func/node/getPersonInfoAuxiliaryByPersonId',
                     headers: {
                         'Content-Type': 'application/json',
                         'Cookie':sessionId,

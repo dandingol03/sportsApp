@@ -27,18 +27,18 @@ export let releaseActivity=(event)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
-
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
+                    request: 'addActivity',
+                    info:{
                        event:event
-
+                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -103,17 +103,19 @@ export let fetchActivityList=()=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             var allActivityList = null;
 
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
+                    request: 'fetchActivityList',
+                    info:{
+                    }
                 }
             }).then((json)=>{
                 if (json.re == 1) {
@@ -212,18 +214,18 @@ export let signUpActivity=(eventId)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
-
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-                    eventId:eventId
-
+                    request: 'signUpActivity',
+                    info:{
+                        eventId:eventId
+                    }
                 }
             }).then((json)=>{
                 if (json.re == 1) {
@@ -246,18 +248,18 @@ export let deleteActivity=(eventId)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'deleteActivity',
+                    info:{
                         eventId:eventId
-
+                    }
                 }
             }).then((json)=>{
                 if (json.re == 1) {
@@ -280,18 +282,18 @@ export let exitActivity=(eventId)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'exitActivity',
+                    info:{
                         eventId:eventId
-
+                    }
                 }
             }).then((json)=>{
                 if (json.re == 1) {
@@ -315,18 +317,18 @@ export let searchMember=(searchInfo)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'searchOnePerson',
+                    info:{
                         searchInfo:searchInfo
-
+                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -347,21 +349,21 @@ export let createGroup=(info)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'createGroup',
+                    info: {
                         groupName:info.group.groupName,
                         groupBrief:info.group.groupBrief,
                         memberList:info.memberList,
                         groupMaxMemNum:info.group.groupMaxMemNum,
-
+                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -422,18 +424,19 @@ export let fetchMyGroupList=()=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             var myGroupList = null;
 
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request:'fetchMyGroup',
+                    info:{
+                    }
                 }
             }).then((json)=>{
                 if (json.re == 1) {
@@ -462,18 +465,19 @@ export let fetchAllGroupList=()=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             var allGroupList = null;
 
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'fetchAllGroup',
+                    info:{
+                    }
                 }
             }).then((json)=>{
                 if (json.re == 1) {
@@ -514,18 +518,18 @@ export let joinGroup=(groupId)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'joinGroup',
+                    info:{
                         groupId:groupId
-
+                    }
                 }
             }).then((json)=>{
                 if (json.re == 1) {
@@ -548,18 +552,18 @@ export let deleteGroup=(groupId)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'deleteGroup',
+                    info:{
                         groupId:groupId
-
+                    }
                 }
             }).then((json)=>{
                 if (json.re == 1) {
@@ -582,18 +586,18 @@ export let exitGroup=(group)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
-                        groupId:group.groupId
-
+                    request: 'exitGroup',
+                    info:{
+                        group:group
+                    }
                 }
             }).then((json)=>{
                 if (json.re == 1) {

@@ -24,16 +24,15 @@ export let fetchCoaches=()=>{
 
             var state=getState();
             var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/svr/request',
                 headers: {
-
-                    'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    'Authorization': "Bearer " + accessToken,
+                    'Content-Type': 'application/json'
                 },
                 body: {
-
+                    request: 'fetchCoaches'
                 }
             }).then((json)=>{
                 if(json.re==1){
