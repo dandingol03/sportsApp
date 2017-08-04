@@ -29,7 +29,7 @@ export let releaseActivity=(event)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/addActivity',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ export let fetchActivityList=()=>{
             var allActivityList = null;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/fetchActivityList',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -216,7 +216,7 @@ export let signUpActivity=(eventId)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/signUpActivity',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -250,7 +250,7 @@ export let deleteActivity=(eventId)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/deleteActivity',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -284,7 +284,7 @@ export let exitActivity=(eventId)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/exitActivity',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -319,7 +319,7 @@ export let searchMember=(searchInfo)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/searchOnePerson',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -351,7 +351,7 @@ export let createGroup=(info)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/createGroup',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -428,7 +428,7 @@ export let fetchMyGroupList=()=>{
             var myGroupList = null;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/fetchMyGroup',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -469,7 +469,7 @@ export let fetchAllGroupList=()=>{
             var allGroupList = null;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/fetchAllGroup',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -520,7 +520,7 @@ export let joinGroup=(groupId)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/joinGroup',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -554,7 +554,7 @@ export let deleteGroup=(groupId)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/deleteGroup',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -588,7 +588,7 @@ export let exitGroup=(group)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/exitGroup',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'

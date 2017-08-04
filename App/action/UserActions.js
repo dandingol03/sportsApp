@@ -98,7 +98,7 @@ export let updateSelfLevel=(selfLevel)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updateSelfLevel',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -156,7 +156,7 @@ export let updateUsername=(username)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updateUsername',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -233,7 +233,7 @@ export let updateMobilePhone=(mobilePhone)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updateMobilePhone',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -261,7 +261,7 @@ export let verifyMobilePhone=(mobilePhone)=>{
         return new Promise((resolve, reject) => {
 
             Proxy.postes({
-                url: Config.server + '/securityCode',
+                url: Config.server + '/func/node/securityCode',
                 headers: {
                     'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
                     'Content-Type': 'application/json'
@@ -289,7 +289,7 @@ export let updatePerName=(perName)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updatePerName',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -320,7 +320,7 @@ export let updateWeChat=(wechat)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updateWeChat',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -351,7 +351,7 @@ export let updatePerIdCard=(perIdCard)=>{
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/updatePerIdCard',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
@@ -431,7 +431,7 @@ export let addRelativePerson=(payload)=> {
             var accessToken = state.user.accessToken;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/addRelativePerson',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
