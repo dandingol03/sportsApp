@@ -108,7 +108,7 @@ class CoachDetail extends Component{
                                 <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>教练等级：</Text>
                             </View>
                             <View style={{flex:5,color:'#343434',justifyContent:'flex-start',alignItems: 'flex-start'}}>
-                                <Text style={{color:'#343434',justifyContent:'flex-start'}}>{coachLevelList[coachDetail.trainerInfo.coachLevel]}</Text>
+                                <Text style={{color:'#343434',justifyContent:'flex-start'}}>{coachLevelList[coachDetail.coachLevel]}</Text>
                             </View>
                         </View>
 
@@ -118,7 +118,7 @@ class CoachDetail extends Component{
                                 <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>运动水平：</Text>
                             </View>
                             <View style={{flex:5,color:'#343434',justifyContent:'flex-start',alignItems: 'flex-start'}}>
-                                <Text style={{color:'#343434',justifyContent:'flex-start'}}>{sportLevelList[coachDetail.trainerInfo.sportLevel]}</Text>
+                                <Text style={{color:'#343434',justifyContent:'flex-start'}}>{sportLevelList[coachDetail.sportLevel]}</Text>
                             </View>
                         </View>
 

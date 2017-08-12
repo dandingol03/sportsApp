@@ -190,7 +190,7 @@ class My extends Component{
 
     componentWillMount(){
 
-        this.getPortrait();
+       // this.getPortrait();
     }
 
     render() {

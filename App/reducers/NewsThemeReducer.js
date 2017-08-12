@@ -1,6 +1,7 @@
 
 import {
-    UPDATE_NEWS_THEME
+    UPDATE_NEWS_THEME,
+    UPDATE_NEWS_INFO
 } from '../constants/NewsConstants';
 
 const initialState = {
@@ -16,7 +17,11 @@ let newsTheme = (state = initialState, action) => {
             return Object.assign({}, state, {
                 news:news
             })
-
+        case  UPDATE_NEWS_INFO:
+            var {news}=action.payload
+            return Object.assign({}, state, {
+                news:news
+            })
         default:
             return state;
     }

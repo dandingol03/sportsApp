@@ -21,7 +21,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import GroupDetail from './GroupDetail';
 import {
-    fetchAllGroupList,disableAllGroupOnFresh,joinGroup
+    fetchAllGroupList,disableAllGroupOnFresh,joinGroup,fetchGroupMemberList
 } from '../../action/ActivityActions';
 
 class AllGroup extends Component{
@@ -49,23 +49,32 @@ class AllGroup extends Component{
             ).start();
         }.bind(this), 500);
 
+        this.props.dispatch(enableAllGroupOnFresh());
+
     }
 
     navigate2GroupDetail(group){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name:'group_detail',
-                component: GroupDetail,
-                params: {
-                    groupInfo:group.groupInfo,
-                    memberList:group.memberList,
-                    flag:'其他组详情'
+
+        this.props.dispatch(fetchGroupMemberList(group))
+            .then((json)=> {
+                if (json.re == 1) {
+                    var memberList = json.data;
+                    const { navigator } = this.props;
+                    if(navigator) {
+                        navigator.push({
+                            name:'group_detail',
+                            component: GroupDetail,
+                            params: {
+                                groupInfo:group,
+                                memberList:memberList,
+                                flag:'其他组详情'
+                            }
+                        })
+                    }
                 }
             })
-        }
-    }
 
+    }
 
     renderRow(rowData,sectionId,rowId){
 
@@ -78,15 +87,15 @@ class AllGroup extends Component{
                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                 </View>
                 <View style={{flex:3,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                    <Text style={{color:'#343434'}}>{rowData.groupInfo.groupName}</Text>
-                    <Text style={{color:'#343434'}}>({rowData.memberList.length})</Text>
+                    <Text style={{color:'#343434'}}>{rowData.groupName}</Text>
+                    <Text style={{color:'#343434'}}>({rowData.groupNowMember})</Text>
                 </View>
                 <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
                 </View>
                 <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',margin:10,borderWidth:1,borderColor:'#66CDAA',borderRadius:5}}
                                   onPress={()=>{
-                                      this.joinGroup(rowData.groupInfo.groupId);
+                                      this.joinGroup(rowData.groupId);
                 }}>
                     <Text style={{color:'#66CDAA',fontSize:12,}}>加入</Text>
                 </TouchableOpacity>
@@ -130,12 +139,6 @@ class AllGroup extends Component{
             doingFetch: false,
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
-            groupList:[
-                {groupId:1,groupNum:'G00001',groupName:'宇宙无敌战队组',groupManager:'小鱼丁',createTime:new Date(),memberCount:5,isManager:true},
-                {groupId:2,groupNum:'G00002',groupName:'骑摩托的部长队组',groupManager:'Danding',createTime:new Date(),memberCount:3,isManager:false},
-                {groupId:2,groupNum:'G00002',groupName:'羽毛球客',groupManager:'Danding',createTime:new Date(),memberCount:3,isManager:false},
-                {groupId:2,groupNum:'G00002',groupName:'badminton lovers',groupManager:'Danding',createTime:new Date(),memberCount:3,isManager:false},
-            ],
 
         }
     }
@@ -143,7 +146,6 @@ class AllGroup extends Component{
     render() {
 
         var groupListView=null;
-        //var groupList = this.state.groupList;
         var {allGroupList,allGroupOnFresh}=this.props;
 
         if(allGroupOnFresh==true)
@@ -163,18 +165,6 @@ class AllGroup extends Component{
                 );
             }
         }
-
-
-        // var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        // if (groupList !== undefined && groupList !== null && groupList.length > 0) {
-        //     groupListView = (
-        //         <ListView
-        //             automaticallyAdjustContentInsets={false}
-        //             dataSource={ds.cloneWithRows(groupList)}
-        //             renderRow={this.renderRow.bind(this)}
-        //         />
-        //     );
-        // }
 
         return (
             <View style={{flex:1, backgroundColor:'#eee',}}>

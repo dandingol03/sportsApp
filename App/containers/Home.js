@@ -13,7 +13,8 @@ import {
     Animated,
     Easing,
     Alert,
-    InteractionManager
+    InteractionManager,
+    Linking
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -39,7 +40,9 @@ import ValidateMyInformationModal from '../components/my/modal/ValidateMyInforma
 import {
     fetchNewsTheme,
     updateNewsTheme,
-    getNewsContentUrl
+    getNewsContentUrl,
+    fetchNewsInfo,
+    updateNewsInfo
 } from '../action/NewsActions';
 
 import {
@@ -111,20 +114,6 @@ class Home extends Component {
         }
     }
 
-    _renderPage(data, pageID) {
-        return (
-
-            <View style={{width:width}}>
-                <Image
-                    source={data}
-                    style={{width:width,flex:3}}
-                    resizeMode={"stretch"}
-                />
-            </View>
-
-        );
-    }
-
     _onRefresh() {
         this.setState({ isRefreshing: true, fadeAnim: new Animated.Value(0) });
         setTimeout(function () {
@@ -142,43 +131,63 @@ class Home extends Component {
         }.bind(this), 2000);
     }
 
+    dateFormat(date)
+    {
+        //object时间转时间格式"yyyy-mm-dd hh:mm:ss"
+        return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
+    }
+
     renderRow(rowData,sectionId,rowId){
         return(
             <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:1,borderColor:'#ddd',marginTop:4,padding:5}}
                 onPress={()=>{
-                    this.props.dispatch(getNewsContentUrl(rowData.themeId)).then((json)=>{
-                        if(json.re==1)
-                        {
-                            var url=json.data
-                            this.navigate2NewsContentDetail(url)
-                        }
-                    })
+                    {/*this.props.dispatch(getNewsContentUrl(rowData.themeId)).then((json)=>{*/}
+                        {/*if(json.re==1)*/}
+                        {/*{*/}
+                            {/*var url=json.data*/}
+                            {/*this.navigate2NewsContentDetail(url)*/}
+                        {/*}*/}
+                    {/*})*/}
+
+                    Linking.openURL("http://114.215.99.2:8880/news/"+rowData.newsNum+"/index.html").catch(err => console.error('An error occurred', err));
+
                 }}
             >
 
                 <View style={{flexDirection:'column',width:70,justifyContent:'center',alignItems:'center'}}>
                     <Image  resizeMode="stretch" style={{width:65,height:65}}
-                        source={{uri: rowData.themeImg}}
+                        source={{uri: rowData.img}}
                     />
+
                 </View>
 
                 <View style={{flex:1,flexDirection:'column',alignItems:'flex-start'}}>
                     <View style={{padding:4,paddingHorizontal:12}}>
-
                         <Text style={{color:'#646464',fontWeight:'bold',fontSize:15}}>
                             {rowData.title}
+                        </Text>
+                    </View>
+
+                    <View style={{padding:4,paddingHorizontal:12}}>
+                        <Text style={{color:'#646464',fontSize:13}}>
+                            {rowData.brief}
                         </Text>
                     </View>
 
                     <View style={{paddingTop:12,paddingBottom:4,paddingHorizontal:12,flexDirection:'row',alignItems:'center'}}>
                         <View style={{padding:4,paddingHorizontal:6,}}>
                             <Text style={{color:'#323232',fontSize:13}}>
-                                { DateFilter.filter(rowData.createTime,'yyyy-mm-dd hh:mm')}
+                                阅读：{rowData.readCount}
+                            </Text>
+                        </View>
+
+                        <View style={{padding:4,paddingHorizontal:6,}}>
+                            <Text style={{color:'#323232',fontSize:13}}>
+                                {this.dateFormat(rowData.createTime)}
                             </Text>
                         </View>
                     </View>
                 </View>
-
 
             </TouchableOpacity>)
     }
@@ -215,7 +224,6 @@ class Home extends Component {
                 this.mobilePhoneDialog.show()
             }
         }
-
 
         var newsList=null
         if(this.props.news&&this.props.news.length>0)
@@ -255,16 +263,6 @@ class Home extends Component {
 
                     <View style={{flex:1}}>
 
-                        {/*<View style={{width:width,flex:2}}>*/}
-                            {/*<ViewPager*/}
-                                {/*style={this.props.style}*/}
-                                {/*dataSource={this.state.dataSource}*/}
-                                {/*renderPage={this._renderPage}*/}
-                                {/*isLoop={true}*/}
-                                {/*autoPlay={true}*/}
-                            {/*/>*/}
-                        {/*</View>*/}
-
                         <View style={{width:width,flex:2}}>
                             <Image
                                 source={ require('../../img/tt1@2x.png')}
@@ -283,14 +281,12 @@ class Home extends Component {
                                 <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
                                                   onPress={()=>{ _scrollView.scrollToEnd({animated: true});}}>
 
-                                    <Text> 底部</Text>
+                                    {/*<Text> 底部</Text>*/}
                                 </TouchableOpacity>
                             </View>
 
                             </Image>
                         </View>
-
-
 
                         {/*内容区*/}
                         <View style={{flex:5,justifyContent:'center',backgroundColor:'#eee'}}>
@@ -439,17 +435,15 @@ class Home extends Component {
     componentDidMount()
     {
         InteractionManager.runAfterInteractions(() => {
-            this.props.dispatch(fetchNewsTheme()).then((json)=>{
+            this.props.dispatch(fetchNewsInfo()).then((json)=>{
                 if(json.re==1)
                 {
-
-                    this.props.dispatch(updateNewsTheme(json.data))
+                    this.props.dispatch(updateNewsInfo(json.data))
                 }
             })
         });
 
     }
-
 }
 
 var styles = StyleSheet.create({

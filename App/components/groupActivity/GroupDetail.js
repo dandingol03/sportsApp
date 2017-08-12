@@ -61,7 +61,7 @@ class GroupDetail extends Component{
                         <Image resizeMode="stretch" style={{height:50,width:50,borderRadius:10,}} source={rowData.portrait}/>
                     </View>
                     <View>
-                        <Text numberOfLines={1}>{rowData.username}</Text>
+                        <Text numberOfLines={1}>{rowData}</Text>
                     </View>
                 </View>
             );

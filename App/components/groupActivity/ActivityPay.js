@@ -130,7 +130,7 @@ class ActivityPay extends Component{
                                     <Icon name={'circle'} size={10} color="#aaa"/>
                                 </View>
                                 <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                    {DateFilter.filter(activity.eventTime,'yyyy-mm-dd hh:mm')}
+                                    {activity.startTime}--{activity.endTime}
                                 </Text>
                             </View>
 
@@ -153,7 +153,7 @@ class ActivityPay extends Component{
                                     val={this.state.pay.payment}
                                     onChangeText={
                                     (value)=>{
-                                        this.setState({pay:Object.assign(this.state.pay,{payment:value})})
+                                        this.setState({pay:Object.assign(this.state.pay,{payment:parseInt(value)})})
                                     }}
                                     onCancel={
                                     ()=>{this.setState({pay:Object.assign(this.state.pay,{payment:null})});}

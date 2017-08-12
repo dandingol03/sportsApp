@@ -36,8 +36,6 @@ import AddRelativeModal from './AddRelativeModal';
 
 var { height, width } = Dimensions.get('window');
 
-const CANCEL_INDEX = 0;
-const DESTRUCTIVE_INDEX = 1;
 import{
     fetchPersonRelative,
     addBadmintonClassMermberInfo,
@@ -64,12 +62,6 @@ class BadmintonCourseSignUp extends Component {
         this.state = {
             isRefreshing: false,
             event: {},
-            menuVisible: false,
-            memberLevelButtons: ['取消', '无', '体育本科', '国家一级运动员', '国家二级运动员', '国家三级运动员'],
-            eventTypeButtons: ['取消', '羽毛球单打', '羽毛球双打', '羽毛球混双', '基础练习'],
-            filter: {
-                cost: 'ascend'
-            },
             relative:props.relative,
             isSelfCheck:true
         };
@@ -87,45 +79,8 @@ class BadmintonCourseSignUp extends Component {
 
     render() {
 
-        const shadowOpt = {
-            width:width-10,
-            height:190,
-            color:"#000",
-            border:2,
-            radius:0,
-            opacity:0.2,
-            x:4,
-            y:1.5,
-            style:{marginVertical:5}
-        }
-
         var {classInfo,username}=this.props
         var {relative}=this.state
-
-        var schedules=[]
-        classInfo.shedules.map((schedule,i)=>{
-
-            var dayMap={
-                1:'周一',
-                2:'周二',
-                3:'周三',
-                4:'周四',
-                5:'周五'
-            }
-
-            schedules.push(
-                <View key={i} style={{flexDirection:'row',padding:2,paddingHorizontal:10,marginTop:10}}>
-
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Icon name={'clock-o'} size={15} color="#666" style={{backgroundColor:'transparent'}}/>
-                    </View>
-
-                    <View style={{flexDirection:'row',alignItems:'center',marginLeft:9}}>
-                        <Text style={{color:'#222',fontSize:13}}>{dayMap[schedule.sectionDay]} {schedule.sectionStart}~{schedule.sectionEnd}</Text>
-                    </View>
-
-                </View>)
-        })
 
         var persons=[]
         persons.push(
@@ -171,7 +126,7 @@ class BadmintonCourseSignUp extends Component {
                     >
 
                         <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10}}>
-                            <Text>{person.username}</Text>
+                            <Text>{person.usename}</Text>
                         </View>
                         <View style={{flex:1}}></View>
                         <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10,width:70}}>
@@ -217,7 +172,7 @@ class BadmintonCourseSignUp extends Component {
                     >
                         <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center'}}>
                             <Text style={{fontSize:16,color:'#222',fontWeight:'bold'}}>
-                                {classInfo.className}
+                                {classInfo.courseName}
                             </Text>
 
 
@@ -225,13 +180,13 @@ class BadmintonCourseSignUp extends Component {
                             <View style={{flex:1}}></View>
 
                             <Text style={{fontSize:13,color:'#008B00',fontWeight:'bold'}}>
-                                {classInfo.venueName}
+                                {classInfo.unitName}
                             </Text>
 
                         </View>
 
 
-                        {schedules}
+                        {/*{schedules}*/}
 
                         <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center',marginTop:10}}>
                             <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -261,7 +216,7 @@ class BadmintonCourseSignUp extends Component {
                             <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center',marginRight:5}}>
                                 <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
                                 <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-                                    {classInfo.perName}
+                                    {classInfo.creatorName}
                                 </Text>
                             </View>
 
@@ -346,40 +301,54 @@ class BadmintonCourseSignUp extends Component {
                                    var info = {
                                         isSelfCheck:isSelfCheck,
                                         persons:persons,
-                                        classId:classInfo.classId,
+                                        classId:classInfo.courseId,
                                         creatorId:classInfo.creatorId,
                                         signNumber:classInfo.signNumber,
                                         maxNumber:classInfo.maxNumber,
                                         };
 
-                                   this.props.dispatch(checkPersonIsMember(info)).then((json)=>{
-                                        if(json.re==1){
-                                           this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{
+                                   {/*this.props.dispatch(checkPersonIsMember(info)).then((json)=>{*/}
+                                        {/*if(json.re==1){*/}
+                                           {/*this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{*/}
+                                            {/*if(json.re==1){*/}
+                                                {/*Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{*/}
+                                                  {/*this.goBack();*/}
+                                                   {/*this.props.setMyCourseList();*/}
+                                                {/*}}]);*/}
+                                            {/*}*/}
+                                            {/*console.log();*/}
+                                        {/*})*/}
+                                        {/*}*/}
+                                        {/*else{*/}
+                                            {/*if(json.data!==null){*/}
+                                                {/*var personString = '';*/}
+                                                {/*json.data.map((person)=>{*/}
+                                                    {/*if(person.personId==this.props.personInfo.personId){*/}
+                                                        {/*person.username=this.props.username;*/}
+                                                    {/*}*/}
+                                                    {/*personString = personString+person.username+'、'*/}
+                                                {/*})*/}
+                                                {/*Alert.alert('信息','此课程'+personString+'已报名',[{text:'确认',onPress:()=>{*/}
+
+                                                {/*}}]);*/}
+                                            {/*}*/}
+                                        {/*}*/}
+                                   {/*})*/}
+
+                                   this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{
                                             if(json.re==1){
                                                 Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
+                                                  this.goBack();
+                                                   this.props.setMyCourseList();
+                                                }}]);
+                                            }else if(json.re==-1){
+                                                Alert.alert('信息',json.data,[{text:'确认',onPress:()=>{
                                                   this.goBack();
                                                    this.props.setMyCourseList();
                                                 }}]);
                                             }
                                             console.log();
                                         })
-                                        }
-                                        else{
-                                            if(json.data!==null){
-                                                var personString = '';
-                                                json.data.map((person)=>{
-                                                    if(person.personId==this.props.personInfo.personId){
-                                                        person.username=this.props.username;
-                                                    }
-                                                    personString = personString+person.username+'、'
-                                                })
-                                                Alert.alert('信息','此课程'+personString+'已报名',[{text:'确认',onPress:()=>{
-
-                                                }}]);
-                                            }
-                                        }
-                                   })
-
 
                                }
                             }}

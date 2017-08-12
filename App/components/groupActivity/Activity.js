@@ -25,7 +25,7 @@ import MyActivity from './MyActivity';
 import ActivityDetail from './ActivityDetail';
 import ActivityPay from './ActivityPay';
 import {
-    fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity
+    fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity,fetchEventMemberList
 } from '../../action/ActivityActions';
 
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
@@ -94,18 +94,31 @@ class Activity extends Component {
     }
 
     navigate2ActivityDetail(rowData,flag){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'activity_detail',
-                component: ActivityDetail,
-                params: {
-                    activity:rowData,
-                    flag:flag,
-                    signUpActivity:this.signUpActivity.bind(this)
+
+        this.props.dispatch(fetchEventMemberList(rowData.eventId))
+            .then((json)=> {
+            if(json.re==1){
+
+                var memberList = json.data;
+                rowData.memberList = memberList;
+                const { navigator } = this.props;
+                if(navigator) {
+                    navigator.push({
+                        name: 'activity_detail',
+                        component: ActivityDetail,
+                        params: {
+                            activity:rowData,
+                            flag:flag,
+                            signUpActivity:this.signUpActivity.bind(this)
+                        }
+                    })
                 }
-            })
-        }
+            }
+
+
+
+        })
+
     }
 
     navigate2ActivityPay(event)
@@ -147,6 +160,11 @@ class Activity extends Component {
 
     renderRow(rowData,sectionId,rowId){
 
+
+        var endTimeParam = rowData.endTime.split(' ');
+        rowData.endTime = endTimeParam[1];
+
+
         var row=(
             <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,}}>
                 <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
@@ -158,16 +176,17 @@ class Activity extends Component {
                             <Text>{rowData.eventManager.username}</Text>
                         </View>
                     </View>
-                    <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                        {rowData.groupId==null?null:
-                            <Text>{'('+rowData.group.groupName+'组活动'+')'}</Text>
+                    <View style={{flex:2,justifyContent:'center',alignItems: 'flex-end'}}>
+                        {
+                            rowData.eventType==1?null:
+                            <Text>组内活动</Text>
                         }
                     </View>
 
 
-                    {rowData.meCoach!==undefined&&rowData.meCoach!==null?
-                    <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                        <Text>{'(指定您为教练)'}</Text>
+                    {rowData.coach!==undefined&&rowData.coach!==null?
+                    <View style={{flex:2,justifyContent:'center',alignItems: 'flex-end',marginRight:15}}>
+                        <Text>指定教练</Text>
                     </View> :null
                     }
 
@@ -175,8 +194,8 @@ class Activity extends Component {
                                       onPress={()=>{
                                           this.navigate2ActivityDetail(rowData,'公开活动');
                                       }}>
-                        <Text style={{marginRight:5}}>详情</Text>
-                        <Icon name={'angle-right'} size={25} color="#343434"/>
+                        <Text style={{marginRight:5,color:'#66CDAA'}}>详情</Text>
+                        <Icon name={'angle-right'} size={25} color="#66CDAA"/>
                     </TouchableOpacity>
                 </View>
                 <View style={{flex:3,padding:10}}>
@@ -199,7 +218,7 @@ class Activity extends Component {
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {DateFilter.filter(rowData.eventTime,'yyyy-mm-dd hh:mm')}
+                            {rowData.startTime}--{rowData.endTime}
                         </Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
@@ -207,13 +226,13 @@ class Activity extends Component {
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'人均费用：'+rowData.cost+'元'}
+                            {'人均费用：'+rowData.feeDes+'元'}
                         </Text>
                     </View>
                 </View>
                 <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                        <Text style={{color:'#aaa',fontSize:13}}>{rowData.memberList.length}报名</Text>
+                        <Text style={{color:'#aaa',fontSize:13}}>已报名:{rowData.eventNowMemNum}</Text>
                     </View>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center'}}>
 

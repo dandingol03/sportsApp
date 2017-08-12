@@ -465,7 +465,8 @@ class MyInformation extends Component{
                         <ValidateMobilePhoneModal
                             val={this.props.mobilePhone}
                             onVerify={(data)=>{
-                                this.props.dispatch(verifyMobilePhone(data)).then((json)=>{
+                                this.props.dispatch(verifyMobilePhone(data))
+                                .then((json)=>{
                                     if(json.re==1)
                                     {
                                         this.state.verifyCode=json.data

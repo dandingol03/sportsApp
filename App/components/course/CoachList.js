@@ -105,7 +105,7 @@ class CoachList extends Component {
 
                         <View style={{flex:1,paddingLeft:20}}>
                             <Text style={{fontSize:12,color:'#222'}}>
-                                {this.state.memberLevel[rowData.trainerInfo.coachlevel]}
+                                {this.state.memberLevel[rowData.coachlevel]}
                             </Text>
                         </View>
                     </View>
@@ -134,12 +134,9 @@ class CoachList extends Component {
     render()
     {
 
-        var state=this.state
-        var props=this.props
-
         var coachList = null;
         var {coaches}=this.props;
-        //var { coaches } = this.state;
+
         if(coaches&&coaches.length>0)
         {
             var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });

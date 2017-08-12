@@ -7,6 +7,7 @@ import {
     View,
     StyleSheet,
     Text,
+    TextInput,
     Platform,
     TouchableOpacity,
     RefreshControl,
@@ -95,9 +96,9 @@ class CreateCustomerPlan extends Component{
     setCoach(type,coach)
     {
         if(type=='coach'){
-            this.setState({plan:Object.assign(this.state.plan,{coachId:coach.trainerInfo.trainerId,coachName:coach.perName})});
+            this.setState({planNew:Object.assign(this.state.planNew,{coachId:coach.trainerId.toString(),coachName:coach.perName})});
         }else{
-            this.setState({plan:Object.assign(this.state.plan,{sparringId:coach.trainerInfo.trainerId,sparringName:coach.perName})});
+            this.setState({planNew:Object.assign(this.state.planNew,{sparringId:coach.trainerId.toString(),sparringName:coach.perName})});
         }
     }
 
@@ -212,7 +213,10 @@ class CreateCustomerPlan extends Component{
             coachId:null,coachName:null,deadline:null,deadlineTime:null},
             doingFetch: false,
             isRefreshing: false,
-            memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
+            memberLevelButtons:['取消','业余小白','初级爱好者','业余高手','专业运动员'],
+
+            planNew:{hasCoach:'0',coachId:null,remark:'',coachName:null},
+            remark:''
         }
     }
 
@@ -220,19 +224,7 @@ class CreateCustomerPlan extends Component{
     render() {
         const CANCEL_INDEX = 0;
         const DESTRUCTIVE_INDEX = 1;
-        const memberLevelButtons=['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'];
-
-        const shadowOpt = {
-            width:224*width/320,
-            height:25*height/568,
-            color:"#000",
-            border:0.5,
-            radius:1,
-            opacity:0.2,
-            x:-0.5,
-            y:1,
-            style:{marginVertical:8}
-        }
+        const memberLevelButtons=['取消','业余小白','初级爱好者','业余高手','专业运动员'];
 
         return (
             <View style={{flex:1}}>
@@ -245,238 +237,75 @@ class CreateCustomerPlan extends Component{
 
                 <View style={{flex:5,backgroundColor:'#fff'}}>
 
-                    {/*计划时间*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:10,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>计划时间：</Text>
-                        </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
-                            <TextInputWrapper
-                                placeholderTextColor='#888'
-                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入计划时间，如7月中旬..."
-                                val={this.state.plan.planTime}
-                                onChangeText={
-                                    (value)=>{
-                                        this.setState({plan:Object.assign(this.state.plan,{planTime:value})})
-                                    }}
-                                onCancel={
-                                    ()=>{this.setState({plan:Object.assign(this.state.plan,{planTime:null})});}
-                                }
-                            />
-                        </View>
-                    </View>
 
-                    {/*训练项目*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>训练项目：</Text>
-                        </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
-                            <TextInputWrapper
-                                placeholderTextColor='#888'
-                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入训练项目"
-                                val={this.state.plan.planItem}
-                                onChangeText={
-                                    (value)=>{
-                                        this.setState({plan:Object.assign(this.state.plan,{planItem:value})})
-                                    }}
-                                onCancel={
-                                    ()=>{this.setState({plan:Object.assign(this.state.plan,{planItem:null})});}
-                                }
-                            />
-                        </View>
-                    </View>
-
-                    {/*训练地点*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,
-                        marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>训练地点：</Text>
-                        </View>
-
-                        {
-                            this.state.venue==null?
-                                <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}
-                                                  onPress={()=>{
-                                this.navigate2VenueInspect();
-                                 //this.navigate2SelectVenue();
-                            }}>
-                                    <Text style={{marginLeft:20,fontSize:13,color:'#888'}}>
-                                        请选择训练地点
-                                    </Text>
-                                </TouchableOpacity>:
-                                <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}
-                                                  onPress={()=>{
-                                this.navigate2VenueInspect();
-                                 //this.navigate2SelectVenue();
-                            }}>
-                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#222',fontSize:13}}>{this.state.venue.name}</Text>
-                                    </View>
-                                    <TouchableOpacity style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20,padding:5}}
-                                                      onPress={()=>{
-                                                              var venue = null;
-                                                              this.setState({venue:venue});
-                                                          }}>
-                                        <Ionicons name={'md-close-circle'} size={20} color={'red'}/>
-                                    </TouchableOpacity>
-
-                                </TouchableOpacity>
-
-                        }
+                    <View style={{height:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
 
                     </View>
 
-                    {/*自身水平*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text>自身水平：</Text>
-                        </View>
-                        <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}
-                                          onPress={()=>{ this.show('actionSheet1'); }}>
+                    {/*需求描述*/}
+                    <View style={{flex:3,margin:10,marginTop:5,marginBottom:5}}>
+                        <Text>需求描述:</Text>
+                        <TextInput
+                            style={{height:height*200/736,padding:8,fontSize:13,marginTop:5,borderRadius:5,backgroundColor:'#eee'}}
+                            onChangeText={(text) =>
+                                        {
+                                           this.setState({remark:text});
+                                        }}
+                            value={this.state.remark}
+                            placeholder='请描述需求...'
+                            placeholderTextColor="#aaa"
+                            underlineColorAndroid="transparent"
+                            multiline={true}
+                        />
+                    </View>
 
-                            {
-                                this.state.plan.memberLevel==null?
-                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#888',fontSize:13}}>请选择自身水平：</Text>
-                                    </View> :
-                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#444',fontSize:13}}>{this.state.plan.memberLevelName}</Text>
-                                    </View>
-                            }
-                            <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                <Icon name={'angle-right'} size={30} color="#fff"/>
+                    <View style={{flex:2}}>
+                        {/*联系方式*/}
+                        <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
+                            <View style={{flex:1}}>
+                                <Text style={{color:'#343434'}}>联系方式：</Text>
                             </View>
-                            <ActionSheet
-                                ref={(o) => {
-                                        this.actionSheet1 = o;
-                                    }}
-                                title="请选择自身水平"
-                                options={memberLevelButtons}
-                                cancelButtonIndex={CANCEL_INDEX}
-                                destructiveButtonIndex={DESTRUCTIVE_INDEX}
-                                onPress={
-                                        (data)=>{ this._handlePress1(data); }
-                                    }
-                            />
-                        </TouchableOpacity>
-                    </View>
-
-
-                    {/*联系方式*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>联系方式：</Text>
-                        </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
-                            {
-                                this.props.personInfo.mobilePhone!==null?
+                                {
+                                    this.props.personInfo.mobilePhone!==null?
 
-                                    <View style={{height:30,marginLeft:20,justifyContent:'center',alignItems: 'center',}}>
-                                        <Text style={{color:'#222'}}>
-                                            {this.props.personInfo.mobilePhone}
-                                        </Text>
-                                    </View>:
-                                    <TextInputWrapper
-                                        placeholderTextColor='#888'
-                                        textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                        placeholder="请输入联系方式"
-                                        val={this.state.plan.phoneNum}
-                                        onChangeText={
+                                        <View style={{height:30,marginLeft:20,justifyContent:'center',alignItems: 'center',}}>
+                                            <Text style={{color:'#222'}}>
+                                                {this.props.personInfo.mobilePhone}
+                                            </Text>
+                                        </View>:
+                                        <TextInputWrapper
+                                            placeholderTextColor='#888'
+                                            textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                            placeholder="请输入联系方式"
+                                            val={this.state.plan.phoneNum}
+                                            onChangeText={
                                     (value)=>{
                                         this.setState({plan:Object.assign(this.state.plan,{phoneNum:value})})
                                     }}
-                                        onCancel={
+                                            onCancel={
                                     ()=>{this.setState({plan:Object.assign(this.state.plan,{phoneNum:null})});}
                                 }
-                                    />
-                            }
-                        </View>
-                    </View>
-
-                    {/*活动时间*/}
-                    <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
-                        margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text>有效期至</Text>
-                        </View>
-                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
-                            backgroundColor:'#eee',borderRadius:10}}>
-                            {
-                                this.state.plan.deadlineTime==null?
-                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#888',fontSize:13}}>请选择有效期至：</Text>
-                                    </View> :
-                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#444',fontSize:13}}>{this.state.plan.deadlineTime}</Text>
-                                    </View>
-                            }
-
-                            <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
-                                <DatePicker
-                                    style={{width:60,marginLeft:0,borderWidth:0}}
-                                    customStyles={{
-                                        placeholderText:{color:'transparent',fontSize:12},
-                                        dateInput:{height:30,borderWidth:0},
-                                        dateTouchBody:{marginRight:25,height:22,borderWidth:0},
-                                    }}
-                                    mode="datetime"
-                                    placeholder="选择"
-                                    format="YYYY-MM-DD HH:mm"
-                                    minDate={new Date()}
-                                    confirmBtnText="确认"
-                                    cancelBtnText="取消"
-                                    showIcon={true}
-                                    iconComponent={<Icon name={'angle-right'} size={30} color="#fff"/>}
-                                    onDateChange={(date) => {
-                                        if(this.state.selectTime==false)
-                                        {
-                                            //TODO:校检date的合法性
-                                            var reg=/([\d]{4})-([\d]{2})-([\d]{2})\s([\d]{2})\:([\d]{2})/;
-                                            var re=reg.exec(date);
-                                            if(re)
-                                            {
-                                                var tmpDate=new Date(re[1],parseInt(re[2])-1,re[3],re[4],re[5])
-                                                this.verifyDate(tmpDate);
-                                            }
-                                        }else{
-                                        }
-
-                                    }}
-                                />
+                                        />
+                                }
                             </View>
                         </View>
-                    </View>
 
+                        {/*选择教练*/}
+                        <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
+                            <View style={{flex:1}}>
+                                <Text>选择教练：</Text>
+                            </View>
 
-
-                    {/*选择教练*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text>选择教练：</Text>
-                        </View>
-
-                        {
-                            this.state.plan.coachId==null?
+                            {
+                                this.state.plan.coachId==null?
 
                                     <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
                                         {
-                                            this.state.plan.hasCoach==1?
+                                            this.state.plan.hasCoach=='1'?
                                                 <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
                                         ,borderWidth:1,borderColor:'#66CDAA'}}>
                                                     <Text style={{color:'#fff'}}>是</Text>
@@ -484,7 +313,7 @@ class CreateCustomerPlan extends Component{
                                                 <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
                                                                   onPress={()=>{
-                                            this.setState({plan:Object.assign(this.state.plan,{hasCoach:1})});
+                                            this.setState({planNew:Object.assign(this.state.planNew,{hasCoach:'1'})});
                                             this.navigate2Coach('coach');
                                         }}
                                                 >
@@ -493,7 +322,7 @@ class CreateCustomerPlan extends Component{
                                         }
 
                                         {
-                                            this.state.plan.hasCoach==0?
+                                            this.state.plan.hasCoach=='0'?
                                                 <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
                                         ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
                                                     <Text style={{color:'#fff'}}>否</Text>
@@ -501,7 +330,7 @@ class CreateCustomerPlan extends Component{
                                                 <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
                                                                   onPress={()=>{
-                                              this.setState({plan:Object.assign(this.state.plan,{hasCoach:0})});
+                                              this.setState({planNew:Object.assign(this.state.planNew,{hasCoach:'0'})});
                                           }}
                                                 >
                                                     <Text style={{color:'#888'}}>否</Text>
@@ -510,23 +339,201 @@ class CreateCustomerPlan extends Component{
                                         }
 
                                     </View> :
-                                <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                                    <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
-                                    <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
-                                        {this.state.plan.coachName}
-                                    </Text>
+                                        <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
+                                            {this.state.planNew.coachName}
+                                        </Text>
 
-                                    <TouchableOpacity style={{marginLeft:120,fontSize:13,color:'#222'}}
-                                                      onPress={()=>{
-                                                              var plan = this.state.plan;
+                                        <TouchableOpacity style={{marginLeft:120,fontSize:13,color:'#222'}}
+                                                          onPress={()=>{
+                                                              var plan = this.state.planNew;
                                                               plan.coachId=null;
-                                                              this.setState({plan:plan});
+                                                              this.setState({planNew:plan});
                                                           }}>
-                                        <Ionicons name={'md-close-circle'} size={18} color={'red'}/>
-                                    </TouchableOpacity>
-                                </View>
-                        }
+                                            <Ionicons name={'md-close-circle'} size={18} color={'red'}/>
+                                        </TouchableOpacity>
+                                    </View>
+                            }
+                        </View>
+
                     </View>
+
+
+                    {/*/!*计划时间*!/*/}
+                    {/*<View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:10,marginBottom:5}}>*/}
+                        {/*<View style={{flex:1}}>*/}
+                            {/*<Text style={{color:'#343434'}}>计划时间：</Text>*/}
+                        {/*</View>*/}
+                        {/*<View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
+                            {/*borderRadius:10}}>*/}
+                            {/*<TextInputWrapper*/}
+                                {/*placeholderTextColor='#888'*/}
+                                {/*textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}*/}
+                                {/*placeholder="请输入计划时间，如7月中旬..."*/}
+                                {/*val={this.state.plan.planTime}*/}
+                                {/*onChangeText={*/}
+                                    {/*(value)=>{*/}
+                                        {/*this.setState({plan:Object.assign(this.state.plan,{planTime:value})})*/}
+                                    {/*}}*/}
+                                {/*onCancel={*/}
+                                    {/*()=>{this.setState({plan:Object.assign(this.state.plan,{planTime:null})});}*/}
+                                {/*}*/}
+                            {/*/>*/}
+                        {/*</View>*/}
+                    {/*</View>*/}
+
+                    {/*/!*训练项目*!/*/}
+                    {/*<View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>*/}
+                        {/*<View style={{flex:1}}>*/}
+                            {/*<Text style={{color:'#343434'}}>训练项目：</Text>*/}
+                        {/*</View>*/}
+                        {/*<View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
+                            {/*borderRadius:10}}>*/}
+                            {/*<TextInputWrapper*/}
+                                {/*placeholderTextColor='#888'*/}
+                                {/*textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}*/}
+                                {/*placeholder="请输入训练项目"*/}
+                                {/*val={this.state.plan.planItem}*/}
+                                {/*onChangeText={*/}
+                                    {/*(value)=>{*/}
+                                        {/*this.setState({plan:Object.assign(this.state.plan,{planItem:value})})*/}
+                                    {/*}}*/}
+                                {/*onCancel={*/}
+                                    {/*()=>{this.setState({plan:Object.assign(this.state.plan,{planItem:null})});}*/}
+                                {/*}*/}
+                            {/*/>*/}
+                        {/*</View>*/}
+                    {/*</View>*/}
+
+                    {/*/!*训练地点*!/*/}
+                    {/*<View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>*/}
+                        {/*<View style={{flex:1}}>*/}
+                            {/*<Text style={{color:'#343434'}}>训练地点：</Text>*/}
+                        {/*</View>*/}
+
+                        {/*{*/}
+                            {/*this.state.venue==null?*/}
+                                {/*<TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
+                            {/*borderRadius:10}}*/}
+                                                  {/*onPress={()=>{*/}
+                                {/*this.navigate2VenueInspect();*/}
+                                 {/*//this.navigate2SelectVenue();*/}
+                            {/*}}>*/}
+                                    {/*<Text style={{marginLeft:20,fontSize:13,color:'#888'}}>*/}
+                                        {/*请选择训练地点*/}
+                                    {/*</Text>*/}
+                                {/*</TouchableOpacity>:*/}
+                                {/*<TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
+                            {/*borderRadius:10}}*/}
+                                                  {/*onPress={()=>{*/}
+                                {/*this.navigate2VenueInspect();*/}
+                                 {/*//this.navigate2SelectVenue();*/}
+                            {/*}}>*/}
+                                    {/*<View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>*/}
+                                        {/*<Text style={{color:'#222',fontSize:13}}>{this.state.venue.name}</Text>*/}
+                                    {/*</View>*/}
+                                    {/*<TouchableOpacity style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20,padding:5}}*/}
+                                                      {/*onPress={()=>{*/}
+                                                              {/*var venue = null;*/}
+                                                              {/*this.setState({venue:venue});*/}
+                                                          {/*}}>*/}
+                                        {/*<Ionicons name={'md-close-circle'} size={20} color={'red'}/>*/}
+                                    {/*</TouchableOpacity>*/}
+
+                                {/*</TouchableOpacity>*/}
+
+                        {/*}*/}
+
+                    {/*</View>*/}
+
+                    {/*/!*自身水平*!/*/}
+                    {/*<View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>*/}
+                        {/*<View style={{flex:1}}>*/}
+                            {/*<Text>自身水平：</Text>*/}
+                        {/*</View>*/}
+                        {/*<TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
+                            {/*borderRadius:10}}*/}
+                                          {/*onPress={()=>{ this.show('actionSheet1'); }}>*/}
+
+                            {/*{*/}
+                                {/*this.state.plan.memberLevel==null?*/}
+                                    {/*<View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>*/}
+                                        {/*<Text style={{color:'#888',fontSize:13}}>请选择自身水平：</Text>*/}
+                                    {/*</View> :*/}
+                                    {/*<View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>*/}
+                                        {/*<Text style={{color:'#444',fontSize:13}}>{this.state.plan.memberLevelName}</Text>*/}
+                                    {/*</View>*/}
+                            {/*}*/}
+                            {/*<View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>*/}
+                                {/*<Icon name={'angle-right'} size={30} color="#fff"/>*/}
+                            {/*</View>*/}
+                            {/*<ActionSheet*/}
+                                {/*ref={(o) => {*/}
+                                        {/*this.actionSheet1 = o;*/}
+                                    {/*}}*/}
+                                {/*title="请选择自身水平"*/}
+                                {/*options={memberLevelButtons}*/}
+                                {/*cancelButtonIndex={CANCEL_INDEX}*/}
+                                {/*destructiveButtonIndex={DESTRUCTIVE_INDEX}*/}
+                                {/*onPress={*/}
+                                        {/*(data)=>{ this._handlePress1(data); }*/}
+                                    {/*}*/}
+                            {/*/>*/}
+                        {/*</TouchableOpacity>*/}
+                    {/*</View>*/}
+
+                    {/*/!*活动时间*!/*/}
+                    {/*<View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>*/}
+                        {/*<View style={{flex:1}}>*/}
+                            {/*<Text>有效期至</Text>*/}
+                        {/*</View>*/}
+                        {/*<View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',borderRadius:10}}>*/}
+                            {/*{*/}
+                                {/*this.state.plan.deadlineTime==null?*/}
+                                    {/*<View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>*/}
+                                        {/*<Text style={{color:'#888',fontSize:13}}>请选择有效期至：</Text>*/}
+                                    {/*</View> :*/}
+                                    {/*<View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>*/}
+                                        {/*<Text style={{color:'#444',fontSize:13}}>{this.state.plan.deadlineTime}</Text>*/}
+                                    {/*</View>*/}
+                            {/*}*/}
+
+                            {/*<View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>*/}
+                                {/*<DatePicker*/}
+                                    {/*style={{width:60,marginLeft:0,borderWidth:0}}*/}
+                                    {/*customStyles={{*/}
+                                        {/*placeholderText:{color:'transparent',fontSize:12},*/}
+                                        {/*dateInput:{height:30,borderWidth:0},*/}
+                                        {/*dateTouchBody:{marginRight:25,height:22,borderWidth:0},*/}
+                                    {/*}}*/}
+                                    {/*mode="datetime"*/}
+                                    {/*placeholder="选择"*/}
+                                    {/*format="YYYY-MM-DD HH:mm"*/}
+                                    {/*minDate={new Date()}*/}
+                                    {/*confirmBtnText="确认"*/}
+                                    {/*cancelBtnText="取消"*/}
+                                    {/*showIcon={true}*/}
+                                    {/*iconComponent={<Icon name={'angle-right'} size={30} color="#fff"/>}*/}
+                                    {/*onDateChange={(date) => {*/}
+                                        {/*if(this.state.selectTime==false)*/}
+                                        {/*{*/}
+                                            {/*//TODO:校检date的合法性*/}
+                                            {/*var reg=/([\d]{4})-([\d]{2})-([\d]{2})\s([\d]{2})\:([\d]{2})/;*/}
+                                            {/*var re=reg.exec(date);*/}
+                                            {/*if(re)*/}
+                                            {/*{*/}
+                                                {/*var tmpDate=new Date(re[1],parseInt(re[2])-1,re[3],re[4],re[5])*/}
+                                                {/*this.verifyDate(tmpDate);*/}
+                                            {/*}*/}
+                                        {/*}else{*/}
+                                        {/*}*/}
+
+                                    {/*}}*/}
+                                {/*/>*/}
+                            {/*</View>*/}
+                        {/*</View>*/}
+                    {/*</View>*/}
 
                     <View style={{backgroundColor:'#fff',padding:10}}>
                         <Text style={{color:'#aaa',fontSize:11}}>
@@ -539,7 +546,7 @@ class CreateCustomerPlan extends Component{
                     <TouchableOpacity style={{width:width*2/3,backgroundColor:'#66CDAA',borderRadius:10,padding:10,flexDirection:'row',
                         justifyContent:'center'}}
                                       onPress={()=>{
-                            this.props.dispatch(distributeCustomerPlan(this.state.plan,this.state.venue)).then((json)=>{
+                            this.props.dispatch(distributeCustomerPlan(this.state.planNew,this.state.remark)).then((json)=>{
                                 if(json.re==1)
                                 {
                                        Alert.alert('信息','定制课程已发布成功',[{text:'确认',onPress:()=>{

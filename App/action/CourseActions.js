@@ -20,16 +20,16 @@ export let fetchMyCourses=()=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/allow/getMyClass',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'fetchMyCourses'
+
                 }
             }).then((json)=>{
                 resolve(json)
@@ -49,18 +49,16 @@ export let verifyCoursesCancelable=(courses)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/course/verifyCoursesCancelable',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'verifyCoursesCancelable',
-                    info:{
-                        courses
-                    }
+                    courses:courses
                 }
             }).then((json)=>{
                 resolve(json)
@@ -71,8 +69,6 @@ export let verifyCoursesCancelable=(courses)=>{
         })
     }
 }
-
-
 
 export let onMyCoursesUpdate=(myCourses)=>{
     return (dispatch,getState)=>{
@@ -97,16 +93,16 @@ export let fetchCourses=()=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
-            Proxy.postes({
-                url: Config.server + '/svr/request',
+            Proxy.get({
+                url: Config.server + '/func/allow/getAllClass ',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'fetchCourses'
+
                 }
             }).then((json)=>{
                 resolve(json)
@@ -151,45 +147,29 @@ export let disableMyCustomCoursesOnFresh=()=>{
     }
 }
 
+//获取用户定制课程
 export let fetchCustomCourse=()=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var today = new Date();
-            var customCourseList = [];
+            var sessionId = state.user.sessionId;
             var myCustomCourses = [];
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/course/fetchCustomCourse',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'fetchCustomCourse'
+
                 }
             }).then((json)=>{
                 var allCustomCourse = json.data;
                 if (allCustomCourse!== undefined && allCustomCourse !== null &&allCustomCourse.length > 0) {
-                    allCustomCourse.map((customCourse,i)=>{
-                        var date = new Date(customCourse.deadline);
-                        if(((date-today)>0&&today.getDate()!=date.getDate())||
-                            (today.getDate()==date.getDate()&&(date.getHours()-today.getHours()>0)))
-                        {
-                            if((customCourse.hasCoach==0&&customCourse.status==0)||(customCourse.hasCoach==1&&customCourse.coach.personId==state.user.personInfo.personId&&customCourse.status==0))
-                                customCourseList.push(customCourse);
-
-                            if(customCourse.courseManager==state.user.personInfo.personId){
-                                myCustomCourses.push(customCourse);
-                            }
-
-                        }
-                    })
-
-                    dispatch(setMyCustomCourses(myCustomCourses));
-                    resolve({re:json.re,data:customCourseList})
+                    dispatch(setMyCustomCourses(allCustomCourse));
+                    resolve({re:json.re,data:allCustomCourse})
                 }
             }).catch((e)=>{
                 alert(e);
@@ -213,26 +193,25 @@ export let onCustomCourseUpdate=(customCourse)=>{
 
 
 //发布课程
-export let distributeCourse=(course,timeList,venue,memberId)=>{
+export let distributeCourse=(course,venue,memberId,demandId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/course/distributeCourse',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'distributeCourse',
                     info:{
                         course,
-                        timeList,
                         venue,
-                        memberId
+                        memberId,
+                        demandId,
                     }
                 }
             }).then((json)=>{
@@ -251,19 +230,16 @@ export let fetchClassSchedule=(classId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/course/fetchClassSchedule',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'fetchClassSchedule',
-                    info:{
-                        classId
-                    }
+                    classId:classId
                 }
             }).then((json)=>{
                 resolve(json)
@@ -281,16 +257,17 @@ export let fetchPersonRelative =()=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/course/fetchPersonRelative',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
+
                 },
                 body: {
-                    request: 'fetchPersonRelative',
+
                 }
             }).then((json)=>{
                 resolve(json)
@@ -308,17 +285,16 @@ export let checkPersonIsMember=(info)=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/course/checkPersonIsMember',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
 
-                    request: 'checkPersonIsMember',
                     info:{
                         isSelfCheck:info.isSelfCheck,
                         persons:info.persons,
@@ -343,26 +319,39 @@ export let addBadmintonClassMermberInfo=(info)=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
+            var selfPersonId = state.user.personInfo.personId;
+
+
+            if(info.isSelfCheck==true){
+
+                var personIdStr = selfPersonId+',';
+            }else{
+                var personIdStr = '';
+            }
+
+            info.persons.map((person)=>{
+                personIdStr = personIdStr + person.personId+',';
+            })
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/allow/classMultiplySignUp',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
 
-                    request: 'addBadmintonClassMermberInfo',
-                    info:{
-                        isSelfCheck:info.isSelfCheck,
-                        persons:info.persons,
-                        classId:info.classId,
-                        creatorId:info.creatorId,
-                        signNumber:info.signNumber,
-                        maxNumber:info.maxNumber,
-                    }
-
+                    classId:parseInt(info.classId),
+                    personId:personIdStr,
+                    // info:{
+                    //     isSelfCheck:info.isSelfCheck,
+                    //     persons:info.persons,
+                    //     classId:info.classId,
+                    //     creatorId:info.creatorId,
+                    //     signNumber:info.signNumber,
+                    //     maxNumber:info.maxNumber,
+                    // }
 
                 }
             }).then((json)=>{
@@ -377,24 +366,23 @@ export let addBadmintonClassMermberInfo=(info)=>{
 }
 
 //发布用户定制课程
-export let distributeCustomerPlan=(plan,venue)=>{
+export let distributeCustomerPlan=(plan,remark)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/allow/createClass ',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'distributeCustomerPlan',
-                    info:{
-                        plan,
-                        venue
-                    }
+                    hasCoach:plan.hasCoach,
+                    classTrainer:plan.coachId,
+                    demandBrief:remark,
+
                 }
             }).then((json)=>{
                 resolve(json)
@@ -410,22 +398,20 @@ export let distributeCustomerPlan=(plan,venue)=>{
 
 //取消已有课程报名
 export let dropoutMyCourses=(courses)=>{
+
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/allow/deleteMyClassForPhone',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-             request: 'dropoutCourseInBatch',
-                    info:{
-                        courses
-                    }
+                    courses:courses
                 }
             }).then((json)=>{
                 resolve(json)
@@ -444,19 +430,17 @@ export let finishCustomCourse=(courseId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/course/finishCustomCourse',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'finishCustomCourse',
-                    info:{
-                        courseId:courseId
-                    }
+
+                    courseId:courseId
                 }
             }).then((json)=>{
                 if (json.re == 1) {
@@ -478,19 +462,16 @@ export let cancleCustomCourse=(courseId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/course/cancleCustomCourse',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'cancleCustomCourse',
-                    info:{
-                        courseId:courseId
-                    }
+                    courseId:courseId
                 }
             }).then((json)=>{
                 if (json.re == 1) {

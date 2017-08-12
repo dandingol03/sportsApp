@@ -242,7 +242,6 @@ class CourseTimeModal extends Component{
                                         {
                                             this.state.selectStartTime=true;
                                             var startTime = date
-                                            //var startTime = date.getHours().toString()+':'+date.getMinutes()().toString();
                                             this.setState({startTime:startTime,selectStartTime:false})
                                         }else{
                                         }

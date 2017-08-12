@@ -29,14 +29,13 @@ import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 import {
     releaseActivity
 } from '../../action/ActivityActions';
-
 import TextInputWrapper from '../../encrypt/TextInputWrapper';
 import VenueInspect from '../../components/venue/VenueInspect';
 import CreateGroup from './CreateGroup';
 import Coach from '../../components/Coach';
-import SelectVenue from '../../components/venue/SelectVenue';
 import ActivitySchedule from './IsActivitySchedule';
-import MyGroup from './MyGroup';
+import SelectTime from './SelectTime';
+
 import {
     fetchMyGroupList,disableMyGroupOnFresh,enableActivityOnFresh
 } from '../../action/ActivityActions';
@@ -62,7 +61,7 @@ class AddActivity extends Component{
 
     setEventPlace(eventPlace)
     {
-        this.setState({event:Object.assign(this.state.event,{eventPlace:eventPlace.name,unitId:eventPlace.unitId})});
+        this.setState({event:Object.assign(this.state.event,{eventPlace:eventPlace.name,unitId:eventPlace.unitId,feeDes:eventPlace.feeDes})});
         this.setState({feeDes:eventPlace.feeDes});
 
     }
@@ -70,13 +69,11 @@ class AddActivity extends Component{
     setCoach(type,coach)
     {
         if(type=='coach'){
-            this.setState({event:Object.assign(this.state.event,{coachId:coach.trainerInfo.trainerId,coachName:coach.perName})});
+            this.setState({event:Object.assign(this.state.event,{coachId:coach.trainerId,coachName:coach.perName})});
         }else{
-            this.setState({event:Object.assign(this.state.event,{sparringId:coach.trainerInfo.trainerId,sparringName:coach.perName})});
+            this.setState({event:Object.assign(this.state.event,{sparringId:coach.trainerId,sparringName:coach.perName})});
         }
     }
-
-
 
     navigate2VenueInspect()
     {
@@ -85,20 +82,6 @@ class AddActivity extends Component{
             navigator.push({
                 name: 'VenueInspect',
                 component: VenueInspect,
-                params: {
-                    setPlace:this.setEventPlace.bind(this)
-                }
-            })
-        }
-    }
-
-    navigate2SelectVenue()
-    {
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'VenueInspect',
-                component: SelectVenue,
                 params: {
                     setPlace:this.setEventPlace.bind(this)
                 }
@@ -137,13 +120,8 @@ class AddActivity extends Component{
     }
 
     setScheduleTime(time){
-       // this.state.event.type=event.type;
         var event = this.state.event;
-        event.eventTime = time.eventTime;
-        event.startTime= time.startTime;
-        event.endTime = time.endTime;
-        event.eventWeek = time.eventWeek;
-        event.isSchedule = time.type;
+        event.time= time;
         this.setState({event:event});
 
     }
@@ -154,12 +132,11 @@ class AddActivity extends Component{
         if(navigator){
             navigator.push({
                 name:'activity_schedule',
-                component:ActivitySchedule,
+                component:SelectTime,
                 params: {
                     setScheduleTime: this.setScheduleTime.bind(this)
                 }
-        })
-
+            })
         }
     }
 
@@ -171,9 +148,6 @@ class AddActivity extends Component{
                 Alert.alert('信息','新活动创建成功',[{text:'确认',onPress:()=>{
                     this.goBack()
                 }}]);
-                // console.log('发布新活动');
-                // alert('新活动创建成功！');
-                // this.goBack();
             }
 
         });
@@ -204,16 +178,18 @@ class AddActivity extends Component{
 
     }
 
+    //对象水平
     _handlePress1(index) {
 
         if(index!==0){
             var memberLevel = this.state.memberLevelButtons[index];
             var memberLevelCode = index;
-            this.setState({event:Object.assign(this.state.event,{memberLevel:memberLevel})});
+            this.setState({event:Object.assign(this.state.event,{memberLevel:memberLevelCode,memberLevelName:memberLevel})});
         }
 
     }
 
+    //选类型
     _handlePress2(index) {
 
         if(index!==0){
@@ -224,6 +200,7 @@ class AddActivity extends Component{
 
     }
 
+    //选群组
     _handlePress3(index,groupNameButtons) {
 
         if(index!==0){
@@ -237,14 +214,14 @@ class AddActivity extends Component{
                 var {myGroupList} = this.props;
                 if(myGroupList!==null&&myGroupList!==undefined){
                     myGroupList.map((group,i)=>{
-                        if(group.groupInfo.groupName==groupName){
-                            groupId = group.groupInfo.groupId;
-                            groupNum =  group.groupInfo.groupNowMemNum;
+                        if(group.groupName==groupName){
+                            groupId = group.groupId;
+                           // groupNum =  group.groupInfo.groupNowMemNum;
                         }
                     })
                 }
 
-                this.setState({event:Object.assign(this.state.event,{groupName:groupName,groupId:groupId,groupNum:groupNum})});
+                this.setState({event:Object.assign(this.state.event,{groupName:groupName,groupId:groupId})});
             }
         }
 
@@ -263,7 +240,7 @@ class AddActivity extends Component{
             var {myGroupList} = this.props;
             if(myGroupList!==null&&myGroupList!==undefined){
                 myGroupList.map((group,i)=>{
-                    groupNameButtons.push(group.groupInfo.groupName);
+                    groupNameButtons.push(group.groupName);
                 })
             }
             this.setState({doingFetch:false,groupNameButtons:groupNameButtons});
@@ -282,11 +259,11 @@ class AddActivity extends Component{
             doingFetch: false,
             selectTime:false,
             eventTime:null,
-            event:{eventBrief:'',eventType:null,isSchedule:null,eventName:null,eventTime:null,eventPlace:null,unitId:null,eventMaxMemNum:null,
+            event:{eventName:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
-                   groupName:null,groupId:null,groupNum:null,cost:null,startTime:null,endTime:null,eventWeek:null,},
+                   groupName:null,groupId:null,cost:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
 
-            memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'],
+            memberLevelButtons:['取消','业余小白','初级爱好者','业余高手','专业运动员'],
             eventTypeButtons:['取消','公开','组内'],
             groupNameButtons:['取消','新建群组'],
         }
@@ -303,20 +280,8 @@ class AddActivity extends Component{
                 this.fetchMyGroupList();
         }
 
-        const memberLevelButtons=['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员'];
+        const memberLevelButtons=['取消','业余小白','初级爱好者','业余高手','专业运动员'];
         const eventTypeButtons=['取消','公开','组内'];
-
-        const shadowOpt = {
-            width:224*width/320,
-            height:25*height/568,
-            color:"#000",
-            border:0.5,
-            radius:1,
-            opacity:0.2,
-            x:-0.5,
-            y:1,
-            style:{marginVertical:8}
-        }
 
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
@@ -399,7 +364,7 @@ class AddActivity extends Component{
                                                onPress={()=>{this.navigate2ActivitySchedule();}}>
                                 {
 
-                                    this.state.event.isSchedule==null?
+                                    this.state.event.time.startTime==null?
 
                                     <View
                                         style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
@@ -407,7 +372,7 @@ class AddActivity extends Component{
                                     </View>:
                                 <View
                                     style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                    <Text style={{fontSize:13}}>{this.state.event.eventTime} {this.state.event.startTime}-{this.state.event.endTime} </Text>
+                                    <Text style={{fontSize:13}}>{this.state.event.time.startTimeView}-{this.state.event.time.endTimeView} </Text>
                                 </View>
                                 }
 
@@ -427,7 +392,6 @@ class AddActivity extends Component{
                             borderRadius:10}}
                                                       onPress={
                                   ()=>{
-                                      //this.navigate2VenueInspect()
                                       this.navigate2VenueInspect()
                                   }}
                                     >
@@ -443,7 +407,6 @@ class AddActivity extends Component{
                             borderRadius:10}}
                                                       onPress={
                                   ()=>{
-                                      //this.navigate2VenueInspect()
                                       this.navigate2VenueInspect()
                                   }}
                                     >
@@ -580,7 +543,7 @@ class AddActivity extends Component{
                                                     <Text style={{color:'#888',fontSize:13}}>请选择对象水平：</Text>
                                                 </View> :
                                                 <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                                    <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevel}</Text>
+                                                    <Text style={{color:'#444',fontSize:13}}>{this.state.event.memberLevelName}</Text>
                                                 </View>
                                         }
                                         <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>

@@ -21,7 +21,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ActivityDetail from './ActivityDetail';
 import DateFilter from '../../utils/DateFilter';
 import {
-    enableActivityOnFresh,
+    enableActivityOnFresh,fetchEventMemberList
 } from '../../action/ActivityActions';
 
 
@@ -59,18 +59,30 @@ class MyActivity extends Component {
     }
 
     navigate2ActivityDetail(rowData,flag){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'activity_detail',
-                component: ActivityDetail,
-                params: {
-                    activity:rowData,
-                    flag:this.props.flag,
-                    setMyActivityList:this.setMyActivityList.bind(this),
+
+        this.props.dispatch(fetchEventMemberList(rowData.eventId))
+            .then((json)=> {
+                if (json.re == 1) {
+
+                    var memberList = json.data;
+                    rowData.memberList = memberList;
+
+                    const { navigator } = this.props;
+                    if(navigator) {
+                        navigator.push({
+                            name: 'activity_detail',
+                            component: ActivityDetail,
+                            params: {
+                                activity:rowData,
+                                flag:this.props.flag,
+                                setMyActivityList:this.setMyActivityList.bind(this),
+                            }
+                        })
+                    }
+
                 }
             })
-        }
+
     }
 
     renderRow(rowData,sectionId,rowId){
@@ -101,7 +113,7 @@ class MyActivity extends Component {
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
                             <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                {DateFilter.filter(rowData.eventTime,'yyyy-mm-dd hh:mm')}
+                                {rowData.startTime} -- {rowData.endTime}
                             </Text>
                         </View>
                         <View style={{flexDirection:'row',marginBottom:3}}>

@@ -61,16 +61,14 @@ var  Login =React.createClass({
 
                 <Image resizeMode="stretch" source={require('../../img/beijing@2x.png')} style={{width:width,height:height}}>
 
-                    <View style={{backgroundColor:'transparent',flex:1}}>
+                    <View style={{backgroundColor:'transparent',flex:3}}>
 
                     </View>
 
-                    <View style={{paddingVertical:2,backgroundColor:'transparent',flex:1}} >
+                    <View style={{paddingVertical:2,backgroundColor:'transparent',flex:4}} >
 
                         {/*输入用户名*/}
-                        <View style={{flexDirection:'row',height:45,marginBottom:10,backgroundColor:'transparent',margin:10,
-                        borderWidth:1,borderColor:"#66CDAA",borderRadius:20,padding:3}}>
-
+                        <View style={{flexDirection:'row',height:45,marginBottom:10,backgroundColor:'transparent',margin:10, borderWidth:1,borderColor:"#66CDAA",borderRadius:20,padding:3}}>
 
                             <View style={{flex:6}}>
                                 <View style={{flex:1,flexDirection:'row'}}>
@@ -101,9 +99,7 @@ var  Login =React.createClass({
                         </View>
 
                         {/*输入密码*/}
-                        <View style={{flexDirection:'row',height:42,marginTop:10,backgroundColor:'transparent',margin:10,
-                        borderWidth:1,borderColor:"#66CDAA",borderRadius:20}}>
-
+                        <View style={{flexDirection:'row',height:42,marginTop:10,backgroundColor:'transparent',margin:10,borderWidth:1,borderColor:"#66CDAA",borderRadius:20}}>
 
                             <View style={{flex:6}}>
                                 <View style={{flex:1,flexDirection:'row'}}>
@@ -170,7 +166,6 @@ var  Login =React.createClass({
                             </View>
                         </View>
 
-
                         {/*登录注册按钮*/}
                         <View style={{flexDirection:'row',justifyContent:'center',marginBottom:10,marginTop:20}}>
 
@@ -196,8 +191,14 @@ var  Login =React.createClass({
                                           {
                                               this.setState({showProgress: true});
                                               this.props.dispatch(doLogin(this.state.user.username,this.state.user.password))
-                                              .then(()=>{
+                                              .then((json)=>{
                                                   this.setState({showProgress: false,user:{}});
+                                                  if(json.re==-1){
+                                                      setTimeout(()=>{
+                                                            alert(json.data);
+                                                      },900)
+
+                                                  }
                                               })
                                               .catch((e)=>{
                                                         alert(e);

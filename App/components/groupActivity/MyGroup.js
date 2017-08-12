@@ -23,7 +23,7 @@ import CreateGroup from './CreateGroup';
 import GroupDetail from './GroupDetail';
 import AllGroup from './AllGroup';
 import {
-    fetchMyGroupList,disableMyGroupOnFresh,enableMyGroupOnFresh
+    fetchMyGroupList,disableMyGroupOnFresh,enableMyGroupOnFresh,fetchGroupMemberList
 } from '../../action/ActivityActions';
 
 class MyGroup extends Component{
@@ -99,19 +99,30 @@ class MyGroup extends Component{
     }
 
     navigate2GroupDetail(group){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name:'group_detail',
-                component: GroupDetail,
-                params: {
-                    setMyGroupList:this.setMyGroupList.bind(this),
-                    groupInfo:group.groupInfo,
-                    memberList:group.memberList,
-                    flag:'我的组详情'
+
+        this.props.dispatch(fetchGroupMemberList(group))
+            .then((json)=> {
+                if (json.re == 1) {
+
+                    var memberList = json.data;
+
+                    const { navigator } = this.props;
+                    if(navigator) {
+                        navigator.push({
+                            name:'group_detail',
+                            component: GroupDetail,
+                            params: {
+                                setMyGroupList:this.setMyGroupList.bind(this),
+                                groupInfo:group,
+                                memberList:memberList,
+                                flag:'我的组详情'
+                            }
+                        })
+                    }
+
                 }
             })
-        }
+
     }
 
     renderRow(rowData,sectionId,rowId){
@@ -125,10 +136,10 @@ class MyGroup extends Component{
                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                 </View>
                 <View style={{flex:3,justifyContent:'center',alignItems: 'center',flexDirection:'row'}}>
-                    <Text style={{color:'#343434'}}>{rowData.groupInfo.groupName}</Text>
-                    <Text style={{color:'#343434'}}>({rowData.memberList.length})</Text>
+                    <Text style={{color:'#343434'}}>{rowData.groupName}</Text>
+                    <Text style={{color:'#343434'}}></Text>
                     {
-                        rowData.groupInfo.groupManager==this.props.personInfo.personId?
+                        rowData.groupManager==this.props.personInfo.personId?
                             <Icon name={'user'} style={{marginLeft:10}} size={18} color="pink"/>:null
                     }
                 </View>
@@ -197,8 +208,6 @@ class MyGroup extends Component{
             }
         }
 
-        // var groupList = this.state.groupList;
-        // var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
         return (
             <View style={{flex:1, backgroundColor:'#eee',}}>

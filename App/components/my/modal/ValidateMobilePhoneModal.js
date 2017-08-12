@@ -21,7 +21,9 @@ import ActionSheet from 'react-native-actionsheet';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 var {height, width} = Dimensions.get('window');
-
+import{
+    verifyMobilePhone,
+} from '../../../action/UserActions';
 
 class CompulseMobilePhoneModal extends Component{
 
@@ -44,31 +46,6 @@ class CompulseMobilePhoneModal extends Component{
         this.setState(nextProps)
     }
 
-    renderRow(rowData)
-    {
-        if(this.state.selectDay!==rowData){
-            return  (
-                <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
-                justifyContent:'center',alignItems: 'center'}}
-                                  onPress={()=>{this.setState({selectDay:rowData});}}>
-                    <Text style={{color:'#66CDAA',fontSize:13}}>{rowData}</Text>
-                </TouchableOpacity>
-
-            );
-        }else{
-            return  (
-                <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
-                justifyContent:'center',alignItems: 'center'}}
-                                  onPress={()=>{this.setState({selectDay:rowData});}}>
-                    <Text style={{color:'#fff',fontSize:13}}>{rowData}</Text>
-                </TouchableOpacity>
-
-            );
-        }
-
-    }
-
-
     constructor(props)
     {
         super(props);
@@ -80,8 +57,6 @@ class CompulseMobilePhoneModal extends Component{
     }
 
     render(){
-
-
 
         return (
 
@@ -118,6 +93,7 @@ class CompulseMobilePhoneModal extends Component{
                                 //进行验证
                                 if(this.props.onVerify)
                                     this.props.onVerify(this.state.val)
+                                    //this.props.dispatch(verifyMobilePhone(this.state.val))
                             }}
                         >
                             <Text style={{fontSize:12,color:'#fff'}}>获取验证码</Text>

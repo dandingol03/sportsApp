@@ -86,15 +86,16 @@ export let fetchMaintainedVenue=()=>{
 
             var state=getState();
             var accessToken = state.user.accessToken;
-
+            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/getMaintainedVenue',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'getMaintainedVenue',
+
                 }
             }).then((json)=>{
                 resolve(json)

@@ -30,12 +30,9 @@ import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native
 
 var { height, width } = Dimensions.get('window');
 
-const CANCEL_INDEX = 0;
-const DESTRUCTIVE_INDEX = 1;
 import{
     fetchCourses,
     onCoursesUpdate,
-    fetchClassSchedule
 } from '../../action/CourseActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
@@ -120,16 +117,7 @@ class BadmintonCourse extends Component {
         return (
             <TouchableOpacity style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
                 onPress={()=>{
-                    this.props.dispatch(fetchClassSchedule(rowData.classId)).then((json)=>{
-                       if(json.re==1)
-                       {
-                           var classInfo=rowData
-                           classInfo.shedules=json.data
-                           this.navigate2CourseSignUp(classInfo)
-                       }else{
-
-                       }
-                    })
+                    this.navigate2CourseSignUp(rowData);
 
                 }}
             >
@@ -138,7 +126,7 @@ class BadmintonCourse extends Component {
 
                         <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
                             <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                {rowData.className}
+                                {rowData.courseName}
                             </Text>
                         </View>
 
@@ -146,7 +134,7 @@ class BadmintonCourse extends Component {
                         <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
                             <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
                             <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-                                {rowData.perName}
+                                {rowData.creatorName}教练
                             </Text>
                         </View>
                     </View>
@@ -170,7 +158,7 @@ class BadmintonCourse extends Component {
 
                         <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
                             <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.venueName}
+                                {rowData.unitName}
                             </Text>
                         </View>
 
@@ -200,6 +188,14 @@ class BadmintonCourse extends Component {
                 },           // Configuration
             ).start();
         }.bind(this), 2000);
+
+        this.props.dispatch(fetchCourses()).then((json)=>{
+            if(json.re==1)
+            {
+                this.props.dispatch(onCoursesUpdate(json.data))
+            }
+        })
+
     }
 
     _handlePress2(index) {
@@ -214,19 +210,6 @@ class BadmintonCourse extends Component {
 
     show(actionSheet) {
         this[actionSheet].show();
-    }
-
-    showPopover(ref) {
-        this.refs[ref].measure((ox, oy, width, height, px, py) => {
-            this.setState({
-                menuVisible: true,
-                buttonRect: { x: px + 20, y: py + 0, width: 200, height: height }
-            });
-        });
-    }
-
-    closePopover() {
-        this.setState({ menuVisible: false });
     }
 
     /**
@@ -246,8 +229,6 @@ class BadmintonCourse extends Component {
     }
 
     render() {
-
-        var displayArea = { x: 5, y: 20, width: width, height: height - 25 };
 
         var courseList = null
         if (this.props.courses && this.props.courses.length > 0) {
@@ -295,14 +276,15 @@ class BadmintonCourse extends Component {
         }
 
         var actions=[]
-        if(this.props.userType==0)//用户
+        if(this.props.userType=='0')//用户
         {
             // actions.push({icon:ACTION_ADD,value:'xxx',show:OPTION_SHOW})
-            actions.push({value:'课程定制',show:OPTION_NEVER})
+            actions.push({value:'定制课程',show:OPTION_NEVER})
         }
         else
         {
             actions.push({value:'创建课程',show:OPTION_NEVER});
+            actions.push({value:'课程定制',show:OPTION_NEVER});//教练作为用户
             actions.push({value:'查看定制列表',show:OPTION_NEVER});
         }
 
@@ -313,15 +295,20 @@ class BadmintonCourse extends Component {
                 <Toolbar width={width} title="课程制定" navigator={this.props.navigator}
                          actions={actions}
                          onPress={(i)=>{
-                             if(this.props.userType==1){
+                             if(this.props.userType=='1'){
                                  if(i==0)
                                  {
-                                     this.navigate2BadmintonCourseForCoach();
+                                    this.navigate2BadmintonCourseForCoach();
                                  }
                                  if(i==1)
                                 {
-                                     this.navigate2CustomCourseList();
+                                    this.navigate2BadmintonCourseForUser();
                                 }
+                                  if(i==2)
+                                {
+                                    this.navigate2CustomCourseList();
+                                }
+
 
                              }else{
                                  this.navigate2BadmintonCourseForUser()
@@ -437,7 +424,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => {
 
     const props = {
-        userType: parseInt(state.user.usertype),
+        userType: state.user.usertype.perTypeCode,
         courses:state.course.courses
     }
     return props

@@ -96,18 +96,18 @@ export let updateSelfLevel=(selfLevel)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-
+            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/updateSelfLevel',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'updateSelfLevel',
-                    info:{
-                        selfLevel
-                    }
+
+                    selfLevel:selfLevel
+
                 }
             }).then((json)=>{
                 resolve(json)
@@ -154,18 +154,18 @@ export let updateUsername=(username)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-
+            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/updateUsername',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'updateUsername',
-                    info:{
+
                         username:username
-                    }
+
                 }
             }).then((json)=>{
                 resolve(json)
@@ -232,17 +232,17 @@ export let updateMobilePhone=(mobilePhone)=>{
             var state=getState();
             var accessToken = state.user.accessToken;
 
+            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/func/node/updateMobilePhone',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
+
                 },
                 body: {
-                    request: 'updateMobilePhone',
-                    info:{
-                        mobilePhone:mobilePhone
-                    }
+                    mobilePhone:mobilePhone
                 }
             }).then((json)=>{
                 resolve(json)
@@ -259,12 +259,15 @@ export let updateMobilePhone=(mobilePhone)=>{
 export let verifyMobilePhone=(mobilePhone)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
+            var state=getState();
+            var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/node/securityCode',
                 headers: {
-                    'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
                     phoneNum:mobilePhone
@@ -287,18 +290,15 @@ export let updatePerName=(perName)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-
+            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/updatePerName',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'updatePerName',
-                    info:{
                         perName:perName
-                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -318,18 +318,18 @@ export let updateWeChat=(wechat)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-
+            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/updateWeChat',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'updateWeChat',
-                    info:{
+
                         wechat:wechat
-                    }
+
                 }
             }).then((json)=>{
                 resolve(json)
@@ -349,18 +349,16 @@ export let updatePerIdCard=(perIdCard)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-
+            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/updatePerIdCard',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'updatePerIdCard',
-                    info:{
                         perIdCard:perIdCard
-                    }
                 }
             }).then((json)=>{
                 resolve(json)
@@ -429,16 +427,21 @@ export let addRelativePerson=(payload)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
-
+            var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/func/node/addRelativePerson',
+                url: Config.server + '/func/relative/addRelative',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'addRelativePerson',
-                    info:payload
+                    userName:payload.username,
+                    genderCode:payload.genderCode.toString(),
+                    perName:payload.perName,
+                    perBirthday:payload.perBirthday,
+
+                    //payload:payload
                 }
             }).then((json)=>{
                 if(json.re==1){
@@ -463,20 +466,18 @@ export let registerUser=(payload)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var {userType,username,password,genderCode,mobilePhone,nickName}=payload;
-
+            var sessionId = state.user.sessionId;
             Proxy.postes({
-                url: Config.server + '/register',
+                url: Config.server + '/func/register/userRegister',
                 headers: {
-                    'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    username: username,
+                    userName: username,
                     password:password,
-                    mobilePhone:mobilePhone,
-                    genderCode:genderCode,
-                    nickName:nickName,
-                    userType:userType
+                    phoneNum:mobilePhone,
+                    Trainer:userType
                 }
             }).then((json)=>{
                 resolve(json)
@@ -492,14 +493,134 @@ export let registerUser=(payload)=>{
 }
 
 //用户登录
+// export let doLogin=function(username,password){
+//
+//     return dispatch=> {
+//
+//         return new Promise((resolve, reject) => {
+//             var versionName = '1';
+//             var sessionId = null;
+//
+//             Proxy.getSession({
+//                 url: Config.server + '/func/auth/webLogin',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: {
+//                     loginName: username,
+//                     password: password,
+//                     loginType:1,
+//                     parameter:{appVersion:versionName}
+//                 }
+//             }).then((response)=> {
+//
+//                 var json=response.text().then((res) => {
+//                     resolve(JSON.parse(res));
+//                 });
+//
+//                 console.log('json='+json);
+//
+//                 sessionId = response.headers.map['set-cookie'][0];
+//
+//                 //TODO:make a dispatch
+//                 dispatch(updateCertificate({username: username, password: password}));
+//
+//
+//                 PreferenceStore.put('username', username);
+//                 PreferenceStore.put('password', password);
+//
+//                 return Proxy.postes({
+//                     url:Config.server + '/func/node/getUserTypeByPersonId',
+//                     headers: {
+//                         'Content-Type': 'application/json',
+//                         'Cookie':sessionId,
+//
+//                     },
+//                     body: {
+//
+//                     }
+//                 });
+//
+//             }).then((json)=> {
+//
+//                 if (json.re == 1) {
+//                     dispatch(updateUserType(json.data))
+//                 }
+//                 var userType = json.data.perTypeCode;
+//                 if (parseInt(userType) == 0)//用户
+//                 {
+//                     return {re: 1}
+//                 } else {
+//                     //教练,获取教练信息
+//                     return Proxy.postes({
+//                         url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
+//                         headers: {
+//                             'Content-Type': 'application/json',
+//                             'Cookie':sessionId,
+//                         },
+//                         body: {
+//
+//                         }
+//                     });
+//                 }
+//             }).then((json)=>{
+//
+//                 if(json.re==1&&json.data)
+//                 {
+//                     dispatch(updateTrainerInfo({data:json.data}))
+//                 }
+//
+//
+//
+//                 return Proxy.postes({
+//                     url: Config.server + '/func/node/getPersonInfoByPersonId',
+//                     headers: {
+//                         'Content-Type': 'application/json',
+//                         'Cookie':sessionId,
+//                     },
+//                     body: {
+//
+//                     }
+//                 });
+//             }).then((json) => {
+//
+//                 if (json.re == 1)
+//                     dispatch(updatePersonInfo({data: json.data}));
+//
+//
+//                 return Proxy.postes({
+//                     url: Config.server + '/func/node/getPersonInfoAuxiliaryByPersonId',
+//                     headers: {
+//                         'Content-Type': 'application/json',
+//                         'Cookie':sessionId,
+//                     },
+//                     body: {
+//
+//                     }
+//                 })
+//
+//             }).then((json)=>{
+//                 if(json.re==1)
+//                     dispatch(updatePersonInfoAuxiliary({data: json.data}));
+//                 //dispatch(getAccessToken(accessToken));
+//                 dispatch(setSessionId(sessionId));
+//                 resolve(json)
+//             }).catch((err)=> {
+//                 //dispatch(getAccessToken(null));
+//                 dispatch(setSessionId(sessionId));
+//                 reject(err)
+//             });
+//         });
+//     }
+// }
+
+
 export let doLogin=function(username,password){
 
     return dispatch=> {
 
         return new Promise((resolve, reject) => {
             var versionName = '1';
-
-            var personId = null;
             var sessionId = null;
 
             Proxy.getSession({
@@ -515,19 +636,24 @@ export let doLogin=function(username,password){
                 }
             }).then((response)=> {
 
-                //var json=JSON.parse(response.text());
-
                 sessionId = response.headers.map['set-cookie'][0];
+                return response.text();
 
-                if(sessionId!==null&&sessionId!==undefined){
+            }).then((json)=>{
+                var loginInfo = JSON.parse(json);
 
+                if(loginInfo.errorMessageList!==null&&loginInfo.errorMessageList!==undefined&&loginInfo.errorMessageList.length>0){
+                    resolve({re:-1,data:loginInfo.errorMessageList[1]});
+
+                }else{
                     //TODO:make a dispatch
                     dispatch(updateCertificate({username: username, password: password}));
+
 
                     PreferenceStore.put('username', username);
                     PreferenceStore.put('password', password);
 
-                    return Proxy.postes({
+                    Proxy.postes({
                         url:Config.server + '/func/node/getUserTypeByPersonId',
                         headers: {
                             'Content-Type': 'application/json',
@@ -537,221 +663,92 @@ export let doLogin=function(username,password){
                         body: {
 
                         }
-                    });
+                    }).then((json)=> {
 
-                }else{
-                    alert('登录失败');
-                }
-
-            }).then((json)=> {
-
-                if (json.re == 1) {
-                    dispatch(updateUserType(json.data))
-                }
-                var userType = json.data
-                if (parseInt(userType) == 0)//用户
-                {
-                    return {re: 1}
-                } else {
-                    //教练,获取教练信息
-                    return Proxy.postes({
-                        url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Cookie':sessionId,
-                        },
-                        body: {
-
+                        if (json.re == 1) {
+                            dispatch(updateUserType(json.data))
                         }
+                        var userType = json.data.perTypeCode;
+                        if (parseInt(userType) == 0)//用户
+                        {
+                            return {re: 1}
+                        } else {
+                            //教练,获取教练信息
+                            return Proxy.postes({
+                                url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Cookie':sessionId,
+                                },
+                                body: {
+
+                                }
+                            });
+                        }
+                    }).then((json)=>{
+
+                        if(json.re==1&&json.data)
+                        {
+                            dispatch(updateTrainerInfo({data:json.data}))
+                        }
+
+
+
+                        return Proxy.postes({
+                            url: Config.server + '/func/node/getPersonInfoByPersonId',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Cookie':sessionId,
+                            },
+                            body: {
+
+                            }
+                        });
+                    }).then((json) => {
+
+                        if (json.re == 1)
+                            dispatch(updatePersonInfo({data: json.data}));
+
+
+                        return Proxy.postes({
+                            url: Config.server + '/func/node/getPersonInfoAuxiliaryByPersonId',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Cookie':sessionId,
+                            },
+                            body: {
+
+                            }
+                        })
+
+                    }).then((json)=>{
+                        if(json.re==1)
+                            dispatch(updatePersonInfoAuxiliary({data: json.data}));
+                        //dispatch(getAccessToken(accessToken));
+                        dispatch(setSessionId(sessionId));
+                        resolve(json)
+                    }).catch((err)=> {
+                        //dispatch(getAccessToken(null));
+                        dispatch(setSessionId(sessionId));
+                        reject(err)
                     });
-                }
-            }).then((json)=>{
 
-                if(json.re==1&&json.data)
-                {
-                    dispatch(updateTrainerInfo({data:json.data}))
                 }
 
-
-
-                return Proxy.postes({
-                    url: Config.server + '/func/node/getPersonInfoByPersonId',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Cookie':sessionId,
-                    },
-                    body: {
-
-                    }
-                });
-            }).then((json) => {
-
-                if (json.re == 1)
-                    dispatch(updatePersonInfo({data: json.data}));
-
-
-                return Proxy.postes({
-                    url: Config.server + '/func/node/getPersonInfoAuxiliaryByPersonId',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Cookie':sessionId,
-                    },
-                    body: {
-
-                    }
-                })
-
-            }).then((json)=>{
-                if(json.re==1)
-                    dispatch(updatePersonInfoAuxiliary({data: json.data}));
-                //dispatch(getAccessToken(accessToken));
-                dispatch(setSessionId(sessionId));
-                resolve(json)
             }).catch((err)=> {
                 //dispatch(getAccessToken(null));
                 dispatch(setSessionId(sessionId));
                 reject(err)
-            });
-        });
-    }
-}
-
-//用户登录（node）
-// export let doLogin=function(username,password){
-//     return dispatch=> {
-//
-//         return new Promise((resolve, reject) => {
-//
-//             var accessToken=null;
-//             Proxy.postes({
-//                 url: Config.server + '/login',
-//                 headers: {
-//                     'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
-//                     'Content-Type': 'application/x-www-form-urlencoded'
-//                 },
-//                 body: "grant_type=password&password=" + password + "&username=" + username
-//             }).then((json)=> {
-//                 accessToken = json.access_token;
-//
-//                 //TODO:make a dispatch
-//                 dispatch(updateCertificate({username: username, password: password}));
-//
-//
-//                 PreferenceStore.put('username', username);
-//                 PreferenceStore.put('password', password);
-//
-//
-//                 return Proxy.postes({
-//                     url: Config.server + '/svr/request',
-//                     headers: {
-//                         'Authorization': "Bearer " + accessToken,
-//                         'Content-Type': 'application/json'
-//                     },
-//                     body: {
-//                         request: 'getUserTypeByPersonId'
-//                     }
-//                 });
-//
-//             }).then((json)=> {
-//
-//                 if (json.re == 1) {
-//                     dispatch(updateUserType(json.data))
-//                 }
-//                 var userType = json.data
-//                 if (parseInt(userType) == 0)//用户
-//                 {
-//                     return {re: 1}
-//                 } else {
-//                     //教练,获取教练信息
-//                     return Proxy.postes({
-//                         url: Config.server + '/svr/request',
-//                         headers: {
-//                             'Authorization': "Bearer " + accessToken,
-//                             'Content-Type': 'application/json'
-//                         },
-//                         body: {
-//                             request: 'fetchBadmintonTrainerInfo'
-//                         }
-//                     });
-//                 }
-//             }).then((json)=>{
-//
-//                 if(json.re==1&&json.data)
-//                 {
-//                     dispatch(updateTrainerInfo({data:json.data}))
-//                 }
-//
-//
-//
-//                 return Proxy.postes({
-//                     url: Config.server + '/svr/request',
-//                     headers: {
-//                         'Authorization': "Bearer " + accessToken,
-//                         'Content-Type': 'application/json'
-//                     },
-//                     body: {
-//                         request: 'getPersonInfoByPersonId'
-//                     }
-//                 });
-//             }).then((json) => {
-//
-//                 if (json.re == 1)
-//                     dispatch(updatePersonInfo({data: json.data}));
-//
-//
-//                 return Proxy.postes({
-//                     url: Config.server + '/svr/request',
-//                     headers: {
-//                         'Authorization': "Bearer " + accessToken,
-//                         'Content-Type': 'application/json'
-//                     },
-//                     body: {
-//                         request: 'getPersonInfoAuxiliaryByPersonId'
-//                     }
-//                 })
-//
-//             }).then((json)=>{
-//                 if(json.re==1)
-//                     dispatch(updatePersonInfoAuxiliary({data: json.data}));
-//                 dispatch(getAccessToken(accessToken));
-//                 resolve(json)
-//             }).catch((err)=> {
-//                 dispatch(getAccessToken(null));
-//                 reject(err)
-//             });
-//         });
-//     }
-// }
-
-//测试
-export let doGetType=function(){
-
-    return dispatch=> {
-
-        return new Promise((resolve, reject) => {
-
-            var personId=38;
-
-            Proxy.postes({
-                url:Config.server+'/func/commodity/getQueryDataListByInputStringMobile',
-                headers: {
-                    //'Authorization': "Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW",
-                    //'Content-Type': 'application/x-www-form-urlencoded'
-                    'Content-Type': 'application/json'
-                },
-                //body: "codigo=" + codeNum + "&merchantId=" + merchantId
-                body: {
-                    codigo:codeNum,
-                    merchantId:merchantId
-                }
-            }).then((json)=>{
-                if(json.re==1){
-                    alert('xxx');
-                }
             })
-        });
+        })
     }
 }
+
+
+
+
+
+
 
 //上传身份证
 export let uploadPersonIdCard=(path,personId)=> {
@@ -915,19 +912,17 @@ export let wechatPay=(pay,eventId)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var accessToken = state.user.accessToken;
+            var sessionId = state.user.sessionId;
 
             Proxy.postes({
-                url: Config.server + '/svr/request',
+                url: Config.server + '/func/node/addPaymentInfo',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie':sessionId,
                 },
                 body: {
-                    request: 'addPaymentInfo',
-                    info:{
-                        pay:pay,
-                        eventId:eventId
-                    }
+                    pay:pay,
+                    eventId:parseInt(eventId)
                 }
             }).then((json)=>{
                 if(json.re==1){
@@ -938,13 +933,12 @@ export let wechatPay=(pay,eventId)=>{
 
                     if(pay.payType=='微信'){
                         Proxy.postes({
-                            url: Config.server + '/svr/request',
+                            url: Config.server + '/func/node/wechatPay',
                             headers: {
-                                'Authorization': "Bearer " + accessToken,
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/json',
+                                'Cookie':sessionId,
                             },
                             body: {
-                                request: 'wechatPay',
                                 info:{
                                     app_id:'wx9068ac0e88c09e7a',//应用ID
                                     mch_id:'1485755962',//商户号

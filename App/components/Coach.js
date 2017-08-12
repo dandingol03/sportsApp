@@ -90,7 +90,7 @@ class Coach extends Component {
 
                         <View style={{flex:1,paddingLeft:20}}>
                             <Text style={{fontSize:12,color:'#222'}}>
-                                {this.state.memberLevel[rowData.trainerInfo.coachlevel]}
+                                {this.state.memberLevel[rowData.coachLevel]}
                             </Text>
                         </View>
                     </View>

@@ -70,7 +70,7 @@ class ActivityDetail extends Component{
                     <Image resizeMode="stretch" style={{height:50,width:50,borderRadius:10,}} source={rowData.portrait}/>
                 </View>
                 <View style={{justifyContent:'center',alignItems: 'center',}}>
-                    <Text numberOfLines={1} style={{color:'#343434',}}>{rowData.username}</Text>
+                    <Text numberOfLines={1} style={{color:'#343434',}}>{rowData}</Text>
                 </View>
             </View>
         );
@@ -104,6 +104,9 @@ class ActivityDetail extends Component{
 
         var activity = this.state.activity;
         var {personInfo}=this.props;
+
+        var start = activity.startTime;
+
 
         var memberList = activity.memberList;
         if(memberList!==null&&memberList!==undefined){
@@ -173,7 +176,7 @@ class ActivityDetail extends Component{
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
                             <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                {DateFilter.filter(activity.eventTime,'yyyy-mm-dd hh:mm')}
+                                {activity.startTime}--{activity.endTime}
                                 </Text>
                         </View>
                         <View style={{flex:1,flexDirection:'row',marginBottom:3}}>

@@ -45,7 +45,7 @@ class CustomerCourseList extends Component {
         }
     }
 
-    navigate2BadmintonCourseForCoach(memberId) {
+    navigate2BadmintonCourseForCoach(memberId,demandId) {
         const { navigator } = this.props;
         if (navigator) {
             navigator.push({
@@ -61,6 +61,7 @@ class CustomerCourseList extends Component {
                         })
                     },
                     memberId:memberId,
+                    demandId:demandId
                 }
             })
         }
@@ -85,57 +86,65 @@ class CustomerCourseList extends Component {
                     </View>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'flex-start',marginLeft:5}}>
                         <View>
-                            <Text>{rowData.creator.username}</Text>
+                            <Text>{rowData.demandManagerName}</Text>
                         </View>
                     </View>
 
-                    <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-end',alignItems: 'center'}}
-                                      onPress={()=>{
-
-                                      }}>
+                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-end',alignItems: 'center'}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'phone'} size={13} color="#aaa"/>
                         </View>
                         <View style={{flex:7}}>
-                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.creator.mobilePhone}</Text>
+                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.demandManagerPhone}</Text>
                         </View>
-                    </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={{flex:3,padding:10,flexDirection:'row',}}>
+                <View style={{flex:5,padding:10,}}>
 
-                    <View style={{flex:3}}>
+                    <View style={{flex:3,marginBottom:15}}>
                         <View style={{flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'star'} size={16} color="#66CDAA"/>
                             </View>
                             <View style={{flex:7}}>
-                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.courseName}</Text>
+                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}
+                                      numberOfLines={5}>
+                                    {rowData.demandBrief}
+                                    </Text>
                             </View>
                         </View>
 
-                        <View style={{flexDirection:'row',marginBottom:3}}>
-                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                                <Icon name={'map-marker'} size={13} color="#aaa"/>
-                            </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.venue.name}</Text>
-                        </View>
-
-                        <View style={{flexDirection:'row',marginBottom:3}}>
-                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                                <Icon name={'calendar'} size={13} color="#aaa"/>
-                            </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                {rowData.courseTime}
-                            </Text>
-                        </View>
                     </View>
 
-                    <TouchableOpacity style={{flex:1,justifyContent:'flex-end',alignItems: 'center'}}
-                                      onPress={()=>{this.navigate2BadmintonCourseForCoach(rowData.courseManager)}}>
-                        <View style={{borderWidth:1,borderColor:'#66CDAA',borderRadius:5,padding:3}}>
-                            <Text style={{color:'#66CDAA',}}>为Ta建课</Text>
+
+                    {
+                        rowData.courseId==null?
+                            <TouchableOpacity style={{flex:2,justifyContent:'flex-end',alignItems: 'flex-end'}}
+                                              onPress={()=>{this.navigate2BadmintonCourseForCoach(rowData.demandManagerId,rowData.demandId)}}>
+                                <View style={{borderWidth:1,borderColor:'#66CDAA',borderRadius:5,padding:3}}>
+                                    <Text style={{color:'#66CDAA',}}>为Ta建课</Text>
+                                </View>
+                            </TouchableOpacity>:
+
+                        <View style={{flex:2,flexDirection:'row',justifyContent:'flex-end',alignItems: 'flex-end'}}>
+
+                            <View style={{flex:2,borderWidth:1,borderColor:'#66CDAA',borderRadius:5,padding:3}}>
+                                <Text style={{color:'#66CDAA',}}>已制定：{rowData.courseName}</Text>
+                            </View>
+
+                            <TouchableOpacity style={{flex:1,justifyContent:'flex-end',alignItems: 'flex-end'}}
+                                              onPress={()=>{this.navigate2BadmintonCourseForCoach(rowData.demandManagerId,rowData.demandId)}}>
+                                <View style={{borderWidth:1,borderColor:'#66CDAA',borderRadius:5,padding:3}}>
+                                    <Text style={{color:'#66CDAA',}}>为Ta建课</Text>
+                                </View>
+                            </TouchableOpacity>
+
                         </View>
-                    </TouchableOpacity>
+
+
+
+                    }
+
                 </View>
             </View>
         );

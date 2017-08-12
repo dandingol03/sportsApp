@@ -62,79 +62,47 @@ class CustomCourse extends Component{
 
     renderRow(rowData, sectionId, rowId) {
         var row=(
-            <View style={{padding:4,margin:5,backgroundColor:'#fff',flexDirection:'column',
-                                    paddingBottom:7,borderWidth:1,borderColor:'#eee'}}>
-                <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,alignItems:'center'}}>
-                    <Text style={{fontSize:16,color:'#222',fontWeight:'bold'}}>
-                        {rowData.courseName}
-                    </Text>
+            <View style={{padding:4,margin:5,backgroundColor:'#fff',flexDirection:'column',paddingBottom:7,borderWidth:1,borderColor:'#eee'}}>
 
-                    <Text style={{fontSize:14,color:'#333',marginLeft:12,fontWeight:'bold'}}>
+                <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
+                    <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
+                        <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
+                    </View>
+                    <View style={{flex:2,justifyContent:'center',alignItems: 'flex-start',marginLeft:5}}>
+                        <View>
+                            <Text>{rowData.demandManagerName}</Text>
+                        </View>
+                    </View>
 
-                    </Text>
+                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-end',alignItems: 'center'}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'phone'} size={13} color="#aaa"/>
+                        </View>
+                        <View style={{flex:7}}>
+                            <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.demandManagerPhone}</Text>
+                        </View>
+                    </View>
+                </View>
 
-                    <View style={{backgroundColor:'#008B00',borderRadius:2,padding:2,marginLeft:5}}>
-                        <Text style={{color:'#fff',fontSize:11}}>
+                <View style={{padding:2,paddingHorizontal:10,alignItems:'flex-start'}}>
 
+                    <View style={{margin:15}}>
+                        <Text style={{fontSize:14,color:'#222',}}>
+                            {rowData.demandBrief}
                         </Text>
                     </View>
 
+                </View>
+
+                <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,marginTop:10}}>
                     <View style={{flex:1}}></View>
 
                     {
-                        rowData.status==0?
-                            <Text style={{fontSize:13,color:'#008B00',fontWeight:'bold'}}>
-                                进行中
-                            </Text>:
-                            <Text style={{fontSize:13,color:'#aaa',fontWeight:'bold'}}>
-                                已完成
-                            </Text>
-                    }
-
-                </View>
-
-                <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,marginTop:10}}>
-
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Icon name={'map-marker'} size={18} color="#666" style={{backgroundColor:'transparent'}}/>
-                    </View>
-
-                    <View style={{flexDirection:'row',alignItems:'center',marginLeft:10}}>
-                        <Text style={{color:'#222',fontSize:13}}>{rowData.venue.name}</Text>
-                    </View>
-
-                </View>
-
-                <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,marginTop:10}}>
-
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Icon name={'clock-o'} size={15} color="#666" style={{backgroundColor:'transparent'}}/>
-                    </View>
-
-                    <View style={{flexDirection:'row',alignItems:'center',marginLeft:9}}>
-                        <Text style={{color:'#222',fontSize:13}}>{DateFilter.filter(rowData.deadline,'yyyy-mm-dd hh:mm')}</Text>
-                    </View>
-
-                </View>
-
-                <View style={{flexDirection:'row',padding:2,paddingHorizontal:10,marginTop:10}}>
-
-                    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                        {
-                            rowData.hasCoach==1?
-                                <Text>
-                                    指定教练：{rowData.coach.perName}
-                                </Text>
-                                :null
-                        }
-                    </View>
-                    <View style={{flex:1}}></View>
-                    {
-                        rowData.status==0?
+                        rowData.courseId==null?
                             <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center'}}>
                                 <TouchableOpacity style={{padding:5,borderWidth:1,borderColor:'red',borderRadius:5,justifyContent:'center',alignItems: 'center',marginRight:20}}
                                                   onPress={()=>{
-                                                       this.props.dispatch(cancleCustomCourse(rowData.courseId)).then((json)=> {
+                                                       this.props.dispatch(cancleCustomCourse(rowData.demandId)).then((json)=> {
                                                            if(json.re==1){
                                                              Alert.alert('信息','取消成功',[{text:'确认',onPress:()=>{
                                                              this.props.dispatch(enableMyCustomCoursesOnFresh());
@@ -145,22 +113,16 @@ class CustomCourse extends Component{
                                 }}>
                                     <Text style={{color:'red',}}>取消</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{padding:5,borderWidth:1,borderColor:'#66CDAA',borderRadius:5,justifyContent:'center',alignItems: 'center',}}
-                                                  onPress={()=>{
-                                                       this.props.dispatch(finishCustomCourse(rowData.courseId)).then((json)=> {
-                                                            if(json.re==1){
-                                                             Alert.alert('信息','取消成功',[{text:'确认',onPress:()=>{
-                                                             this.props.dispatch(enableMyCustomCoursesOnFresh());
-                                                                }}]);
-                                                           }
-                                                               })
-
-                                }}>
-                                    <Text style={{color:'#66CDAA',}}>完成</Text>
-                                </TouchableOpacity>
+                            </View>:
+                            <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center'}}>
+                                <View style={{padding:5,borderWidth:1,borderColor:'#66CDAA',borderRadius:5,justifyContent:'center',alignItems: 'center',marginRight:20}}>
+                                    <Text style={{color:'red',}}>已报名课程：{rowData.courseName}</Text>
+                                </View>
                             </View>
-                            :null
+
+
                     }
+
 
                 </View>
 

@@ -62,7 +62,6 @@ class MyCourses extends Component {
             ).start();
         }.bind(this), 500);
 
-        this.props.dispatch(enableMyGroupOnFresh());
 
     }
 
@@ -141,7 +140,7 @@ class MyCourses extends Component {
                                        var {myCourses}=this.state
                                        var _myCourses=_.cloneDeep(myCourses)
                                        _myCourses.map((course,i)=>{
-                                           if(course.classInfo.classId==rowData.classInfo.classId)
+                                           if(course.classId==rowData.classId)
                                            {
                                                if(course.checked==true)
                                                    course.checked=false
@@ -163,7 +162,7 @@ class MyCourses extends Component {
                                var {myCourses}=this.state
                                var _myCourses=_.cloneDeep(myCourses)
                                _myCourses.map((course,i)=>{
-                                   if(course.classInfo.classId==rowData.classInfo.classId)
+                                   if(course.classId==rowData.classId)
                                    {
                                        if(course.checked==true)
                                            course.checked=false
@@ -174,12 +173,12 @@ class MyCourses extends Component {
                                this.setState({title:'已选择',goBackIcon:'md-close',onLongPressed:true,myCourses:_myCourses})
                               }}
             >
-                <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
+                <View style={{flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <View style={{flex: 1,padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
 
                         <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
                             <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                {rowData.classInfo.className}
+                                {rowData.cLassName}
                             </Text>
                         </View>
 
@@ -188,7 +187,7 @@ class MyCourses extends Component {
                             <CommIcon name="account-check" size={24} color="#0adc5e"
                                       style={{backgroundColor:'transparent',}}/>
                             <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-                                {rowData.classInfo.creator.perName}
+                                {rowData.cLassCreateName}
                             </Text>
                         </View>
 
@@ -209,32 +208,37 @@ class MyCourses extends Component {
                         }
                     </View>
 
-                    <View style={{ padding: 3, paddingHorizontal: 12 }}>
-                        <Text style={{ color: '#444', fontSize: 13 }}>
-                            {rowData.classInfo.detail}
-                        </Text>
+                    <View style={{flex: 1,padding:4,flexDirection: 'row', alignItems: 'center'}}>
+
+                        <View style={{padding:4,flexDirection: 'row',}}>
+                            <Text style={{ color: '#343434', fontSize: 13,}}>
+                                简介：
+                            </Text>
+                            <Text style={{ color: '#343434', fontSize: 13 }}>
+                                {rowData.detail}
+                            </Text>
+                        </View>
                     </View>
 
-                    <View
-                        style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ color: '#f00', fontSize: 12, width: 50 }}>
-                            ￥{rowData.classInfo.cost}
-                        </Text>
-
-                        <View
-                            style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.classInfo.classCount}课次
+                    <View style={{ flex:3, padding:4,width:width-20}}>
+                        <View style={{padding:4,marginingBottom: 4, flexDirection: 'row',}}>
+                            <Text style={{ color: '#343434', fontSize: 13,}}>
+                                地点：
+                            </Text>
+                            <Text style={{ color: '#343434', fontSize: 13 }}>
+                                {rowData.classAddr}
                             </Text>
                         </View>
 
-                        <View
-                            style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.classInfo.venue.name}
+                        <View style={{ padding:4,margining: 4,flexDirection: 'row'}}>
+                            <Text style={{color: '#343434', fontSize: 13,}}>
+                                时间：
+                            </Text>
+
+                            <Text style={{color: '#343434', fontSize: 13,}}>
+                               {rowData.scheduleDes}
                             </Text>
                         </View>
-
 
                     </View>
                 </View>
@@ -442,11 +446,11 @@ class MyCourses extends Component {
                                           var {myCourses}=this.state
                                           myCourses.map((course,i)=>{
                                               if(course.checked==true)
-                                                  courses.push(course.classInfo.classId)
+                                                  courses.push(parseInt(course.classId));
                                           })
                                           if(courses.length>0)
                                           {
-                                              if(this.props.userType==1)
+                                              if(this.props.userType=='1')
                                               {
                                                   //教练
                                                   //检查课程是否有报名
@@ -508,6 +512,6 @@ var styles = StyleSheet.create({
 module.exports = connect(state => ({
         myCourses: state.course.myCourses,
         myCoursesOnFresh: state.course.myCoursesOnFresh,
-        userType: parseInt(state.user.usertype)
+        userType: parseInt(state.user.usertype.perTypeCode)
     })
 )(MyCourses);

@@ -7,6 +7,7 @@ import {
     View,
     StyleSheet,
     Text,
+    TextInput,
     Platform,
     TouchableOpacity,
     RefreshControl,
@@ -24,9 +25,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextInputWrapper from 'react-native-text-input-wrapper';
 import CourseTimeModal from './CourseTimeModal';
 import VenueInspect from '../../components/venue/VenueInspect';
-import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
+import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper';
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
-
+import ActionSheet from 'react-native-actionsheet';
 import SelectVenue from '../../components/venue/SelectVenue';
 
 const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
@@ -47,9 +48,28 @@ class CreateBadmintonCourse extends Component{
         }
     }
 
+    //选类型
+    _handlePress(index) {
+
+        if(index!==0){
+            var costTypeStr = this.state.costTypeButtons[index];
+            var costType = index;
+            this.setState({course:Object.assign(this.state.course,{costType:costType.toString(),costTypeStr:costTypeStr})});
+        }
+
+    }
+
+    show(actionSheet) {
+        this[actionSheet].show();
+    }
+
+
     setCoursePlace(coursePlace)
     {
-        this.setState({venue:coursePlace});
+        var place = coursePlace;
+        place.unitId = parseInt(coursePlace.unitId);
+
+        this.setState({venue:place});
 
     }
 
@@ -60,20 +80,6 @@ class CreateBadmintonCourse extends Component{
             navigator.push({
                 name: 'VenueInspect',
                 component: VenueInspect,
-                params: {
-                    setPlace:this.setCoursePlace.bind(this)
-                }
-            })
-        }
-    }
-
-    navigate2SelectVenue()
-    {
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'VenueInspect',
-                component: SelectVenue,
                 params: {
                     setPlace:this.setCoursePlace.bind(this)
                 }
@@ -146,11 +152,12 @@ class CreateBadmintonCourse extends Component{
         this.state={
             dialogShow: false,
             modalVisible:false,
-            course:{courseName:null,courseBrief:null,coursePlace:null,unitId:null,courseTime:null,memberCount:null,fee:null},
+            course:{courseName:null,maxNumber:null,classCount:null,cost:null,costType:null,detail:null,coursePlace:null,unitId:null,scheduleDes:''},
             doingFetch: false,
             isRefreshing: false,
             time:null,
-            timeList:[]
+            timeList:[],
+            costTypeButtons:['取消','按人支付','按小时支付','按班支付'],
         }
         this.showScaleAnimationDialog = this.showScaleAnimationDialog.bind(this);
     }
@@ -161,6 +168,11 @@ class CreateBadmintonCourse extends Component{
 
 
     render() {
+
+        const CANCEL_INDEX = 0;
+        const DESTRUCTIVE_INDEX = 1;
+
+        const costTypeButtons=['取消','按人支付','按小时支付','按班支付'];
 
         var timeList = this.state.timeList;
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -195,8 +207,7 @@ class CreateBadmintonCourse extends Component{
                 <View style={{flex:5,backgroundColor:'#fff'}}>
 
                     {/*课程名称*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:10,marginBottom:5}}>
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:10,marginBottom:5}}>
                         <View style={{flex:1}}>
                             <Text style={{color:'#343434'}}>课程名称：</Text>
                         </View>
@@ -209,18 +220,17 @@ class CreateBadmintonCourse extends Component{
                                 val={this.state.course.className}
                                 onChangeText={
                                     (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{className:value})})
+                                        this.setState({course:Object.assign(this.state.course,{courseName:value})})
                                     }}
                                 onCancel={
-                                    ()=>{this.setState({course:Object.assign(this.state.course,{className:null})});}
+                                    ()=>{this.setState({course:Object.assign(this.state.course,{courseName:null})});}
                                 }
                             />
                         </View>
                     </View>
 
                     {/*课程人数*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
                             <Text style={{color:'#343434'}}>课程人数：</Text>
                         </View>
@@ -233,7 +243,7 @@ class CreateBadmintonCourse extends Component{
                                 val={this.state.course.maxNumber}
                                 onChangeText={
                                     (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{maxNumber:value})})
+                                        this.setState({course:Object.assign(this.state.course,{maxNumber:parseInt(value)})})
                                     }}
                                 onCancel={
                                     ()=>{this.setState({course:Object.assign(this.state.course,{maxNumber:null})});}
@@ -242,9 +252,44 @@ class CreateBadmintonCourse extends Component{
                         </View>
                     </View>
 
+                    {/*支付方式*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text>收费类型：</Text>
+                        </View>
+                        <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                          onPress={()=>{ this.show('actionSheet'); }}>
+                            {
+                                this.state.course.costTypeStr==null?
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#888',fontSize:13}}>请选择支付方式：</Text>
+                                    </View> :
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#444',fontSize:13}}>{this.state.course.costTypeStr}</Text>
+                                    </View>
+
+                            }
+                            <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',marginLeft:20}}>
+                                <Icon name={'angle-right'} size={30} color="#fff"/>
+                            </View>
+                            <ActionSheet
+                                ref={(p) => {
+                                        this.actionSheet =p;
+                                    }}
+                                title="请选择支付方式"
+                                options={costTypeButtons}
+                                cancelButtonIndex={CANCEL_INDEX}
+                                destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                onPress={
+                                        (data)=>{ this._handlePress(data); }
+                                    }
+                            />
+                        </TouchableOpacity>
+                    </View>
+
                     {/*课程花费*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
                             <Text style={{color:'#343434'}}>课程花费：</Text>
                         </View>
@@ -257,7 +302,7 @@ class CreateBadmintonCourse extends Component{
                                 val={this.state.course.cost}
                                 onChangeText={
                                     (value)=>{
-                                        this.setState({course:Object.assign(this.state.course,{cost:value})})
+                                        this.setState({course:Object.assign(this.state.course,{cost:parseInt(value)})})
                                     }}
                                 onCancel={
                                     ()=>{this.setState({course:Object.assign(this.state.course,{cost:null})});}
@@ -266,9 +311,31 @@ class CreateBadmintonCourse extends Component{
                         </View>
                     </View>
 
+                    {/*课次*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text style={{color:'#343434'}}>课次：</Text>
+                        </View>
+                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                            <TextInputWrapper
+                                placeholderTextColor='#888'
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                placeholder="请输入课次"
+                                val={this.state.course.classCount}
+                                onChangeText={
+                                    (value)=>{
+                                        this.setState({course:Object.assign(this.state.course,{classCount:parseInt(value)})})
+                                    }}
+                                onCancel={
+                                    ()=>{this.setState({course:Object.assign(this.state.course,{classCount:null})});}
+                                }
+                            />
+                        </View>
+                    </View>
+
                     {/*课程说明*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
                             <Text style={{color:'#343434'}}>课程说明：</Text>
                         </View>
@@ -291,8 +358,7 @@ class CreateBadmintonCourse extends Component{
                     </View>
 
                     {/*课程场馆*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,
-                        marginTop:5,marginBottom:5}}>
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
                             <Text style={{color:'#343434'}}>课程场馆：</Text>
                         </View>
@@ -302,7 +368,6 @@ class CreateBadmintonCourse extends Component{
                                 <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
                                                   onPress={()=>{
-                               //this.navigate2SelectVenue();
                                 this.navigate2VenueInspect();
                             }}>
                                     <Text style={{marginLeft:20,fontSize:13,color:'#888'}}>
@@ -312,7 +377,6 @@ class CreateBadmintonCourse extends Component{
                                 <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
                                                   onPress={()=>{
-                               //this.navigate2SelectVenue();
                                 this.navigate2VenueInspect();
                             }}>
                                     <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
@@ -333,31 +397,21 @@ class CreateBadmintonCourse extends Component{
 
                     </View>
 
-                    {/*添加细项*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
-                    ,margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>添加细项：</Text>
-                        </View>
-                        <View style={{flex:3,}}>
-                            <TouchableOpacity onPress={()=>{
-                                //this.setState({modalVisible:true});
-                                this.showScaleAnimationDialog();
-                            }}>
-                                <Ionicons name='md-add-circle'  size={22} color="#66CDAA"/>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-
-                    <View style={{height:100,width:width,padding:5,backgroundColor:'#eee'}}>
-                        {
-                            (this.state.timeList==null||this.state.timeList==undefined||this.state.timeList.length==0)?
-                                null:
-                                <View>
-                                    {timeList}
-                                </View>
-                        }
-
+                    {/*上课时间描述*/}
+                    <View style={{flex:3,margin:10,marginTop:5,marginBottom:5}}>
+                        <Text>上课时间:</Text>
+                        <TextInput
+                            style={{height:height*120/736,padding:8,fontSize:13,marginTop:5,borderRadius:5,backgroundColor:'#eee'}}
+                            onChangeText={(text) =>
+                                        {
+                                          this.setState({course:Object.assign(this.state.course,{scheduleDes:text})});
+                                        }}
+                            value={this.state.course.scheduleDes}
+                            placeholder='请描述上课时间...'
+                            placeholderTextColor="#aaa"
+                            underlineColorAndroid="transparent"
+                            multiline={true}
+                        />
                     </View>
 
                     <View style={{backgroundColor:'#fff',padding:10}}>
@@ -372,7 +426,7 @@ class CreateBadmintonCourse extends Component{
                         justifyContent:'center'}}
                                       onPress={()=>{
                                           if(this.props.memberId!==null&&this.props.memberId!==undefined){
-                                                this.props.dispatch(distributeCourse(this.state.course,this.state.timeList,this.state.venue,this.props.memberId))
+                                                this.props.dispatch(distributeCourse(this.state.course,this.state.venue,parseInt(this.props.memberId),parseInt(this.props.demandId)))
                                                 .then((json)=>{
                                                      if(json.re==1){
                                                          Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
@@ -382,7 +436,7 @@ class CreateBadmintonCourse extends Component{
                                                      }
                                                 })
                                           }else{
-                                              this.props.dispatch(distributeCourse(this.state.course,this.state.timeList,this.state.venue,null))
+                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,null))
                                                 .then((json)=>{
                                                      if(json.re==1){
                                                          Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
