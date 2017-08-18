@@ -59,7 +59,7 @@ export let releaseActivity=(event)=>{
                 headers: {
 
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+                    //'Cookie':sessionId,
 
                 },
                 body:params

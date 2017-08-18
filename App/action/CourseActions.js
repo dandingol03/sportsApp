@@ -20,13 +20,11 @@ export let fetchMyCourses=()=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/allow/getMyClass',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -48,14 +46,11 @@ export let verifyCoursesCancelable=(courses)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/course/verifyCoursesCancelable',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     courses:courses
@@ -93,13 +88,10 @@ export let fetchCourses=()=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var sessionId = state.user.sessionId;
-
             Proxy.get({
                 url: Config.server + '/func/allow/getAllClass ',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -153,14 +145,11 @@ export let fetchCustomCourse=()=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var sessionId = state.user.sessionId;
-            var myCustomCourses = [];
 
             Proxy.postes({
                 url: Config.server + '/func/course/fetchCustomCourse',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -198,13 +187,11 @@ export let distributeCourse=(course,venue,memberId,demandId)=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/course/distributeCourse',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     info:{
@@ -230,13 +217,11 @@ export let fetchClassSchedule=(classId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/course/fetchClassSchedule',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     classId:classId
@@ -257,13 +242,10 @@ export let fetchPersonRelative =()=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var sessionId = state.user.sessionId;
-
             Proxy.postes({
                 url: Config.server + '/func/course/fetchPersonRelative',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
 
                 },
                 body: {
@@ -291,7 +273,6 @@ export let checkPersonIsMember=(info)=>{
                 url: Config.server + '/func/course/checkPersonIsMember',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -319,7 +300,6 @@ export let addBadmintonClassMermberInfo=(info)=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var sessionId = state.user.sessionId;
             var selfPersonId = state.user.personInfo.personId;
 
 
@@ -338,20 +318,12 @@ export let addBadmintonClassMermberInfo=(info)=>{
                 url: Config.server + '/func/allow/classMultiplySignUp',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+
                 },
                 body: {
 
                     classId:parseInt(info.classId),
                     personId:personIdStr,
-                    // info:{
-                    //     isSelfCheck:info.isSelfCheck,
-                    //     persons:info.persons,
-                    //     classId:info.classId,
-                    //     creatorId:info.creatorId,
-                    //     signNumber:info.signNumber,
-                    //     maxNumber:info.maxNumber,
-                    // }
 
                 }
             }).then((json)=>{
@@ -370,13 +342,11 @@ export let distributeCustomerPlan=(plan,remark)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/allow/createClass ',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     hasCoach:plan.hasCoach,
@@ -402,13 +372,11 @@ export let dropoutMyCourses=(courses)=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/allow/deleteMyClassForPhone',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     courses:courses
@@ -430,13 +398,11 @@ export let finishCustomCourse=(courseId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/course/finishCustomCourse',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -462,13 +428,11 @@ export let cancleCustomCourse=(courseId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/course/cancleCustomCourse',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     courseId:courseId

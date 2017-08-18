@@ -85,14 +85,10 @@ export let fetchMaintainedVenue=()=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/getMaintainedVenue',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 

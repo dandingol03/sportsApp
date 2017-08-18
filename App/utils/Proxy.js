@@ -152,8 +152,11 @@ let Proxy={
 
             return new Promise((resolve,reject) => {
                 fetch(url,options)
+                    .then(
+                        (response) => response.text()
+                    )
                     .then((res) => {
-                        resolve(res)
+                        resolve(JSON.parse(res));
                     })
                     .catch((err) => {
                         reject(new Error(err));
@@ -166,7 +169,6 @@ let Proxy={
             throw new Error('lack of url field');
         }
     },
-
 
     fetch:(params)=>{
         var url=params.url;

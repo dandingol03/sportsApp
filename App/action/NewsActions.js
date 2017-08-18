@@ -84,14 +84,11 @@ export let fetchNewsInfo=()=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/allow/getNewsList',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 

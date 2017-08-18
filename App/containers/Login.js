@@ -199,6 +199,9 @@ var  Login =React.createClass({
                                                       },900)
 
                                                   }
+                                                  if(json.re==-100){
+                                                        this.setState({showProgress: false,user:{}});
+                                                  }
                                               })
                                               .catch((e)=>{
                                                         alert(e);
@@ -251,20 +254,6 @@ var  Login =React.createClass({
 
     componentDidMount() {
 
-
-        // setTimeout(function () {
-        //     Sound.setCategory('Playback', true)
-        //     const s = new Sound('./serviceAudio.wav',  Sound.MAIN_BUNDLE,(e) => {
-        //         if (e) {
-        //             alert(e)
-        //             return;
-        //         }
-        //
-        //         s.play(() => s.release());
-        //     });
-        // },1000)
-
-        //fetch username and password
         var username=null;
         var password=null;
         PreferenceStore.get('username').then((val)=>{
@@ -280,14 +269,12 @@ var  Login =React.createClass({
                     username:username,
                     password:password
                 }})
-                //this.onLoginPressed();
             }
         })
 
 
     },
     componentWillUnmount() {
-        // Remove the alert located on this master page from the manager
 
     }
 

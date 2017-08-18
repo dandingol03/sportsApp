@@ -50,6 +50,13 @@ import {
     onMobilePhoneUpdate,
     verifyMobilePhone
 } from '../action/UserActions';
+
+import {
+   fetchGamed,
+} from '../action/CompetationActions';
+
+
+
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 var IMGS = [
     require('../../img/tt1@2x.png'),
@@ -320,6 +327,19 @@ class Home extends Component {
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                                       onPress={ ()=>{
+                                          this.navigate2Mall();
+                                      }}>
+
+                                        {/*<Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>*/}
+                                        <Image resizeMode="stretch" source={require('../../img/shangc-@2x.png')} />
+                                        <View style={{marginTop:0,paddingTop:15}}>
+                                            <Text style={{fontSize:13,color:'#646464'}}>比赛</Text>
+                                        </View>
+                                    </TouchableOpacity>
+
+
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
+                                                      onPress={ ()=>{
                                          //this.navigate2Market(vegetable);
                                          alert('暂未开通');
                                          console.log('找教练');
@@ -438,7 +458,19 @@ class Home extends Component {
             this.props.dispatch(fetchNewsInfo()).then((json)=>{
                 if(json.re==1)
                 {
-                    this.props.dispatch(updateNewsInfo(json.data))
+                    this.props.dispatch(updateNewsInfo(json.data));
+                    // this.props.dispatch(fetchGames()).then((json)=>{
+                    //     if(json.re==1){
+                    //         this.state.games = json.data;
+                    //     }
+                    //
+                    //
+                    // });
+
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
                 }
             })
         });

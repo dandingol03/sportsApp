@@ -23,14 +23,12 @@ export let fetchCoaches=()=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/func/node/fetchCoaches',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+
                 },
                 body: {
 

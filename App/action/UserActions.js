@@ -60,34 +60,11 @@ export let updateUserType=(usertype)=>{
     }
 }
 
-let getAccessToken= (accessToken)=>{
-    if(accessToken!==null)
-        return {
-            type: ACCESS_TOKEN_ACK,
-            accessToken:accessToken,
-            auth:true,
-        };
-    else
-        return {
-            type:ACCESS_TOKEN_ACK,
-            accessToken:accessToken,
-            auth:'failed'
-        }
-}
-
-let setSessionId= (sessionId)=>{
-    if(sessionId!==null)
-        return {
-            type: SESSION_ID,
-            sessionId:sessionId,
-            auth:true,
-        };
-    else
-        return {
-            type: SESSION_ID,
-            sessionId: sessionId,
-            auth:'failed'
-        }
+export let getAccessToken = (auth)=>{
+    return {
+        type: ACCESS_TOKEN_ACK,
+        auth:auth,
+    };
 }
 
 //自身水平更改
@@ -95,14 +72,11 @@ export let updateSelfLevel=(selfLevel)=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/updateSelfLevel',
                 headers: {
 
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -125,14 +99,11 @@ export let updateSportLevel=(sportLevel)=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/node/updateSportLevel',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     sportLevel: sportLevel
@@ -153,14 +124,11 @@ export let updateUsername=(username)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/func/node/updateUsername',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -230,15 +198,11 @@ export let updateMobilePhone=(mobilePhone)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/node/updateMobilePhone',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
 
                 },
                 body: {
@@ -289,13 +253,11 @@ export let updatePerName=(perName)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/updatePerName',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+
                 },
                 body: {
                         perName:perName
@@ -317,14 +279,12 @@ export let updateWeChat=(wechat)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/updateWeChat',
                 headers: {
 
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+
                 },
                 body: {
 
@@ -348,14 +308,12 @@ export let updatePerIdCard=(perIdCard)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/updatePerIdCard',
                 headers: {
 
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+
                 },
                 body: {
                         perIdCard:perIdCard
@@ -426,14 +384,11 @@ export let addRelativePerson=(payload)=> {
     return (dispatch, getState) => {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/relative/addRelative',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+
                 },
                 body: {
                     userName:payload.username,
@@ -466,12 +421,10 @@ export let registerUser=(payload)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var {userType,username,password,genderCode,mobilePhone,nickName}=payload;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/register/userRegister',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     userName: username,
@@ -614,16 +567,14 @@ export let registerUser=(payload)=>{
 //     }
 // }
 
-
 export let doLogin=function(username,password){
 
     return dispatch=> {
 
         return new Promise((resolve, reject) => {
             var versionName = '1';
-            var sessionId = null;
 
-            Proxy.getSession({
+            Proxy.postes({
                 url: Config.server + '/func/auth/webLogin',
                 headers: {
                     'Content-Type': 'application/json'
@@ -634,16 +585,10 @@ export let doLogin=function(username,password){
                     loginType:1,
                     parameter:{appVersion:versionName}
                 }
-            }).then((response)=> {
-
-                sessionId = response.headers.map['set-cookie'][0];
-                return response.text();
-
             }).then((json)=>{
-                var loginInfo = JSON.parse(json);
 
-                if(loginInfo.errorMessageList!==null&&loginInfo.errorMessageList!==undefined&&loginInfo.errorMessageList.length>0){
-                    resolve({re:-1,data:loginInfo.errorMessageList[1]});
+                if(json.errorMessageList!==null&&json.errorMessageList!==undefined&&json.errorMessageList.length>0){
+                    resolve({re:-1,data:json.errorMessageList[1]});
 
                 }else{
                     //TODO:make a dispatch
@@ -657,98 +602,108 @@ export let doLogin=function(username,password){
                         url:Config.server + '/func/node/getUserTypeByPersonId',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Cookie':sessionId,
-
                         },
                         body: {
 
                         }
                     }).then((json)=> {
+                        if(json.re==-100){
+                            resolve(json);
+                        }else{
+                            if (json.re == 1) {
+                                dispatch(updateUserType(json.data))
+                            }
+                            var userType = json.data.perTypeCode;
+                            if (parseInt(userType) == 0)//用户
+                            {
+                                return {re: 1}
+                            } else {
+                                //教练,获取教练信息
+                                return Proxy.postes({
+                                    url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: {
 
-                        if (json.re == 1) {
-                            dispatch(updateUserType(json.data))
+                                    }
+                                })
+
+                            }
+
                         }
-                        var userType = json.data.perTypeCode;
-                        if (parseInt(userType) == 0)//用户
-                        {
-                            return {re: 1}
-                        } else {
-                            //教练,获取教练信息
-                            return Proxy.postes({
-                                url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
+
+                    }).then((json)=>{
+                        if(json.re==-100){
+                            resolve(json);
+                        }
+                        else{
+                            if(json.re==1&&json.data)
+                            {
+                                dispatch(updateTrainerInfo({data:json.data}))
+                            }
+                            Proxy.postes({
+                                url: Config.server + '/func/node/getPersonInfoByPersonId',
                                 headers: {
                                     'Content-Type': 'application/json',
-                                    'Cookie':sessionId,
                                 },
                                 body: {
 
                                 }
-                            });
+                            }).then((json) => {
+                                if(json.re==-100){
+                                    resolve(json);
+                                }
+                                else{
+                                    if (json.re == 1)
+                                        dispatch(updatePersonInfo({data: json.data}));
+
+                                    Proxy.postes({
+                                        url: Config.server + '/func/node/getPersonInfoAuxiliaryByPersonId',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: {
+
+                                        }
+                                    }).then((json)=>{
+                                        if(json.re==-100){
+                                            resolve(json);
+                                        }
+                                        else{
+                                            if(json.re==1)
+                                                dispatch(updatePersonInfoAuxiliary({data: json.data}));
+                                            dispatch(getAccessToken(true));
+                                            resolve(json)
+                                        }
+                                    }).catch((err)=> {
+
+                                        reject(err)
+                                    });
+
+                                }
+                            }).catch((err)=> {
+                                dispatch(getAccessToken(false));
+                                //dispatch(setSessionId(sessionId));
+                                reject(err)
+                            })
                         }
-                    }).then((json)=>{
 
-                        if(json.re==1&&json.data)
-                        {
-                            dispatch(updateTrainerInfo({data:json.data}))
-                        }
-
-
-
-                        return Proxy.postes({
-                            url: Config.server + '/func/node/getPersonInfoByPersonId',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Cookie':sessionId,
-                            },
-                            body: {
-
-                            }
-                        });
-                    }).then((json) => {
-
-                        if (json.re == 1)
-                            dispatch(updatePersonInfo({data: json.data}));
-
-
-                        return Proxy.postes({
-                            url: Config.server + '/func/node/getPersonInfoAuxiliaryByPersonId',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Cookie':sessionId,
-                            },
-                            body: {
-
-                            }
-                        })
-
-                    }).then((json)=>{
-                        if(json.re==1)
-                            dispatch(updatePersonInfoAuxiliary({data: json.data}));
-                        //dispatch(getAccessToken(accessToken));
-                        dispatch(setSessionId(sessionId));
-                        resolve(json)
                     }).catch((err)=> {
-                        //dispatch(getAccessToken(null));
-                        dispatch(setSessionId(sessionId));
+                        dispatch(getAccessToken(false));
+                        //dispatch(setSessionId(sessionId));
                         reject(err)
-                    });
-
+                    })
                 }
 
             }).catch((err)=> {
-                //dispatch(getAccessToken(null));
-                dispatch(setSessionId(sessionId));
+                dispatch(getAccessToken(false));
+                //dispatch(setSessionId(sessionId));
                 reject(err)
             })
         })
     }
 }
-
-
-
-
-
-
 
 //上传身份证
 export let uploadPersonIdCard=(path,personId)=> {
@@ -911,14 +866,11 @@ export let wechatPay=(pay,eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
 
             Proxy.postes({
                 url: Config.server + '/func/node/addPaymentInfo',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     pay:pay,
@@ -936,7 +888,6 @@ export let wechatPay=(pay,eventId)=>{
                             url: Config.server + '/func/node/wechatPay',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Cookie':sessionId,
                             },
                             body: {
                                 info:{
