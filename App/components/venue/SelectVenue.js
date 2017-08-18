@@ -25,6 +25,11 @@ import {
     makeTabsHidden,
     makeTabsShown
 } from '../../action/TabActions';
+
+import {
+    getAccessToken
+}from '../../action/UserActions'
+
 import VenueDetail from './VenueDetail';
 
 class SelectVenue extends Component {
@@ -188,6 +193,12 @@ class SelectVenue extends Component {
                     })
                     this.setState({venues:venues});
                     //this.props.dispatch(makeTabsHidden());
+                }
+                else {
+                    if(json.re=-100){
+                        this.props.dispatch(getAccessToken(false))
+                    }
+
                 }
             })
         });
