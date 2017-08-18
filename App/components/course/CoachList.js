@@ -28,6 +28,11 @@ import{
     fetchCoaches,
     onCoachUpdate,
 } from '../../action/CoachActions';
+
+import {
+    getAccessToken,
+} from '../../action/UserActions';
+
 import CoachDetail from './CoachDetail'
 
 class CoachList extends Component {
@@ -183,8 +188,6 @@ class CoachList extends Component {
         )
 
     }
-
-
     componentDidMount()
     {
         InteractionManager.runAfterInteractions(() => {
@@ -192,6 +195,11 @@ class CoachList extends Component {
                 if(json.re==1)
                 {
                     this.props.dispatch(onCoachUpdate(json.data))
+                }
+                else{
+                    if(ison.re=-100) {
+                        this.props.dispatch(getAccessToken(false))
+                    }
                 }
             })
         });
