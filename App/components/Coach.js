@@ -27,6 +27,9 @@ import{
     onCoachUpdate,
 } from '../action/CoachActions';
 
+import{
+    getAccessToken
+}from '../action/UserActions'
 
 class Coach extends Component {
 
@@ -239,6 +242,11 @@ class Coach extends Component {
                 if(json.re==1)
                 {
                     this.props.dispatch(onCoachUpdate(json.data))
+                }
+                else {
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false))
+                    }
                 }
             })
         });
