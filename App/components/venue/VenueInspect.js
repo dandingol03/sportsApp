@@ -35,7 +35,9 @@ import {
     localSearch,
     fetchMaintainedVenue
 } from '../../action/MapActions';
-
+import{
+    getAccessToken
+}from '../../action/UserActions'
 
 
 class VenueInspect extends Component{
@@ -216,6 +218,11 @@ class VenueInspect extends Component{
                     });
                 })
                 this.setState({markers:markers,venues:venues});
+            }
+            else{
+                if(json.re=-100){
+                    this.props.dispatch(getAccessToken(false))
+                }
             }
         })
 
