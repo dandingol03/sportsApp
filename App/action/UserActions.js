@@ -894,7 +894,7 @@ export let wechatPay=(pay,eventId)=>{
                                     app_id:'wx9068ac0e88c09e7a',//应用ID
                                     mch_id:'1485755962',//商户号
                                     nonce_str:nonce_str,//随机字符串
-                                    notify_url:'http://192.168.1.111:3011/wechatPayBack',
+                                    notify_url:Config.server +'/allow/minirepay',
                                     out_trade_no:out_trade_no,
                                     total_fee:total_fee,
                                     attach:'山东体育热科技有限公司',

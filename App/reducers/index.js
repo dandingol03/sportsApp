@@ -9,7 +9,7 @@ import mapReducer from './MapReducer';
 import newsThemeReducer from './NewsThemeReducer';
 import courseReducer from './CourseReducer';
 import coachReducer from './CoachReducer';
-import competationsReducer from './CompetationReducer';
+import competitionsReducer from './CompetitionReducer';
 
 
 export default rootReducer = combineReducers({
@@ -21,5 +21,5 @@ export default rootReducer = combineReducers({
     newsTheme:newsThemeReducer,
     course:courseReducer,
     coach:coachReducer,
-    competations:competationsReducer
+    competitions:competitionsReducer
 })

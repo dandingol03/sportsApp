@@ -4,7 +4,7 @@
 
 import {
     SET_COMPETATION
-} from '../constants/CompetationConstants';
+} from '../constants/CompetitionConstants';
 
 const initialState = {
     competations:null

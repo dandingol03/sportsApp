@@ -24,6 +24,7 @@ import {
     enableActivityOnFresh,fetchEventMemberList
 } from '../../action/ActivityActions';
 
+import {getAccessToken,} from '../../action/UserActions';
 
 class MyActivity extends Component {
 
@@ -80,6 +81,10 @@ class MyActivity extends Component {
                         })
                     }
 
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
                 }
             })
 

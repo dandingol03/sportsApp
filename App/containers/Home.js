@@ -20,16 +20,12 @@ import {
 import {connect} from 'react-redux';
 var {height, width} = Dimensions.get('window');
 
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import ViewPager from 'react-native-viewpager';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import BadmintonCourse from '../components/course/BadmintonCourse';
 import Mall from './mall/FirstPage';
 import Activity from '../components/groupActivity/Activity';
-import NewsContentDetail from '../components/news/NewsContentDetail';
-import DateFilter from '../utils/DateFilter';
+import Competition from '../components/competition/CompetitionList';
 
 import PopupDialog,{ScaleAnimation} from 'react-native-popup-dialog';
 const scaleAnimation = new ScaleAnimation();
@@ -38,9 +34,6 @@ import MobilePhoneModal from '../components/my/modal/ValidateMobilePhoneModal';
 import ValidateMyInformationModal from '../components/my/modal/ValidateMyInformationModal';
 
 import {
-    fetchNewsTheme,
-    updateNewsTheme,
-    getNewsContentUrl,
     fetchNewsInfo,
     updateNewsInfo
 } from '../action/NewsActions';
@@ -48,16 +41,14 @@ import {
 import {
     updateMobilePhone,
     onMobilePhoneUpdate,
-    verifyMobilePhone
+    verifyMobilePhone,
+    getAccessToken
 } from '../action/UserActions';
 
 import {
-   fetchGamed,
+   fetchCompetition,
 } from '../action/CompetationActions';
 
-
-
-import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 var IMGS = [
     require('../../img/tt1@2x.png'),
     require('../../img/tt2@2x.jpeg'),
@@ -66,19 +57,6 @@ var IMGS = [
 ];
 
 class Home extends Component {
-
-    navigate2NewsContentDetail(url){
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'NewsContentDetail',
-                component: NewsContentDetail,
-                params: {
-                    url
-                }
-            })
-        }
-    }
 
     navigate2Activity(){
         const { navigator } = this.props;
@@ -92,6 +70,22 @@ class Home extends Component {
             })
         }
     }
+
+    navigate2Competition(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'competition',
+                component: Competition,
+                params: {
+
+                }
+            })
+        }
+    }
+
+
+
 
     navigate2Mall(){
         const { navigator } = this.props;
@@ -327,7 +321,7 @@ class Home extends Component {
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                                       onPress={ ()=>{
-                                          this.navigate2Mall();
+                                          this.navigate2Competition();
                                       }}>
 
                                         {/*<Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>*/}

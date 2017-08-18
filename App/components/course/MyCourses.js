@@ -37,6 +37,8 @@ import {
     makeTabsShown
 } from '../../action/TabActions';
 
+import {getAccessToken,} from '../../action/UserActions';
+
 class MyCourses extends Component {
 
     goBack() {
@@ -114,8 +116,12 @@ class MyCourses extends Component {
 
                             this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
                         } else {
-                            this.props.dispatch(disableMyCoursesOnFresh())
-                            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                            if(json.re==-100){
+                                this.props.dispatch(getAccessToken(false));
+                            }else{
+                                this.props.dispatch(disableMyCoursesOnFresh())
+                                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                            }
                         }
                     }).catch((e) => {
                         this.props.dispatch(disableMyCoursesOnFresh())
@@ -125,6 +131,10 @@ class MyCourses extends Component {
 
                 }}]);
 
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
         })
     }
@@ -260,8 +270,12 @@ class MyCourses extends Component {
 
                 this.setState({doingFetch: false, isRefreshing: false, onLongPressed: false})
             } else {
-                this.props.dispatch(disableMyCoursesOnFresh())
-                this.setState({doingFetch: false, isRefreshing: false, onLongPressed: false})
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }else{
+                    this.props.dispatch(disableMyCoursesOnFresh())
+                    this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                }
             }
         }).catch((e) => {
             this.props.dispatch(disableMyCoursesOnFresh())
@@ -332,8 +346,12 @@ class MyCourses extends Component {
 
                                             this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
                                         } else {
-                                            this.props.dispatch(disableMyCoursesOnFresh())
-                                            this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                                             if(json.re==-100){
+                                                this.props.dispatch(getAccessToken(false));
+                                             }else{
+                                                this.props.dispatch(disableMyCoursesOnFresh())
+                                                this.setState({doingFetch: false, isRefreshing: false,onLongPressed:false})
+                                             }
                                         }
                                     }).catch((e) => {
                                         this.props.dispatch(disableMyCoursesOnFresh())
@@ -460,7 +478,6 @@ class MyCourses extends Component {
                                                           var flag=json.data
                                                           if(flag==true)//如果可以删除
                                                           {
-
                                                               Alert.alert('错误','所选课程已有用户报名，不能删除',[{text:'确认',onPress:()=>{
                                                                   this.setState({onLongPressed:false})
                                                               }}]);
@@ -468,6 +485,11 @@ class MyCourses extends Component {
                                                           }else{
                                                               this.dropoutMyCourses(courses)
                                                           }
+                                                      }else{
+                                                           if(json.re==-100){
+                                                                this.props.dispatch(getAccessToken(false));
+                                                           }
+
                                                       }
                                                   })
                                               }else{

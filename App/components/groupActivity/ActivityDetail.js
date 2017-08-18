@@ -22,13 +22,13 @@ import {
 
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
-import DateFilter from '../../utils/DateFilter';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import GridView from 'react-native-grid-view';
 import ActivityPay from './ActivityPay';
 import {
     deleteActivity,exitActivity,
 } from '../../action/ActivityActions';
+import {getAccessToken,} from '../../action/UserActions';
 
 class ActivityDetail extends Component{
 
@@ -46,6 +46,10 @@ class ActivityDetail extends Component{
                 alert('活动撤销成功！');
                 this.props.setMyActivityList();
                 this.goBack();
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
         });
 
@@ -58,6 +62,10 @@ class ActivityDetail extends Component{
                 alert('已成功退出活动！');
                 this.props.setMyActivityList();
                 this.goBack();
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
         });
     }
@@ -233,7 +241,25 @@ class ActivityDetail extends Component{
                     <TouchableOpacity style={{flex:3,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:10,
                     borderTopWidth:1,borderColor:'#eee'}}
                     onPress={()=>{
-                        this.props.signUpActivity(this.props.activity);
+                        this.props.signUpActivity(this.props.activity).then((json)=>{
+                             if(json.re==1){
+                                Alert.alert('信息','报名成功,是否立即支付？',[{text:'是',onPress:()=>{
+                                // this.setMyActivityList();
+                                this.navigate2ActivityPay(activity);
+                                }},
+                                {text:'否',onPress:()=>{
+                                this.goBack();
+
+                            }},
+                    ]);
+
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
+                }
+
+                        });
                     }}>
                         <Text style={{color:'#66CDAA',}}>报名</Text>
                     </TouchableOpacity>:null

@@ -5,7 +5,7 @@ import Proxy from '../utils/Proxy'
 import {
     SET_COMPETATION
 
-} from '../constants/CompetationConstants'
+} from '../constants/CompetitionConstants'
 
 //设置教练列表
 export let setCompetations=(competations)=>{

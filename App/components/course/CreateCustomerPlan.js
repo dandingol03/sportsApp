@@ -35,6 +35,7 @@ import{
     distributeCustomerPlan
 } from '../../action/CourseActions';
 
+import {getAccessToken,} from '../../action/UserActions';
 
 class CreateCustomerPlan extends Component{
 
@@ -148,8 +149,12 @@ class CreateCustomerPlan extends Component{
             if(json.re==1){
                 this.setState({member:json.data});
             }else{
-                alert('该用户未注册，是否邀请');
-                //TODO:微信分享邀请好友
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }else{
+                    alert('该用户未注册，是否邀请');
+                    //TODO:微信分享邀请好友
+                }
             }
         });
     }
@@ -553,7 +558,11 @@ class CreateCustomerPlan extends Component{
                                             this.goBack();
 
                                        }}]);
-                                }
+                                }else{
+                                    if(json.re==-100){
+                                        this.props.dispatch(getAccessToken(false));
+                                    }
+            }
                             })
                       }}>
                         <Text style={{color:'#fff',fontSize:15}}>发布</Text>

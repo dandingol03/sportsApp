@@ -24,6 +24,7 @@ import GroupMemberModal from './GroupMemberModal';
 import {
    searchMember,deleteGroup,exitGroup
 } from '../../action/ActivityActions';
+import {getAccessToken,} from '../../action/UserActions';
 
 class GroupDetail extends Component{
 
@@ -36,7 +37,6 @@ class GroupDetail extends Component{
 
     renderRow(rowData)
     {
-
         if(rowData.addNewOne==true)
         {
             return  (
@@ -73,8 +73,12 @@ class GroupDetail extends Component{
             if(json.re==1){
                 this.setState({member:json.data});
             }else{
-                alert('该用户未注册，是否邀请');
-                //TODO:微信分享邀请好友
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }else{
+                    alert('该用户未注册，是否邀请');
+                    //TODO:微信分享邀请好友
+                }
             }
         });
     }
@@ -86,6 +90,10 @@ class GroupDetail extends Component{
                 alert('删除成功');
                 this.props.setMyGroupList();
                 this.goBack();
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
         });
 
@@ -98,6 +106,10 @@ class GroupDetail extends Component{
                 alert('退群成功');
                 this.props.setMyGroupList();
                 this.goBack();
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
         });
     }

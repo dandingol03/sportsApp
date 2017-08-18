@@ -25,7 +25,7 @@ import GroupMemberModal from './GroupMemberModal';
 import {
     createGroup,searchMember,enableMyGroupOnFresh
 } from '../../action/ActivityActions';
-
+import {getAccessToken,} from '../../action/UserActions';
 
 class CreateGroup extends Component{
 
@@ -41,14 +41,17 @@ class CreateGroup extends Component{
             if(json.re==1){
                 this.setState({member:json.data});
             }else{
-                alert('该用户未注册，是否邀请');
-                //TODO:微信分享邀请好友
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }else{
+                    alert('该用户未注册，是否邀请');
+                    //TODO:微信分享邀请好友
+                }
             }
         });
     }
 
     removeMember(memberList,rowData) {
-
         var index=null;
         memberList.map((member, i) => {
             if(member.mobilePhone==rowData.mobilePhone){
@@ -66,13 +69,16 @@ class CreateGroup extends Component{
     createGroup(info){
         this.props.dispatch(createGroup(info)).then((json)=>{
             if(json.re==1){
-
                 Alert.alert('信息','创建成功',[{text:'确认',onPress:()=>{
                     this.props.dispatch(enableMyGroupOnFresh());
                     this.goBack()
                 }}]);
             }else{
-                alert('创建失败');
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }else{
+                    alert('创建失败');
+                }
 
             }
         });

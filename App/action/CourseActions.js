@@ -155,10 +155,14 @@ export let fetchCustomCourse=()=>{
 
                 }
             }).then((json)=>{
-                var allCustomCourse = json.data;
-                if (allCustomCourse!== undefined && allCustomCourse !== null &&allCustomCourse.length > 0) {
-                    dispatch(setMyCustomCourses(allCustomCourse));
-                    resolve({re:json.re,data:allCustomCourse})
+                if(json.re==-100){
+                    resolve(json)
+                }else{
+                    var allCustomCourse = json.data;
+                    if (allCustomCourse!== undefined && allCustomCourse !== null &&allCustomCourse.length > 0) {
+                        dispatch(setMyCustomCourses(allCustomCourse));
+                        resolve({re:json.re,data:allCustomCourse})
+                    }
                 }
             }).catch((e)=>{
                 alert(e);
@@ -412,7 +416,11 @@ export let finishCustomCourse=(courseId)=>{
                 if (json.re == 1) {
                     resolve({re:1,data:'成功'});
                 }else{
-                    resolve({re:-1,data:'不成功'});
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'不成功'});
+                    }
                 }
             }).catch((e)=>{
                 alert(e);
@@ -441,7 +449,11 @@ export let cancleCustomCourse=(courseId)=>{
                 if (json.re == 1) {
                     resolve({re:1,data:'成功'});
                 }else{
-                    resolve({re:-1,data:'不成功'});
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'不成功'});
+                    }
                 }
             }).catch((e)=>{
                 alert(e);

@@ -28,7 +28,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 var {height, width,scale} = Dimensions.get('window');
-import DateFilter from '../../utils/DateFilter';
 
 class ActivityPay extends Component{
     goBack(){
@@ -91,7 +90,7 @@ class ActivityPay extends Component{
         this.state={
             isRefreshing:false,
             activity:this.props.activity,
-            pay:{payment:'',payType:''},
+            pay:{payment:'',payType:'微信'},
         };
     }
 
@@ -153,7 +152,7 @@ class ActivityPay extends Component{
                                     val={this.state.pay.payment}
                                     onChangeText={
                                     (value)=>{
-                                        this.setState({pay:Object.assign(this.state.pay,{payment:parseInt(value)})})
+                                        this.setState({pay:Object.assign(this.state.pay,{payment:value})})
                                     }}
                                     onCancel={
                                     ()=>{this.setState({pay:Object.assign(this.state.pay,{payment:null})});}
@@ -172,7 +171,8 @@ class ActivityPay extends Component{
                                     <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
                                                       onPress={()=>{
                                               var pay = this.state.pay;
-                                              pay.payType = null;
+                                              //pay.payType = null;
+                                              pay.payType = '微信'
                                               this.setState({pay:pay});
                         }}>
                                         <Icon name={'dot-circle-o'} size={15} color="#66CDAA"/>
@@ -190,28 +190,28 @@ class ActivityPay extends Component{
 
                             }
 
-                            {
-                                this.state.pay.payType=='现金'?
-                                    <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
-                                                      onPress={()=>{
-                                              var pay = this.state.pay;
-                                              pay.payType = null;
-                                              this.setState({pay:pay});
-                        }}>
-                                        <Icon name={'dot-circle-o'} size={15} color="#66CDAA"/>
-                                        <Text style={{marginLeft:10}}>现金支付</Text>
-                                    </TouchableOpacity>:
-                                    <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
-                                                      onPress={()=>{
-                                               var pay = this.state.pay;
-                                              pay.payType = '现金';
-                                              this.setState({pay:pay});
-                        }}>
-                                        <Icon name={'circle-o'} size={15} color="#66CDAA"/>
-                                        <Text style={{marginLeft:10}}>现金支付</Text>
-                                    </TouchableOpacity>
+                            {/*{*/}
+                                {/*this.state.pay.payType=='现金'?*/}
+                                    {/*<TouchableOpacity style={{flexDirection:'row',marginLeft:20}}*/}
+                                                      {/*onPress={()=>{*/}
+                                              {/*var pay = this.state.pay;*/}
+                                              {/*pay.payType = null;*/}
+                                              {/*this.setState({pay:pay});*/}
+                        {/*}}>*/}
+                                        {/*<Icon name={'dot-circle-o'} size={15} color="#66CDAA"/>*/}
+                                        {/*<Text style={{marginLeft:10}}>现金支付</Text>*/}
+                                    {/*</TouchableOpacity>:*/}
+                                    {/*<TouchableOpacity style={{flexDirection:'row',marginLeft:20}}*/}
+                                                      {/*onPress={()=>{*/}
+                                               {/*var pay = this.state.pay;*/}
+                                              {/*pay.payType = '现金';*/}
+                                              {/*this.setState({pay:pay});*/}
+                        {/*}}>*/}
+                                        {/*<Icon name={'circle-o'} size={15} color="#66CDAA"/>*/}
+                                        {/*<Text style={{marginLeft:10}}>现金支付</Text>*/}
+                                    {/*</TouchableOpacity>*/}
 
-                            }
+                            {/*}*/}
 
                         </View>
 

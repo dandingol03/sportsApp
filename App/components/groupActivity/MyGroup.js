@@ -26,6 +26,10 @@ import {
     fetchMyGroupList,disableMyGroupOnFresh,enableMyGroupOnFresh,fetchGroupMemberList
 } from '../../action/ActivityActions';
 
+import {
+    getAccessToken,
+} from '../../action/UserActions';
+
 class MyGroup extends Component{
 
     goBack(){
@@ -120,6 +124,10 @@ class MyGroup extends Component{
                         })
                     }
 
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
                 }
             })
 
@@ -165,8 +173,12 @@ class MyGroup extends Component{
                 this.props.dispatch(disableMyGroupOnFresh());
                 this.setState({doingFetch:false,isRefreshing:false})
             }else{
-                this.props.dispatch(disableMyGroupOnFresh());
-                this.setState({doingFetch:false,isRefreshing:false})
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }else{
+                    this.props.dispatch(disableMyGroupOnFresh());
+                    this.setState({doingFetch:false,isRefreshing:false})
+                }
             }
         }).catch((e)=>{
             this.props.dispatch(disableMyGroupOnFresh());

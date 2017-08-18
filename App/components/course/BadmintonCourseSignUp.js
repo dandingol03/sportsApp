@@ -42,6 +42,7 @@ import{
     checkPersonIsMember
 
 } from '../../action/CourseActions';
+import {getAccessToken,} from '../../action/UserActions';
 
 import{
     onRelativePersonsUpdate,
@@ -346,6 +347,8 @@ class BadmintonCourseSignUp extends Component {
                                                   this.goBack();
                                                    this.props.setMyCourseList();
                                                 }}]);
+                                            }else if(json.re==-100){
+                                                 this.props.dispatch(getAccessToken(false));
                                             }
                                             console.log();
                                         })
@@ -386,7 +389,11 @@ class BadmintonCourseSignUp extends Component {
                                                {
                                                    this.scaleAnimationDialog.dismiss();
                                                    this.props.dispatch(onRelativePersonsUpdate(json.data))
-                                               }
+                                               }else{
+                                                         if(json.re==-100){
+                                                              this.props.dispatch(getAccessToken(false));
+                                                         }
+                                                     }
                                             })
                                          console.log()
 
@@ -417,6 +424,10 @@ class BadmintonCourseSignUp extends Component {
                 if(json.re==1)
                 {
                     this.props.dispatch(onRelativePersonsUpdate(json.data))
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
                 }
             })
         });

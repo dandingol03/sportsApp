@@ -28,6 +28,8 @@ import {
     fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity,fetchEventMemberList
 } from '../../action/ActivityActions';
 
+import {getAccessToken,} from '../../action/UserActions';
+
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 /**
  * 群活动
@@ -113,6 +115,10 @@ class Activity extends Component {
                         }
                     })
                 }
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
 
 
@@ -153,6 +159,10 @@ class Activity extends Component {
                         }},
                     ]);
 
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
                 }
             })
         }
@@ -251,7 +261,10 @@ class Activity extends Component {
     fetchData(){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
-        this.props.dispatch(fetchActivityList()).then(()=> {
+        this.props.dispatch(fetchActivityList()).then((json)=> {
+            if(json.re==-100){
+                this.props.dispatch(getAccessToken(false));
+            }
             this.props.dispatch(disableActivityOnFresh());
             this.setState({doingFetch:false,isRefreshing:false})
         }).catch((e)=>{

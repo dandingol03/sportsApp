@@ -35,7 +35,7 @@ import{
     onCoursesUpdate,
 } from '../../action/CourseActions';
 import CreateBadmintonCourse from './CreateBadmintonCourse';
-
+import {getAccessToken,} from '../../action/UserActions';
 class CustomerCourseList extends Component {
 
     goBack() {
@@ -57,6 +57,10 @@ class CustomerCourseList extends Component {
                             if(json.re==1)
                             {
                                 this.props.dispatch(onCoursesUpdate(json.data))
+                            }else{
+                                if(json.re==-100){
+                                    this.props.dispatch(getAccessToken(false));
+                                }
                             }
                         })
                     },
@@ -73,6 +77,10 @@ class CustomerCourseList extends Component {
             if(json.re==1)
             {
                 this.props.dispatch(onCoursesUpdate(json.data))
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
         })
     }
@@ -261,6 +269,10 @@ class CustomerCourseList extends Component {
                 if(json.re==1)
                 {
                     this.props.dispatch(onCustomCourseUpdate(json.data))
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
                 }
             })
         });

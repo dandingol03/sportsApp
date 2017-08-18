@@ -32,6 +32,8 @@ import{
 
 } from '../../action/CourseActions';
 
+import {getAccessToken,} from '../../action/UserActions';
+
 class CustomCourse extends Component{
 
     goBack(){
@@ -107,7 +109,11 @@ class CustomCourse extends Component{
                                                              Alert.alert('信息','取消成功',[{text:'确认',onPress:()=>{
                                                              this.props.dispatch(enableMyCustomCoursesOnFresh());
                                                                 }}]);
-                                                           }
+                                                           }else{
+                                                                if(json.re==-100){
+                                                                    this.props.dispatch(getAccessToken(false));
+                                                                }
+                                                            }
                                                                })
 
                                 }}>
@@ -136,9 +142,13 @@ class CustomCourse extends Component{
     fetchData(){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
-        this.props.dispatch(fetchCustomCourse()).then(()=> {
-            this.props.dispatch(disableMyCustomCoursesOnFresh());
-            this.setState({doingFetch:false,isRefreshing:false})
+        this.props.dispatch(fetchCustomCourse()).then((json)=> {
+            if(json.re==-100){
+                this.props.dispatch(getAccessToken(false));
+            }else{
+                this.props.dispatch(disableMyCustomCoursesOnFresh());
+                this.setState({doingFetch:false,isRefreshing:false})
+            }
         }).catch((e)=>{
             this.props.dispatch(disableMyCustomCoursesOnFresh());
             this.setState({doingFetch:false,isRefreshing:false});

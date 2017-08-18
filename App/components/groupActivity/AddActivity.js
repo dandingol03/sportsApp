@@ -33,13 +33,15 @@ import TextInputWrapper from '../../encrypt/TextInputWrapper';
 import VenueInspect from '../../components/venue/VenueInspect';
 import CreateGroup from './CreateGroup';
 import Coach from '../../components/Coach';
-import ActivitySchedule from './IsActivitySchedule';
 import SelectTime from './SelectTime';
 
 import {
     fetchMyGroupList,disableMyGroupOnFresh,enableActivityOnFresh
 } from '../../action/ActivityActions';
 
+import {
+    getAccessToken,
+} from '../../action/UserActions';
 
 /**
  * 发布活动
@@ -148,6 +150,11 @@ class AddActivity extends Component{
                 Alert.alert('信息','新活动创建成功',[{text:'确认',onPress:()=>{
                     this.goBack()
                 }}]);
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+
+                }
             }
 
         });
@@ -233,17 +240,23 @@ class AddActivity extends Component{
 
     fetchMyGroupList(){
         this.state.doingFetch=true;
-        this.props.dispatch(fetchMyGroupList()).then(()=> {
-            this.props.dispatch(disableMyGroupOnFresh());
+        this.props.dispatch(fetchMyGroupList()).then((json)=> {
+            if(json.re==-100){
+                this.props.dispatch(getAccessToken(false));
+            }else{
+                if(json.re==1){
+                    this.props.dispatch(disableMyGroupOnFresh());
 
-            var groupNameButtons=['取消','新建群组'];
-            var {myGroupList} = this.props;
-            if(myGroupList!==null&&myGroupList!==undefined){
-                myGroupList.map((group,i)=>{
-                    groupNameButtons.push(group.groupName);
-                })
+                    var groupNameButtons=['取消','新建群组'];
+                    var {myGroupList} = this.props;
+                    if(myGroupList!==null&&myGroupList!==undefined){
+                        myGroupList.map((group,i)=>{
+                            groupNameButtons.push(group.groupName);
+                        })
+                    }
+                    this.setState({doingFetch:false,groupNameButtons:groupNameButtons});
+                }
             }
-            this.setState({doingFetch:false,groupNameButtons:groupNameButtons});
 
         }).catch((e)=>{
             this.props.dispatch(disableMyGroupOnFresh());

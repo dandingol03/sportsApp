@@ -16,18 +16,14 @@ import {
     SET_VISIBLE_EVENTS,
 } from '../constants/ActivityConstants';
 
-
 //发布群活动
 export let releaseActivity=(event)=>{
 
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var sessionId = state.user.sessionId;
+
             var personId = state.user.personInfo.personId;
-
-            var today = new Date();
-
 
             var params={
                 eventManagerId:personId,
@@ -57,10 +53,7 @@ export let releaseActivity=(event)=>{
             Proxy.postes({
                 url: Config.server + '/func/allow/createEvents',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    //'Cookie':sessionId,
-
                 },
                 body:params
             }).then((json)=>{
@@ -123,8 +116,6 @@ export let fetchActivityList=()=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             var allActivityList = null;
 
             Proxy.postes({
@@ -132,7 +123,7 @@ export let fetchActivityList=()=>{
                 headers: {
 
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+
                 },
                 body: {
                 }
@@ -142,8 +133,6 @@ export let fetchActivityList=()=>{
                     var visibleEvents=[];
                     var myEvents=[];//我发起的活动
                     var myTakenEvents=[];//我报名的活动
-                    var today = new Date();
-
                     if (allActivityList!== undefined && allActivityList !== null &&allActivityList.length > 0) {
                         dispatch(setActivityList(allActivityList));
                         allActivityList.map((activity,i)=>{
@@ -168,7 +157,12 @@ export let fetchActivityList=()=>{
                         resolve({re:1});
                     }
                 }else{
-                    resolve({re:-1,data:'目前没有已创建的群活动'});
+
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'目前没有已创建的群活动'});
+                    }
                 }
             }).catch((e)=>{
                 alert(e);
@@ -184,14 +178,12 @@ export let signUpActivity=(eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/signUpActivity',
                 headers: {
 
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
+
 
                 },
                 body: {
@@ -202,7 +194,11 @@ export let signUpActivity=(eventId)=>{
                 if (json.re == 1) {
                     resolve({re:1,data:'报名成功'});
                 }else{
-                    resolve({re:-1,data:'报名不成功'});
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'报名不成功'});
+                    }
                 }
             }).catch((e)=>{
                 alert(e);
@@ -218,14 +214,12 @@ export let deleteActivity=(eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
+
             Proxy.postes({
                 url: Config.server + '/func/node/deleteActivity',
                 headers: {
 
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -236,6 +230,9 @@ export let deleteActivity=(eventId)=>{
                 if (json.re == 1) {
                     resolve({re:1,data:' 撤销成功'});
                 }else{
+                    if(json.re==-100){
+                        resolve(json);
+                    }
                     resolve({re:-1,data:'撤销不成功'});
                 }
             }).catch((e)=>{
@@ -252,25 +249,24 @@ export let exitActivity=(eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/exitActivity',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
-
-                        eventId:parseInt(eventId)
-
+                    eventId:parseInt(eventId)
                 }
             }).then((json)=>{
                 if (json.re == 1) {
                     resolve({re:1,data:'退出成功'});
                 }else{
-                    resolve({re:-1,data:'退出不成功'});
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'退出不成功'});
+                    }
+
                 }
             }).catch((e)=>{
                 alert(e);
@@ -281,25 +277,19 @@ export let exitActivity=(eventId)=>{
     }
 }
 
-
-
 //用用户名搜索成员
 export let searchMember=(searchInfo)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/searchOnePerson',
                 headers: {
 
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
-
-                        searchInfo:searchInfo
+                    searchInfo:searchInfo
 
                 }
             }).then((json)=>{
@@ -320,14 +310,10 @@ export let createGroup=(info)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/createGroup',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -395,16 +381,12 @@ export let fetchMyGroupList=()=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             var myGroupList = null;
 
             Proxy.postes({
                 url: Config.server + '/func/allow/getMyGroups',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -419,7 +401,11 @@ export let fetchMyGroupList=()=>{
                         resolve({re:1,data:myGroupList});
                     }
                 }else{
-                    resolve({re:-1,data:'目前未加入任何群组'});
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'目前未加入任何群组'});
+                    }
                 }
             }).catch((e)=>{
                 alert(e);
@@ -435,16 +421,12 @@ export let fetchAllGroupList=()=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             var allGroupList = null;
 
             Proxy.postes({
                 url: Config.server + '/func//allow/getGroups',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -471,7 +453,11 @@ export let fetchAllGroupList=()=>{
                         resolve({re:1});
                     //}
                 }else{
-                    resolve({re:-1,data:'目前没有已创建的群组'});
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'目前没有已创建的群组'});
+                    }
                 }
             }).catch((e)=>{
                 alert(e);
@@ -488,14 +474,10 @@ export let joinGroup=(groupId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/joinGroup',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
 
@@ -506,7 +488,11 @@ export let joinGroup=(groupId)=>{
                 if (json.re == 1) {
                     resolve({re:1,data:null});
                 }else{
-                    resolve({re:-1,data:' 加入不成功'});
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:' 加入不成功'});
+                    }
                 }
             }).catch((e)=>{
                 alert(e);
@@ -522,25 +508,23 @@ export let deleteGroup=(groupId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/deleteGroup',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
-
-                        groupId:parseInt(groupId)
-
+                    groupId:parseInt(groupId)
                 }
             }).then((json)=>{
                 if (json.re == 1) {
                     resolve({re:1,data:'删除成功'});
                 }else{
-                    resolve({re:-1,data:'删除不成功'});
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'删除不成功'});
+                    }
                 }
             }).catch((e)=>{
                 alert(e);
@@ -556,25 +540,23 @@ export let exitGroup=(group)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/exitGroup',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
-
-                        groupId:parseInt(group.groupId)
-
+                    groupId:parseInt(group.groupId)
                 }
             }).then((json)=>{
                 if (json.re == 1) {
                     resolve({re:1,data:'退出成功'});
                 }else{
-                    resolve({re:-1,data:'退出不成功'});
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'退出不成功'});
+                    }
                 }
             }).catch((e)=>{
                 alert(e);
@@ -590,14 +572,11 @@ export let fetchEventMemberList=(eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/fetchEventMemberList',
                 headers: {
 
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     eventId:parseInt(eventId)
@@ -618,14 +597,10 @@ export let fetchGroupMemberList=(group)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken = state.user.accessToken;
-            var sessionId = state.user.sessionId;
             Proxy.postes({
                 url: Config.server + '/func/node/fetchGroupMemberList',
                 headers: {
-
                     'Content-Type': 'application/json',
-                    'Cookie':sessionId,
                 },
                 body: {
                     groupId:parseInt(group.groupId)

@@ -35,6 +35,8 @@ import{
     onCoursesUpdate,
 } from '../../action/CourseActions';
 
+import {getAccessToken,} from '../../action/UserActions';
+
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 
 class BadmintonCourse extends Component {
@@ -109,6 +111,10 @@ class BadmintonCourse extends Component {
             if(json.re==1)
             {
                 this.props.dispatch(onCoursesUpdate(json.data))
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
         })
     }
@@ -193,6 +199,10 @@ class BadmintonCourse extends Component {
             if(json.re==1)
             {
                 this.props.dispatch(onCoursesUpdate(json.data))
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
         })
 
@@ -397,6 +407,10 @@ class BadmintonCourse extends Component {
                 if(json.re==1)
                 {
                     this.props.dispatch(onCoursesUpdate(json.data))
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
                 }
             })
         });

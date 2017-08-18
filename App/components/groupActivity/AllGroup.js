@@ -24,6 +24,10 @@ import {
     fetchAllGroupList,disableAllGroupOnFresh,joinGroup,fetchGroupMemberList
 } from '../../action/ActivityActions';
 
+import {
+    getAccessToken,
+} from '../../action/UserActions';
+
 class AllGroup extends Component{
 
     goBack(){
@@ -71,6 +75,10 @@ class AllGroup extends Component{
                             }
                         })
                     }
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
                 }
             })
 
@@ -111,6 +119,10 @@ class AllGroup extends Component{
                alert('加入成功！');
                this.props.setMyGroupList();
                this.goBack();
+           }else{
+               if(json.re==-100){
+                   this.props.dispatch(getAccessToken(false));
+               }
            }
         }).catch((e)=>{
             alert(e)
@@ -121,9 +133,13 @@ class AllGroup extends Component{
     fetchData(){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
-        this.props.dispatch(fetchAllGroupList()).then(()=> {
-            this.props.dispatch(disableAllGroupOnFresh());
-            this.setState({doingFetch:false,isRefreshing:false})
+        this.props.dispatch(fetchAllGroupList()).then((json)=> {
+            if(json.re==-100){
+                this.props.dispatch(getAccessToken(false));
+            }else{
+                this.props.dispatch(disableAllGroupOnFresh());
+                this.setState({doingFetch:false,isRefreshing:false})
+            }
         }).catch((e)=>{
             this.props.dispatch(disableAllGroupOnFresh());
             this.setState({doingFetch:false,isRefreshing:false});
