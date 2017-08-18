@@ -27,6 +27,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
+import {getAccessToken,} from '../../action/UserActions';
 var {height, width,scale} = Dimensions.get('window');
 
 class ActivityPay extends Component{
@@ -78,6 +79,10 @@ class ActivityPay extends Component{
                 }
 
 
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
 
         })
