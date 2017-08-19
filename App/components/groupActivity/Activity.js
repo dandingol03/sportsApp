@@ -170,10 +170,15 @@ class Activity extends Component {
 
     renderRow(rowData,sectionId,rowId){
 
+        switch(rowData.costType){
+            case '1':rowData.costType = '按每人收费'; break;
+            case '2':rowData.costType = '按每小时收费'; break;
+            case '3':rowData.costType = '总费用'; break;
+            case '4':rowData.costType = '按每人次收费'; break;
+            case '5':rowData.costType = '按每人每小时收费'; break;
+            case '6':rowData.costType = '按场地小时收费'; break;
 
-        var endTimeParam = rowData.endTime.split(' ');
-        rowData.endTime = endTimeParam[1];
-
+        }
 
         var row=(
             <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,}}>
@@ -188,7 +193,7 @@ class Activity extends Component {
                     </View>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'flex-end'}}>
                         {
-                            rowData.eventType==1?null:
+                            rowData.eventType==0?null:
                             <Text>组内活动</Text>
                         }
                     </View>
@@ -227,8 +232,11 @@ class Activity extends Component {
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {rowData.startTime}--{rowData.endTime}
+                        <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {rowData.startTime}    --
+                        </Text>
+                        <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {rowData.endTime}
                         </Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
@@ -236,7 +244,15 @@ class Activity extends Component {
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'人均费用：'+rowData.feeDes+'元'}
+                            {'收费方式：'+rowData.costType}
+                        </Text>
+                    </View>
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'费用：'+rowData.cost+'元'}
                         </Text>
                     </View>
                 </View>
