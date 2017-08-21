@@ -966,38 +966,33 @@ export let wechatPay=(pay,eventId)=>{
                     var nonce_str = Math.random().toString(36).substr(2, 15);
                     var out_trade_no = json.data;
 
-                    if(pay.payType=='微信'){
-                        Proxy.postes({
-                            url: Config.server + '/func/node/wechatPay',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: {
-                                info:{
-                                    app_id:'wx9068ac0e88c09e7a',//应用ID
-                                    mch_id:'1485755962',//商户号
-                                    nonce_str:nonce_str,//随机字符串
-                                    notify_url:Config.server +'/allow/minirepay',
-                                    out_trade_no:out_trade_no,
-                                    total_fee:total_fee,
-                                    attach:'山东体育热科技有限公司',
-                                    body:'群活动费用',
-
-                                }
+                    Proxy.postes({
+                        url: Config.server + '/func/node/wechatPay',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: {
+                            info:{
+                                app_id:'wx9068ac0e88c09e7a',//应用ID
+                                mch_id:'1485755962',//商户号
+                                nonce_str:nonce_str,//随机字符串
+                                notify_url:Config.server +'/func/allow/minirepay',
+                                out_trade_no:out_trade_no,
+                                total_fee:total_fee,
+                                attach:'山东体育热科技有限公司',
+                                body:'群活动费用',
 
                             }
-                        }).then((json)=>{
-                            resolve(json)
 
-                        }).catch((e)=>{
-                            alert(e);
-                            reject(e);
-                        })
+                        }
+                    }).then((json)=>{
+                        resolve(json)
 
-                    }
-                    else{
-                        resolve(json);
-                    }
+                    }).catch((e)=>{
+                        alert(e);
+                        reject(e);
+                    })
+
                 }
                 else{
                     console.log('添加支付订单信息不完整');

@@ -121,6 +121,54 @@ class My extends Component{
         }
     }
 
+    wechatPay(){
+
+
+        WeChat.shareToTimeline({
+            type: 'news',
+            title: '我正在使用捷惠宝App,想与您一起分享',
+            description: 'share resource image to time line',
+            mediaTagName: 'email signature',
+            messageAction: undefined,
+            messageExt: undefined,
+            webpageUrl:'http://139.129.96.231:3000/wx',
+        });
+
+
+        // this.props.dispatch(wechatPay()).then((json)=>{
+        //     if(json.re==1){
+        //         var prepayId = json.data.prepayid;
+        //         var sign = json.data.sign;
+        //         var timeStamp = json.data.timestamp;
+        //         var noncestr = json.data.noncestr;
+        //
+        //         var wechatPayData=
+        //             {
+        //                 partnerId: '1485755962',  // 商家向财付通申请的商家id
+        //                 prepayId: prepayId,   // 预支付订单
+        //                 nonceStr: noncestr,   // 随机串，防重发
+        //                 timeStamp: timeStamp,  // 时间戳，防重发
+        //                 package: 'Sign=WXPay',    // 商家根据财付通文档填写的数据和签名
+        //                 sign: sign // 商家根据微信开放平台文档对数据做的签名
+        //             };
+        //
+        //         WeChat.pay(wechatPayData).then(
+        //             (result)=>{
+        //                 console.log(result);
+        //
+        //             },
+        //             (error)=>{
+        //                 console.log(error);
+        //             }
+        //         )
+        //
+        //     }
+        //
+        // })
+
+
+    }
+
 
     showPortraitDialog() {
         this.portraitDialog.show();

@@ -33,7 +33,7 @@ export let releaseActivity=(event)=>{
                 eventPlaceId:event.unitId,
                 eventMaxMemNum:event.eventType=='公开'?parseInt(event.eventMaxMemNum):100,
                 coachId:parseInt(event.coachId),
-                sparringId:parseInt(event.coachId),
+                sparringId:parseInt(event.sparringId),
                 groupId:parseInt(event.groupId),
 
                 eventDate:event.time.eventWeek,
@@ -43,6 +43,7 @@ export let releaseActivity=(event)=>{
 
                 memberLevel:event.memberLevel.toString(),
                 cost:parseInt(event.cost),
+                costType:event.costTypeCode.toString(),
                 isNeedCoach:parseInt(event.hasCoach),
                 isNeedSparring:parseInt(event.hasSparring),
                 feeDes:event.feeDes,
