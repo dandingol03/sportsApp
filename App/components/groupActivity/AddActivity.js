@@ -160,30 +160,6 @@ class AddActivity extends Component{
         });
     }
 
-    verifyDate(date)
-    {
-        this.state.selectTime=true;
-
-        var curDay=new Date();
-        var hour=date.getHours();
-        var day=date.getDay();
-
-        if(((date-curDay)>0&&curDay.getDate()!=date.getDate())||(curDay.getDate()==date.getDate()&&(hour-curDay.getHours()>2)))
-        {
-            var eventTime = DateFilter.filter(date,'yyyy-mm-dd hh:mm');
-            this.setState({event:Object.assign(this.state.event,{eventTime:date}),selectTime:false,eventTime:eventTime});
-
-        }else{
-
-            setTimeout(()=>{
-                Alert.alert('错误','您所选的日期必须在两小时之后,请重新选择',[{text:'确认',onPress:()=>{
-
-                }}]);
-            },800)
-            this.setState({selectTime:false});
-        }
-
-    }
 
     //对象水平
     _handlePress1(index) {
@@ -234,6 +210,17 @@ class AddActivity extends Component{
 
     }
 
+    //选付费方式
+    _handlePress4(index,groupNameButtons) {
+
+        if(index!==0){
+            var costType = this.state.costTypeButtons[index];
+            var costTypeCode = index;
+            this.setState({event:Object.assign(this.state.event,{costType:costType,costTypeCode:costTypeCode})});
+        }
+
+    }
+
     show(actionSheet) {
         this[actionSheet].show();
     }
@@ -274,11 +261,12 @@ class AddActivity extends Component{
             eventTime:null,
             event:{eventName:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
-                   groupName:null,groupId:null,cost:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
+                   groupName:null,groupId:null,cost:null,costType:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
 
             memberLevelButtons:['取消','业余小白','初级爱好者','业余高手','专业运动员'],
             eventTypeButtons:['取消','公开','组内'],
             groupNameButtons:['取消','新建群组'],
+            costTypeButtons:['取消',' 按人付费','按小时付费','总费用','按每人次收费','按每人每小时收费','按场地小时收费'],
         }
     }
 
@@ -295,6 +283,7 @@ class AddActivity extends Component{
 
         const memberLevelButtons=['取消','业余小白','初级爱好者','业余高手','专业运动员'];
         const eventTypeButtons=['取消','公开','组内'];
+        const costTypeButtons=['取消',' 按人付费','按小时付费','按小时付费','总费用','按每人次收费','按每人每小时收费','按场地小时收费'];
 
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
@@ -478,6 +467,45 @@ class AddActivity extends Component{
                                 />
                             </TouchableOpacity>
                         </View>
+
+
+                        {/*付费方式*/}
+                        <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                            <View style={{flex:1}}>
+                                <Text>付费方式：</Text>
+                            </View>
+                            <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                              onPress={()=>{ this.show('actionSheet4'); }}>
+                                {
+                                    this.state.event.costType==null?
+                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                            <Text style={{color:'#888',fontSize:13}}>请选择付费方式：</Text>
+                                        </View> :
+                                        <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                            <Text style={{color:'#444',fontSize:13}}>{this.state.event.costType}</Text>
+                                        </View>
+
+                                }
+                                <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',marginLeft:20}}>
+                                    <Icon name={'angle-right'} size={30} color="#fff"/>
+                                </View>
+                                <ActionSheet
+                                    ref={(p) => {
+                                        this.actionSheet4 =p;
+                                    }}
+                                    title="请选择付费方式"
+                                    options={costTypeButtons}
+                                    cancelButtonIndex={CANCEL_INDEX}
+                                    destructiveButtonIndex={DESTRUCTIVE_INDEX}
+                                    onPress={
+                                        (data)=>{ this._handlePress4(data); }
+                                    }
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+
 
                         {/*人均费用*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>

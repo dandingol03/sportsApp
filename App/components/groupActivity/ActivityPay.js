@@ -42,7 +42,7 @@ class ActivityPay extends Component{
 
         this.props.dispatch(wechatPay(pay,eventId)).then((json)=>{
             if(json.re==1){
-                if(pay.payType=='微信'){
+                if(pay.payType=='1'){
                     var prepayId = json.data.prepayid;
                     var sign = json.data.sign;
                     var timeStamp = json.data.timestamp;
@@ -95,7 +95,7 @@ class ActivityPay extends Component{
         this.state={
             isRefreshing:false,
             activity:this.props.activity,
-            pay:{payment:'',payType:'微信'},
+            pay:{payment:'',payType:'1'},
         };
     }
 
@@ -172,21 +172,21 @@ class ActivityPay extends Component{
                             </Text>
 
                             {
-                                this.state.pay.payType=='微信'?
+                                this.state.pay.payType=='1'?
                                     <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
                                                       onPress={()=>{
                                               var pay = this.state.pay;
                                               //pay.payType = null;
-                                              pay.payType = '微信'
+                                              pay.payType = '1'
                                               this.setState({pay:pay});
-                        }}>
+                                    }}>
                                         <Icon name={'dot-circle-o'} size={15} color="#66CDAA"/>
                                         <Text style={{marginLeft:10}}>微信支付</Text>
                                     </TouchableOpacity>:
                                     <TouchableOpacity style={{flexDirection:'row',marginLeft:20}}
                                                       onPress={()=>{
                                               var pay = this.state.pay;
-                                              pay.payType = '微信';
+                                              pay.payType = '1';
                                               this.setState({pay:pay});
                         }}>
                                         <Icon name={'circle-o'} size={15} color="#66CDAA"/>
@@ -194,29 +194,6 @@ class ActivityPay extends Component{
                                     </TouchableOpacity>
 
                             }
-
-                            {/*{*/}
-                                {/*this.state.pay.payType=='现金'?*/}
-                                    {/*<TouchableOpacity style={{flexDirection:'row',marginLeft:20}}*/}
-                                                      {/*onPress={()=>{*/}
-                                              {/*var pay = this.state.pay;*/}
-                                              {/*pay.payType = null;*/}
-                                              {/*this.setState({pay:pay});*/}
-                        {/*}}>*/}
-                                        {/*<Icon name={'dot-circle-o'} size={15} color="#66CDAA"/>*/}
-                                        {/*<Text style={{marginLeft:10}}>现金支付</Text>*/}
-                                    {/*</TouchableOpacity>:*/}
-                                    {/*<TouchableOpacity style={{flexDirection:'row',marginLeft:20}}*/}
-                                                      {/*onPress={()=>{*/}
-                                               {/*var pay = this.state.pay;*/}
-                                              {/*pay.payType = '现金';*/}
-                                              {/*this.setState({pay:pay});*/}
-                        {/*}}>*/}
-                                        {/*<Icon name={'circle-o'} size={15} color="#66CDAA"/>*/}
-                                        {/*<Text style={{marginLeft:10}}>现金支付</Text>*/}
-                                    {/*</TouchableOpacity>*/}
-
-                            {/*}*/}
 
                         </View>
 

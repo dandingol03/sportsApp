@@ -7,7 +7,7 @@ import {
 } from '../constants/CompetitionConstants';
 
 const initialState = {
-    competations:null
+    competitionList:null
 };
 
 let competations = (state = initialState, action) => {

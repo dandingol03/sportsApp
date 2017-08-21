@@ -218,37 +218,39 @@ class SeletTime extends Component{
                         </View>
 
                         {/*开始时间*/}
-                        <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
-                            <View style={{flex:1,}}>
-                                <Text style={{color:'#343434'}}>开始时间:</Text>
-                            </View>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                        {
+                            this.state.isSchedule == 1 ?
+                                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                                    <View style={{flex:1,}}>
+                                        <Text style={{color:'#343434'}}>开始时间:</Text>
+                                    </View>
+                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
                                 backgroundColor:'#eee',borderRadius:10,margin:5}}>
-                                {
-                                    this.state.startTime==null?
-                                        <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#888',fontSize:13}}>请选择：</Text>
-                                        </View> :
-                                        <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#444',fontSize:13}}>{this.state.startTimeView}</Text>
-                                        </View>
-                                }
-                                <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
-                                    <DatePicker
-                                        style={{width:50,marginLeft:0,borderWidth:0}}
-                                        customStyles={{
+                                        {
+                                            this.state.startTime==null?
+                                                <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#888',fontSize:13}}>请选择：</Text>
+                                                </View> :
+                                                <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#444',fontSize:13}}>{this.state.startTimeView}</Text>
+                                                </View>
+                                        }
+                                        <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
+                                            <DatePicker
+                                                style={{width:50,marginLeft:0,borderWidth:0}}
+                                                customStyles={{
                                         placeholderText:{color:'transparent',fontSize:12},
                                         dateInput:{height:30,borderWidth:0},
                                         dateTouchBody:{marginRight:25,height:22,borderWidth:0},
                                     }}
-                                        mode="time"
-                                        placeholder="选择"
-                                        format="HH:mm"
-                                        confirmBtnText="确认"
-                                        cancelBtnText="取消"
-                                        showIcon={true}
-                                        iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
-                                        onDateChange={(date) => {
+                                                mode="time"
+                                                placeholder="选择"
+                                                format="HH:mm"
+                                                confirmBtnText="确认"
+                                                cancelBtnText="取消"
+                                                showIcon={true}
+                                                iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
+                                                onDateChange={(date) => {
                                         if(this.state.selectStartTime==false)
                                         {
                                             this.state.selectStartTime=true;
@@ -261,43 +263,92 @@ class SeletTime extends Component{
                                         }
 
                                     }}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-
-                        {/*结束时间*/}
-                        <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
-                            <View style={{flex:1,}}>
-                                <Text style={{color:'#343434'}}>结束时间:</Text>
-                            </View>
-                            <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
-                                backgroundColor:'#eee',borderRadius:10,margin:5}}>
-                                {
-                                    this.state.endTime==null?
-                                        <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#888',fontSize:13}}>请选择：</Text>
-                                        </View> :
-                                        <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                            <Text style={{color:'#444',fontSize:13}}>{this.state.endTimeView}</Text>
+                                            />
                                         </View>
-                                }
-                                <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
-                                    <DatePicker
-                                        style={{width:50,marginLeft:0,borderWidth:0}}
-                                        customStyles={{
+                                    </View>
+                                </View>:
+                                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                                    <View style={{flex:1,}}>
+                                        <Text style={{color:'#343434'}}>开始时间:</Text>
+                                    </View>
+                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                                backgroundColor:'#eee',borderRadius:10,margin:5}}>
+                                        {
+                                            this.state.startTime==null?
+                                                <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#888',fontSize:13}}>请选择：</Text>
+                                                </View> :
+                                                <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#444',fontSize:13}}>{this.state.startTimeView}</Text>
+                                                </View>
+                                        }
+                                        <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
+                                            <DatePicker
+                                                style={{width:50,marginLeft:0,borderWidth:0}}
+                                                customStyles={{
                                         placeholderText:{color:'transparent',fontSize:12},
                                         dateInput:{height:30,borderWidth:0},
                                         dateTouchBody:{marginRight:25,height:22,borderWidth:0},
                                     }}
-                                        mode="time"
-                                        placeholder="选择"
-                                        format="HH:mm"
-                                        confirmBtnText="确认"
-                                        cancelBtnText="取消"
-                                        showIcon={true}
-                                        iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
-                                        onDateChange={(date) => {
+                                                mode="datetime"
+                                                placeholder="选择"
+                                                format="YYYY-MM-DD HH:mm:ss"
+                                                confirmBtnText="确认"
+                                                cancelBtnText="取消"
+                                                showIcon={true}
+                                                iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
+                                                onDateChange={(date) => {
+                                        if(this.state.selectStartTime==false)
+                                        {
+                                            this.state.selectStartTime=true;
+                                            var startTimeParam = date.split(' ');
+                                            var startTimeStr =startTimeParam[1];
+                                            this.setState({startTime:date,selectStartTime:false,startTimeView:startTimeStr})
+                                        }else{
+                                        }
+
+                                    }}
+                                            />
+                                        </View>
+                                    </View>
+                                </View>
+                        }
+
+                        {/*结束时间*/}
+
+                        {
+                            this.state.isSchedule == 1 ?
+                                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                                    <View style={{flex:1,}}>
+                                        <Text style={{color:'#343434'}}>结束时间:</Text>
+                                    </View>
+                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                                backgroundColor:'#eee',borderRadius:10,margin:5}}>
+                                        {
+                                            this.state.endTime==null?
+                                                <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#888',fontSize:13}}>请选择：</Text>
+                                                </View> :
+                                                <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#444',fontSize:13}}>{this.state.endTimeView}</Text>
+                                                </View>
+                                        }
+                                        <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
+                                            <DatePicker
+                                                style={{width:50,marginLeft:0,borderWidth:0}}
+                                                customStyles={{
+                                        placeholderText:{color:'transparent',fontSize:12},
+                                        dateInput:{height:30,borderWidth:0},
+                                        dateTouchBody:{marginRight:25,height:22,borderWidth:0},
+                                    }}
+                                                mode="time"
+                                                placeholder="选择"
+                                                format="HH:mm"
+                                                confirmBtnText="确认"
+                                                cancelBtnText="取消"
+                                                showIcon={true}
+                                                iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
+                                                onDateChange={(date) => {
                                         if(this.state.selectEndTime==false)
                                         {
                                             this.state.selectEndTime=true;
@@ -312,10 +363,56 @@ class SeletTime extends Component{
                                         }
 
                                     }}
-                                    />
+                                            />
+                                        </View>
+                                    </View>
+                                </View>:
+                                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                                    <View style={{flex:1,}}>
+                                        <Text style={{color:'#343434'}}>结束时间:</Text>
+                                    </View>
+                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
+                                backgroundColor:'#eee',borderRadius:10,margin:5}}>
+                                        {
+                                            this.state.endTime==null?
+                                                <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#888',fontSize:13}}>请选择：</Text>
+                                                </View> :
+                                                <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#444',fontSize:13}}>{this.state.endTimeView}</Text>
+                                                </View>
+                                        }
+                                        <View  style={{height:30,marginLeft:20,flexDirection:'row',alignItems: 'center',}}>
+                                            <DatePicker
+                                                style={{width:50,marginLeft:0,borderWidth:0}}
+                                                customStyles={{
+                                        placeholderText:{color:'transparent',fontSize:12},
+                                        dateInput:{height:30,borderWidth:0},
+                                        dateTouchBody:{marginRight:25,height:22,borderWidth:0},
+                                    }}
+                                                mode="datetime"
+                                                placeholder="选择"
+                                                format="YYYY-MM-DD HH:mm:ss"
+                                                confirmBtnText="确认"
+                                                cancelBtnText="取消"
+                                                showIcon={true}
+                                                iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
+                                                onDateChange={(date) => {
+                                        if(this.state.selectEndTime==false)
+                                        {
+                                            this.state.selectEndTime=true;
+                                            var endTimeParam = date.split(' ');
+                                            var endTimeStr =endTimeParam[1];
+                                            this.setState({endTime:date,selectEndTime:false,endTimeView:endTimeStr})
+                                        }else{
+                                        }
+
+                                    }}
+                                            />
+                                        </View>
+                                    </View>
                                 </View>
-                            </View>
-                        </View>
+                        }
 
 
                         <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
