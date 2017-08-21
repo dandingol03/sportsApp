@@ -18,6 +18,8 @@ import {
     ON_SPORT_LEVEL_UPDATE,
     ON_PER_NAME_UPDATE,
     ON_WECHAT_UPDATE,
+    ON_GENDER_CODE_UPDATE,
+    ON_PER_BIRTHDAY_UPDATE,
     ON_PER_ID_CARD_UPDATE,
     ON_RELATIVE_PERSON_UPDATE,
     UPDATE_PORTRAIT
@@ -284,7 +286,6 @@ export let updateWeChat=(wechat)=>{
                 headers: {
 
                     'Content-Type': 'application/json',
-
                 },
                 body: {
 
@@ -303,6 +304,57 @@ export let updateWeChat=(wechat)=>{
     }
 }
 
+//性别更改
+export let updateGenderCode=(genderCode)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateGenderCode',
+                headers: {
+
+                    'Content-Type': 'application/json',
+                },
+                body: {
+
+                    genderCode:genderCode
+
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+
+//年龄更改
+export let updatePerBirthday=(perBirthday)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve ,reject)=>{
+            var state =getState();
+            Proxy.postes({
+                url:Config.server + '/func/node/updatePerBirthday',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:{
+                    perBirthday:perBirthday
+                }
+            }).then((json)=>{
+                resolve(json)
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+        })
+    }
+}
 //身份证证件号更改
 export let updatePerIdCard=(perIdCard)=>{
     return (dispatch,getState)=>{
@@ -342,6 +394,8 @@ export let onPerNameUpdate=(perName)=>{
     }
 }
 
+
+//微信
 export let onWeChatUpdate=(wechat)=>{
     return (dispatch,getState)=>{
 
@@ -353,6 +407,35 @@ export let onWeChatUpdate=(wechat)=>{
         })
     }
 }
+
+
+
+//性别
+export let onGenderCodeUpdate=(genderCode)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_GENDER_CODE_UPDATE,
+            payload: {
+                genderCode
+            }
+        })
+    }
+}
+
+//年龄
+export let onPerBirthdayUpdate=(perBirthday)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_PER_BIRTHDAY_UPDATE,
+            payload: {
+                perBirthday
+            }
+        })
+    }
+}
+
 
 export let onPerIdCardUpdate=(perIdCard)=>{
     return (dispatch,getState)=>{
