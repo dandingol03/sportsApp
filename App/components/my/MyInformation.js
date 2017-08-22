@@ -39,7 +39,7 @@ import ValidateMobilePhoneModal from './modal/ValidateMobilePhoneModal';
 import WxModal from './modal/WxModal';
 import IdCardModal from './modal/IdCardModal';
 import SexModal from './modal/SexModal';
-import AgeModal from './modal/AgeModal';
+
 
 import{
     updateUsername,
@@ -243,7 +243,7 @@ class MyInformation extends Component{
 
 
                         {/*性别*/}
-                        <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,}}
+                        <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10}}
                                           onPress={()=>{
                                                   this.showSexDialog();
                                               }}
