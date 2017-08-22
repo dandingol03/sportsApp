@@ -99,6 +99,10 @@ class ActivityPay extends Component{
         };
     }
 
+    payMoney(){
+        alert("请输入大于零的金额");
+    }
+
     render(){
         activity = this.props.activity;
 
@@ -199,7 +203,12 @@ class ActivityPay extends Component{
 
                         <TouchableOpacity style={{flexDirection:'row',flex:3,padding:10,justifyContent:'center',alignItems: 'center'}}
                                           onPress={()=>{
-                                this.wechatPay(this.state.pay,this.state.activity.eventId);
+
+                                if(this.state.pay.payment<=0){
+                                    this.payMoney();
+                                }else{
+                                     this.wechatPay(this.state.pay,this.state.activity.eventId);
+                                }
                             }}>
                             <View style={{backgroundColor:'#66CDAA',padding:5,paddingLeft:20,paddingRight:20,borderRadius:5}}>
                                 <Text style={{color:'#fff'}}>
