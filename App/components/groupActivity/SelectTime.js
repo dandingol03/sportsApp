@@ -81,6 +81,7 @@ class SeletTime extends Component{
 
     }
 
+
     constructor(props) {
         super(props);
         this.state={
@@ -96,6 +97,39 @@ class SeletTime extends Component{
             endTimeView:null,
 
             eventWeekButtons:['取消',]
+        }
+    }
+    verifyTime(date){
+
+        var endhour = date.substring(0,2);
+        var inthour=parseInt(endhour);
+        var hourminutes=inthour*60;
+        var min=date.substring(3,5);
+        var intmin=parseInt(min);
+        var endmintotal=hourminutes+intmin;
+
+        var startTime= this.state.startTimeView;
+        var starthour=startTime.substring(0,2);
+        var inthour1=parseInt(starthour);
+        var hourminutes1=inthour1*60;
+        var min1=startTime.substring(3,5);
+        var intmin1=parseInt(min1);
+        var startinttotal=hourminutes1+intmin1;
+
+        if((endmintotal-startinttotal)<60){
+            alert("活动时间最短为一小时");
+        }else{
+            if(this.state.selectEndTime==false)
+            {
+                this.state.selectEndTime=true;
+                var endTime = date+':00';
+                var day = new Date();
+                var today = DateFilter.filter(day, 'yyyy-mm-dd');
+                var endTimeStr = today+' '+endTime;
+
+
+                this.setState({endTime:endTimeStr,selectEndTime:false,endTimeView:date})
+            }
         }
     }
 
@@ -219,6 +253,7 @@ class SeletTime extends Component{
 
                         {/*开始时间*/}
                         {
+
                             this.state.isSchedule == 1 ?
                                 <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                                     <View style={{flex:1,}}>
@@ -290,20 +325,22 @@ class SeletTime extends Component{
                                         dateInput:{height:30,borderWidth:0},
                                         dateTouchBody:{marginRight:25,height:22,borderWidth:0},
                                     }}
-                                                mode="datetime"
+                                                mode="time"
                                                 placeholder="选择"
-                                                format="YYYY-MM-DD HH:mm:ss"
+                                                format="HH:mm"
                                                 confirmBtnText="确认"
                                                 cancelBtnText="取消"
                                                 showIcon={true}
                                                 iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
                                                 onDateChange={(date) => {
-                                        if(this.state.selectStartTime==false)
+                                           if(this.state.selectStartTime==false)
                                         {
                                             this.state.selectStartTime=true;
-                                            var startTimeParam = date.split(' ');
-                                            var startTimeStr =startTimeParam[1];
-                                            this.setState({startTime:date,selectStartTime:false,startTimeView:startTimeStr})
+                                            var startTime = date+':00';
+                                            var day = new Date();
+                                            var today = DateFilter.filter(day, 'yyyy-mm-dd');
+                                            var startTimeStr = today+' '+startTime;
+                                            this.setState({startTime:startTimeStr,selectStartTime:false,startTimeView:date})
                                         }else{
                                         }
 
@@ -349,18 +386,21 @@ class SeletTime extends Component{
                                                 showIcon={true}
                                                 iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
                                                 onDateChange={(date) => {
-                                        if(this.state.selectEndTime==false)
-                                        {
-                                            this.state.selectEndTime=true;
-                                            var endTime = date+':00';
-                                            var day = new Date();
-                                            var today = DateFilter.filter(day, 'yyyy-mm-dd');
-                                            var endTimeStr = today+' '+endTime;
+
+                                                this.verifyTime(date);
 
 
-                                            this.setState({endTime:endTimeStr,selectEndTime:false,endTimeView:date})
-                                        }else{
-                                        }
+                                        {/*if(this.state.selectEndTime==false)*/}
+                                        {/*{*/}
+                                            {/*this.state.selectEndTime=true;*/}
+                                            {/*var endTime = date+':00';*/}
+                                            {/*var day = new Date();*/}
+                                            {/*var today = DateFilter.filter(day, 'yyyy-mm-dd');*/}
+                                            {/*var endTimeStr = today+' '+endTime;*/}
+
+                                            {/*this.setState({endTime:endTimeStr,selectEndTime:false,endTimeView:date})*/}
+                                        {/*}else{*/}
+                                        {/*}*/}
 
                                     }}
                                             />
@@ -390,22 +430,28 @@ class SeletTime extends Component{
                                         dateInput:{height:30,borderWidth:0},
                                         dateTouchBody:{marginRight:25,height:22,borderWidth:0},
                                     }}
-                                                mode="datetime"
+                                                mode="time"
                                                 placeholder="选择"
-                                                format="YYYY-MM-DD HH:mm:ss"
+                                                format="HH:mm"
                                                 confirmBtnText="确认"
                                                 cancelBtnText="取消"
                                                 showIcon={true}
                                                 iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
                                                 onDateChange={(date) => {
-                                        if(this.state.selectEndTime==false)
-                                        {
-                                            this.state.selectEndTime=true;
-                                            var endTimeParam = date.split(' ');
-                                            var endTimeStr =endTimeParam[1];
-                                            this.setState({endTime:date,selectEndTime:false,endTimeView:endTimeStr})
-                                        }else{
-                                        }
+
+                                                    this.verifyTime(date);
+                                       {/*if(this.state.selectEndTime==false)*/}
+                                        {/*{*/}
+                                            {/*this.state.selectEndTime=true;*/}
+                                            {/*var endTime = date+':00';*/}
+                                            {/*var day = new Date();*/}
+                                            {/*var today = DateFilter.filter(day, 'yyyy-mm-dd');*/}
+                                            {/*var endTimeStr = today+' '+endTime;*/}
+
+
+                                            {/*this.setState({endTime:endTimeStr,selectEndTime:false,endTimeView:date})*/}
+                                        {/*}else{*/}
+                                        {/*}*/}
 
                                     }}
                                             />
