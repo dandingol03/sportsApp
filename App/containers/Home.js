@@ -45,9 +45,7 @@ import {
     getAccessToken
 } from '../action/UserActions';
 
-import {
-   fetchCompetition,
-} from '../action/CompetationActions';
+
 
 var IMGS = [
     require('../../img/tt1@2x.png'),
@@ -157,7 +155,7 @@ class Home extends Component {
 
                 <View style={{flexDirection:'column',width:70,justifyContent:'center',alignItems:'center'}}>
                     <Image  resizeMode="stretch" style={{width:65,height:65}}
-                        source={{uri: rowData.img}}
+                    source={{uri: rowData.img}}
                     />
 
                 </View>
@@ -319,17 +317,19 @@ class Home extends Component {
                                         </View>
                                     </TouchableOpacity>
 
-                                    {/*<TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}*/}
-                                                      {/*onPress={ ()=>{*/}
-                                          {/*this.navigate2Competition();*/}
-                                      {/*}}>*/}
 
-                                        {/*/!*<Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>*!/*/}
-                                        {/*<Image resizeMode="stretch" source={require('../../img/shangc-@2x.png')} />*/}
-                                        {/*<View style={{marginTop:0,paddingTop:15}}>*/}
-                                            {/*<Text style={{fontSize:13,color:'#646464'}}>比赛</Text>*/}
-                                        {/*</View>*/}
-                                    {/*</TouchableOpacity>*/}
+                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
+                                                      onPress={ ()=>{
+                                          this.navigate2Competition();
+                                      }}>
+
+                                        {/*<Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>*/}
+                                        <Image resizeMode="stretch" source={require('../../img/shangc-@2x.png')} />
+                                        <View style={{marginTop:0,paddingTop:15}}>
+                                            <Text style={{fontSize:13,color:'#646464'}}>比赛</Text>
+                                        </View>
+                                    </TouchableOpacity>
+
 
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
