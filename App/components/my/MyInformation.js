@@ -243,7 +243,7 @@ class MyInformation extends Component{
 
 
                         {/*性别*/}
-                        <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10}}
+                        <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}
                                           onPress={()=>{
                                                   this.showSexDialog();
                                               }}
@@ -268,7 +268,7 @@ class MyInformation extends Component{
 
 
                         {/*年龄*/}
-                        <View style={{flexDirection:'row',padding:12,paddingHorizontal:10,}}
+                        <View style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}
 
                         >
                             <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
@@ -671,37 +671,6 @@ class MyInformation extends Component{
 
                     </PopupDialog>
 
-                    {/*年龄*/}
-                    <PopupDialog
-                        ref={(popupDialog) => {
-                        this.AgeDialog = popupDialog;
-                    }}
-                        dialogAnimation={scaleAnimation}
-                        actions={[]}
-                        width={0.8}
-                        height={0.3}
-                    >
-
-                        <AgeModal
-                            val={this.props.age}
-                            onClose={()=>{
-                                this.AgeDialog.dismiss();
-                            }}
-                            onConfirm={(val)=>{
-                                if(val!=this.props.age)
-                                {
-                                    this.props.dispatch(updateWeChat(val)).then((json)=>{
-                                        if(json.re==1)
-                                        {
-                                            this.props.dispatch(onWeChatUpdate(val))
-                                        }
-                                        this.AgeDialog.dismiss();
-                                    })
-                                }
-                            }}
-                        />
-
-                    </PopupDialog>
 
 
 
