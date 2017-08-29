@@ -126,8 +126,6 @@ class SeletTime extends Component{
                 var day = new Date();
                 var today = DateFilter.filter(day, 'yyyy-mm-dd');
                 var endTimeStr = today+' '+endTime;
-
-
                 this.setState({endTime:endTimeStr,selectEndTime:false,endTimeView:date})
             }
         }
