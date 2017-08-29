@@ -158,7 +158,6 @@ class Activity extends Component {
                             this.setMyActivityList();
                         }},
                     ]);
-
                 }else{
                     if(json.re==-100){
                         this.props.dispatch(getAccessToken(false));
@@ -226,17 +225,14 @@ class Activity extends Component {
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
-                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlace.name}</Text>
+                       <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventAddr}</Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
-                        <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {rowData.startTime}    --
-                        </Text>
-                        <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {rowData.endTime}
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'时间:'+rowData.eventTime}
                         </Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
@@ -244,7 +240,7 @@ class Activity extends Component {
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'收费方式：'+rowData.costType}
+                            {'比赛简介：'+rowData.eventBrief}
                         </Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
@@ -252,7 +248,7 @@ class Activity extends Component {
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'费用：'+rowData.cost+'元'}
+                            {'活动编号：'+rowData.eventNum}
                         </Text>
                     </View>
                 </View>
