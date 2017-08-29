@@ -261,7 +261,7 @@ class AddActivity extends Component{
             eventTime:null,
             event:{eventName:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
-                   groupName:null,groupId:null,cost:null,costType:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
+                   groupName:null,groupId:null,cost:null,costType:null,filedNum:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
 
             memberLevelButtons:['取消','业余小白','初级爱好者','业余高手','专业运动员'],
             eventTypeButtons:['取消','公开','组内'],
@@ -283,7 +283,7 @@ class AddActivity extends Component{
 
         const memberLevelButtons=['取消','业余小白','初级爱好者','业余高手','专业运动员'];
         const eventTypeButtons=['取消','公开','组内'];
-        const costTypeButtons=['取消',' 按人付费','按小时付费','按小时付费','总费用','按每人次收费','按每人每小时收费','按场地小时收费'];
+        const costTypeButtons=['取消',' 按人付费','按小时付费','总费用','按每人次收费','按每人每小时收费','按场地小时收费'];
 
         return (
             <View style={{flex:1,backgroundColor:'#fff'}}>
@@ -431,6 +431,34 @@ class AddActivity extends Component{
                             }
 
                         </View>
+
+
+                        {/*场地需求*/}
+
+                        {
+                            (this.state.event.time.isSchedule==0)?
+                                <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>
+                                    <View style={{flex:1}}>
+                                        <Text>场地数目：</Text>
+                                    </View>
+                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}>
+                                        <TextInputWrapper
+                                            placeholderTextColor='#888'
+                                            textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
+                                            placeholder="请输入需要的场地数目:"
+                                            val={this.state.event.eventMaxMemNum}
+                                            onChangeText={
+                                    (value)=>{
+                                        this.setState({event:Object.assign(this.state.event,{filedNum:value})})
+                                    }}
+                                            onCancel={
+                                    ()=>{this.setState({event:Object.assign(this.state.event,{filedNum:null})});}
+                                }
+                                        />
+                                    </View>
+                                </View>:null
+                        }
 
                         {/*邀请群组*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
