@@ -35,13 +35,14 @@ export let releaseActivity=(event)=>{
                 coachId:parseInt(event.coachId),
                 sparringId:parseInt(event.sparringId),
                 groupId:parseInt(event.groupId),
+                yardNum:event.filedNum==null?1:parseInt(event.filedNum),
 
                 eventDate:event.time.eventWeek,
                 startTime:event.time.startTime,
-                endTime:event.time.startTime,
+                endTime:event.time.endTime,
                 IsSchedule:event.time.isSchedule,
 
-                memberLevel:event.memberLevel.toString(),
+                memberLevel:event.memberLevel==null?"组内":event.memberLevel.toString(),
                 cost:parseInt(event.cost),
                 costType:event.costTypeCode.toString(),
                 isNeedCoach:parseInt(event.hasCoach),
@@ -49,6 +50,7 @@ export let releaseActivity=(event)=>{
                 feeDes:event.feeDes,
                 eventNowMemNum:1,
                 status:0
+
             }
 
             Proxy.postes({
@@ -119,12 +121,12 @@ export let fetchActivityList=()=>{
             var state=getState();
             var allActivityList = null;
 
+            var username = state.user.user.username;
+
             Proxy.postes({
-                url: Config.server + '/func/node/fetchActivityList',
+                url: Config.server + '/func/allow/getMyEvents',
                 headers: {
-
                     'Content-Type': 'application/json',
-
                 },
                 body: {
                 }
@@ -137,17 +139,30 @@ export let fetchActivityList=()=>{
                     if (allActivityList!== undefined && allActivityList !== null &&allActivityList.length > 0) {
                         dispatch(setActivityList(allActivityList));
                         allActivityList.map((activity,i)=>{
+                            var members=new Array();
+                            var flag=0;
 
-                            if(activity.eventMemberType==1){
+                            members=activity.eventMember.split(",");
+
+                            if(activity.eventManager==username){
                                 myEvents.push(activity);
                             }
-                            if(activity.eventMemberType==2){
-                                myTakenEvents.push(activity);
-                            }
-                            if(activity.eventMemberType==0){
-                                visibleEvents.push(activity);
-                            }
 
+                            for(j=0;j<members.length;j++){
+
+                                if(activity.eventManager==members[j]){
+                                    myTakenEvents.push(activity);
+                                }
+
+                                if(activity.eventManager!=members[j]){
+                                    flag++;
+                                    if(flag==members.length){
+
+                                        visibleEvents.push(activity);
+                                    }
+                                }
+
+                            }
                         });
 
                         dispatch(setVisibleEvents(visibleEvents));
@@ -286,7 +301,6 @@ export let searchMember=(searchInfo)=>{
             Proxy.postes({
                 url: Config.server + '/func/node/searchOnePerson',
                 headers: {
-
                     'Content-Type': 'application/json',
                 },
                 body: {
