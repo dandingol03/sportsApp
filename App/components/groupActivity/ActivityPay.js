@@ -125,20 +125,20 @@ class ActivityPay extends Component{
                                 <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                     <Icon name={'circle'} size={10} color="#aaa"/>
                                 </View>
-                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlace.name}</Text>
+                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventAddr}</Text>
                             </View>
                             <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                                 <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                     <Icon name={'circle'} size={10} color="#aaa"/>
                                 </View>
-                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlace.address}</Text>
+                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventBrief}</Text>
                             </View>
                             <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                                 <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                     <Icon name={'circle'} size={10} color="#aaa"/>
                                 </View>
                                 <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                    {activity.startTime}--{activity.endTime}
+                                    {'活动时间:'+activity.eventTime}
                                 </Text>
                             </View>
 
