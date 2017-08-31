@@ -111,7 +111,7 @@ class MyActivity extends Component {
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventAddr}</Text>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlaceName}</Text>
                         </View>
                         <View style={{flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
