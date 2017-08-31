@@ -10,7 +10,7 @@ import newsThemeReducer from './NewsThemeReducer';
 import courseReducer from './CourseReducer';
 import coachReducer from './CoachReducer';
 import competitionsReducer from './CompetitionReducer';
-
+import mycompetitionReducer from './MyCompetationReducer';
 
 export default rootReducer = combineReducers({
     tab:tabReducer,
@@ -21,5 +21,6 @@ export default rootReducer = combineReducers({
     newsTheme:newsThemeReducer,
     course:courseReducer,
     coach:coachReducer,
-    competitions:competitionsReducer
+  //  competitions:competitionsReducer,
+    mycompetition:mycompetitionReducer
 })

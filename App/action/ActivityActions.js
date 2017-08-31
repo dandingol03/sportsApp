@@ -42,7 +42,7 @@ export let releaseActivity=(event)=>{
                 endTime:event.time.endTime,
                 IsSchedule:event.time.isSchedule,
 
-                memberLevel:event.memberLevel==null?"组内":event.memberLevel.toString(),
+                memberLevel:event.memberLevel==null?"1":event.memberLevel.toString(),
                 cost:parseInt(event.cost),
                 costType:event.costTypeCode.toString(),
                 isNeedCoach:parseInt(event.hasCoach),
@@ -120,22 +120,24 @@ export let fetchActivityList=()=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var allActivityList = null;
-
             var username = state.user.user.username;
 
+            var visibleEvents=[];
+            var myEvents=[];//我发起的活动
+            var myTakenEvents=[];//我报名的活动
             Proxy.postes({
-                url: Config.server + '/func/allow/getMyEvents',
+               // url: Config.server + '/func/allow/getAllEventsForPhone',
+                url: Config.server + '/func/allow/getCheckedEvents',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: {
+
                 }
             }).then((json)=>{
                 if (json.re == 1) {
                     allActivityList = json.data;
-                    var visibleEvents=[];
-                    var myEvents=[];//我发起的活动
-                    var myTakenEvents=[];//我报名的活动
+
                     if (allActivityList!== undefined && allActivityList !== null &&allActivityList.length > 0) {
                         dispatch(setActivityList(allActivityList));
                         allActivityList.map((activity,i)=>{
@@ -144,15 +146,15 @@ export let fetchActivityList=()=>{
 
                             members=activity.eventMember.split(",");
 
-                            if(activity.eventManager==username){
+                            if(activity.eventManagerLoginName==username){
                                 myEvents.push(activity);
                             }
 
                             for(j=0;j<members.length;j++){
 
-                                if(activity.eventManager==members[j]){
-                                    myTakenEvents.push(activity);
-                                }
+                                // if(activity.eventManager==members[j]){
+                                //     myTakenEvents.push(activity);
+                                // }
 
                                 if(activity.eventManager!=members[j]){
                                     flag++;
@@ -165,12 +167,6 @@ export let fetchActivityList=()=>{
                             }
                         });
 
-                        dispatch(setVisibleEvents(visibleEvents));
-                        dispatch(setMyEvents(myEvents));
-                        dispatch(setMyTakenEvents(myTakenEvents));
-
-                        dispatch(disableActivityOnFresh());
-                        resolve({re:1});
                     }
                 }else{
 
@@ -180,6 +176,76 @@ export let fetchActivityList=()=>{
                         resolve({re:-1,data:'目前没有已创建的群活动'});
                     }
                 }
+
+                Proxy.postes({
+                    // url: Config.server + '/func/allow/getAllEventsForPhone',
+                    url: Config.server + '/func/allow/getMyEvents',
+                    headers: {
+
+                        'Content-Type': 'application/json',
+
+                    },
+                    body: {
+
+                    }
+                }).then((json)=>{
+                    if(json.re==1){
+                        myEventsList = json.data;
+                        if (myEventsList!== undefined && myEventsList !== null &&myEventsList.length > 0){
+                            myEventsList.map((activity,i)=>{
+                                var members=new Array();
+                                var flag=0;
+                                var flag1=0;
+                                visibleEvents.map((visibleEvent,k)=>{
+
+                                    if(activity.eventName!=visibleEvent.eventName){
+
+                                        flag1++;
+                                    }
+                                    if(flag1==visibleEvents.length){
+
+                                        members=activity.eventMember.split(",");
+
+                                        if(activity.eventManager==username){
+                                            myEvents.push(activity);
+                                        }
+
+                                        visibleEvents.push(activity);
+                                        // for(j=0;j<members.length;j++){
+                                        //
+                                        //     // if(activity.eventManager==members[j]){
+                                        //     //     myTakenEvents.push(activity);
+                                        //     // }
+                                        //     if(activity.eventManager!=members[j]){
+                                        //         flag++;
+                                        //         if(flag==members.length){
+                                        //
+                                        //             visibleEvents.push(activity);
+                                        //         }
+                                        //     }
+                                        //
+                                        // }
+
+                                    }
+
+                                })
+
+
+                            });
+
+                        }
+                    }
+                    dispatch(setVisibleEvents(visibleEvents));
+                    dispatch(setMyEvents(myEvents));
+                    dispatch(setMyTakenEvents(myTakenEvents));
+                    dispatch(disableActivityOnFresh());
+                    resolve({re:1});
+
+
+                }).catch((e)=>{
+                    alert(e);
+                    reject(e);
+                })
             }).catch((e)=>{
                 alert(e);
                 reject(e);
