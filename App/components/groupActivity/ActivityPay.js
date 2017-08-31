@@ -125,20 +125,25 @@ class ActivityPay extends Component{
                                 <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                     <Icon name={'circle'} size={10} color="#aaa"/>
                                 </View>
-                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventAddr}</Text>
+                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventPlaceName}</Text>
                             </View>
                             <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                                 <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                     <Icon name={'circle'} size={10} color="#aaa"/>
                                 </View>
-                                <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventBrief}</Text>
+                                {
+                                    activity.eventBrief==null&&activity.eventBrief==undefined?
+                                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>无</Text>:
+                                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{activity.eventBrief}</Text>
+                                }
+
                             </View>
                             <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                                 <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                     <Icon name={'circle'} size={10} color="#aaa"/>
                                 </View>
                                 <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                    {'活动时间:'+activity.eventTime}
+                                    {'活动时间:'+activity.startTimeStr}
                                 </Text>
                             </View>
 

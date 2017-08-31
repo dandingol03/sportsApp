@@ -120,11 +120,7 @@ class Activity extends Component {
                     this.props.dispatch(getAccessToken(false));
                 }
             }
-
-
-
         })
-
     }
 
     navigate2ActivityPay(event)
@@ -187,14 +183,14 @@ class Activity extends Component {
                     </View>
                     <View style={{flex:1,justifyContent:'center',alignItems: 'center',marginLeft:5}}>
                         <View>
-                            <Text>{rowData.eventManager.username}</Text>
+                            {/*<Text>{rowData.eventManager.username}</Text>*/}
                         </View>
                     </View>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'flex-end'}}>
-                        {
-                            rowData.eventType==0?null:
-                            <Text>组内活动</Text>
-                        }
+                        {/*{*/}
+                            {/*rowData.eventType==0?null:*/}
+                            {/*<Text>组内活动</Text>*/}
+                        {/*}*/}
                     </View>
 
 
@@ -204,35 +200,46 @@ class Activity extends Component {
                     </View> :null
                     }
 
-                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
-                                      onPress={()=>{
+
+                    {
+                        rowData.isOutDate==0?
+                        <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
+                                          onPress={()=>{
                                           this.navigate2ActivityDetail(rowData,'公开活动');
                                       }}>
-                        <Text style={{marginRight:5,color:'#66CDAA'}}>详情</Text>
-                        <Icon name={'angle-right'} size={25} color="#66CDAA"/>
-                    </TouchableOpacity>
+                            <Text style={{marginRight:5,color:'#66CDAA'}}>详情</Text>
+                            <Icon name={'angle-right'} size={25} color="#66CDAA"/>
+                        </TouchableOpacity>:
+                            <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
+                                      >
+                                <Text style={{marginRight:5,color:'#f00'}}>活动过期</Text>
+                            </TouchableOpacity>
+
+                    }
+
                 </View>
                 <View style={{flex:3,padding:10}}>
-                    <View style={{flexDirection:'row',marginBottom:3}}>
+                    <View style={{flex:3,flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'star'} size={16} color="#66CDAA"/>
                         </View>
                         <View style={{flex:7}}>
                             <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventName}</Text>
                         </View>
+
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
-                       <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventAddr}</Text>
+                       <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlaceName}</Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'时间:'+rowData.eventTime}
+                            {'时间:'+rowData.startTimeStr+'---'+rowData.endTimeStr}
                         </Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
@@ -248,7 +255,7 @@ class Activity extends Component {
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'活动编号：'+rowData.eventNum}
+                            {'场地数目：'+rowData.yardNum}
                         </Text>
                     </View>
                 </View>
@@ -256,14 +263,42 @@ class Activity extends Component {
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
                         <Text style={{color:'#aaa',fontSize:13}}>已报名:{rowData.eventNowMemNum}</Text>
                     </View>
+                    <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
+                        {
+                            rowData.Money!=0 && rowData.Money!=null && rowData.Money!=undefined && rowData.isSignUp==1?
+                            <Text style={{color:'#f00',fontSize:13}}>已支付</Text>:
+                            <View>
+                                {
+                                    ( rowData.Money==0 || rowData.Money==null || rowData.Money==undefined )&& rowData.isSignUp==1?
+                                    <Text style={{color:'#f00',fontSize:13}}>未支付</Text>:
+                                        null
+                                }
+
+                            </View>
+                        }
+
+
+                    </View>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>
-                    <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+
+                    {
+                        rowData.isSignUp==0 ?
+                        <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
                     ,borderRadius:6}}
-                                      onPress={()=>{this.signUpActivity(rowData)}}>
-                        <Text style={{color:'#66CDAA',fontSize:12}}>我要报名</Text>
-                    </TouchableOpacity>
+                                          onPress={()=>{this.signUpActivity(rowData)}}>
+                            <Text style={{color:'#66CDAA',fontSize:12}}>我要报名</Text>
+                        </TouchableOpacity>:
+
+                            <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}
+                                              onPress={()=>{this.signUpActivity(rowData)}}>
+                                <Text style={{color:'#f00',fontSize:12}}>您已报名</Text>
+                            </TouchableOpacity>
+                    }
+
+
                 </View>
             </View>
         );
@@ -359,16 +394,16 @@ class Activity extends Component {
                         </Animated.View>
                     </View>
 
-                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',
+                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#66CDAA',
                             position:'absolute',bottom:8}}>
-                        <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
                             padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}>
-                            <Text style={{color:'#66CDAA',}}>我发起的活动</Text>
+                            <Text style={{color:'#fff',}}>我发起的活动</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',
-                            padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity(myTakenEvents,'我的报名');}}>
-                            <Text style={{color:'#66CDAA',}}>我报名的活动</Text>
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
+                            padding:10,margin:5}} onPress={()=>{this.navigate2AddActivity();}}>
+                            <Text style={{color:'#fff',}}>我要创建活动</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -376,7 +411,7 @@ class Activity extends Component {
                     <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:8,left:width*0.5-25}}>
                         <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,
                         borderWidth:1,borderColor:'#eee',borderRadius:50}}
-                                          onPress={()=>{this.navigate2AddActivity();}}>
+                                          >
                             <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
                         </TouchableOpacity>
                     </View>
