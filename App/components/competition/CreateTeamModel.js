@@ -1,4 +1,4 @@
-/*
+
 
 
 
@@ -20,12 +20,12 @@ import TextInputWrapper from 'react-native-text-input-wrapper';
 import DateFilter from '../../utils/DateFilter';
 import DatePicker from 'react-native-datepicker';
 import ActionSheet from 'react-native-actionsheet';
+
 var {height, width} = Dimensions.get('window');
 
 
 
-const CANCEL_INDEX = 0;
-const DESTRUCTIVE_INDEX = 3;
+
 
 
 
@@ -46,13 +46,16 @@ class CreateTeamModel extends Component{
 
 
 
-    show(actionSheet) {
-        this[actionSheet].show();
+
+    confirm()
+    {
+        if(this.props.onConfirm)
+            this.props.onConfirm(this.state.team)
     }
 
     doCheck()
     {
-        if(this.state.team.teamName&    &this.state.team.teamName!=''
+        if(this.state.team.teamName&&this.state.team.teamName!=''
             &&this.state.team.remark&&this.state.team.remark!='')
         {
             return true
@@ -73,7 +76,7 @@ class CreateTeamModel extends Component{
 
                 <View style={{flex: 1, backgroundColor: '#fff'}}>
 
-                    {/!*团队名*!/}
+                    {/*团队名*/}
                     <View style={{
                         height: 30,
                         flexDirection: 'row',
@@ -100,19 +103,14 @@ class CreateTeamModel extends Component{
                                 val={this.state.team.teamName}
                                 onChangeText={
                                     (value) => {
-                                        this.setState({team: Object.assign(this.state.team, {teamName: value})})
+                                        this.setState({team:Object.assign(this.state.team,{teamName:value})})
                                     }}
-                                onCancel={
-                                    () => {
-                                        this.setState({team: Object.assign(this.state.team, {teamName: null})});
-                                    }
-                                }
                             />
                         </View>
                     </View>
 
 
-                    {/!*备注*!/}
+                    {/*备注*/}
                     <View style={{
                         height: 30,
                         flexDirection: 'row',
@@ -139,38 +137,32 @@ class CreateTeamModel extends Component{
                                 val={this.state.team.remark}
                                 onChangeText={
                                     (value) => {
-                                        this.setState({team: Object.assign(this.state.team, {remark: value})})
+                                        this.setState({team:Object.assign(this.state.team,{remark:value})})
                                     }}
                                 onCancel={
                                     () => {
-                                        this.setState({team: Object.assign(this.state.team, {remark: null})});
+                                        this.setState({team:Object.assign(this.state.team,{remark:null})})
                                     }
                                 }
                             />
                         </View>
                     </View>
 
-
-                    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 40}}>
-                        <TouchableOpacity style={{
-                            padding: 10,
-                            paddingHorizontal: 12,
-                            backgroundColor: '#66CDAA',
-                            borderRadius: 4,
-                            width: width / 2,
-                            justifyContent: 'center',
-                            flexDirection: 'row'
-                        }}
-                                          onPress={() => {
-                                              if (this.doCheck() == true) {
-                                                  if (this.props.onConfirm)
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:40}}>
+                        <TouchableOpacity style={{padding:10,paddingHorizontal:12,backgroundColor:'#66CDAA',borderRadius:4,width:width/2,
+                            justifyContent:'center',flexDirection:'row'}}
+                                          onPress={()=>{
+                                              if(this.doCheck()==true)
+                                              {
+                                                  if(this.props.onConfirm)
                                                       this.props.onConfirm(this.state.team)
                                               }
                                           }}
                         >
-                            <Text style={{color: '#fff',}}>确认</Text>
+                            <Text style={{color:'#fff',}}>确认</Text>
                         </TouchableOpacity>
                     </View>
+
 
                 </View>
             );
@@ -193,7 +185,7 @@ var styles = StyleSheet.create({
         borderTopColor:'#fff'
     },
     body:{
-        padding:10
+        padding:200
     },
     row:{
         flexDirection:'row',
@@ -208,4 +200,4 @@ var styles = StyleSheet.create({
 module.exports = CreateTeamModel;
 
 
-*/
+

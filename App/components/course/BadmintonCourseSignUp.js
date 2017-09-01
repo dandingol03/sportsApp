@@ -308,33 +308,6 @@ class BadmintonCourseSignUp extends Component {
                                         maxNumber:classInfo.maxNumber,
                                         };
 
-                                   {/*this.props.dispatch(checkPersonIsMember(info)).then((json)=>{*/}
-                                        {/*if(json.re==1){*/}
-                                           {/*this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{*/}
-                                            {/*if(json.re==1){*/}
-                                                {/*Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{*/}
-                                                  {/*this.goBack();*/}
-                                                   {/*this.props.setMyCourseList();*/}
-                                                {/*}}]);*/}
-                                            {/*}*/}
-                                            {/*console.log();*/}
-                                        {/*})*/}
-                                        {/*}*/}
-                                        {/*else{*/}
-                                            {/*if(json.data!==null){*/}
-                                                {/*var personString = '';*/}
-                                                {/*json.data.map((person)=>{*/}
-                                                    {/*if(person.personId==this.props.personInfo.personId){*/}
-                                                        {/*person.username=this.props.username;*/}
-                                                    {/*}*/}
-                                                    {/*personString = personString+person.username+'、'*/}
-                                                {/*})*/}
-                                                {/*Alert.alert('信息','此课程'+personString+'已报名',[{text:'确认',onPress:()=>{*/}
-
-                                                {/*}}]);*/}
-                                            {/*}*/}
-                                        {/*}*/}
-                                   {/*})*/}
 
                                    this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{
                                             if(json.re==1){

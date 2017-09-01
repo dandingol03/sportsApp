@@ -26,6 +26,7 @@ import {
 ,cancelCompetition
 } from '../../action/CompetitionActions';
 import { connect } from 'react-redux';
+import {getAccessToken,} from '../../action/UserActions';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 var { height, width } = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -34,7 +35,8 @@ const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 const scaleAnimation = new ScaleAnimation();
 const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 import CreateTeamModel from './CreateTeamModel';
-
+import InviteFriend from './InviteFriend';
+import InviteFriends from './InviteFriends';
 class CompetitionSignUp extends Component {
 
     goBack() {
@@ -63,21 +65,27 @@ class CompetitionSignUp extends Component {
 
     }
 
+
+
+
+
+
+
     signUpCompetition1(competitionItem)          //单打
     {
         if(competitionItem.maxTeamNum<=competitionItem.nowTeamNum){
             alert('该队员人数已满！');
         }else{
             var {personId,personName}=this.props;
-            var projectType=competitionItem.projectType;
-            var projectId=competitionItem.projectId;
+            /*var projectType=competitionItem.projectType;
+            var projectId=competitionItem.projectId;*/
             var personIdA=personId;
             var personIdB=null;
             var teamName=personName;
             var remark=null;
-            this.props.dispatch(signUpCompetition(projectId,personIdA,personIdB,teamName,remark)).then((json)=>{
+            this.props.dispatch(signUpCompetition(competitionItem,personIdA,personIdB,teamName,remark)).then((json)=>{
                 if(json.re==1){
-                    Alert.alert('报名成功',[{text:'是',onPress:()=>{
+                    alert('信息','报名成功',[{text:'是',onPress:()=>{
                         // this.setMyActivityList();
                         //this.navigate2ActivityPay(event);
                     }},
@@ -91,10 +99,17 @@ class CompetitionSignUp extends Component {
                     if(json.re==-100){
                         this.props.dispatch(getAccessToken(false));
                     }
+                    else{
+                        alert("取消报名失败！");
+                    }
+
                 }
             })
         }
     }
+
+
+
 
     renderRow(rowData,sectionId,rowId){
         var row=(
@@ -165,6 +180,23 @@ class CompetitionSignUp extends Component {
                             </Text>
                         </View>:null
                     }
+                    {this.props.memberList !== undefined && this.props.memberList !== null ?
+                        <View style={{flexDirection: 'row', marginBottom: 3}}>
+                            <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center'}}>
+                                <Icon name={'circle'} size={10} color="#aaa"/>
+                            </View>
+
+                            <Text style={{
+                                flex: 7,
+                                fontSize: 13,
+                                color: '#343434',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                {/*{'队员：' + this.props.memberList.}；*/}
+                            </Text>
+                        </View>:null
+                    }
 
                 </View>
 
@@ -172,6 +204,29 @@ class CompetitionSignUp extends Component {
                     {/*<View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
                         <Text style={{color:'#aaa',fontSize:13}}>已报名:{rowData.eventNowMemNum}</Text>
                     </View>*/}
+                    {rowData.joinMark == 1 && rowData.projectType == 6 ?
+                        <TouchableOpacity style={{
+                            flex: 2,
+                            borderWidth: 1,
+                            borderColor: '#66CDAA',
+                            padding: 5,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                            ,
+                            borderRadius: 6
+                        }}
+
+
+                                          onPress={() => {
+                                              this.navigate2InviteFriends(rowData);
+                                          }
+                                          }>
+                            <Text style={{color: '#66CDAA', fontSize: 12}}>编辑队伍</Text>
+                        </TouchableOpacity>:
+                        <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
+                            <Text style={{color:'#aaa',fontSize:13}}></Text>
+                        </View>
+                    }
                     {<View style={{flex:3,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>}
@@ -189,18 +244,25 @@ class CompetitionSignUp extends Component {
 
 
                                           onPress={() => {
-                                             /* if(rowData.projectType==1||rowData.projectType==2)
-                                              {*/
+                                             if(rowData.projectType==1||rowData.projectType==2)
+                                              {
                                                   this.signUpCompetition1(rowData)
-                                             /* }*/
-                                              /*else if(rowData.projectType==6){
-                                                  showScaleAnimationDialog(rowData);
-                                              }*/
+                                              }
+                                              else if(rowData.projectType==6){
+                                                 this.setState({rowData:rowData});
+                                                  this.showScaleAnimationDialog();
+                                              }
+                                              else {
+                                                   this.navigate2InviteFriend(rowData);
+                                             }
+
+
                                           }
 
                                           }>
                             <Text style={{color: '#66CDAA', fontSize: 12}}>我要报名</Text>
                         </TouchableOpacity>:
+
                         <TouchableOpacity style={{
                             flex: 2,
                             borderWidth: 1,
@@ -214,45 +276,29 @@ class CompetitionSignUp extends Component {
 
 
                                           onPress={() => {
-                                              this.cancelCompetition(rowData)
+                                              this.props.dispatch(cancelCompetition(rowData)).then((json)=>{
+                                                  if(json.re==1){
+                                                      Alert.alert('信息','取消报名成功',[{text:'确认',onPress:()=>{
+                                                          this.props.dispatch(enableCompetitionItemOnFresh());
+                                                      }}]);
+
+                                                  }else{
+                                                      if(json.re==-100){
+                                                          this.props.dispatch(getAccessToken(false));
+                                                      }
+                                                      else{
+                                                          alert("取消报名失败")
+                                                      }
+                                                  }
+                                              });
                                           }}>
-                            <Text style={{color: '#66CDAA', fontSize: 12}}>cancel报名</Text>
+                            <Text style={{color: '#66CDAA', fontSize: 12}}>取消报名</Text>
                         </TouchableOpacity>
                     }
 
                 </View>
 
-            {/*    <PopupDialog
-                    ref={(popupDialog) => {
-                        this.scaleAnimationDialog = popupDialog;
-                    }}
-                    dialogAnimation={scaleAnimation}
-                    actions={[
 
-                    ]}
-                >
-                    <View style={{flex:1,padding:10}}>
-                        <CreateTeamModel
-                            onClose={()=>{
-                                this.scaleAnimationDialog.dismiss();
-                                // this.setState({modalVisible:false});
-                            }}
-
-                            onConfirm={(payload)=>{
-                                this.props.dispatch(signUpCompetition(payload,personId)).then((json)=>{
-                                    if(json.re==1)
-                                    {
-
-                                    }else{
-
-                                    }
-
-                                })
-                            }}
-
-                        />
-                    </View>
-                </PopupDialog>*/}
 
             </View>
         );
@@ -276,6 +322,34 @@ class CompetitionSignUp extends Component {
         });
     }
 
+    navigate2InviteFriend(rowData)
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'InviteFriend',
+                component: InviteFriend,
+                params: {
+                    rowData:rowData
+                }
+            })
+        }
+    }
+
+
+    navigate2InviteFriends(rowData)
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'InviteFriends',
+                component: InviteFriends,
+                params: {
+                    rowData:rowData
+                }
+            })
+        }
+    }
 
     constructor(props) {
         super(props);
@@ -283,6 +357,7 @@ class CompetitionSignUp extends Component {
             doingFetch:false,
             isRefreshing:false,
             fadeAnim:new Animated.Value(1),
+            rewData:null,
         };
     }
 
@@ -344,6 +419,47 @@ class CompetitionSignUp extends Component {
                             </ScrollView>
 
                         </Animated.View>
+                        <PopupDialog
+                            ref={(popupDialog) => {
+                                this.scaleAnimationDialog = popupDialog;
+                            }}
+                            dialogAnimation={scaleAnimation}
+                            actions={[]}
+                        >
+                            <View style={{flex:1,padding:10}}>
+                                <CreateTeamModel
+                                    onClose={()=>{
+                                        this.scaleAnimationDialog.dismiss();
+                                        // this.setState({modalVisible:false});
+                                    }}
+
+                                    onConfirm={(payload)=>{
+                                        var rowData=this.state.rowData;
+                                        var {personId}=this.props;
+                                        var personIdA=personId;
+                                        var personIdB=null;
+                                        var teamName=payload.teamName;
+                                        var remark=payload.remark;
+                                        this.props.dispatch(signUpCompetition(rowData,personIdA,personIdB,teamName,remark)).then((json)=>{
+                                            if(json.json.re==1)
+                                            {
+                                                alert('报名成功',[{text:'确认',onPress:()=>{
+                                                }},
+                                                ]);
+                                                //this.scaleAnimationDialog.dismiss();
+
+                                            }else if(json.json.re==-1){
+                                                alert("团队名已存在，不能报名！");
+                                                //this.scaleAnimationDialog.dismiss();
+                                            }else{
+                                                alert("报名失败，请重新报名！");
+                                            }
+
+                                        })
+                                    }}
+                                />
+                            </View>
+                        </PopupDialog>
                     </View>}
 
 
@@ -394,6 +510,6 @@ module.exports = connect(state=>({
         competitionItemList:state.competitions.competitionItemList,
         competitionItemFresh:state.competitions.competitionItemFresh,
         personId:state.user.personInfo.personId,
-        personName:state.user.personInfo.personName,
+        personName:state.user.personInfo.perName,
     })
 )(CompetitionSignUp);
