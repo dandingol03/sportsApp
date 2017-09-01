@@ -409,7 +409,7 @@ export let addRelativePerson=(payload)=> {
 
             }).catch((e)=>{
                 alert(e);
-                reject(e);
+                      reject(e);
             })
         })
     }

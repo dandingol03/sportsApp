@@ -280,6 +280,7 @@ class MyInformation extends Component{
                         <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}
                                           onPress={()=>{
                                                   this.showIdCardDialog();
+
                                               }}
                         >
                             <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>

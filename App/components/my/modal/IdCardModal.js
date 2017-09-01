@@ -69,10 +69,8 @@ class IdCardModal extends Component{
                                   onPress={()=>{this.setState({selectDay:rowData});}}>
                     <Text style={{color:'#fff',fontSize:13}}>{rowData}</Text>
                 </TouchableOpacity>
-
             );
         }
-
     }
 
 
@@ -87,56 +85,56 @@ class IdCardModal extends Component{
     render(){
 
 
-        return (
+    return (
 
-            <View style={styles.container}>
+        <View style={styles.container}>
 
-                <View style={{padding:10}}>
-                    <View style={{flexDirection:'row',alignItems:'center',padding:4}}>
-                        <Text style={{color:'#222',fontSize:17,fontWeight:'bold'}}>修改身份证</Text>
-                    </View>
-                    <View style={{flexDirection:'row',alignItems:'center',padding:4,paddingTop:15,borderBottomWidth:1,borderColor:'#66CDAA'}}>
-                        <TextInputWrapper
-                            placeholderTextColor='#888'
-                            textInputStyle={{marginLeft:4,color:'#222',fontSize:15}}
-                            placeholder=""
-                            val={this.state.val}
-                            onChangeText={
-                                    (value)=>{
-                                        this.setState({val:value})
-                                    }}
-                            onCancel={
-                                    ()=>{
+            <View style={{padding:10}}>
+                <View style={{flexDirection:'row',alignItems:'center',padding:4}}>
+                    <Text style={{color:'#222',fontSize:17,fontWeight:'bold'}}>修改身份证</Text>
+                </View>
+                <View style={{flexDirection:'row',alignItems:'center',padding:4,paddingTop:15,borderBottomWidth:1,borderColor:'#66CDAA'}}>
+                    <TextInputWrapper
+                        placeholderTextColor='#888'
+                        textInputStyle={{marginLeft:4,color:'#222',fontSize:15}}
+                        placeholder=""
+                        val={this.state.val}
+                        onChangeText={
+                            (value)=>{
+                                this.setState({val:value})
+                            }}
+                        onCancel={
+                            ()=>{
 
-                                    }}
-                        />
-                    </View>
-
-                    <View style={{flexDirection:'row',alignItems:'center',padding:6}}>
-                        <Text style={{color:'#777',fontSize:12}}>
-                            输入正确真实的身份证号
-                        </Text>
-
-                    </View>
+                            }}
+                    />
                 </View>
 
+                <View style={{flexDirection:'row',alignItems:'center',padding:6}}>
+                    <Text style={{color:'#777',fontSize:12}}>
+                        输入正确真实的身份证号
+                    </Text>
 
-                <View style={{flex:1,padding:2,margin:4,flexDirection:'row',justifyContent:'center',alignItems:'flex-end'}}>
-                    <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
-                            backgroundColor:'#fff',borderRadius:6,borderWidth:1,borderColor:'#66CDAA'}}
-                                      onPress={()=>{ this.close(); }}>
-                        <Text style={{color:'#66CDAA',padding:5}}>取消</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
-                                backgroundColor:'#66CDAA',borderRadius:6}}
-                                      onPress={()=>{this.confirm()}}>
-                        <Text style={{color:'#fff',padding:5}}>确定</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
-        );
-    }
+
+
+            <View style={{flex:1,padding:2,margin:4,flexDirection:'row',justifyContent:'center',alignItems:'flex-end'}}>
+                <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
+                    backgroundColor:'#fff',borderRadius:6,borderWidth:1,borderColor:'#66CDAA'}}
+                                  onPress={()=>{ this.close(); }}>
+                    <Text style={{color:'#66CDAA',padding:5}}>取消</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
+                    backgroundColor:'#66CDAA',borderRadius:6}}
+                                  onPress={()=>{this.confirm()}}>
+                    <Text style={{color:'#fff',padding:5}}>确定</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
 }
 
 

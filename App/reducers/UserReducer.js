@@ -24,7 +24,6 @@ const initialState = {
     accessToken: null,
     auth:false,
     sessionId:null,
-
     personInfo:null,
     portrait:null,
     user:{},

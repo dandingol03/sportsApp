@@ -322,6 +322,7 @@ export let createGroup=(info)=>{
                         memberList:info.memberList,
                         groupMaxMemNum:parseInt(info.group.groupMaxMemNum),
 
+
                 }
             }).then((json)=>{
                 resolve(json)
