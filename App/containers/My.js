@@ -26,6 +26,10 @@ import Setting from '../components/my/Setting';
 import CustomCourse from '../components/course/MyCustomCourse';
 import PortraitModal from '../components/my/modal/PortraitModal';
 import VenueInspect from '../components/venue/VenueInspect';
+import MyCompentitionList from '../components/competition/MyCompetitionList';
+
+import TeamSignUp from '../components/competition/TeamSignUp';
+
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
 const scaleAnimation = new ScaleAnimation();
 var WeChat = require('react-native-wechat');
@@ -107,6 +111,19 @@ class My extends Component{
         }
     }
 
+    // 我的比赛
+    navigate2MyCompetitionList(){
+        const {navigator} =this.props;
+        if(navigator){
+            navigator.push({
+                name:'MyCompetitonList',
+                component:MyCompentitionList,
+                params:{
+                }
+            })
+        }
+}
+
     navigate2VenueInspect()
     {
         const { navigator } = this.props;
@@ -119,6 +136,68 @@ class My extends Component{
                 }
             })
         }
+    }
+
+
+    navigate2TeamSignUp(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'TeamSignUp',
+                component:TeamSignUp,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    wechatPay(){
+
+
+        WeChat.shareToTimeline({
+            type: 'news',
+            title: '我正在使用捷惠宝App,想与您一起分享',
+            description: 'share resource image to time line',
+            mediaTagName: 'email signature',
+            messageAction: undefined,
+            messageExt: undefined,
+            webpageUrl:'http://139.129.96.231:3000/wx',
+        });
+
+
+        // this.props.dispatch(wechatPay()).then((json)=>{
+        //     if(json.re==1){
+        //         var prepayId = json.data.prepayid;
+        //         var sign = json.data.sign;
+        //         var timeStamp = json.data.timestamp;
+        //         var noncestr = json.data.noncestr;
+        //
+        //         var wechatPayData=
+        //             {
+        //                 partnerId: '1485755962',  // 商家向财付通申请的商家id
+        //                 prepayId: prepayId,   // 预支付订单
+        //                 nonceStr: noncestr,   // 随机串，防重发
+        //                 timeStamp: timeStamp,  // 时间戳，防重发
+        //                 package: 'Sign=WXPay',    // 商家根据财付通文档填写的数据和签名
+        //                 sign: sign // 商家根据微信开放平台文档对数据做的签名
+        //             };
+        //
+        //         WeChat.pay(wechatPayData).then(
+        //             (result)=>{
+        //                 console.log(result);
+        //
+        //             },
+        //             (error)=>{
+        //                 console.log(error);
+        //             }
+        //         )
+        //
+        //     }
+        //
+        // })
+
+
     }
 
 
@@ -217,6 +296,26 @@ class My extends Component{
                             </View>
 
                         </TouchableOpacity>
+
+
+
+                        {/*我的比赛*/}
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                                          onPress={()=>{
+                            this.navigate2MyCompetitionList();
+                        }}
+                        >
+
+                            <View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                            justifyContent:'center',alignItems: 'center'}}>
+                                <Icon name={'group'} size={20} color="#fff"/>
+                            </View>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                                <Text>我的比赛</Text>
+                            </View>
+
+                        </TouchableOpacity>
+
                         <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
                                           onPress={()=>{
                                 this.navigate2MyCourse();
@@ -254,6 +353,19 @@ class My extends Component{
                             <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
                                  <Text>设置</Text>
                              </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                                          onPress={()=>{
+                                this.navigate2TeamSignUp();
+                            }}>
+                            <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                                            justifyContent:'center',alignItems: 'center'}}>
+                                <Icon name={'gear'} size={20} color="#fff"/>
+                            </View>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                                <Text>TeamSignUp</Text>
+                            </View>
                         </TouchableOpacity>
 
                         {/*<TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}*/}

@@ -17,6 +17,8 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 
+import DatePicker from 'react-native-datepicker';
+import DateFilter from '../../utils/DateFilter';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
@@ -36,6 +38,8 @@ import MobilePhoneModal from './modal/MobilePhoneModal';
 import ValidateMobilePhoneModal from './modal/ValidateMobilePhoneModal';
 import WxModal from './modal/WxModal';
 import IdCardModal from './modal/IdCardModal';
+import SexModal from './modal/SexModal';
+
 
 import{
     updateUsername,
@@ -48,11 +52,19 @@ import{
     onPerNameUpdate,
     updateWeChat,
     onWeChatUpdate,
+
+    updateGenderCode,
+    onGenderCodeUpdate,
+
+    updatePerBirthday,
+    onPerBirthdayUpdate,
+
     updatePerIdCard,
     onPerIdCardUpdate,
     onMobilePhoneUpdate,
     verifyMobilePhone,
-    updateMobilePhone
+    updateMobilePhone,
+
 } from '../../action/UserActions';
 
 class MyInformation extends Component{
@@ -61,6 +73,11 @@ class MyInformation extends Component{
         if(navigator) {
             navigator.pop();
         }
+    }
+
+   getDate(tm){
+       var tt=new Date(parseInt(tm)*1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+       return tt;
     }
 
     showUserNameDialog() {
@@ -80,6 +97,12 @@ class MyInformation extends Component{
     showWxDialog()
     {
         this.wxDialog.show()
+    }
+
+
+    showSexDialog()
+    {
+        this.SexDialog.show()
     }
 
     showIdCardDialog()
@@ -145,6 +168,7 @@ class MyInformation extends Component{
         super(props);
         this.state={
             isRefreshing:false,
+            selectBirthday:false,
             memberLevelButtons:['取消','无','体育本科','国家一级运动员','国家二级运动员','国家三级运动员']
         };
     }
@@ -216,6 +240,89 @@ class MyInformation extends Component{
 
                             </View>
                         </TouchableOpacity>
+
+
+                        {/*性别*/}
+                        <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}
+                                          onPress={()=>{
+                                                  this.showSexDialog();
+                                              }}
+                        >
+                            <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                                <Text style={{color:'#555',fontWeight:'bold',fontSize:15}}>
+                                    性别
+                                </Text>
+                            </View>
+                            <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'flex-end'}}>
+                                {
+                                    this.props.genderCode&&this.props.genderCode!=''?
+                                        <Text style={{color:'#444',fontSize:15}}>
+                                            {this.props.genderCode}
+                                        </Text>:
+                                        <Text style={{color:'#777',fontSize:15}}>
+                                            未设置
+                                        </Text>
+                                }
+                            </View>
+                        </TouchableOpacity>
+
+
+                        {/*年龄*/}
+                        <View style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}
+
+                        >
+                            <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
+                                <Text style={{color:'#555',fontWeight:'bold',fontSize:15}}>
+                                    年龄
+                                </Text>
+                            </View>
+                            <View style={{flex:2,marginLeft:30,flexDirection:'row',alignItems:'center',justifyContent:'flex-end'}}>
+                                {
+                                    this.props.perBirthday&&this.props.perBirthday!=''?
+                                        <Text style={{color:'#444',fontSize:15}}>
+                                            {this.props.perBirthday}
+                                        </Text>:
+                                        <Text style={{color:'#777',fontSize:15}}>
+                                            未设置{this.props.perBirthday}
+                                        </Text>
+                                }
+                            </View>
+
+                            <View style={{height:35,marginRight:0,flexDirection:'row',alignItems:'center'}}>
+                                <DatePicker
+                                    style={{width:60,marginLeft:0,borderWidth:0}}
+                                    customStyles={{
+                                        placeholderText:{color:'transparent',fontSize:12},
+                                        dateInput:{height:30,borderWidth:0},
+                                        dateTouchBody:{marginRight:0,height:25,borderWidth:0},
+                                    }}
+                                    mode="date"
+                                    placeholder="选择"
+                                    format="YYYY-MM-DD"
+                                    minDate={"1957-00-00"}
+                                    confirmBtnText="确认"
+                                    cancelBtnText="取消"
+                                    showIcon={true}
+                                    iconComponent={<Icon name={'calendar'} size={30} color="#888"/>}
+                                    onDateChange={(date) => {
+                                        if(this.state.selectBirthday==false)
+                                        {
+                                            this.state.selectBirthday=true;
+                                            this.setState({selectBirthday:false});
+
+
+                                            this.props.dispatch(updatePerBirthday(date)).then((json)=>{
+                                                if(json.re==1){
+                                                    this.props.dispatch(onPerBirthdayUpdate(date))
+                                                }
+                                            })
+
+                                        }
+
+                                    }}
+                                />
+                            </View>
+                        </View>
 
 
                         {/*微信号*/}
@@ -533,6 +640,41 @@ class MyInformation extends Component{
 
                     </PopupDialog>
 
+                    {/*性别*/}
+                    <PopupDialog
+                        ref={(popupDialog) => {
+                        this.SexDialog = popupDialog;
+                    }}
+                        dialogAnimation={scaleAnimation}
+                        actions={[]}
+                        width={0.8}
+                        height={0.3}
+                    >
+
+                        <SexModal
+                            val={this.props.genderCode}
+                            onClose={()=>{
+                                this.SexDialog.dismiss();
+                            }}
+                            onConfirm={(val)=>{
+                                if(val!=this.props.genderCode)
+                                {
+                                    this.props.dispatch(updateGenderCode(val)).then((json)=>{
+                                        if(json.re==1)
+                                        {
+                                            this.props.dispatch(onGenderCodeUpdate(val))
+                                        }
+                                        this.SexDialog.dismiss();
+                                    })
+                                }
+                            }}
+                        />
+
+                    </PopupDialog>
+
+
+
+
                     <PopupDialog
                         ref={(popupDialog) => {
                         this.idCardDialog = popupDialog;
@@ -595,6 +737,13 @@ const mapStateToProps = (state, ownProps) => {
     var personInfo=state.user.personInfo
     var trainerInfo=state.user.trainer
     var personInfoAuxiliary=state.user.personInfoAuxiliary
+    var chuo=personInfo.perBirthday;
+    var time=new Date(chuo);
+    var year=time.getFullYear();
+    var month=time.getMonth()+1;
+    var day=time.getDate();
+    var tt1=year+'-'+month+'-'+day;
+
     const props = {
         username:state.user.user.username,
         perName:personInfo.perName,
@@ -604,6 +753,9 @@ const mapStateToProps = (state, ownProps) => {
         selfLevel:personInfoAuxiliary.selfLevel,
         userType:parseInt(state.user.usertype),
         checkedMobile:personInfoAuxiliary.checkedMobile,
+        genderCode:personInfo.genderCode,
+        perBirthday:tt1,
+
     }
 
     if(trainerInfo)

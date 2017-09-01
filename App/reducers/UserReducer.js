@@ -11,6 +11,8 @@ import {
     ON_USER_NAME_UPDATE,
     ON_PER_NAME_UPDATE,
     ON_WECHAT_UPDATE,
+    ON_GENDER_CODE_UPDATE,
+    ON_PER_BIRTHDAY_UPDATE,
     ON_PER_ID_CARD_UPDATE,
     ON_RELATIVE_PERSON_UPDATE,
     ON_SELF_LEVEL_UPDATE,
@@ -86,6 +88,18 @@ let user = (state = initialState, action) => {
             return Object.assign({}, state, {
                 personInfo:Object.assign(state.personInfo,{perName:perName})
             })
+        case ON_GENDER_CODE_UPDATE:
+            var {genderCode}=action.payload;
+            return Object.assign({},state,{
+                personInfo:Object.assign(state.personInfo,{genderCode:genderCode})
+            })
+
+        case ON_PER_BIRTHDAY_UPDATE:
+            var {perBirthday}=action.payload;
+            return Object.assign({},state,{
+                personInfo:Object.assign(state.personInfo,{perBirthday:perBirthday})
+            })
+
         case ON_WECHAT_UPDATE:
             var  {wechat}=action.payload;
             return Object.assign({}, state, {

@@ -111,21 +111,21 @@ class MyActivity extends Component {
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlace.name}</Text>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlaceName}</Text>
                         </View>
                         <View style={{flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
                             <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                {rowData.startTime} -- {rowData.endTime}
+                                {'活动时间:'+rowData.eventTime}
                             </Text>
                         </View>
                         <View style={{flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
-                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{rowData.eventBrief}</Text>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}v>{'活动简介:'+rowData.eventBrief}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
