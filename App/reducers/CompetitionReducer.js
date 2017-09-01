@@ -1,7 +1,7 @@
 /**
  * Created by dingyiming on 2017/8/16.
  */
-git
+
 import {
     SET_COMPETITION_LIST,
     SET_COMPETITION_ITEM_LIST,
