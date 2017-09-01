@@ -268,11 +268,7 @@ class InviteFriend extends Component{
                                             }}]);
                                         }
                                         else{
-                                            if(json.re==-100){
-                                                this.props.dispatch(getAccessToken(false));
-                                            }else{
-                                                alert('创建失败');
-                                            }
+                                            alert("添加队员失败");
                                         }
                                       })
                                   }}>
