@@ -24,7 +24,7 @@ import TextInputWrapper from 'react-native-text-input-wrapper';
 import InviteFriendModel from './InviteFriendModel.js';
 import {
     searchMember,
-    enableCompetitionOnFresh,
+    enableCompetitionItemOnFresh,
     signUpCompetition,
 } from '../../action/CompetitionActions';
 import {getAccessToken,} from '../../action/UserActions';
@@ -151,7 +151,8 @@ class InviteFriend extends Component{
             doingFetch: false,
             isRefreshing: false,
             member:null,
-            memberList:[]
+            memberList:[],
+
         }
         var person = this.props.personInfo;
         person.username = this.props.user.username;
@@ -234,43 +235,52 @@ class InviteFriend extends Component{
                 </View>
 
                 <TouchableOpacity style={{height:35,backgroundColor:'#66CDAA',margin:20,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
-                                  onPress={()=>{
+                                  onPress={()=> {
                                       //var info ={group:this.state.group,memberList:this.state.memberList};
                                       //this.createGroup(info);
-                                      var rowData=this.props.rowData;
-                                      var personIdA=null;
-                                      var personNameA=null;
-                                      var personIdB=null;
-                                      var personNameB=null;
-                                      var memberList=this.state.memberList
-                                      var remark=null;
-                                      memberList.map((member,i)=>{
-                                          if(i==1)
-                                          {
-                                              personIdA=member.personId;
-                                              personNameA=member.perName;
 
-                                          }else{
-                                              personIdB=member.personId;
-                                              personNameB=member.perName;
+                                      var rowData = this.props.rowData;
+                                      var personIdA = null;
+                                      var personNameA = null;
+                                      var personIdB = null;
+                                      var personNameB = null;
+                                      var memberList = this.state.memberList
+                                      var remark = null;
+                                      memberList.map((member, i) => {
+                                          if (i == 1) {
+                                              personIdA = member.personId;
+                                              personNameA = member.perName;
+
+                                          } else {
+                                              personIdB = member.personId;
+                                              personNameB = member.perName;
                                           }
 
 
-                                      });
-                                      var teamName=personNameA+"-"+personNameB;
-
-                                     this.props.dispatch(signUpCompetition(rowData,personIdA,personIdB,teamName,remark)).then((json)=>{
-                                        if(json.re==1)
-                                        {
-                                            Alert.alert('信息','创建成功',[{text:'确认',onPress:()=>{
-                                                this.props.dispatch(enableCompetitionOnFresh());
-                                                this.goBack()
-                                            }}]);
-                                        }
-                                        else{
-                                            alert("添加队员失败");
-                                        }
                                       })
+                                      if (personIdA == null) {
+                                          alert('请添加队员！');
+                                      } else{
+                                          var teamName = personNameA + "-" + personNameB;
+                                      this.props.dispatch(signUpCompetition(rowData, personIdA, personIdB, teamName, remark)).then((json) => {
+                                          if (json.re == 1) {
+                                              Alert.alert('信息', '创建成功', [{
+                                                  text: '确认', onPress: () => {
+                                                      this.props.dispatch(enableCompetitionItemOnFresh());
+                                                      this.goBack()
+                                                  }
+                                              }]);
+                                          }
+                                          else {
+                                              Alert.alert('信息', json.data, [{
+                                                  text: '确认', onPress: () => {
+                                                      this.props.dispatch(enableCompetitionItemOnFresh());
+                                                      this.goBack()
+                                                  }
+                                              }]);
+                                          }
+                                      })
+                                  }
                                   }}>
                     <Text style={{color:'#fff',fontSize:15}}>确 认</Text>
                 </TouchableOpacity>

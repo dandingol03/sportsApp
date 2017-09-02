@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react';
 import {
+    Alert,
     Dimensions,
     ListView,
     ScrollView,
@@ -85,14 +86,12 @@ class CompetitionSignUp extends Component {
             var remark=null;
             this.props.dispatch(signUpCompetition(competitionItem,personIdA,personIdB,teamName,remark)).then((json)=>{
                 if(json.re==1){
-                    alert('信息','报名成功',[{text:'是',onPress:()=>{
-                        // this.setMyActivityList();
+                    Alert.alert('信息','报名成功',[{text:'是',onPress:()=>{
+                        this.props.dispatch(enableCompetitionItemOnFresh());
+                        //this.goBack();
                         //this.navigate2ActivityPay(event);
                     }},
-                        {text:'否',onPress:()=>{
-                            this.goBack();
-                            //this.setMyActivityList();
-                        }},
+
                     ]);
 
                 }else{
@@ -119,14 +118,14 @@ class CompetitionSignUp extends Component {
                         <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                     </View>
 
-                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
+                   {/* <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
                                       onPress={()=>{
                                           this.navigateCompetitionSignUp(rowData,'公开活动');
                                       }}>
                         <Text style={{marginRight:5,color:'#66CDAA'}}>报名</Text>
                         <Icon name={'angle-right'} size={25
                         } color="#66CDAA"/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
                 </View>
 
                 <View style={{flex:3,padding:10}}>
@@ -444,13 +443,14 @@ class CompetitionSignUp extends Component {
                                             if(json.json.re==1)
                                             {
                                                 alert('报名成功',[{text:'确认',onPress:()=>{
+                                                    this.scaleAnimationDialog.dismiss();
                                                 }},
                                                 ]);
-                                                //this.scaleAnimationDialog.dismiss();
+
 
                                             }else if(json.json.re==-1){
                                                 alert("团队名已存在，不能报名！");
-                                                //this.scaleAnimationDialog.dismiss();
+                                                this.scaleAnimationDialog.dismiss();
                                             }else{
                                                 alert("报名失败，请重新报名！");
                                             }

@@ -20,17 +20,18 @@ import TextInputWrapper from 'react-native-text-input-wrapper';
 import DateFilter from '../../utils/DateFilter';
 import DatePicker from 'react-native-datepicker';
 import ActionSheet from 'react-native-actionsheet';
-
+import {
+    enableCompetitionItemOnFresh,
+} from '../../action/CompetitionActions';
 var {height, width} = Dimensions.get('window');
-
-
-
-
-
-
-
 class CreateTeamModel extends Component{
 
+    goBack(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.pop();
+        }
+    }
     close(){
         if(this.props.onClose!==undefined&&this.props.onClose!==null)
         {
@@ -155,8 +156,10 @@ class CreateTeamModel extends Component{
                                               if(this.doCheck()==true)
                                               {
                                                   if(this.props.onConfirm)
-                                                      this.props.onConfirm(this.state.team)
+                                                      this.props.onConfirm(this.state.team);
+
                                               }
+                                              this.props.dispatch(enableCompetitionItemOnFresh());
                                           }}
                         >
                             <Text style={{color:'#fff',}}>确认</Text>

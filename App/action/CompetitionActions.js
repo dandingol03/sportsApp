@@ -162,7 +162,16 @@ export let setCompetitionItemList=(competitionItemList)=>{
         competitionItemList:competitionItemList
     }
 }
-
+/*export let onGameUpdate=(competitions)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_GAME_UPDATE,
+            payload:{
+                competitions
+            }
+        })
+    }
+}*/
 
 
 export let enableCompetitionOnFresh=()=>{
@@ -262,3 +271,6 @@ export let fetchGamesItem=(competitionId)=>{
         });
     }
 }
+
+
+

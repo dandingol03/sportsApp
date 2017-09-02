@@ -25,6 +25,7 @@ import InviteFriendModel from './InviteFriendModel.js';
 import {
     createGroup,searchMember,
     enableMyGroupOnFresh,
+    enableCompetitionItemOnFresh,
     signUpCompetition,
     addPersonsToCompetitionTeam,
 } from '../../action/CompetitionActions';
@@ -140,11 +141,14 @@ class InviteFriends extends Component{
             doingFetch: false,
             isRefreshing: false,
             member:null,
-            memberList:[]
+            memberList:this.props.rowData.personList,
         }
-        var person = this.props.personInfo;
-        person.username = this.props.user.username;
-        this.state.memberList.push(person);
+        if(this.state.memberList.length==0){
+            var person = this.props.personInfo;
+            person.username = this.props.user.username;
+            this.state.memberList.push(person);
+        }
+
     }
 
     render() {
@@ -172,7 +176,7 @@ class InviteFriends extends Component{
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>添加队员</Text>
+                        <Text style={{color:'#fff',fontSize:18}}>编辑队员</Text>
                     </View>
                     <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
@@ -235,10 +239,10 @@ class InviteFriends extends Component{
                                      this.props.dispatch(addPersonsToCompetitionTeam(rowData,personIdStr)).then((json)=>{
                                       if(json.re==1){
                                           alert('编辑队伍成功',[{text:'是',onPress:()=>{
+                                              this.props.dispatch(enableCompetitionItemOnFresh());
+                                              this.goBack();
                                           }},
-                                              {text:'否',onPress:()=>{
-                                                  this.goBack();
-                                              }},
+
                                           ]);
 
                                       }else{
