@@ -154,6 +154,7 @@ class InviteFriend extends Component{
             memberList:[],
 
         }
+
         var person = this.props.personInfo;
         person.username = this.props.user.username;
         this.state.memberList.push(person);

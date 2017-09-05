@@ -102,10 +102,10 @@ class InviteFriends extends Component{
                         <Icon name={'user'} size={15} color="pink"/>
                         <Text style={{marginLeft:10,color:'#343434'}}>{rowData.perNum}</Text>
                     </View>
-                    <View  style={{flexDirection:'row',marginLeft:10,marginTop:5}}>
+                    {/*<View  style={{flexDirection:'row',marginLeft:10,marginTop:5}}>
                         <Icon name={'mobile'} size={15} color="#87CEFF"/>
                         <Text style={{marginLeft:10,color:'#aaa'}}>{rowData.mobilePhone}</Text>
-                    </View>
+                    </View>*/}
                 </View>
                 <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 

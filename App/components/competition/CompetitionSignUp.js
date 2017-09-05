@@ -440,7 +440,7 @@ class CompetitionSignUp extends Component {
                                         var teamName=payload.teamName;
                                         var remark=payload.remark;
                                         this.props.dispatch(signUpCompetition(rowData,personIdA,personIdB,teamName,remark)).then((json)=>{
-                                            if(json.json.re==1)
+                                            if(json.re==1)
                                             {
                                                 alert('报名成功',[{text:'确认',onPress:()=>{
                                                     this.scaleAnimationDialog.dismiss();
@@ -448,7 +448,7 @@ class CompetitionSignUp extends Component {
                                                 ]);
 
 
-                                            }else if(json.json.re==-1){
+                                            }else if(json.re==-1){
                                                 alert("团队名已存在，不能报名！");
                                                 this.scaleAnimationDialog.dismiss();
                                             }else{
