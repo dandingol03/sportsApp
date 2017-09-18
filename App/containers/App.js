@@ -26,7 +26,7 @@ import {
 import Home from './Home';
 import My from './My';
 import Found from './Found';
-import News from './News';
+import Notice from './Notice';
 import Login from './Login';
 import Register from './Register';
 
@@ -48,7 +48,7 @@ class App extends Component {
             case '首页':
                 break;
             case '消息':
-                component=News;
+                component=Notice;
                 break;
             case '发现':
                 component=Found;

@@ -12,7 +12,7 @@ import {
 } from '../constants/CompetitionConstants'
 
 
-//拉取能报名的比赛
+//拉取能报名���比赛
 export let fetchGames=()=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
@@ -60,21 +60,21 @@ export let signUpCompetition=(competitionItem,personIdA,personIdB,teamName,remar
                     'Cookie':sessionId,
                 },
                 body: {
-                        projectId:projectId,
-                        personIdA:personIdA,
-                        personIdB:personIdB,
-                        teamName:teamName,
-                        remark:remark
+                    projectId:projectId,
+                    personIdA:personIdA,
+                    personIdB:personIdB,
+                    teamName:teamName,
+                    remark:remark
                 }
             }).then((json)=>{
                 if(json.re==1){
-                    resolve(json)
+                    resolve({json})
                 }
                 else if(json.re==-1){
-                    resolve(json)
+                    resolve({json})
                 }
                 else{
-                    resolve(json)
+                    resolve({json})
                 }
 
 
@@ -86,8 +86,6 @@ export let signUpCompetition=(competitionItem,personIdA,personIdB,teamName,remar
         })
     }
 }
-
-
 
 export let cancelCompetition=(competitionItem)=>{
     return (dispatch,getState)=>{
@@ -108,6 +106,7 @@ export let cancelCompetition=(competitionItem)=>{
                 }
             }).then((json)=>{
                 if(json.re==1){
+
                     resolve({re:1})
                 }
 
@@ -163,15 +162,15 @@ export let setCompetitionItemList=(competitionItemList)=>{
     }
 }
 /*export let onGameUpdate=(competitions)=>{
-    return (dispatch,getState)=>{
-        dispatch({
-            type:ON_GAME_UPDATE,
-            payload:{
-                competitions
-            }
-        })
-    }
-}*/
+ return (dispatch,getState)=>{
+ dispatch({
+ type:ON_GAME_UPDATE,
+ payload:{
+ competitions
+ }
+ })
+ }
+ }*/
 
 
 export let enableCompetitionOnFresh=()=>{
@@ -200,22 +199,26 @@ export let addPersonsToCompetitionTeam=(rowData,personIdStr)=> {
     return (dispatch, getState) => {
         return new Promise((resolve, reject) => {
             var state = getState();
-            var projectId = rowData.projectId;
+            var projectId = rowData;
 
             Proxy.postes({
                 url: Config.server + '/func/competition/addPersonsToCompetitionTeam',
                 headers: {
+
                     'Content-Type': 'application/json',
+
                 },
                 body: {
                     projectId:projectId,
                     personIdStr: personIdStr,
+
                 }
             }).then((json) => {
                 if (json.re == 1) {
-                        resolve({re: 1});
-                    }
+                    resolve({re: 1});
+                }
                 else {
+
                     if (json.re == -100) {
                         resolve({re:-100});
                     } else {
@@ -226,6 +229,7 @@ export let addPersonsToCompetitionTeam=(rowData,personIdStr)=> {
                 alert(e);
                 reject(e);
             })
+
         });
     }
 }
@@ -271,6 +275,3 @@ export let fetchGamesItem=(competitionId)=>{
         });
     }
 }
-
-
-

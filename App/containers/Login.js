@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    Alert,
     ScrollView,
     Image,
     View,
@@ -15,7 +16,7 @@ import {
     Platform,
     Animated
 } from 'react-native';
-
+import {fetchGames,enableCompetitionItemOnFresh} from '../action/CompetitionActions';
 import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 var Proxy = require('../utils/Proxy');
@@ -207,6 +208,18 @@ var  Login =React.createClass({
                                                         alert(e);
                                                })
                                           }
+                                       this.props.dispatch(fetchGames()).then((json)=>{
+                                           if(json.data!==null||json.data!==undefined)
+                                           {
+                                               Alert.alert('信息','有新的比赛！',[{text:'是',onPress:()=>{
+                                                   this.props.dispatch(enableCompetitionItemOnFresh());
+
+                                               }},
+
+                                               ])   ;
+
+                                           }
+                                          });
 
 
                                     }}>
