@@ -11,6 +11,7 @@ import courseReducer from './CourseReducer';
 import coachReducer from './CoachReducer';
 import competitionReducer from './CompetitionReducer';
 import mycompetitionReducer from './MyCompetationReducer';
+import myprofit from './MyProfitReducer';
 
 export default rootReducer = combineReducers({
     tab:tabReducer,
@@ -22,5 +23,6 @@ export default rootReducer = combineReducers({
     course:courseReducer,
     coach:coachReducer,
     competitions:competitionReducer,
-    mycompetition:mycompetitionReducer
+    mycompetition:mycompetitionReducer,
+    myprofit:myprofit,
 })
