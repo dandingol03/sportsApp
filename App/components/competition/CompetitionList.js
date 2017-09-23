@@ -73,12 +73,22 @@ class CompetitionList extends Component {
     }
 
     renderRow(rowData,sectionId,rowId){
+        var time1=new Date(rowData.startTime);
+        var time2=new Date(rowData.endTime);
+        var year1=time1.getFullYear();
+        var month1=time1.getMonth()+1;
+        var day1=time1.getDate();
+        var year2=time2.getFullYear();
+        var month2=time2.getMonth()+1;
+        var day2=time2.getDate();
+        var startTime=year1+'-'+month1+'-'+day1;
+        var endTime=year2+'-'+month2+'-'+day2;
         var row=(
             <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,borderBottomWidth:1,borderBottomColor:'#aaa'}}>
                 <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
                     <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
                         <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
-                    </View>
+                </View>
 
                     <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
                                       onPress={()=>{
@@ -132,8 +142,9 @@ class CompetitionList extends Component {
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
+
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'开始时间：'+rowData.startTime}；
+                            {'开始时间：'+startTime}；
                         </Text>
                     </View>
 
@@ -142,7 +153,7 @@ class CompetitionList extends Component {
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'结束时间：'+rowData.endTime}；
+                            {'结束时间：'+endTime}；
                         </Text>
                     </View>
 

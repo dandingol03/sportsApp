@@ -14,6 +14,7 @@ import {
     Easing
 } from 'react-native';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {
     fetchNotices,disableNoticeOnFresh,enableNoticeOnFresh
 } from '../action/NoticeActions';
@@ -28,7 +29,7 @@ class Notice extends Component{
             navigator.pop();
         }
     }
-    
+
     _onRefresh() {
         this.setState({isRefreshing: true, fadeAnim: new Animated.Value(0)});
         setTimeout(function () {
@@ -44,35 +45,14 @@ class Notice extends Component{
                 },           // Configuration
             ).start();
         }.bind(this), 500);
-        this.props.dispatch(enableCompetitionOnFresh());
+        this.props.dispatch(enableNoticeOnFresh());
 
     }
 
-    fetchData(){
-        this.state.doingFetch=true;
-        this.state.isRefreshing=true;
-            this.props.dispatch(fetchNotices()).then((json)=> {
-            if(json.re==-100){
-                this.props.dispatch(getAccessToken(false));
-            }
-            this.props.dispatch(disableNoticeOnFresh());
-            this.setState({doingFetch:false,isRefreshing:false})
-        }).catch((e)=>{
-            this.props.dispatch(disableNoticeOnFresh());
-            this.setState({doingFetch:false,isRefreshing:false});
-            alert(e)
-        });
-    }
 
 
-    constructor(props) {
-        super(props);
-        this.state={
-            doingFetch: false,
-            isRefreshing: false,
-            fadeAnim: new Animated.Value(1)
-        }
-    }
+
+
 
     navigateNoticeDetail(rowData)
     {
@@ -93,7 +73,6 @@ class Notice extends Component{
             <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,borderBottomWidth:1,borderBottomColor:'#aaa'}}>
                 <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
 
-
                     <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
                                       onPress={()=>{
                                           this.navigateNoticeDetail(rowData,'公开活动');
@@ -111,7 +90,7 @@ class Notice extends Component{
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'消息题目：'+rowData.title}
+                            {'消息编号：'+rowData.id}
                         </Text>
                     </View>
 
@@ -120,7 +99,7 @@ class Notice extends Component{
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {'消息内容：'+rowData.contents}；
+                            {'消息题目：'+rowData.title}
                         </Text>
                     </View>
 
@@ -132,6 +111,30 @@ class Notice extends Component{
         return row;
     }
 
+    fetchData(){
+        this.state.doingFetch=true;
+        this.state.isRefreshing=true;
+        this.props.dispatch(fetchNotices()).then((json)=> {
+            if(json.re==-100){
+                this.props.dispatch(getAccessToken(false));
+            }
+            this.props.dispatch(disableNoticeOnFresh());
+            this.setState({doingFetch:false,isRefreshing:false})
+        }).catch((e)=>{
+            this.props.dispatch(disableNoticeOnFresh());
+            this.setState({doingFetch:false,isRefreshing:false});
+            alert(e)
+        });
+    }
+
+    constructor(props) {
+        super(props);
+        this.state={
+            doingFetch: false,
+            isRefreshing: false,
+            fadeAnim: new Animated.Value(1)
+        };
+    }
 
     render() {
 
@@ -196,18 +199,35 @@ class Notice extends Component{
             </View>
         );
     }
+    componentDidMount()
+    {
+
+    }
+
 
 }
 
-var styles = StyleSheet.create({
-
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff'
+    },
+    popoverContent: {
+        width: 100,
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    popoverText: {
+        color: '#ccc',
+        fontSize: 14
+    }
 });
 
 const mapStateToProps = (state, ownProps) => {
 
     const props = {
-
+        userType: state.user.usertype.perTypeCode,
     }
     return props
 }
