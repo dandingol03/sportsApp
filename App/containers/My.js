@@ -29,6 +29,7 @@ import VenueInspect from '../components/venue/VenueInspect';
 import MyCompentitionList from '../components/competition/MyCompetitionList';
 
 import TeamSignUp from '../components/competition/TeamSignUp';
+import Myprofit from '../components/my/Myprofit';
 
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
 const scaleAnimation = new ScaleAnimation();
@@ -139,12 +140,12 @@ class My extends Component{
     }
 
 
-    navigate2TeamSignUp(){
+    navigate2Myprofit(){
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
-                name: 'TeamSignUp',
-                component:TeamSignUp,
+                name: 'myprofit',
+                component:Myprofit,
                 params: {
 
                 }
@@ -355,19 +356,23 @@ class My extends Component{
                              </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
-                                          onPress={()=>{
-                                this.navigate2TeamSignUp();
+                        {
+                            this.props.username=="lxq"||this.props.username=="wbh"?
+                            <TouchableOpacity
+                                style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                                onPress={()=>{
+                                this.navigate2Myprofit();
                             }}>
-                            <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                                <View style={{flex:1,backgroundColor:'#63B8FF',flexDirection:'row',borderRadius:30,padding:5,margin:5,
                                             justifyContent:'center',alignItems: 'center'}}>
-                                <Icon name={'gear'} size={20} color="#fff"/>
-                            </View>
-                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
-                                <Text>TeamSignUp</Text>
-                            </View>
-                        </TouchableOpacity>
-
+                                    <Icon name={'gear'} size={20} color="#fff"/>
+                                </View>
+                                <View
+                                    style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                                    <Text>我的收益</Text>
+                                </View>
+                            </TouchableOpacity>:null
+                        }
                         {/*<TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}*/}
                                           {/*onPress={()=>{*/}
                                 {/*this.wechatPay();*/}
