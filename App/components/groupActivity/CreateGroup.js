@@ -164,7 +164,7 @@ class CreateGroup extends Component{
 
                 <View style={{flex:5,backgroundColor:'#fff'}}>
 
-                    {/*群名*/}
+                    {/*群名*/}1
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
                     ,margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
