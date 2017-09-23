@@ -68,13 +68,13 @@ export let signUpCompetition=(competitionItem,personIdA,personIdB,teamName,remar
                 }
             }).then((json)=>{
                 if(json.re==1){
-                    resolve({json})
+                    resolve({re:1})
                 }
                 else if(json.re==-1){
-                    resolve({json})
+                    resolve({re:-1})
                 }
                 else{
-                    resolve({json})
+                    resolve({re:3})
                 }
 
 
@@ -199,7 +199,7 @@ export let addPersonsToCompetitionTeam=(rowData,personIdStr)=> {
     return (dispatch, getState) => {
         return new Promise((resolve, reject) => {
             var state = getState();
-            var projectId = rowData;
+            var projectId = rowData.projectId;
 
             Proxy.postes({
                 url: Config.server + '/func/competition/addPersonsToCompetitionTeam',

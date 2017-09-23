@@ -118,14 +118,14 @@ class CompetitionSignUp extends Component {
                         <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
                     </View>
 
-                   {/* <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
+                   {/*{<TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
                                       onPress={()=>{
                                           this.navigateCompetitionSignUp(rowData,'公开活动');
                                       }}>
-                        <Text style={{marginRight:5,color:'#66CDAA'}}>报名</Text>
+                        <Text style={{marginRight:5,color:'#66CDAA'}}>已报名</Text>
                         <Icon name={'angle-right'} size={25
                         } color="#66CDAA"/>
-                    </TouchableOpacity>*/}
+                    </TouchableOpacity>}*/}
                 </View>
 
                 <View style={{flex:3,padding:10}}>
@@ -192,7 +192,7 @@ class CompetitionSignUp extends Component {
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
-                                {/*{'队员：' + this.props.memberList.}；*/}
+                                {'队伍名:' }
                             </Text>
                         </View>:null
                     }
@@ -444,15 +444,25 @@ class CompetitionSignUp extends Component {
                                             {
                                                 alert('报名成功',[{text:'确认',onPress:()=>{
                                                     this.scaleAnimationDialog.dismiss();
+                                                    this.props.dispatch(enableCompetitionItemOnFresh());
                                                 }},
                                                 ]);
 
 
                                             }else if(json.re==-1){
-                                                alert("团队名已存在，不能报名！");
-                                                this.scaleAnimationDialog.dismiss();
+                                                alert('团队名已存在，不能报名。',[{text:'确认',onPress:()=>{
+                                                    this.scaleAnimationDialog.dismiss();
+                                                    this.props.dispatch(enableCompetitionItemOnFresh());
+                                                }},
+                                                ]);
+
                                             }else{
-                                                alert("报名失败，请重新报名！");
+
+                                                alert('报名失败，请重新报名！',[{text:'确认',onPress:()=>{
+                                                    this.scaleAnimationDialog.dismiss();
+                                                    this.props.dispatch(enableCompetitionItemOnFresh());
+                                                }},
+                                                ]);
                                             }
 
                                         })

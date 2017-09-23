@@ -23,6 +23,7 @@ import ActionSheet from 'react-native-actionsheet';
 import {
     enableCompetitionItemOnFresh,
 } from '../../action/CompetitionActions';
+import { connect } from 'react-redux';
 var {height, width} = Dimensions.get('window');
 class CreateTeamModel extends Component{
 
@@ -199,8 +200,12 @@ var styles = StyleSheet.create({
     },
 });
 
-
-module.exports = CreateTeamModel;
+module.exports = connect(state=>({
+        accessToken:state.user.accessToken,
+        personInfo:state.user.personInfo,
+        user:state.user.user,
+    })
+)(CreateTeamModel);
 
 
 

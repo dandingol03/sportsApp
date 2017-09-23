@@ -100,7 +100,7 @@ class InviteFriends extends Component{
                 <View style={{flex:3,marginLeft:5}}>
                     <View style={{flexDirection:'row',marginLeft:10}}>
                         <Icon name={'user'} size={15} color="pink"/>
-                        <Text style={{marginLeft:10,color:'#343434'}}>{rowData.perNum}</Text>
+                        <Text style={{marginLeft:10,color:'#343434'}}>{rowData}</Text>
                     </View>
                     {/*<View  style={{flexDirection:'row',marginLeft:10,marginTop:5}}>
                         <Icon name={'mobile'} size={15} color="#87CEFF"/>
@@ -146,7 +146,7 @@ class InviteFriends extends Component{
         if(this.state.memberList.length==0){
             var person = this.props.personInfo;
             person.username = this.props.user.username;
-            this.state.memberList.push(person);
+            this.state.memberList.push(person.username);
         }
 
     }
@@ -240,7 +240,7 @@ class InviteFriends extends Component{
                                       if(json.re==1){
                                           alert('编辑队伍成功',[{text:'是',onPress:()=>{
                                               this.props.dispatch(enableCompetitionItemOnFresh());
-                                              this.goBack();
+                                              this.navigateCompetitionSignUp(this.state.memberList);
                                           }},
 
                                           ]);
@@ -255,7 +255,7 @@ class InviteFriends extends Component{
 
                                       }
                                   }).then(()=>{
-                                         navigateCompetitionSignUp(this.state.memberList);
+                                         this.navigateCompetitionSignUp(this.state.memberList);
                                      });
 
 

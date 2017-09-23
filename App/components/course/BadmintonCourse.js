@@ -306,7 +306,7 @@ class BadmintonCourse extends Component {
                          actions={actions}
                          onPress={(i)=>{
                              if(this.props.userType=='1'){
-                                 if(i==0)
+                                 if(i==0)z
                                  {
                                     this.navigate2BadmintonCourseForCoach();
                                  }
@@ -318,7 +318,6 @@ class BadmintonCourse extends Component {
                                 {
                                     this.navigate2CustomCourseList();
                                 }
-
 
                              }else{
                                  this.navigate2BadmintonCourseForUser()
