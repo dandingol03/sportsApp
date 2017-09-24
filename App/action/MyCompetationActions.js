@@ -97,7 +97,8 @@ export let fetchcompetitionScheduleList=(competitionId)=>{
                     'Content-Type': 'application/json',
                 },
                 body: {
-                    competitionId:parseInt(competitionId)
+                    competitionId:parseInt(competitionId),
+                    personId:state.user.personInfo.personId,
                 }
             }).then((json)=>{
                 if(json.re==1){
@@ -123,4 +124,4 @@ export let fetchcompetitionScheduleList=(competitionId)=>{
             }
          })
      }
- }*/
+ }*!/*/

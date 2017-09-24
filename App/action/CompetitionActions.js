@@ -195,7 +195,7 @@ export let disableCompetitionItemOnFresh=()=>{
     }
 }
 
-export let addPersonsToCompetitionTeam=(rowData,personIdStr)=> {
+export let addPersonsToCompetitionTeam=(rowData,personNameStr)=> {
     return (dispatch, getState) => {
         return new Promise((resolve, reject) => {
             var state = getState();
@@ -210,7 +210,7 @@ export let addPersonsToCompetitionTeam=(rowData,personIdStr)=> {
                 },
                 body: {
                     projectId:projectId,
-                    personIdStr: personIdStr,
+                    personNameStr: personNameStr,
 
                 }
             }).then((json) => {
@@ -218,7 +218,6 @@ export let addPersonsToCompetitionTeam=(rowData,personIdStr)=> {
                     resolve({re: 1});
                 }
                 else {
-
                     if (json.re == -100) {
                         resolve({re:-100});
                     } else {

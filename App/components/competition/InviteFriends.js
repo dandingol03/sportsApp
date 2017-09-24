@@ -226,17 +226,17 @@ class InviteFriends extends Component{
                                       //this.createGroup(info);
                                       //var rowData=this.props.rowData;
                                       var memberList=this.state.memberList
-                                      var personIdStr=null;
+                                      var personNameStr='';
                                       memberList.map((member,i)=>{
-                                         //personIdStr.concat(member.personId+",");
-                                          personIdStr=personIdStr+member.personId+","
+
+                                          personNameStr=personNameStr+member+","
                                           }
 
                                       );
-                                      var length=personIdStr.length
-                                      personIdStr=personIdStr.substring(0,length-1)
+                                      var length=personNameStr.length
+                                      personNameStr=personNameStr.substring(0,length-1)
                                       var rowData=this.props.rowData;
-                                     this.props.dispatch(addPersonsToCompetitionTeam(rowData,personIdStr)).then((json)=>{
+                                     this.props.dispatch(addPersonsToCompetitionTeam(rowData,personNameStr)).then((json)=>{
                                       if(json.re==1){
                                           alert('编辑队伍成功',[{text:'是',onPress:()=>{
                                               this.props.dispatch(enableCompetitionItemOnFresh());
@@ -255,6 +255,7 @@ class InviteFriends extends Component{
 
                                       }
                                   }).then(()=>{
+                                         this.props.dispatch(enableCompetitionItemOnFresh());
                                          this.navigateCompetitionSignUp(this.state.memberList);
                                      });
 
@@ -286,7 +287,7 @@ class InviteFriends extends Component{
                         setMemberList={()=>{
                             if(this.state.member!==null&&this.state.member!==undefined){
                                 var memberList = this.state.memberList;
-                                memberList.push(this.state.member);
+                                memberList.push(this.state.member.perNum);
                                 this.setState({memberList:memberList});
                             }
                         }}
