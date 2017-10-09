@@ -154,8 +154,6 @@ class Myprofit extends Component {
                 {/*<View style={{flex:1,alignItems:'center',justifyContent:'center',borderBottomColor:'#eee',borderBottomWidth:1}}>*/}
                 {/*<Icon name={'angle-right'} size={30} color="#66CDAA"/>*/}
                 {/*</View>*/}
-
-
             </TouchableOpacity>
         );
 
@@ -306,7 +304,7 @@ class Myprofit extends Component {
 
                         </View>
 
-                        <View style={{width:250,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:20,marginTop:20}}>
+                        <View style={{width:270,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:20,marginTop:20}}>
                             <View style={{width:50,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                                 <Image source={require('../../../img/portrait.jpg')} style={{ width: 46, height: 46,borderRadius:23 }}
                                        resizeMode="stretch" />
@@ -316,6 +314,46 @@ class Myprofit extends Component {
 
                                 <View style={{flexDirection: 'row', alignItems: 'center', padding: 6, paddingTop: 2}}>
                                     <Text style={{fontSize:16,color:'#222'}}>
+                                        群活动手机今日总收益
+                                    </Text>
+
+                                    <Text style={{fontSize:13,color:'#222',}}>
+                                        {this.props.tel1+'￥'}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={{width:270,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:20,marginTop:20}}>
+                            <View style={{width:50,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                                <Image source={require('../../../img/portrait.jpg')} style={{ width: 46, height: 46,borderRadius:23 }}
+                                       resizeMode="stretch" />
+                            </View>
+
+                            <View style={{flex:5,flexDirection:'column',borderBottomColor:'#eee',borderBottomWidth:1}}>
+
+                                <View style={{flexDirection: 'row', alignItems: 'center', padding: 6, paddingTop: 2}}>
+                                    <Text style={{fontSize:16,color:'#222'}}>
+                                        群活动微信今日总收益
+                                    </Text>
+
+                                    <Text style={{fontSize:13,color:'#222',}}>
+                                        {this.props.wx1+'￥'}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={{width:270,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:20,marginTop:20}}>
+                            <View style={{width:50,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                                <Image source={require('../../../img/portrait.jpg')} style={{ width: 46, height: 46,borderRadius:23 }}
+                                       resizeMode="stretch" />
+                            </View>
+
+                            <View style={{marginLeft:20,flexDirection:'column',borderBottomColor:'#eee',borderBottomWidth:1}}>
+
+                                <View style={{flexDirection: 'row', alignItems: 'center', padding: 6, paddingTop: 2}}>
+                                    <Text style={{fontSize:16,color:'#f00'}}>
                                         群活动的今日总收益
                                     </Text>
 
@@ -326,7 +364,7 @@ class Myprofit extends Component {
                             </View>
                         </View>
 
-                        <View style={{width:250,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:20,marginTop:20}}>
+                        <View style={{width:270,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:20,marginTop:20}}>
                             <View style={{width:50,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                                 <Image source={require('../../../img/portrait.jpg')} style={{ width: 46, height: 46,borderRadius:23 }}
                                        resizeMode="stretch" />
@@ -336,6 +374,44 @@ class Myprofit extends Component {
 
                                 <View style={{flexDirection: 'row', alignItems: 'center', padding: 6, paddingTop: 2}}>
                                     <Text style={{fontSize:16,color:'#222'}}>
+                                        购物手机今日总收益
+                                    </Text>
+
+                                    <Text style={{fontSize:13,color:'#222',}}>
+                                        {this.props.tel2+'￥'}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{width:270,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:20,marginTop:20}}>
+                            <View style={{width:50,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                                <Image source={require('../../../img/portrait.jpg')} style={{ width: 46, height: 46,borderRadius:23 }}
+                                       resizeMode="stretch" />
+                            </View>
+
+                            <View style={{flex:5,flexDirection:'column',borderBottomColor:'#eee',borderBottomWidth:1}}>
+
+                                <View style={{flexDirection: 'row', alignItems: 'center', padding: 6, paddingTop: 2}}>
+                                    <Text style={{fontSize:16,color:'#222'}}>
+                                        购物微信今日总收益
+                                    </Text>
+
+                                    <Text style={{fontSize:13,color:'#222',}}>
+                                        {this.props.wx2+'￥'}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{width:270,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:20,marginTop:20}}>
+                            <View style={{width:50,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                                <Image source={require('../../../img/portrait.jpg')} style={{ width: 46, height: 46,borderRadius:23 }}
+                                       resizeMode="stretch" />
+                            </View>
+
+                            <View style={{marginLeft:50,flexDirection:'column',borderBottomColor:'#eee',borderBottomWidth:1}}>
+
+                                <View style={{flexDirection: 'row', alignItems: 'center', padding: 6, paddingTop: 2}}>
+                                    <Text style={{fontSize:16,color:'#f00'}}>
                                         购物的今日总收益
                                     </Text>
 
@@ -457,115 +533,6 @@ class Myprofit extends Component {
             </View>
                 }
 
-                    {/*<View style={{ flex:1, width: width, backgroundColor: '#fff' }}>*/}
-                    {/*<View style={{flexDirection: 'row', alignItems: 'center', padding: 6, paddingTop: 2}}>*/}
-                        {/*<View style={{width:250,flexDirection:'row',justifyContent:'flex-start',paddingRight:5}}>*/}
-                            {/*<Icon name="" size={14} color="#00f" style={{marginLeft:5}}/>*/}
-                            {/*<Text style={{fontSize:12,color:'#222'}}>*/}
-                                {/*今日收益总额：*/}
-                            {/*</Text>*/}
-
-                            {/*{*/}
-                                {/*this.state.qunhuodongstate==false&&this.state.huaxiaostate==false?*/}
-                                    {/*<Text style={{fontSize:13,color:'#f00',}}>*/}
-                                        {/*{this.props.total+'￥'}*/}
-                                    {/*</Text>:*/}
-                                    {/*<View style={{width:55}}>*/}
-                                        {/*{*/}
-
-                                            {/*this.state.qunhuodongstate==true&&this.state.huaxiaostate==false?*/}
-                                                {/*<Text style={{fontSize:13,color:'#f00',}}>*/}
-                                                    {/*{this.props.total1+'￥'}*/}
-                                                {/*</Text>:null*/}
-                                        {/*}*/}
-                                        {/*{*/}
-
-                                            {/*this.state.qunhuodongstate==false&&this.state.huaxiaostate==true?*/}
-                                                {/*<Text style={{fontSize:13,color:'#f00',}}>*/}
-                                                    {/*{this.props.total2+'￥'}*/}
-                                                {/*</Text>:null*/}
-                                        {/*}*/}
-                                    {/*</View>*/}
-                            {/*}*/}
-                            {/*<View style={{width:10}}></View>*/}
-
-                            {/*<View style={{width:250,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:50}}>*/}
-                                {/*<Text style={{fontSize:12,color:'#222'}}>筛选:</Text>*/}
-                                {/*<TouchableOpacity style={{ flexDirection: 'row',  justifyContent: 'flex-end', alignItems: 'center', }}*/}
-                                                  {/*onPress={() => {*/}
-
-                                        {/*this.setState({qunhuodongstate:true});*/}
-
-
-                             {/*}}*/}
-                                {/*>*/}
-                                    {/*<Text style={{ fontSize: 13 }}>群活动</Text>*/}
-                                    {/*{*/}
-
-                                    {/*}*/}
-                                {/*</TouchableOpacity>*/}
-                                {/*<TouchableOpacity style={{ flexDirection: 'row',justifyContent: 'flex-end', alignItems: 'center',marginLeft:15}}*/}
-                                                  {/*onPress={() => {*/}
-                                                  {/*this.setState({huaxiaostate:true});*/}
-
-
-                             {/*}}*/}
-                                {/*>*/}
-                                    {/*<Text style={{ fontSize: 13 }}>花销</Text>*/}
-                                    {/*{*/}
-
-                                    {/*}*/}
-                                {/*</TouchableOpacity>*/}
-
-                                {/*<TouchableOpacity style={{ flexDirection: 'row',justifyContent: 'flex-end', alignItems: 'center',marginLeft:15}}*/}
-                                                  {/*onPress={() => {*/}
-                                                  {/*this.setState({huaxiaostate:false,qunhuodongstate:false});*/}
-                             {/*}}*/}
-                                {/*>*/}
-                                    {/*<Text style={{ fontSize: 13 }}>全部</Text>*/}
-                                    {/*{*/}
-
-                                    {/*}*/}
-                                {/*</TouchableOpacity>*/}
-                            {/*</View>*/}
-
-                        {/*</View>*/}
-
-                    {/*</View>*/}
-
-
-                    {/*<View style={{ flex:1, width: width, backgroundColor: '#66CDAA' }}>*/}
-                        {/*{*/}
-                            {/*this.state.qunhuodongstate==false&&this.state.huaxiaostate==false?*/}
-
-                                {/*<Animated.View style={{flex: 1, padding: 4,paddingTop:10,opacity: this.state.fadeAnim,backgroundColor:'#fff' }}>*/}
-                                    {/*{paymentList}*/}
-                                {/*</Animated.View>:*/}
-                                {/*<View style={{ flex:1, width: width, backgroundColor: '#66CDAA' }}>*/}
-                                    {/*{*/}
-                                        {/*this.state.qunhuodongstate==true&&this.state.huaxiaostate==false?*/}
-                                            {/*<Animated.View style={{flex: 1, padding: 4,paddingTop:10,opacity: this.state.fadeAnim,backgroundColor:'#fff' }}>*/}
-                                                {/*{qunhuodongList}*/}
-                                                {/*{this.state.qunhuodongstate=false}*/}
-                                            {/*</Animated.View>:null*/}
-                                    {/*}*/}
-
-                                    {/*{*/}
-                                        {/*this.state.huaxiaostate==true&&this.state.qunhuodongstate==false?*/}
-                                            {/*<Animated.View style={{flex: 1, padding: 4,paddingTop:10,opacity: this.state.fadeAnim,backgroundColor:'#fff' }}>*/}
-                                                {/*{huaxiaoList}*/}
-                                                {/*{this.state.huaxiaostate=false}*/}
-                                            {/*</Animated.View>:null*/}
-                                    {/*}*/}
-                                {/*</View>*/}
-
-                        {/*}*/}
-
-
-                    {/*</View>*/}
-
-                    {/*</View>*/}
-
 
             </View>
         )
@@ -603,7 +570,12 @@ module.exports = connect(state=>({
         qunhuodong:state.myprofit.qunhuodong,
         total1:state.myprofit.total1,
         huaxiao:state.myprofit.huaxiao,
-        total2:state.myprofit.total2
+        total2:state.myprofit.total2,
+        tel1:state.myprofit.tel1,
+        tel2:state.myprofit.tel2,
+        wx1:state.myprofit.wx1,
+        wx2:state.myprofit.wx2,
+
 
     })
 )(Myprofit);

@@ -10,7 +10,7 @@ import {
 } from '../constants/MyProfitConstants'
 
 //设置教练列表
-export let setPayment=(payments,money,qunhuodong,huaxiao,money1,money2)=>{
+export let setPayment=(payments,money,qunhuodong,huaxiao,money1,money2,tel1,tel2,wx1,wx2)=>{
     return {
         type:SET_PAYMENT,
         payments:payments,
@@ -18,7 +18,11 @@ export let setPayment=(payments,money,qunhuodong,huaxiao,money1,money2)=>{
         qunhuodong:qunhuodong,
         huaxiao:huaxiao,
         total1:money1,
-        total2:money2
+        total2:money2,
+        tel1:tel1,
+        tel2:tel2,
+        wx1:wx1,
+        wx2:wx2
     }
 }
 
@@ -45,6 +49,10 @@ export let fetchPayment=()=>{
                     var money=0;
                     var money1=0;
                     var money2=0;
+                    var tel1=0;
+                    var tel2=0;
+                    var wx1=0;
+                    var wx2=0;
                     var qunhuodong=[];
                     var huaxiao=[];
                     payments.map((payments,i)=>{
@@ -52,15 +60,33 @@ export let fetchPayment=()=>{
                         if(payments.useType=="1"){
                             qunhuodong.push(payments);
                             money1+=payments.payment;
+                            if(payments.payType=="1"){
+                                tel1+=payments.payment;
+
+                            }
+                            if(payments.payType=="2")
+                            {
+                                wx1+=payments.payment;
+                            }
+
+
                         }
                         if(payments.useType=="2"){
                             huaxiao.push(payments);
                             money2+=payments.payment;
+                            if(payments.payType=="1"){
+                                tel2+=payments.payment;
+
+                            }
+                            if(payments.payType=="2")
+                            {
+                                wx2+=payments.payment;
+                            }
                         }
                     })
                     money=money+'';
                     money=money.substring(0,6);
-                    dispatch(setPayment(payments,money,qunhuodong,huaxiao,money1,money2));
+                    dispatch(setPayment(payments,money,qunhuodong,huaxiao,money1,money2,tel1,tel2,wx1,wx2));
                 }
                 resolve({re:1,data:payments})
 

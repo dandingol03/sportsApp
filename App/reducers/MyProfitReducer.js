@@ -16,7 +16,11 @@ const initialState = {
         qunhuodong:null,
         total1:null,
         huaxiao:null,
-        total2:null
+        total2:null,
+    tel1:null,
+    tel2:null,
+    wx1:null,
+    wx2:null
 };
 
 let myprofit = (state = initialState, action) => {
@@ -29,7 +33,11 @@ let myprofit = (state = initialState, action) => {
                 qunhuodong:action.qunhuodong,
                 huaxiao:action.huaxiao,
                 total1:action.total1,
-                total2:action.total2
+                total2:action.total2,
+                tel1:action.tel1,
+                tel2:action.tel2,
+                wx1:action.wx1,
+                wx2:action.wx2
 
             })
 
