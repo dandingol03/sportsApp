@@ -86,6 +86,8 @@ class CompetitionSchedule extends Component{
         var min1=time1.toTimeString().substr(0,8);
         var tt1=year1+'-'+month1+'-'+day1+' '+min1;
 
+        
+
         var row=(
             <View style={{flex:1,backgroundColor:'#eee',marginTop:5,marginBottom:5,}}>
                 <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
