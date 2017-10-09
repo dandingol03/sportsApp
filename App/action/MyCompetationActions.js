@@ -51,6 +51,8 @@ export let disableCompetitionOnFresh=()=>{
     }
 }
 
+
+
 //拉取我的比赛
 export let fetchMyGames=()=>{
     return (dispatch,getState)=>{
