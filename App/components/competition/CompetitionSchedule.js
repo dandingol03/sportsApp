@@ -70,6 +70,22 @@ class CompetitionSchedule extends Component{
     }
     renderRow(rowData,sectionId,rowId){
 
+        var starttime=rowData.startTime;
+        var endtime=rowData.endTime;
+        var time=new Date(starttime);
+        var year=time.getFullYear();
+        var month=time.getMonth()+1;
+        var day=time.getDate();
+        var min=time.toTimeString().substr(0,8);
+        var tt=year+'-'+month+'-'+day+' '+min;
+
+        var time1=new Date(endtime);
+        var year1=time1.getFullYear();
+        var month1=time1.getMonth()+1;
+        var day1=time1.getDate();
+        var min1=time1.toTimeString().substr(0,8);
+        var tt1=year1+'-'+month1+'-'+day1+' '+min1;
+
         var row=(
             <View style={{flex:1,backgroundColor:'#eee',marginTop:5,marginBottom:5,}}>
                 <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
@@ -91,14 +107,25 @@ class CompetitionSchedule extends Component{
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
-                        <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            比赛对手：{rowData.teamNameA}     VS
-                        </Text>
-                        <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {rowData.teamNameB}
+                        <Text style={{flex:8,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            比赛类型：{rowData.gameTypeName}
                         </Text>
                     </View>
 
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            比赛对手：{rowData.personNameA1}{rowData.personNameA2}V
+                        </Text>
+
+                        <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {rowData.personNameB1}{rowData.personNameB2}
+                        </Text>
+                    </View>
+                    {
+                        rowData.scoreA!=null&&rowData.scoreB!=null?
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
@@ -109,18 +136,18 @@ class CompetitionSchedule extends Component{
                         <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
                             {rowData.scoreB}
                         </Text>
-                    </View>
-
+                    </View>:null
+                    }
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
 
-                            {rowData.startTime}  --
+                            {tt}  --
                         </Text>
                         <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {rowData.endTime}
+                            {tt1}
                         </Text>
                     </View>
                 </View>
@@ -176,7 +203,7 @@ class CompetitionSchedule extends Component{
                             {
                                 activityListView==null?
                                     <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
-                                        <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>有错误</Text>
+                                        <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>数据为空</Text>
                                     </View>:
                                     <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
                                         <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>

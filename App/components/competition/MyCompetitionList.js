@@ -109,6 +109,22 @@ class MyCompetitionList extends Component {
 
     renderRow(rowData,sectionId,rowId){
 
+        var starttime=rowData.startTime;
+        var endtime=rowData.endTime;
+        var time=new Date(starttime);
+        var year=time.getFullYear();
+        var month=time.getMonth()+1;
+        var day=time.getDate();
+        var min=time.toTimeString().substr(0,8);
+        var tt=year+'-'+month+'-'+day+' '+min;
+
+        var time1=new Date(endtime);
+        var year1=time1.getFullYear();
+        var month1=time1.getMonth()+1;
+        var day1=time1.getDate();
+        var min1=time1.toTimeString().substr(0,8);
+        var tt1=year1+'-'+month1+'-'+day1+' '+min1;
+
         var row=(
             <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,}}>
                 <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
@@ -143,10 +159,10 @@ class MyCompetitionList extends Component {
                             <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
                         <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {rowData.startTime}    --
+                            {tt}    --
                         </Text>
                         <Text style={{flex:4,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                            {rowData.endTime}
+                            {tt1}
                         </Text>
                     </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
@@ -172,67 +188,6 @@ class MyCompetitionList extends Component {
         return row;
     }
 
-    // _renderRow(rowData){
-    //
-    //
-    //     var row=(
-    //         <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,borderBottomWidth:1,borderColor:'#aaa'}}>
-    //             <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
-    //                 <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
-    //                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/logo.png')}/>
-    //                 </View>
-    //
-    //                 <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
-    //                                   onPress={()=>{
-    //                                      // this.navigate2ActivityDetail(rowData,'公开活动');
-    //                                   }}>
-    //                     <Text style={{marginRight:5,color:'#66CDAA'}}>详情</Text>
-    //                     <Icon name={'angle-right'} size={25} color="#66CDAA"/>
-    //                 </TouchableOpacity>
-    //             </View>
-    //             <View style={{flex:3,padding:10}}>
-    //
-    //                 <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
-    //
-    //                     <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
-    //                         <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-    //                             {rowData}
-    //                         </Text>
-    //                     </View>
-    //                     <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-    //
-    //                         <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-    //                             {rowData.type}
-    //                         </Text>
-    //                     </View>
-    //                 </View>
-    //                 <View style={{flexDirection:'row',marginBottom:3}}>
-    //                     <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-    //                         <Icon name={'circle'} size={10} color="#aaa"/>
-    //                     </View>
-    //
-    //                     <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-    //                         <Text style={{ color: '#fff', fontSize: 12 }}>
-    //                             主办方：{rowData.host}
-    //                         </Text>
-    //                     </View>
-    //
-    //                     <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center',marginLeft:120}}>
-    //
-    //                     </View>
-    //                     <Text style={{ flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-    //                         {rowData.time}
-    //                     </Text>
-    //
-    //
-    //                 </View>
-    //             </View>
-    //
-    //         </View>
-    //
-    //     );
-    //     return row;
-    // }
     render() {
 
         var activityListView=null;

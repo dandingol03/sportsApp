@@ -98,7 +98,7 @@ export let fetchcompetitionScheduleList=(competitionId)=>{
                 },
                 body: {
                     competitionId:parseInt(competitionId),
-                    personId:state.user.personInfo.personId,
+
                 }
             }).then((json)=>{
                 if(json.re==1){
