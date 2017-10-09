@@ -90,6 +90,7 @@ class MyActivity extends Component {
 
     }
 
+    
     renderRow(rowData,sectionId,rowId){
         var chuo =rowData.startTime;
         var time =new Date(chuo);
