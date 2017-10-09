@@ -107,6 +107,8 @@ class MyCompetitionList extends Component {
     }
 
 
+    
+
     renderRow(rowData,sectionId,rowId){
 
         var starttime=rowData.startTime;
