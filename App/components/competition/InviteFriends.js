@@ -239,7 +239,7 @@ class InviteFriends extends Component{
                                      this.props.dispatch(addPersonsToCompetitionTeam(rowData,personNameStr)).then((json)=>{
                                       if(json.re==1){
                                           alert('编辑队伍成功',[{text:'是',onPress:()=>{
-                                              this.props.dispatch(enableCompetitionItemOnFresh());
+                                             this.props.dispatch(enableCompetitionItemOnFresh());
                                               this.navigateCompetitionSignUp(this.state.memberList);
                                           }},
 

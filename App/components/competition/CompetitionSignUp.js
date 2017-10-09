@@ -443,8 +443,9 @@ class CompetitionSignUp extends Component {
                                             if(json.re==1)
                                             {
                                                 alert('报名成功',[{text:'确认',onPress:()=>{
-                                                    this.scaleAnimationDialog.dismiss();
+
                                                     this.props.dispatch(enableCompetitionItemOnFresh());
+                                                    this.scaleAnimationDialog.dismiss();
                                                 }},
                                                 ]);
 
