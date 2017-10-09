@@ -189,6 +189,14 @@ class Activity extends Component {
 
         }
 
+        var str=rowData.eventMember;
+        var members=new Array();
+        members=str.split(",");
+        if(members[0]==""){
+            var eventNowMemNum=0;
+        }else{
+            var eventNowMemNum=members.length;
+        }
         var row=(
             <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,}}>
                 <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
@@ -293,7 +301,7 @@ class Activity extends Component {
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
                         {
                             rowData.eventNowMemNum!=null?
-                                <Text style={{color:'#aaa',fontSize:13}}>已报名:{rowData.eventNowMemNum}</Text>:
+                                <Text style={{color:'#aaa',fontSize:13}}>已报名:{eventNowMemNum}</Text>:
                                 <Text style={{color:'#aaa',fontSize:13}}>已报名:暂无</Text>
                         }
 
