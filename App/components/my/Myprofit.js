@@ -455,8 +455,8 @@ class Myprofit extends Component {
                         }
                         <View style={{width:10}}></View>
 
-                        <View style={{width:250,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:50}}>
-                            <Text style={{fontSize:12,color:'#222'}}>筛选:</Text>
+                        <View style={{width:250,flexDirection:'row',justifyContent:'flex-start',paddingRight:5,marginLeft:30}}>
+                            <Text style={{fontSize:16,color:'#222'}}>筛选:</Text>
                             <TouchableOpacity style={{ flexDirection: 'row',  justifyContent: 'flex-end', alignItems: 'center', }}
                                               onPress={() => {
 
@@ -465,7 +465,7 @@ class Myprofit extends Component {
 
                              }}
                             >
-                                <Text style={{ fontSize: 13 }}>群活动</Text>
+                                <Text style={{ fontSize: 16 }}>群活动</Text>
                                 {
 
                                 }
@@ -477,7 +477,7 @@ class Myprofit extends Component {
 
                              }}
                             >
-                                <Text style={{ fontSize: 13 }}>花销</Text>
+                                <Text style={{ fontSize: 16}}>花销</Text>
                                 {
 
                                 }
@@ -488,7 +488,7 @@ class Myprofit extends Component {
                                                   this.setState({huaxiaostate:false,qunhuodongstate:false});
                              }}
                             >
-                                <Text style={{ fontSize: 13 }}>全部</Text>
+                                <Text style={{ fontSize: 16}}>全部</Text>
                                 {
 
                                 }
