@@ -148,9 +148,6 @@ class CompetitionSignUp extends Component {
                         </Text>
                     </View>
 
-
-
-
                     {rowData.maxTeamNum!==undefined&&rowData.maxTeamNum!==null?
                         <View style={{flexDirection:'row',marginBottom:3}}>
                           <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
@@ -177,7 +174,7 @@ class CompetitionSignUp extends Component {
                             }}>
                                 {'已报名队数：' + rowData.nowTeamNum}；
                             </Text>
-                        </View>:null
+                        </View>:nullgit
                     }
                     {this.props.memberList !== undefined && this.props.memberList !== null ?
                         <View style={{flexDirection: 'row', marginBottom: 3}}>
@@ -203,7 +200,7 @@ class CompetitionSignUp extends Component {
                     {/*<View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
                         <Text style={{color:'#aaa',fontSize:13}}>已报名:{rowData.eventNowMemNum}</Text>
                     </View>*/}
-                    {rowData.joinMark == 1 && rowData.projectType == 6 ?
+                    {rowData.joinMark == 1 && rowData.projectType == 6&&rowData.isTeamCreateor==1?
                         <TouchableOpacity style={{
                             flex: 2,
                             borderWidth: 1,
@@ -222,14 +219,33 @@ class CompetitionSignUp extends Component {
                                           }>
                             <Text style={{color: '#66CDAA', fontSize: 12}}>编辑队伍</Text>
                         </TouchableOpacity>:
-                        <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                            <Text style={{color:'#aaa',fontSize:13}}></Text>
-                        </View>
+                        null
                     }
+
+                    {rowData.joinMark == 1 && rowData.projectType == 6&&rowData.isTeamCreateor==0?
+                        <TouchableOpacity style={{
+                            flex: 2,
+                            borderWidth: 1,
+                            borderColor: '#66CDAA',
+                            padding: 5,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                            ,
+                            borderRadius: 6
+                        }}
+
+
+
+                        >
+                            <Text style={{color: '#66CDAA', fontSize: 12}}>已报名</Text>
+                        </TouchableOpacity>:
+                        null
+                    }
+
                     {<View style={{flex:3,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>}
-                    {rowData.joinMark ==0 ?
+                    {rowData.joinMark == 0?
                         <TouchableOpacity style={{
                             flex: 2,
                             borderWidth: 1,
@@ -243,24 +259,27 @@ class CompetitionSignUp extends Component {
 
 
                                           onPress={() => {
-                                             if(rowData.projectType==1||rowData.projectType==2)
-                                              {
+                                              if (rowData.projectType == 1 || rowData.projectType == 2) {
                                                   this.signUpCompetition1(rowData)
                                               }
-                                              else if(rowData.projectType==6){
-                                                 this.setState({rowData:rowData});
+                                              else if (rowData.projectType == 6) {
+                                                  this.setState({rowData: rowData});
                                                   this.showScaleAnimationDialog();
                                               }
                                               else {
-                                                   this.navigate2InviteFriend(rowData);
-                                             }
+                                                  this.navigate2InviteFriend(rowData);
+                                              }
 
 
                                           }
 
                                           }>
                             <Text style={{color: '#66CDAA', fontSize: 12}}>我要报名</Text>
-                        </TouchableOpacity>:
+                        </TouchableOpacity> :
+                        null
+                    }
+
+                    {rowData.joinMark == 1&&rowData.projectType == 6&&rowData.isTeamCreateor==1?
 
                         <TouchableOpacity style={{
                             flex: 2,
@@ -292,12 +311,10 @@ class CompetitionSignUp extends Component {
                                               });
                                           }}>
                             <Text style={{color: '#66CDAA', fontSize: 12}}>取消报名</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity>:null
                     }
 
                 </View>
-
-
 
             </View>
         );
