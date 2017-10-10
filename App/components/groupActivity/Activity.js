@@ -150,7 +150,7 @@ class Activity extends Component {
                         this.navigate2ActivityPay(event);
                     }},
                         {text:'否',onPress:()=>{
-                            this.goBack();
+                           // this.goBack();
                             this.setMyActivityList();
                         }},
                     ]);
@@ -163,6 +163,28 @@ class Activity extends Component {
         }
     }
 
+    exitActivity(event)
+    {
+        if(event.eventMaxMemNum<=event.eventNowMemNum){
+            alert('该活动人数已满！');
+
+        }else{
+            this.props.dispatch(exitActivity(event.eventId)).then((json)=>{
+                if(json.re==1){
+                    Alert.alert('信息','退出报名成功',[{text:'确认',onPress:()=>{
+                        // this.setMyActivityList();
+                        //this.goBack();
+                        this.setMyActivityList();
+                    }},
+                    ]);
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
+                }
+            })
+        }
+    }
     isActivityPay(){
         Alert.alert('信息','您已成功报名，但未支付，是否现在支付？',[{text:'是',onPress:()=>{
             // this.setMyActivityList();
@@ -328,7 +350,7 @@ class Activity extends Component {
                                     rowData.Money==0||rowData.Money==null?
                                         <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
                     ,borderRadius:6}}
-                                                          onPress={()=>{this.props.dispatch(exitActivity(rowData.eventId))}}>
+                                                          onPress={()=>{this.exitActivity(rowData)}}>
                                             <Text style={{color:'#f00',fontSize:12}}>取消报名</Text>
                                         </TouchableOpacity>:
                                         <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
@@ -336,9 +358,6 @@ class Activity extends Component {
                                         >
                                             <Text style={{color:'#f00',fontSize:12}}>报名成功</Text>
                                         </TouchableOpacity>
-
-
-
                                 }
 
                             </View>
