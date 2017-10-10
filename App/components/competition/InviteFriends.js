@@ -57,12 +57,17 @@ class InviteFriends extends Component{
 
     removeMember(memberList,rowData) {
         var index=null;
+        var flag=0;
         memberList.map((member, i) => {
-            if(member.mobilePhone==rowData.mobilePhone){
-                index = i;
-            }else{
-                index=-1;
+            if(flag==0){
+                if(member==rowData){
+                    index = i;
+                    flag=1;
+                }else{
+                    index=-1;
+                }
             }
+
         });
         if(index!==-1){
             memberList.splice(index, 1);

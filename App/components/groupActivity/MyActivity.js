@@ -90,7 +90,15 @@ class MyActivity extends Component {
 
     }
 
+
     renderRow(rowData,sectionId,rowId){
+
+        var chuo =rowData.startTime;
+        var time =new Date(chuo);
+        var year =time.getFullYear();
+        var month =time.getMonth();
+        var day=time.getDate();
+        var tt1=year+'-'+month+'-'+day;
 
         var row=(
             <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,}}>
@@ -113,14 +121,17 @@ class MyActivity extends Component {
                             </View>
                             <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>{rowData.eventPlaceName}</Text>
                         </View>
+                        {
+                            rowData.startTime!=undefined?
                         <View style={{flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>
                             </View>
                             <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                {'活动时间:'+rowData.eventTime}
+                                {'活动时间:'+tt1}
                             </Text>
-                        </View>
+                        </View>:null
+                        }
                         <View style={{flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                                 <Icon name={'circle'} size={10} color="#aaa"/>

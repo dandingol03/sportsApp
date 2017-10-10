@@ -240,8 +240,6 @@ export let fetchActivityList=()=>{
                     dispatch(setMyTakenEvents(myTakenEvents));
                     dispatch(disableActivityOnFresh());
                     resolve({re:1});
-
-
                 }).catch((e)=>{
                     alert(e);
                     reject(e);
@@ -265,7 +263,6 @@ export let signUpActivity=(eventId)=>{
                 headers: {
 
                     'Content-Type': 'application/json',
-
 
                 },
                 body: {
@@ -327,7 +324,7 @@ export let deleteActivity=(eventId)=>{
 }
 
 //退出群活动
-export let exitActivity=(eventId)=>{
+export let  exitActivity=(eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();

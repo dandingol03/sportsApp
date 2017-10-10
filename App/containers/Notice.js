@@ -73,14 +73,14 @@ class Notice extends Component{
             <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,borderBottomWidth:1,borderBottomColor:'#aaa'}}>
                 <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
 
-                    <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
+                    {/*<TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
                                       onPress={()=>{
                                           this.navigateNoticeDetail(rowData,'公开活动');
                                       }}>
                         <Text style={{marginRight:5,color:'#66CDAA'}}>详情</Text>
                         <Icon name={'angle-right'} size={25
                         } color="#66CDAA"/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
                 </View>
 
                 <View style={{flex:3,padding:10}}>
