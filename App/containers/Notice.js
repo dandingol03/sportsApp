@@ -63,7 +63,7 @@ class Notice extends Component{
                 component: NoticeDetail,
                 params: {
                     rowData:rowData,
-                }
+                } 
             })
         }
     }
