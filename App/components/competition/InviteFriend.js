@@ -310,21 +310,8 @@ class InviteFriend extends Component{
 
                             if(this.state.member!==null&&this.state.member!==undefined){
                                 var memberList = this.state.memberList;
-                                memberList.map((member, i) => {
-                                    if (this.state.member==member) {
-                                        Alert.alert('信息', '已经添加过改队员', [{
-                                            text: '确认', onPress: () => {
-
-                                            }
-                                        }]);
-                                    } else {
-                                        memberList.push(this.state.member);
-                                        this.setState({memberList:memberList});
-                                    }
-
-
-                                })
-
+                                memberList.push(this.state.member);
+                                this.setState({memberList:memberList});
                             }
                         }}
                     />
