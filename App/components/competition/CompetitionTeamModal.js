@@ -112,7 +112,11 @@ class CompetitionTeamModal extends Component{
 
                         <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
                     backgroundColor:'#66CDAA',borderRadius:6}}
-                                          onPress={()=>{this.setMemberList();}}>
+                                          onPress={()=>{
+
+
+
+                                              this.setMemberList();}}>
                             <Text style={{color:'#fff',padding:5}}>添加</Text>
                         </TouchableOpacity>
                     </View>

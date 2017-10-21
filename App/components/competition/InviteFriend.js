@@ -204,7 +204,7 @@ class InviteFriend extends Component{
                             borderRadius:10}}>
                             <TouchableOpacity style={{marginRight:15}}
                                               onPress={()=>{
-                                                  if(this.state.memberList.length<3)
+                                                  if(this.state.memberList.length<2)
                                                   {
                                                       this.setState({modalVisible:true});
                                                   }
@@ -307,10 +307,24 @@ class InviteFriend extends Component{
                         member={this.state.member}
                         accessToken={this.props.accessToken}
                         setMemberList={()=>{
+
                             if(this.state.member!==null&&this.state.member!==undefined){
                                 var memberList = this.state.memberList;
-                                memberList.push(this.state.member);
-                                this.setState({memberList:memberList});
+                                memberList.map((member, i) => {
+                                    if (this.state.member==member) {
+                                        Alert.alert('信息', '已经添加过改队员', [{
+                                            text: '确认', onPress: () => {
+
+                                            }
+                                        }]);
+                                    } else {
+                                        memberList.push(this.state.member);
+                                        this.setState({memberList:memberList});
+                                    }
+
+
+                                })
+
                             }
                         }}
                     />
