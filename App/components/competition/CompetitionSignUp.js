@@ -215,7 +215,8 @@ class CompetitionSignUp extends Component {
                             justifyContent: 'center',
                             alignItems: 'center'
                             ,
-                            borderRadius: 6
+                            borderRadius: 6,
+                            marginLeft:50
                         }}
 
 

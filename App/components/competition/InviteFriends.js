@@ -115,12 +115,20 @@ class InviteFriends extends Component{
                 <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
                 </View>
-                <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',margin:10,borderWidth:1,borderColor:'#FF4040',borderRadius:5}}
-                                  onPress={()=>{
-                                      this.removeMember(this.state.memberList,rowData);
-                                  }}>
-                    <Text style={{color:'#FF4040',fontSize:12,}}>删除</Text>
-                </TouchableOpacity>
+                {rowData==this.props.personInfo.perNum?
+                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',margin:10,borderWidth:1,borderColor:'#66CDAA',borderRadius:5}}
+                    onPress={()=>{
+                }}>
+                    <Text style={{color:'#66CDAA',fontSize:12,}}>队长</Text>
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',margin:10,borderWidth:1,borderColor:'#FF4040',borderRadius:5}}
+                                      onPress={()=>{
+                                          this.removeMember(this.state.memberList,rowData);
+                                      }}>
+                        <Text style={{color:'#FF4040',fontSize:12,}}>删除</Text>
+                    </TouchableOpacity>
+                }
             </View>
         );
         return row;
