@@ -291,7 +291,8 @@ class InviteFriends extends Component{
                         }}
                         member={this.state.member}
                         accessToken={this.props.accessToken}
-                        setMemberList={()=>{git
+                        setMemberList={()=>{
+
                             if(this.state.member!==null&&this.state.member!==undefined){
                                 var memberList = this.state.memberList;
                                 memberList.push(this.state.member.perNum);
