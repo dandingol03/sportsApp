@@ -295,8 +295,28 @@ class InviteFriends extends Component{
 
                             if(this.state.member!==null&&this.state.member!==undefined){
                                 var memberList = this.state.memberList;
-                                memberList.push(this.state.member.perNum);
-                                this.setState({memberList:memberList});
+                                var flag=0;
+                                memberList.map((member,i)=>{
+                                    if(flag==0){
+                                        if(this.state.member.perNum==member)
+                                        {
+                                            alert('已经加入了该成员',[{text:'是',onPress:()=>{
+
+                                            }},
+
+                                            ]);
+                                         flag=1;
+                                        }
+                                    }
+
+                                    }
+
+                                );
+                                if(flag==0) {
+                                    memberList.push(this.state.member.perNum);
+                                    this.setState({memberList: memberList});
+                                }
+
                             }
                         }}
                     />
