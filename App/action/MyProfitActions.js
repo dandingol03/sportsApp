@@ -85,7 +85,10 @@ export let fetchPayment=()=>{
                         }
                     })
                     money=money+'';
-                    money=money.substring(0,6);
+                    s1=money.indexOf(".");
+                    str1=money.substring(0,s1);
+                    str2=money.substring(s1,s1+3);
+                    money=str1+''+str2;
                     dispatch(setPayment(payments,money,qunhuodong,huaxiao,money1,money2,tel1,tel2,wx1,wx2));
                 }
                 resolve({re:1,data:payments})

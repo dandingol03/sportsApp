@@ -107,7 +107,7 @@ class MyCompetitionList extends Component {
     }
 
 
-    
+
 
     renderRow(rowData,sectionId,rowId){
 

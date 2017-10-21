@@ -61,7 +61,7 @@ class CreateGroup extends Component{
             }
         });
         if(index!==-1){
-            memberList.splice(index, 1);
+            memberList.splice(index,1);
             this.setState({memberList:memberList});
         }
     }
@@ -88,7 +88,7 @@ class CreateGroup extends Component{
         var row=(
             <View style={{flex:1,flexDirection:'row',backgroundColor:'#fff',marginBottom:5,padding:5,borderBottomWidth:1,
             borderColor:'#eee',borderRadius:8}}>
-                <View style={{flex:1,}}>
+                <View style={{flex:1}}>
                     <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={rowData.portrait}/>
                 </View>
                 <View style={{flex:3,marginLeft:5}}>
@@ -164,7 +164,7 @@ class CreateGroup extends Component{
 
                 <View style={{flex:5,backgroundColor:'#fff'}}>
 
-                    {/*群名*/}1
+                    {/*群名*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff'
                     ,margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>

@@ -48,7 +48,7 @@ export let releaseActivity=(event)=>{
                 isNeedCoach:parseInt(event.hasCoach),
                 isNeedSparring:parseInt(event.hasSparring),
                 feeDes:event.feeDes,
-                eventNowMemNum:1,
+                eventNowMemNum:0,
                 status:0
 
             }
@@ -324,7 +324,7 @@ export let deleteActivity=(eventId)=>{
 }
 
 //退出群活动
-export let  exitActivity=(eventId)=>{
+export let exitActivity=(eventId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
