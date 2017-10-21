@@ -48,7 +48,7 @@ export let releaseActivity=(event)=>{
                 isNeedCoach:parseInt(event.hasCoach),
                 isNeedSparring:parseInt(event.hasSparring),
                 feeDes:event.feeDes,
-                eventNowMemNum:1,
+                eventNowMemNum:0,
                 status:0
 
             }
