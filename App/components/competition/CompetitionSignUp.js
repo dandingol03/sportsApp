@@ -99,7 +99,7 @@ class CompetitionSignUp extends Component {
                         this.props.dispatch(getAccessToken(false));
                     }
                     else{
-                        alert("取消报名失败！");
+                        alert("报名失败！");
                     }
 
                 }
@@ -147,9 +147,6 @@ class CompetitionSignUp extends Component {
                             {'项目名称：'+rowData.projectName}；
                         </Text>
                     </View>
-
-
-
 
                     {rowData.maxTeamNum!==undefined&&rowData.maxTeamNum!==null?
                         <View style={{flexDirection:'row',marginBottom:3}}>
@@ -200,10 +197,16 @@ class CompetitionSignUp extends Component {
                 </View>
 
                 <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
-                    {/*<View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                        <Text style={{color:'#aaa',fontSize:13}}>已报名:{rowData.eventNowMemNum}</Text>
-                    </View>*/}
-                    {rowData.joinMark == 1 && rowData.projectType == 6 ?
+
+                    {rowData.joinMark == 1 && rowData.projectType ==6?
+
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>已报名</Text>
+                        :
+                        null
+                    }
+
+
+                    {rowData.joinMark == 1 && rowData.projectType == 6&&rowData.isTeamCreateor==1?
                         <TouchableOpacity style={{
                             flex: 2,
                             borderWidth: 1,
@@ -222,82 +225,337 @@ class CompetitionSignUp extends Component {
                                           }>
                             <Text style={{color: '#66CDAA', fontSize: 12}}>编辑队伍</Text>
                         </TouchableOpacity>:
-                        <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
-                            <Text style={{color:'#aaa',fontSize:13}}></Text>
-                        </View>
+                        null
                     }
+
+                    {rowData.joinMark == 1 && rowData.projectType ==1?
+
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>已报名</Text>
+                        :
+                        null
+                    }
+
+                    {rowData.joinMark == 1 && rowData.projectType ==2?
+
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>已报名</Text>
+                        :
+                        null
+                    }
+
+                    {rowData.joinMark == 1 && rowData.projectType ==3?
+
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>已报名</Text>
+                        :
+                        null
+                    }
+
+                    {rowData.joinMark == 1 && rowData.projectType ==4?
+
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>已报名</Text>
+                        :
+                        null
+                    }
+
+                    {rowData.joinMark == 1 && rowData.projectType ==5?
+
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>已报名</Text>
+                        :
+                        null
+                    }
+
+
                     {<View style={{flex:3,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>}
-                    {rowData.joinMark ==0 ?
+
+
+
+
+
+                       {rowData.joinMark == 1&&rowData.projectType == 6 && rowData.isTeamCreateor == 1 ?//团体且是队长
+
+                            <TouchableOpacity style={{
+                                flex: 2,
+                                borderWidth: 1,
+                                borderColor: '#66CDAA',
+                                padding: 5,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 6
+                            }}
+                                              onPress={() => {
+                                                  this.props.dispatch(cancelCompetition(rowData)).then((json) => {
+                                                      if (json.re == 1) {
+                                                          Alert.alert('信息', '取消报名成功', [{
+                                                              text: '确认', onPress: () => {
+                                                                  this.props.dispatch(enableCompetitionItemOnFresh());
+                                                              }
+                                                          }]);
+
+                                                      } else {
+                                                          if (json.re == -100) {
+                                                              this.props.dispatch(getAccessToken(false));
+                                                          }
+                                                          else {
+                                                              alert("取消报名失败")
+                                                          }
+                                                      }
+                                                  });
+                                              }}>
+                                <Text style={{color: '#66CDAA', fontSize: 12}}>取消报名</Text>
+                            </TouchableOpacity>:null
+                       }
+
+                    {rowData.joinMark==1&&rowData.projectType==2&&rowData.isTeamCreateor==1?
+
                         <TouchableOpacity style={{
                             flex: 2,
                             borderWidth: 1,
                             borderColor: '#66CDAA',
                             padding: 5,
                             justifyContent: 'center',
-                            alignItems: 'center'
-                            ,
+                            alignItems: 'center',
                             borderRadius: 6
                         }}
-
-
                                           onPress={() => {
-                                             if(rowData.projectType==1||rowData.projectType==2)
-                                              {
-                                                  this.signUpCompetition1(rowData)
-                                              }
-                                              else if(rowData.projectType==6){
-                                                 this.setState({rowData:rowData});
-                                                  this.showScaleAnimationDialog();
-                                              }
-                                              else {
-                                                   this.navigate2InviteFriend(rowData);
-                                             }
+                                              this.props.dispatch(cancelCompetition(rowData)).then((json) => {
+                                                  if (json.re == 1) {
+                                                      Alert.alert('信息', '取消报名成功', [{
+                                                          text: '确认', onPress: () => {
+                                                              this.props.dispatch(enableCompetitionItemOnFresh());
+                                                          }
+                                                      }]);
 
-
-                                          }
-
-                                          }>
-                            <Text style={{color: '#66CDAA', fontSize: 12}}>我要报名</Text>
-                        </TouchableOpacity>:
-
-                        <TouchableOpacity style={{
-                            flex: 2,
-                            borderWidth: 1,
-                            borderColor: '#66CDAA',
-                            padding: 5,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                            ,
-                            borderRadius: 6
-                        }}
-
-
-                                          onPress={() => {
-                                              this.props.dispatch(cancelCompetition(rowData)).then((json)=>{
-                                                  if(json.re==1){
-                                                      Alert.alert('信息','取消报名成功',[{text:'确认',onPress:()=>{
-                                                          this.props.dispatch(enableCompetitionItemOnFresh());
-                                                      }}]);
-
-                                                  }else{
-                                                      if(json.re==-100){
+                                                  } else {
+                                                      if (json.re == -100) {
                                                           this.props.dispatch(getAccessToken(false));
                                                       }
-                                                      else{
+                                                      else {
                                                           alert("取消报名失败")
                                                       }
                                                   }
                                               });
                                           }}>
                             <Text style={{color: '#66CDAA', fontSize: 12}}>取消报名</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity>:null
                     }
 
+                       {rowData.joinMark==1&&rowData.projectType==3&&rowData.isTeamCreateor==1?
+
+                           <TouchableOpacity style={{
+                           flex: 2,
+                           borderWidth: 1,
+                           borderColor: '#66CDAA',
+                           padding: 5,
+                           justifyContent: 'center',
+                           alignItems: 'center',
+                           borderRadius: 6
+                       }}
+                           onPress={() => {
+                           this.props.dispatch(cancelCompetition(rowData)).then((json) => {
+                               if (json.re == 1) {
+                                   Alert.alert('信息', '取消报名成功', [{
+                                       text: '确认', onPress: () => {
+                                           this.props.dispatch(enableCompetitionItemOnFresh());
+                                       }
+                                   }]);
+
+                               } else {
+                                   if (json.re == -100) {
+                                       this.props.dispatch(getAccessToken(false));
+                                   }
+                                   else {
+                                       alert("取消报名失败")
+                                   }
+                               }
+                           });
+                       }}>
+                           <Text style={{color: '#66CDAA', fontSize: 12}}>取消报名</Text>
+                           </TouchableOpacity>:null
+                       }
+
+                       {rowData.joinMark==1&&rowData.projectType==4&&rowData.isTeamCreateor==1?
+
+                           <TouchableOpacity style={{
+                           flex: 2,
+                           borderWidth: 1,
+                           borderColor: '#66CDAA',
+                           padding: 5,
+                           justifyContent: 'center',
+                           alignItems: 'center',
+                           borderRadius: 6
+                       }}
+                           onPress={() => {
+                           this.props.dispatch(cancelCompetition(rowData)).then((json) => {
+                               if (json.re == 1) {
+                                   Alert.alert('信息', '取消报名成功', [{
+                                       text: '确认', onPress: () => {
+                                           this.props.dispatch(enableCompetitionItemOnFresh());
+                                       }
+                                   }]);
+
+                               } else {
+                                   if (json.re == -100) {
+                                       this.props.dispatch(getAccessToken(false));
+                                   }
+                                   else {
+                                       alert("取消报名失败")
+                                   }
+                               }
+                           });
+                       }}>
+                           <Text style={{color: '#66CDAA', fontSize: 12}}>取消报名</Text>
+                           </TouchableOpacity>:null
+                       }
+
+                       {rowData.joinMark==1&&rowData.projectType==5&&rowData.isTeamCreateor==1?
+
+                           <TouchableOpacity style={{
+                           flex: 2,
+                           borderWidth: 1,
+                           borderColor: '#66CDAA',
+                           padding: 5,
+                           justifyContent: 'center',
+                           alignItems: 'center',
+                           borderRadius: 6
+                       }}
+                           onPress={() => {
+                           this.props.dispatch(cancelCompetition(rowData)).then((json) => {
+                               if (json.re == 1) {
+                                   Alert.alert('信息', '取消报名成功', [{
+                                       text: '确认', onPress: () => {
+                                           this.props.dispatch(enableCompetitionItemOnFresh());
+                                       }
+                                   }]);
+
+                               } else {
+                                   if (json.re == -100) {
+                                       this.props.dispatch(getAccessToken(false));
+                                   }
+                                   else {
+                                       alert("取消报名失败")
+                                   }
+                               }
+                           });
+                       }}>
+                           <Text style={{color: '#66CDAA', fontSize: 12}}>取消报名</Text>
+                           </TouchableOpacity>:null
+                       }
+
+                       {rowData.joinMark==1&&rowData.projectType==1?
+
+                           <TouchableOpacity style={{
+                           flex: 2,
+                           borderWidth: 1,
+                           borderColor: '#66CDAA',
+                           padding: 5,
+                           justifyContent: 'center',
+                           alignItems: 'center',
+                           borderRadius: 6
+                       }}
+                           onPress={() => {
+                           this.props.dispatch(cancelCompetition(rowData)).then((json) => {
+                               if (json.re == 1) {
+                                   Alert.alert('信息', '取消报名成功', [{
+                                       text: '确认', onPress: () => {
+                                           this.props.dispatch(enableCompetitionItemOnFresh());
+                                       }
+                                   }]);
+
+                               } else {
+                                   if (json.re == -100) {
+                                       this.props.dispatch(getAccessToken(false));
+                                   }
+                                   else {
+                                       alert("取消报名失败")
+                                   }
+                               }
+                           });
+                       }}>
+                           <Text style={{color: '#66CDAA', fontSize: 12}}>取消报名</Text>
+                           </TouchableOpacity>:null
+                       }
+
+                       {rowData.joinMark==1&&rowData.projectType==2?
+
+                           <TouchableOpacity style={{
+                           flex: 2,
+                           borderWidth: 1,
+                           borderColor: '#66CDAA',
+                           padding: 5,
+                           justifyContent: 'center',
+                           alignItems: 'center',
+                           borderRadius: 6
+                       }}
+                           onPress={() => {
+                           this.props.dispatch(cancelCompetition(rowData)).then((json) => {
+                               if (json.re == 1) {
+                                   Alert.alert('信息', '取消报名成功', [{
+                                       text: '确认', onPress: () => {
+                                           this.props.dispatch(enableCompetitionItemOnFresh());
+                                       }
+                                   }]);
+
+                               } else {
+                                   if (json.re == -100) {
+                                       this.props.dispatch(getAccessToken(false));
+                                   }
+                                   else {
+                                       alert("取消报名失败")
+                                   }
+                               }
+                           });
+                       }}>
+                           <Text style={{color: '#66CDAA', fontSize: 12}}>取消报名</Text>
+                           </TouchableOpacity>:null
+                       }
+
+
+                       {rowData.joinMark==0?
+                           <TouchableOpacity style={{
+                           flex: 2,
+                           borderWidth: 1,
+                           borderColor: '#66CDAA',
+                           padding: 5,
+                           justifyContent: 'center',
+                           alignItems: 'center',
+                           borderRadius: 6
+                       }}
+
+
+                           onPress={() => {
+                           if (rowData.projectType == 1 || rowData.projectType == 2) {
+                               this.signUpCompetition1(rowData)
+                           }
+                           else if (rowData.projectType == 6) {
+                               this.setState({rowData: rowData});
+                               this.showScaleAnimationDialog();
+                           }
+                           else {
+                               if (rowData.maxTeamNum == rowData.nowTeamNum) {
+                                   Alert.alert('信息', '队伍人数已满，不能报名！', [{
+                                       text: '确认', onPress: () => {
+
+                                       }
+                                   }]);
+                               }
+                               else {
+                                   this.navigate2InviteFriend(rowData);
+                               }
+
+                           }
+                       }
+
+                       }>
+                           <Text style={{color: '#66CDAA', fontSize: 12}}>我要报名</Text>
+                           </TouchableOpacity>:null
+
+                       }
+
+
+
+
                 </View>
-
-
 
             </View>
         );
@@ -444,8 +702,9 @@ class CompetitionSignUp extends Component {
                                             {
                                                 alert('报名成功',[{text:'确认',onPress:()=>{
 
-                                                    this.props.dispatch(enableCompetitionItemOnFresh());
                                                     this.scaleAnimationDialog.dismiss();
+                                                    this.props.dispatch(enableCompetitionItemOnFresh());
+
                                                 }},
                                                 ]);
 

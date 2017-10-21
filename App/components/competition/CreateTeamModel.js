@@ -160,6 +160,7 @@ class CreateTeamModel extends Component{
                                                       this.props.onConfirm(this.state.team);
 
                                               }
+                                              this.close();
                                               this.props.dispatch(enableCompetitionItemOnFresh());
                                           }}
                         >

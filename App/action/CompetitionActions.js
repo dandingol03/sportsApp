@@ -68,13 +68,13 @@ export let signUpCompetition=(competitionItem,personIdA,personIdB,teamName,remar
                 }
             }).then((json)=>{
                 if(json.re==1){
-                    resolve({re:1})
+                    resolve({re:1});
                 }
                 else if(json.re==-1){
-                    resolve({re:-1})
+                    resolve({re:1})
                 }
                 else{
-                    resolve({re:3})
+                    resolve({re:1})
                 }
 
 

@@ -57,12 +57,17 @@ class InviteFriends extends Component{
 
     removeMember(memberList,rowData) {
         var index=null;
+        var flag=0;
         memberList.map((member, i) => {
-            if(member.mobilePhone==rowData.mobilePhone){
-                index = i;
-            }else{
-                index=-1;
+            if(flag==0){
+                if(member==rowData){
+                    index = i;
+                    flag=1;
+                }else{
+                    index=-1;
+                }
             }
+
         });
         if(index!==-1){
             memberList.splice(index, 1);
@@ -172,7 +177,11 @@ class InviteFriends extends Component{
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
                     backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
                     <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
-                                      onPress={()=>{this.goBack();}}>
+                                      onPress={()=>{
+                                          this.props.dispatch(enableCompetitionItemOnFresh());
+                                          this.goBack();
+
+                                      }}>
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
@@ -222,9 +231,7 @@ class InviteFriends extends Component{
 
                 <TouchableOpacity style={{height:35,backgroundColor:'#66CDAA',margin:20,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                   onPress={()=>{
-                                      //var info ={group:this.state.group,memberList:this.state.memberList};
-                                      //this.createGroup(info);
-                                      //var rowData=this.props.rowData;
+
                                       var memberList=this.state.memberList
                                       var personNameStr='';
                                       memberList.map((member,i)=>{
@@ -285,10 +292,31 @@ class InviteFriends extends Component{
                         member={this.state.member}
                         accessToken={this.props.accessToken}
                         setMemberList={()=>{
+
                             if(this.state.member!==null&&this.state.member!==undefined){
                                 var memberList = this.state.memberList;
-                                memberList.push(this.state.member.perNum);
-                                this.setState({memberList:memberList});
+                                var flag=0;
+                                memberList.map((member,i)=>{
+                                    if(flag==0){
+                                        if(this.state.member.perNum==member)
+                                        {
+                                            alert('已经加入了该成员',[{text:'是',onPress:()=>{
+
+                                            }},
+
+                                            ]);
+                                         flag=1;
+                                        }
+                                    }
+
+                                    }
+
+                                );
+                                if(flag==0) {
+                                    memberList.push(this.state.member.perNum);
+                                    this.setState({memberList: memberList});
+                                }
+
                             }
                         }}
                     />
