@@ -272,8 +272,18 @@ class InviteFriend extends Component{
                                                   }
                                               }]);
                                           }
+                                          else if(json.re==-1)
+                                          {
+                                              Alert.alert('信息', '您邀请的队员已经被邀请！', [{
+                                              text: '确认', onPress: () => {
+                                                  this.props.dispatch(enableCompetitionItemOnFresh());
+                                                  this.goBack()
+                                              }
+                                          }]);
+
+                                          }
                                           else {
-                                              Alert.alert('信息', json.data, [{
+                                              Alert.alert('信息', '邀请队员失败！', [{
                                                   text: '确认', onPress: () => {
                                                       this.props.dispatch(enableCompetitionItemOnFresh());
                                                       this.goBack()
