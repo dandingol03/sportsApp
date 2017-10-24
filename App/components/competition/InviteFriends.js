@@ -212,7 +212,21 @@ class InviteFriends extends Component{
                             borderRadius:10}}>
                             <TouchableOpacity style={{marginRight:15}}
                                               onPress={()=>{
-                                                  this.setState({modalVisible:true});
+                                                  var rowData=this.props.rowData;
+                                                  var memberList=this.state.memberList;
+                                                  var length=memberList.length;
+                                                  if(rowData.maxMemberNum==length)
+                                                  {
+                                                      alert('队伍最大为：'+maxMemberNum,[{text:'是',onPress:()=>{
+                                                      }},
+
+                                                      ]);
+
+                                                  }
+                                                  else{
+                                                      this.setState({modalVisible:true});
+                                                  }
+
                                               }}>
                                 <Ionicons name='md-add-circle'  size={26} color="#66CDAA"/>
                             </TouchableOpacity>
