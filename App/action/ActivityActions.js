@@ -31,6 +31,7 @@ export let releaseActivity=(event)=>{
                 eventType:event.eventType=='组内'?'1':'0',
                 eventBrief:event.eventBrief,
                 eventPlaceId:event.unitId,
+                placeYardStr:event.field,
                 eventMaxMemNum:event.eventType=='公开'?parseInt(event.eventMaxMemNum):100,
                 coachId:parseInt(event.coachId),
                 sparringId:parseInt(event.sparringId),
@@ -62,7 +63,7 @@ export let releaseActivity=(event)=>{
             }).then((json)=>{
                 resolve(json)
             }).catch((e)=>{
-                alert(e);
+                alert("群活动填写不完整！");
                 reject(e);
             })
 
