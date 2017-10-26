@@ -272,8 +272,18 @@ class InviteFriend extends Component{
                                                   }
                                               }]);
                                           }
+                                          else if(json.re==-1)
+                                          {
+                                              Alert.alert('信息', '您邀请的队员已经被邀请！', [{
+                                              text: '确认', onPress: () => {
+                                                  this.props.dispatch(enableCompetitionItemOnFresh());
+                                                  this.goBack()
+                                              }
+                                          }]);
+
+                                          }
                                           else {
-                                              Alert.alert('信息', json.data, [{
+                                              Alert.alert('信息', '邀请队员失败！', [{
                                                   text: '确认', onPress: () => {
                                                       this.props.dispatch(enableCompetitionItemOnFresh());
                                                       this.goBack()
@@ -310,21 +320,8 @@ class InviteFriend extends Component{
 
                             if(this.state.member!==null&&this.state.member!==undefined){
                                 var memberList = this.state.memberList;
-                                memberList.map((member, i) => {
-                                    if (this.state.member==member) {
-                                        Alert.alert('信息', '已经添加过改队员', [{
-                                            text: '确认', onPress: () => {
-
-                                            }
-                                        }]);
-                                    } else {
-                                        memberList.push(this.state.member);
-                                        this.setState({memberList:memberList});
-                                    }
-
-
-                                })
-
+                                memberList.push(this.state.member);
+                                this.setState({memberList:memberList});
                             }
                         }}
                     />

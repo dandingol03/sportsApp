@@ -215,7 +215,8 @@ class CompetitionSignUp extends Component {
                             justifyContent: 'center',
                             alignItems: 'center'
                             ,
-                            borderRadius: 6
+                            borderRadius: 6,
+                            marginLeft:30
                         }}
 
 
@@ -525,15 +526,33 @@ class CompetitionSignUp extends Component {
 
                            onPress={() => {
                            if (rowData.projectType == 1 || rowData.projectType == 2) {
-                               this.signUpCompetition1(rowData)
+                               if (rowData.maxTeamNum == rowData.nowTeamNum) {
+                                   Alert.alert('信息', '报名队伍已满，不能报名！', [{
+                                       text: '确认', onPress: () => {
+
+                                       }
+                                   }]);
+                               }else{
+                                   this.signUpCompetition1(rowData)
+                               }
+
                            }
                            else if (rowData.projectType == 6) {
-                               this.setState({rowData: rowData});
-                               this.showScaleAnimationDialog();
+                               if (rowData.maxTeamNum == rowData.nowTeamNum) {
+                                   Alert.alert('信息', '报名队伍已满，不能报名！', [{
+                                       text: '确认', onPress: () => {
+
+                                       }
+                                   }]);
+                               }else{
+                                   this.setState({rowData: rowData});
+                                   this.showScaleAnimationDialog();
+                               }
+
                            }
                            else {
                                if (rowData.maxTeamNum == rowData.nowTeamNum) {
-                                   Alert.alert('信息', '队伍人数已满，不能报名！', [{
+                                   Alert.alert('信息', '报名队伍已满，不能报名！', [{
                                        text: '确认', onPress: () => {
 
                                        }
