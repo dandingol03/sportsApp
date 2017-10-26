@@ -94,6 +94,8 @@ export let fetchMaintainedVenue=()=>{
 
                 }
             }).then((json)=>{
+                if(json.re==1){}
+
                 resolve(json)
 
             }).catch((e)=>{

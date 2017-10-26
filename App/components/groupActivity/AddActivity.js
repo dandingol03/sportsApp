@@ -26,6 +26,7 @@ import ActionSheet from 'react-native-actionsheet';
 import DatePicker from 'react-native-datepicker';
 import DateFilter from '../../utils/DateFilter';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
+import AddYard from './AddYard';
 import {
     releaseActivity
 } from '../../action/ActivityActions';
@@ -34,6 +35,8 @@ import VenueInspect from '../../components/venue/VenueInspect';
 import CreateGroup from './CreateGroup';
 import Coach from '../../components/Coach';
 import SelectTime from './SelectTime';
+import AddField from './AddField';
+import SexModal from './SexModal';
 
 import {
     fetchMyGroupList,disableMyGroupOnFresh,enableActivityOnFresh
@@ -63,7 +66,7 @@ class AddActivity extends Component{
 
     setEventPlace(eventPlace)
     {
-        this.setState({event:Object.assign(this.state.event,{eventPlace:eventPlace.name,unitId:eventPlace.unitId,feeDes:eventPlace.feeDes})});
+        this.setState({event:Object.assign(this.state.event,{eventPlace:eventPlace.name,unitId:eventPlace.unitId,feeDes:eventPlace.feeDes,yardTotal:eventPlace.yardTotal})});
         this.setState({feeDes:eventPlace.feeDes});
 
     }
@@ -74,6 +77,41 @@ class AddActivity extends Component{
             this.setState({event:Object.assign(this.state.event,{coachId:coach.trainerId,coachName:coach.perName})});
         }else{
             this.setState({event:Object.assign(this.state.event,{sparringId:coach.trainerId,sparringName:coach.perName})});
+        }
+    }
+    setField(field){
+        var event = this.state.event;
+        event.field= field;
+        this.setState({event:event});
+
+    }
+
+    navigate2AddField()
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'AddField',
+                component:AddField,
+                params: {
+                        yardTotal:this.state.event.yardTotal,
+                        setField:this.setField.bind(this)
+                }
+            })
+        }
+    }
+
+    navigate2SexModal()
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'AddField',
+                component:SexModal,
+                params: {
+                    //setPlace:this.setEventPlace.bind(this)
+                }
+            })
         }
     }
 
@@ -259,9 +297,9 @@ class AddActivity extends Component{
             doingFetch: false,
             selectTime:false,
             eventTime:null,
-            event:{eventName:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,eventMaxMemNum:null,
+            event:{eventName:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,yardTotal:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
-                   groupName:null,groupId:null,cost:null,costType:null,filedNum:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
+                   groupName:null,groupId:null,cost:null,costType:null,field:null,filedNum:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
 
             memberLevelButtons:['取消','业余小白','初级爱好者','业余高手','专业运动员'],
             eventTypeButtons:['取消','公开','组内'],
@@ -433,36 +471,70 @@ class AddActivity extends Component{
                         </View>
 
 
-                        {/*场地需求*/}
+                        {/*/!*场地需求*!/*/}
 
+                        {/*{*/}
+                            {/*(this.state.event.time.isSchedule==0)?*/}
+                                {/*<View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>*/}
+                                    {/*<View style={{flex:1}}>*/}
+                                        {/*<Text>场地数目：</Text>*/}
+                                    {/*</View>*/}
+                                    {/*<View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
+                            {/*borderRadius:10}}>*/}
+                                        {/*<TextInputWrapper*/}
+                                            {/*placeholderTextColor='#888'*/}
+                                            {/*textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}*/}
+                                            {/*placeholder="请输入需要的场地数目:"*/}
+                                            {/*val={this.state.event.eventMaxMemNum}*/}
+                                            {/*onChangeText={*/}
+                                    {/*(value)=>{*/}
+                                        {/*this.setState({event:Object.assign(this.state.event,{filedNum:value})})*/}
+                                    {/*}}*/}
+                                            {/*onCancel={*/}
+                                    {/*()=>{this.setState({event:Object.assign(this.state.event,{filedNum:null})});}*/}
+                                {/*}*/}
+                                        {/*/>*/}
+                                    {/*</View>*/}
+                                {/*</View>:null*/}
+                        {/*}*/}
+
+                        {/*活动场地*/}
                         {
-                            (this.state.event.time.isSchedule==0)?
-                                <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>
-                                    <View style={{flex:1}}>
-                                        <Text>场地数目：</Text>
+                            this.state.event.eventPlace!=null?
+                            <View
+                                style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                                <View style={{flex:1}}>
+                                    <Text>活动场地：</Text>
+                                </View>
+                                <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                                  onPress={()=>{this.navigate2AddField()}}>
+
+                                    {
+                                        this.state.event.field == null ?
+                                            <View
+                                                style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                <Text style={{color:'#888',fontSize:13}}>请选择场地：</Text>
+                                                {/*<AddYard/>*/}
+                                            </View> :
+                                            <View
+                                                style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                <Text
+                                                    style={{color:'#444',fontSize:13}}>{this.state.event.field}</Text>
+                                            </View>
+                                    }
+                                    <View
+                                        style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                        <Icon name={'angle-right'} size={30} color="#fff"/>
                                     </View>
-                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}>
-                                        <TextInputWrapper
-                                            placeholderTextColor='#888'
-                                            textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                            placeholder="请输入需要的场地数目:"
-                                            val={this.state.event.eventMaxMemNum}
-                                            onChangeText={
-                                    (value)=>{
-                                        this.setState({event:Object.assign(this.state.event,{filedNum:value})})
-                                    }}
-                                            onCancel={
-                                    ()=>{this.setState({event:Object.assign(this.state.event,{filedNum:null})});}
-                                }
-                                        />
-                                    </View>
-                                </View>:null
+                                </TouchableOpacity>
+                            </View>:null
                         }
 
                         {/*邀请群组*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
+
                                 <Text>邀请群组：</Text>
                             </View>
                             <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',

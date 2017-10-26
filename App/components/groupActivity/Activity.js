@@ -327,6 +327,7 @@ class Activity extends Component {
                             </Text>
                         </View>
                     }
+
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>
@@ -335,6 +336,8 @@ class Activity extends Component {
                             {'场地数目：'+rowData.yardNum}
                         </Text>
                     </View>
+
+
                 </View>
                 <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
