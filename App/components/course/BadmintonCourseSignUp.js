@@ -134,7 +134,7 @@ class BadmintonCourseSignUp extends Component {
                             {
                                 person.checked==true?
                                     <Icon name={'check-square-o'} size={20} color="#666"/>:
-                                    <Icon name={'square-o'} size={20} color="#666"/>
+                                    <Icon name={'square-o'} size={20} cogit lor="#666"/>
                             }
                         </View>
                     </TouchableOpacity>
@@ -292,7 +292,7 @@ class BadmintonCourseSignUp extends Component {
                                }
 
                                //TODO:加入校验
-                               if(classInfo.signNumber+persons.length>=classInfo.maxNumber){
+                               if(classInfo.signNumber+persons.length==classInfo.maxNumber){
 
                                   Alert.alert('信息','人数已满，请选择其他课程',[{text:'确认',onPress:()=>{
                                                  console.log();
