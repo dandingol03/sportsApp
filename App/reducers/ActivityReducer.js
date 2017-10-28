@@ -13,6 +13,7 @@ import {
     SET_VISIBLE_EVENTS,
     ENABLE_ACTIVITY_ONFRESH,
     DISABLE_ACTIVITY_ONFRESH,
+    SET_FIELD_TIME
 } from '../constants/ActivityConstants';
 
 const initialState = {
@@ -25,6 +26,7 @@ const initialState = {
     myEvents:null,
     myTakenEvents:null,
     visibleEvents:null,
+    fieldTime:null
 };
 
 let activity = (state = initialState, action) => {
@@ -79,6 +81,10 @@ let activity = (state = initialState, action) => {
         case DISABLE_ACTIVITY_ONFRESH:
             return Object.assign({}, state, {
                 activityOnFresh:false
+            })
+        case SET_FIELD_TIME:
+            return Object.assign({}, state, {
+                fieldtime:action.fieldtime
             })
 
         default:

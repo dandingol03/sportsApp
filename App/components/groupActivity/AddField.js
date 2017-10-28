@@ -101,9 +101,9 @@ class AddField extends Component{
 
         super(props);
         this.dataSource=new ListView.DataSource({rowHasChanged:(r1,r2)=>r1!==r2})
-        var _data=[{"fieldno":"场地1","check":false,"_id":0}];
+        var _data=[{"fieldno":1,"check":false,"_id":0}];
         for(i=0;i<parseInt(this.props.yardTotal)-1;i++){
-            _data.push({"fieldno":"场地"+(i+2),"check":false,"_id":i+1});
+            _data.push({"fieldno":(i+2),"check":false,"_id":i+1});
         }
         this.state={
             val:props.val,

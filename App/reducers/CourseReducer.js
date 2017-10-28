@@ -1,6 +1,7 @@
 
 import {
     ON_COURSES_UPDATE,
+    ON_COURSES_OF_COACH_UPDATE,
     ON_CUSTOM_COURSE_UPDATE,
 
     DISABLE_MY_COURSES_ONFRESH,
@@ -28,6 +29,11 @@ let course = (state = initialState, action) => {
             var {courses}=action.payload
             return Object.assign({}, state, {
                 courses:courses
+            })
+        case  ON_COURSES_OF_COACH_UPDATE:
+            var {coursesOfCoach}=action.payload
+            return Object.assign({}, state, {
+                coursesOfCoach:coursesOfCoach
             })
         case DISABLE_MY_COURSES_ONFRESH:
             return Object.assign({},state,{

@@ -24,8 +24,9 @@ import AddActivity from './AddActivity';
 import MyActivity from './MyActivity';
 import ActivityDetail from './ActivityDetail';
 import ActivityPay from './ActivityPay';
+import ChooseField from './ChooseField';
 import {
-    fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity,fetchEventMemberList,exitActivity
+    fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity,fetchEventMemberList,exitActivity,exitFieldTimeActivity
 } from '../../action/ActivityActions';
 
 import {getAccessToken,} from '../../action/UserActions';
@@ -137,6 +138,20 @@ class Activity extends Component {
         }
     }
 
+
+    navigate2ActivityChooseField(event){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'ChooseField',
+                component:ChooseField,
+                params: {
+                    activity:event
+                }
+            })
+        }
+
+    }
     signUpActivity(event,eventNowMemNum)
     {
         if(event.eventMaxMemNum<=eventNowMemNum){
@@ -181,6 +196,29 @@ class Activity extends Component {
                     }
                 }
             })
+
+    }
+
+    exitFieldTimeActivity(event)
+    {
+
+        this.props.dispatch(exitActivity(event.eventId)).then((json)=>{
+            if(json.re==1){
+                this.props.dispatch(exitFieldTimeActivity(event.eventId)).then((json)=>{
+                    Alert.alert('信息','退出报名成功',[{text:'确认',onPress:()=>{
+                        // this.setMyActivityList();
+                        //this.goBack();
+                        this.setMyActivityList();
+                    }},
+                    ]);
+                })
+
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
+            }
+        })
 
     }
     isActivityPay(event){
@@ -359,25 +397,41 @@ class Activity extends Component {
 
                     {
                         rowData.isSignUp==0 ?
-                            <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                            <View>
+                            {
+                                rowData.isChooseYardTime==1?
+                                <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
                     ,borderRadius:6}}
-                                              onPress={()=>{this.signUpActivity(rowData,eventNowMemNum)}}>
-                                <Text style={{color:'#66CDAA',fontSize:12}}>我要报名</Text>
-                            </TouchableOpacity>:
+                                                  onPress={()=>{this.navigate2ActivityChooseField(rowData)}}>
+                                    <Text style={{color:'#f00',fontSize:12}}>我要报名</Text>
+                                </TouchableOpacity>:
+                                    <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}
+                                                      onPress={()=>{this.signUpActivity(rowData,eventNowMemNum)}}>
+                                        <Text style={{color:'#f00',fontSize:12}}>我要报名</Text>
+                                    </TouchableOpacity>
+                    }
+
+                            </View>:
 
                             <View>
                                 {
                                     rowData.money==0||rowData.money==null?
-                                        <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                                        <View>
+                                                    <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
                     ,borderRadius:6}}
-                                                          onPress={()=>{this.exitActivity(rowData)}}>
-                                            <Text style={{color:'#f00',fontSize:12}}>取消报名</Text>
-                                        </TouchableOpacity>:
+                                                                      onPress={()=>{this.exitActivity(rowData)}}>
+                                                        <Text style={{color:'#f00',fontSize:12}}>取消报名</Text>
+                                                    </TouchableOpacity>
+                                        </View>:
+                                        <View>
                                         <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
                     ,borderRadius:6}}
                                         >
                                             <Text style={{color:'#f00',fontSize:12}}>报名成功</Text>
                                         </TouchableOpacity>
+                                        </View>
+
                                 }
 
                             </View>

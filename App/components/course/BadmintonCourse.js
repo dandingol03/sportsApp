@@ -38,6 +38,7 @@ import{
 import {getAccessToken,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
+import BadmintonCourseOfCoach from './BadmintonCourseOfCoach';
 
 class BadmintonCourse extends Component {
 
@@ -97,6 +98,21 @@ class BadmintonCourse extends Component {
             })
         }
     }
+
+    navigate2BadmintonCourseOfCoach(rowData)
+    {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'BadmintonCourseOfCoach',
+                component: BadmintonCourseOfCoach,
+                params: {
+                 creatorId:rowData.creatorId
+                }
+            })
+        }
+    }
+
 
     goBack() {
         const { navigator } = this.props;
@@ -296,6 +312,7 @@ class BadmintonCourse extends Component {
             actions.push({value:'创建课程',show:OPTION_NEVER});
             actions.push({value:'课程定制',show:OPTION_NEVER});//教练作为用户
             actions.push({value:'查看定制列表',show:OPTION_NEVER});
+            actions.push({value:'课程记录',show:OPTION_NEVER});
         }
 
         return (
@@ -306,7 +323,7 @@ class BadmintonCourse extends Component {
                          actions={actions}
                          onPress={(i)=>{
                              if(this.props.userType=='1'){
-                                 if(i==0)z
+                                 if(i==0)
                                  {
                                     this.navigate2BadmintonCourseForCoach();
                                  }
@@ -318,6 +335,10 @@ class BadmintonCourse extends Component {
                                 {
                                     this.navigate2CustomCourseList();
                                 }
+                                {if(i==3)
+                                {
+                                    this.navigate2BadmintonCourseOfCoach(this.state.personId);
+                                }}
 
                              }else{
                                  this.navigate2BadmintonCourseForUser()
@@ -445,4 +466,10 @@ const mapStateToProps = (state, ownProps) => {
 
 
 export default connect(mapStateToProps)(BadmintonCourse);
+/*module.exports = connect(state=>({
+        accessToken:state.user.accessToken,
+        personId:state.user.personInfo.personId,
+        user:state.user.user,
 
+    })
+)(BadmintonCourse);*/
