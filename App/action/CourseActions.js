@@ -5,6 +5,7 @@ import Proxy from '../utils/Proxy'
 import {
     DISTRIBUTE_COURSE,
     ON_COURSES_UPDATE,
+    ON_COURSES_OF_COACH_UPDATE,
     ON_MY_COURSES_UPDATE,
     DISABLE_MY_COURSES_ONFRESH,
     ON_CUSTOM_COURSE_UPDATE,
@@ -41,6 +42,33 @@ export let fetchMyCourses=()=>{
     }
 }
 
+
+//显示教练需要教学的课
+export let fetchCoursesOfCoach=(creatorId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/fetchCoursesOfCoach',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    creatorId:creatorId
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
 
 export let verifyCoursesCancelable=(courses)=>{
     return (dispatch,getState)=>{
@@ -118,6 +146,18 @@ export let onCoursesUpdate=(courses)=>{
         })
     }
 }
+
+export let onCoursesOfCoachUpdate=(coursesOfCoach)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_COURSES_OF_COACH_UPDATE,
+            payload:{
+                coursesOfCoach
+            }
+        })
+    }
+}
+
 
 //拉取定制
 export let setMyCustomCourses=(myCustomCourses)=>{
