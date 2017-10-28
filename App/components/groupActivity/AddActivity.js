@@ -26,7 +26,6 @@ import ActionSheet from 'react-native-actionsheet';
 import DatePicker from 'react-native-datepicker';
 import DateFilter from '../../utils/DateFilter';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
-import AddYard from './AddYard';
 import {
     releaseActivity
 } from '../../action/ActivityActions';
@@ -515,7 +514,7 @@ class AddActivity extends Component{
                                             <View
                                                 style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                                 <Text style={{color:'#888',fontSize:13}}>请选择场地：</Text>
-                                                {/*<AddYard/>*/}
+
                                             </View> :
                                             <View
                                                 style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
