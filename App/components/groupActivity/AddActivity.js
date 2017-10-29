@@ -35,7 +35,7 @@ import CreateGroup from './CreateGroup';
 import Coach from '../../components/Coach';
 import SelectTime from './SelectTime';
 import AddField from './AddField';
-import SexModal from './SexModal';
+
 
 import {
     fetchMyGroupList,disableMyGroupOnFresh,enableActivityOnFresh
@@ -100,19 +100,7 @@ class AddActivity extends Component{
         }
     }
 
-    navigate2SexModal()
-    {
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'AddField',
-                component:SexModal,
-                params: {
-                    //setPlace:this.setEventPlace.bind(this)
-                }
-            })
-        }
-    }
+
 
     navigate2VenueInspect()
     {
