@@ -883,8 +883,12 @@ class ChooseField extends Component {
                                 showIcon={true}
                                 iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
                                 onDateChange={(date) => {
-
-                                    this.verifyTime(date);
+                              {/*var startTime = date+':00';*/}
+            {/*var day = new Date();*/}
+            {/*var today = DateFilter.filter(day, 'yyyy-mm-dd');*/}
+            {/*var startTimeStr = today+' '+startTime;*/}
+            {/*this.setState({startTime:startTimeStr,selectStartTime:false,startTimeView:date})*/}
+                            this.verifystartTime(date)
 
 
 
@@ -1023,12 +1027,71 @@ class ChooseField extends Component {
         var eintmin=parseInt(emin);
         var et=ehourmin+eintmin;
 
-
-
        this.setState({fieldstart:fieldstart,fieldend:fieldend})
 
+        if(endmintotal>et||endmintotal<st){
+            alert("您所选的时间场馆不能使用！")
+
+        }else{
+
+            if((endmintotal-startinttotal)<60){
+                alert("活动时间最短为一小时");
+            }else{
+                var endTime = date+':00';
+                var day = new Date();
+                var today = DateFilter.filter(day, 'yyyy-mm-dd');
+                var endTimeStr = today+' '+endTime;
+                this.setState({endTime:endTimeStr,selectEndTime:false,endTimeView:date})
+            }
+        }
+    }
+
+    verifystartTime(date){
+
+        var endhour = date.substring(0,2);
+        var inthour=parseInt(endhour);
+        var hourminutes=inthour*60;
+        var min=date.substring(3,5);
+        var intmin=parseInt(min);
+        var startinttotal=hourminutes+intmin;
+
+
+
+        // var startTime= this.state.startTimeView;
+        // var starthour=startTime.substring(0,2);
+        // var inthour1=parseInt(starthour);
+        // var hourminutes1=inthour1*60;
+        // var min1=startTime.substring(3,5);
+        // var intmin1=parseInt(min1);
+        // var startinttotal=hourminutes1+intmin1;
+
+        var s1=this.props.activity.startTimeStr;
+        var s2=s1.substring(0,11);
+        var e1=this.props.activity.endTimeStr;
+        var e2=e1.substring(0,11);
+        //var fieldstart=s2+startTime+':00';
+        //var fieldend=e2+date+':00';
+
+
+        var time1=s1.substring(11,16);
+        var shour=time1.substring(0,2);
+        var intshour=parseInt(shour);
+        var shourmin=intshour*60;
+        var smin=time1.substring(3,5);
+        var sintmin=parseInt(smin);
+        var st=shourmin+sintmin;
+
+        var time2=e1.substring(11,16);
+        var ehour=time2.substring(0,2);
+        var intehour=parseInt(ehour);
+        var ehourmin=intehour*60;
+        var emin=time2.substring(3,5);
+        var eintmin=parseInt(emin);
+        var et=ehourmin+eintmin;
+
+        //this.setState({fieldstart:fieldstart,fieldend:fieldend})
         if(startinttotal<st||startinttotal>et){
-           alert("您所选的时间场馆不能使用！")
+            alert("您所选的时间场馆不能使用！")
         }else{
             var startTime = date+':00';
             var day = new Date();
@@ -1037,23 +1100,9 @@ class ChooseField extends Component {
             this.setState({startTime:startTimeStr,selectStartTime:false,startTimeView:date})
         }
 
-        if(endmintotal>et){
-            alert("您所选的时间场馆不能使用！");
 
-        }
-
-
-        if((endmintotal-startinttotal)<60){
-            alert("活动时间最短为一小时");
-        }else{
-                var endTime = date+':00';
-                var day = new Date();
-                var today = DateFilter.filter(day, 'yyyy-mm-dd');
-                var endTimeStr = today+' '+endTime;
-                this.setState({endTime:endTimeStr,selectEndTime:false,endTimeView:date})
-
-        }
     }
+
 
     componentWillMount(){
         this.fetchData();
