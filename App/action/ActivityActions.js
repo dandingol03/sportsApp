@@ -51,7 +51,9 @@ export let releaseActivity=(event)=>{
                 isNeedSparring:parseInt(event.hasSparring),
                 feeDes:event.feeDes,
                 eventNowMemNum:0,
-                status:0
+                status:0,
+                isChooseYardTime:event.isChooseYardTime,
+
 
             }
 

@@ -437,31 +437,31 @@ class ChooseField extends Component {
                             <Text>地</Text>
                             <Text>一</Text>
                         </View>
-                        <View style={{marginLeft:4}}>
+                        <View style={{marginLeft:10}}>
                             <Text>{this.state.fieldtime11}</Text>
                         </View>
-                        <View style={{marginLeft:3}}>
+                        <View style={{marginLeft:23}}>
                             <Text>{this.state.fieldtime12}</Text>
                         </View>
-                        <View style={{marginLeft:10}}>
+                        <View style={{marginLeft:30}}>
                             <Text>{this.state.fieldtime13}</Text>
                         </View>
-                        <View style={{marginLeft:3}}>
+                        <View style={{marginLeft:33}}>
                             <Text>{this.state.fieldtime14}</Text>
                         </View>
-                        <View style={{marginLeft:3}}>
+                        <View style={{marginLeft:33}}>
                             <Text>{this.state.fieldtime15}</Text>
                         </View>
-                        <View style={{marginLeft:3}}>
+                        <View style={{marginLeft:33}}>
                             <Text>{this.state.fieldtime16}</Text>
                         </View>
-                        <View style={{marginLeft:3}}>
+                        <View style={{marginLeft:33}}>
                             <Text>{this.state.fieldtime17}</Text>
                         </View>
-                        <View style={{marginLeft:3}}>
+                        <View style={{marginLeft:33}}>
                             <Text>{this.state.fieldtime18}</Text>
                         </View>
-                        <View style={{marginLeft:3}}>
+                        <View style={{marginLeft:33}}>
                             <Text>{this.state.fieldtime19}</Text>
                         </View>
                     </View>:null

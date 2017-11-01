@@ -81,6 +81,16 @@ class AddActivity extends Component{
     setField(field){
         var event = this.state.event;
         event.field= field;
+        var a=field.split(",");
+        if(a.length>1){
+            var event = this.state.event;
+            event.isChooseYardTime= 1;
+            this.setState({event:event})
+        }else{
+            var event = this.state.event;
+            event.isChooseYardTime= 0;
+            this.setState({event:event})
+        }
         this.setState({event:event});
 
     }
@@ -284,7 +294,7 @@ class AddActivity extends Component{
             doingFetch: false,
             selectTime:false,
             eventTime:null,
-            event:{eventName:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,yardTotal:null,eventMaxMemNum:null,
+            event:{eventName:null,isChooseYardTime:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,yardTotal:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
                    groupName:null,groupId:null,cost:null,costType:null,field:null,filedNum:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
 
