@@ -98,6 +98,11 @@ class BadmintonCourse extends Component {
         }
     }
 
+    navigate2CourseRecord()
+    {
+
+    }
+
     goBack() {
         const { navigator } = this.props;
         if (navigator) {
@@ -296,6 +301,8 @@ class BadmintonCourse extends Component {
             actions.push({value:'创建课程',show:OPTION_NEVER});
             actions.push({value:'课程定制',show:OPTION_NEVER});//教练作为用户
             actions.push({value:'查看定制列表',show:OPTION_NEVER});
+            actions.push({value:'上课记录',show:OPTION_NEVER});
+            actions.push({value:'上课记录',show:OPTION_NEVER});
         }
 
         return (
@@ -306,7 +313,7 @@ class BadmintonCourse extends Component {
                          actions={actions}
                          onPress={(i)=>{
                              if(this.props.userType=='1'){
-                                 if(i==0)z
+                                 if(i==0)
                                  {
                                     this.navigate2BadmintonCourseForCoach();
                                  }
@@ -318,6 +325,10 @@ class BadmintonCourse extends Component {
                                 {
                                     this.navigate2CustomCourseList();
                                 }
+                                 if(i==3)
+                                 {
+                                     this.navigate2CourseRecord();
+                                 }
 
                              }else{
                                  this.navigate2BadmintonCourseForUser()

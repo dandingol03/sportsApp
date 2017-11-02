@@ -305,7 +305,7 @@ export let addBadmintonClassMermberInfo=(info)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var selfPersonId = state.user.personInfo.personId;
-
+            var courseCount=info.classCount;
 
             if(info.isSelfCheck==true){
 
@@ -328,6 +328,7 @@ export let addBadmintonClassMermberInfo=(info)=>{
 
                     classId:parseInt(info.classId),
                     personId:personIdStr,
+                    courseCount:courseCount
 
                 }
             }).then((json)=>{
