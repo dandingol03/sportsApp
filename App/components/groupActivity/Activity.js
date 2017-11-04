@@ -24,8 +24,9 @@ import AddActivity from './AddActivity';
 import MyActivity from './MyActivity';
 import ActivityDetail from './ActivityDetail';
 import ActivityPay from './ActivityPay';
+import ChooseField from './ChooseField';
 import {
-    fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity,fetchEventMemberList,exitActivity
+    fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity,fetchEventMemberList,exitActivity,exitFieldTimeActivity
 } from '../../action/ActivityActions';
 
 import {getAccessToken,} from '../../action/UserActions';
@@ -137,6 +138,20 @@ class Activity extends Component {
         }
     }
 
+
+    navigate2ActivityChooseField(event){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'ChooseField',
+                component:ChooseField,
+                params: {
+                    activity:event
+                }
+            })
+        }
+
+    }
     signUpActivity(event,eventNowMemNum)
     {
         if(event.eventMaxMemNum<=eventNowMemNum){
@@ -151,7 +166,7 @@ class Activity extends Component {
                         this.setMyActivityList();
                     }},
                         {text:'否',onPress:()=>{
-                           // this.goBack();
+                            // this.goBack();
                             this.setMyActivityList();
                         }},
                     ]);
@@ -167,20 +182,43 @@ class Activity extends Component {
     exitActivity(event)
     {
 
-            this.props.dispatch(exitActivity(event.eventId)).then((json)=>{
-                if(json.re==1){
+        this.props.dispatch(exitActivity(event.eventId)).then((json)=>{
+            if(json.re==1){
+                Alert.alert('信息','退出报名成功',[{text:'确认',onPress:()=>{
+                    // this.setMyActivityList();
+                    //this.goBack();
+                    this.setMyActivityList();
+                }},
+                ]);
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
+            }
+        })
+
+    }
+
+    exitFieldTimeActivity(event)
+    {
+
+        this.props.dispatch(exitActivity(event.eventId)).then((json)=>{
+            if(json.re==1){
+                this.props.dispatch(exitFieldTimeActivity(event.eventId)).then((json)=>{
                     Alert.alert('信息','退出报名成功',[{text:'确认',onPress:()=>{
                         // this.setMyActivityList();
                         //this.goBack();
                         this.setMyActivityList();
                     }},
                     ]);
-                }else{
-                    if(json.re==-100){
-                        this.props.dispatch(getAccessToken(false));
-                    }
+                })
+
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
                 }
-            })
+            }
+        })
 
     }
     isActivityPay(event){
@@ -266,7 +304,7 @@ class Activity extends Component {
                                     {
                                         ( rowData.Money==0 || rowData.Money==null || rowData.Money==undefined )&& rowData.isSignUp==1?
                                             <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:7,justifyContent:'center',alignItems:'center'
-                    ,borderRadius:6}}
+                                                ,borderRadius:6}}
                                                               onPress={()=>{this.isActivityPay(rowData)}}>
                                                 <Text style={{color:'#f00',fontSize:12}}>未支付</Text>
                                             </TouchableOpacity>:
@@ -306,26 +344,26 @@ class Activity extends Component {
                     </View>
                     {
                         rowData.eventBrief!=undefined&&rowData.eventBrief!=null&&rowData.eventBrief!=''?
-                        <View style={{flexDirection:'row',marginBottom:3}}>
-
-                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                                <Icon name={'circle'} size={10} color="#aaa"/>
-                            </View>
-                            <Text
-                                style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                {'比赛简介：' + rowData.eventBrief}
-                            </Text>
-                        </View>:
                             <View style={{flexDirection:'row',marginBottom:3}}>
 
-                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
-                                <Icon name={'circle'} size={10} color="#aaa"/>
+                                <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                    <Icon name={'circle'} size={10} color="#aaa"/>
+                                </View>
+                                <Text
+                                    style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                                    {'比赛简介：' + rowData.eventBrief}
+                                </Text>
+                            </View>:
+                            <View style={{flexDirection:'row',marginBottom:3}}>
+
+                                <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                    <Icon name={'circle'} size={10} color="#aaa"/>
+                                </View>
+                                <Text
+                                    style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                                    {'比赛简介：' + '无'}
+                                </Text>
                             </View>
-                            <Text
-                                style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
-                                {'比赛简介：' + '无'}
-                            </Text>
-                        </View>
                     }
 
                     <View style={{flexDirection:'row',marginBottom:3}}>
@@ -359,25 +397,41 @@ class Activity extends Component {
 
                     {
                         rowData.isSignUp==0 ?
-                            <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
-                    ,borderRadius:6}}
-                                              onPress={()=>{this.signUpActivity(rowData,eventNowMemNum)}}>
-                                <Text style={{color:'#66CDAA',fontSize:12}}>我要报名</Text>
-                            </TouchableOpacity>:
+                            <View>
+                                {
+                                    rowData.isChooseYardTime==1?
+                                        <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                                            ,borderRadius:6}}
+                                                          onPress={()=>{this.navigate2ActivityChooseField(rowData)}}>
+                                            <Text style={{color:'#f00',fontSize:12}}>我要报名</Text>
+                                        </TouchableOpacity>:
+                                        <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                                            ,borderRadius:6}}
+                                                          onPress={()=>{this.signUpActivity(rowData,eventNowMemNum)}}>
+                                            <Text style={{color:'#f00',fontSize:12}}>我要报名</Text>
+                                        </TouchableOpacity>
+                                }
+
+                            </View>:
 
                             <View>
                                 {
                                     rowData.money==0||rowData.money==null?
-                                        <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
-                    ,borderRadius:6}}
-                                                          onPress={()=>{this.exitActivity(rowData)}}>
-                                            <Text style={{color:'#f00',fontSize:12}}>取消报名</Text>
-                                        </TouchableOpacity>:
-                                        <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
-                    ,borderRadius:6}}
-                                        >
-                                            <Text style={{color:'#f00',fontSize:12}}>报名成功</Text>
-                                        </TouchableOpacity>
+                                        <View>
+                                            <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                                                ,borderRadius:6}}
+                                                              onPress={()=>{this.exitActivity(rowData)}}>
+                                                <Text style={{color:'#f00',fontSize:12}}>取消报名</Text>
+                                            </TouchableOpacity>
+                                        </View>:
+                                        <View>
+                                            <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                                                ,borderRadius:6}}
+                                            >
+                                                <Text style={{color:'#f00',fontSize:12}}>报名成功</Text>
+                                            </TouchableOpacity>
+                                        </View>
+
                                 }
 
                             </View>
@@ -489,16 +543,16 @@ class Activity extends Component {
                         <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:5,paddingBottom:5,}}>
                             <ScrollView
                                 refreshControl={
-                                <RefreshControl
-                                    refreshing={this.state.isRefreshing}
-                                    onRefresh={this._onRefresh.bind(this)}
-                                    tintColor="#9c0c13"
-                                    title="刷新..."
-                                    titleColor="#9c0c13"
-                                    colors={['#ff0000', '#00ff00', '#0000ff']}
-                                    progressBackgroundColor="#ffff00"
-                                />
-                            }
+                                    <RefreshControl
+                                        refreshing={this.state.isRefreshing}
+                                        onRefresh={this._onRefresh.bind(this)}
+                                        tintColor="#9c0c13"
+                                        title="刷新..."
+                                        titleColor="#9c0c13"
+                                        colors={['#ff0000', '#00ff00', '#0000ff']}
+                                        progressBackgroundColor="#ffff00"
+                                    />
+                                }
                             >
                                 {activityListView}
 
@@ -516,7 +570,7 @@ class Activity extends Component {
                     </View>
 
                     <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#66CDAA',
-                            position:'absolute',bottom:8}}>
+                        position:'absolute',bottom:8}}>
                         <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
                             padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}>
                             <Text style={{color:'#fff',}}>我发起的活动</Text>
@@ -531,7 +585,7 @@ class Activity extends Component {
 
                     <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:8,left:width*0.5-25}}>
                         <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,
-                        borderWidth:1,borderColor:'#eee',borderRadius:50}}
+                            borderWidth:1,borderColor:'#eee',borderRadius:50}}
                         >
                             <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
                         </TouchableOpacity>

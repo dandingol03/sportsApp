@@ -101,9 +101,9 @@ class AddField extends Component{
 
         super(props);
         this.dataSource=new ListView.DataSource({rowHasChanged:(r1,r2)=>r1!==r2})
-        var _data=[{"fieldno":"场地1","check":false,"_id":0}];
+        var _data=[{"fieldno":1,"check":false,"_id":0}];
         for(i=0;i<parseInt(this.props.yardTotal)-1;i++){
-            _data.push({"fieldno":"场地"+(i+2),"check":false,"_id":i+1});
+            _data.push({"fieldno":(i+2),"check":false,"_id":i+1});
         }
         this.state={
             val:props.val,
@@ -234,7 +234,7 @@ class AddField extends Component{
 
         return (
 
-            <View style={styles.container}>
+            <View style={{flex:1}}>
 
                 <ScrollView>
                     <View style={{margin:10,borderWidth:1,borderColor:'#343434'}}>
@@ -243,10 +243,10 @@ class AddField extends Component{
 
                 </ScrollView>
 
-                <View style={{flex:1,padding:12,margin:4,flexDirection:'row',justifyContent:'center',alignItems:'flex-end',}}>
+                <View style={{padding:12,margin:4,flexDirection:'row',justifyContent:'center',alignItems:'flex-end',}}>
                     <TouchableOpacity style={{flex:1,padding:2,margin:5,flexDirection:'row',justifyContent:'center',alignItems:'center',
                             backgroundColor:'#fff',borderRadius:6,borderWidth:1,borderColor:'#66CDAA'}}
-                                      onPress={()=>{ this.close(); }}>
+                                      onPress={()=>{ this.goBack(); }}>
                         <Text style={{color:'#66CDAA',padding:5}}>取消</Text>
                     </TouchableOpacity>
 

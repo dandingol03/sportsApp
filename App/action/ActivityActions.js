@@ -14,6 +14,7 @@ import {
     SET_MY_EVENTS,
     SET_MY_TAKEN_EVENTS,
     SET_VISIBLE_EVENTS,
+    SET_FIELD_TIME
 } from '../constants/ActivityConstants';
 
 //发布群活动
@@ -50,7 +51,9 @@ export let releaseActivity=(event)=>{
                 isNeedSparring:parseInt(event.hasSparring),
                 feeDes:event.feeDes,
                 eventNowMemNum:0,
-                status:0
+                status:0,
+                isChooseYardTime:event.isChooseYardTime,
+
 
             }
 
@@ -112,6 +115,55 @@ export let enableActivityOnFresh=()=>{
 export let disableActivityOnFresh=()=>{
     return {
         type:DISABLE_ACTIVITY_ONFRESH,
+    }
+}
+
+export let setFieldTime=(fieldtime)=>{
+    return {
+        type:SET_FIELD_TIME,
+        fieldtime:fieldtime
+    }
+}
+
+//获取场地时间状态列表
+export let fetchVenueUnitTimeList=(unitId,placeYardStr)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            var fieldtime = null;
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/getAllVenueUnitTime',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    unitId:unitId,
+                    placeYardStr:placeYardStr
+
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    fieldtime = json.data;
+                    if (fieldtime !== undefined && fieldtime !== null &&fieldtime.length > 0) {
+                        dispatch(setFieldTime(fieldtime));
+                        //dispatch(disableMyGroupOnFresh());
+                        //resolve({re:1,data:myGroupList});
+                    }
+                    resolve({re:1,data:json.data})
+                }else{
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'目前未加入任何群组'});
+                    }
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
     }
 }
 
@@ -289,6 +341,45 @@ export let signUpActivity=(eventId)=>{
     }
 }
 
+
+export let signUpFieldTimeActivity=(event,select,startTime,endTime)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/allow/eventSignUp',
+                headers: {
+
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    id:event.eventId,
+                    isChooseYardTime:event.isChooseYardTime,
+                    unitId:event.eventPlaceId,
+                    placeYardStr:select,
+                    startTime:startTime,
+                    endTime:endTime
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:'报名成功'});
+                }else{
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'报名不成功'});
+                    }
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
 //撤销群活动
 export let deleteActivity=(eventId)=>{
     return (dispatch,getState)=>{
@@ -336,6 +427,39 @@ export let exitActivity=(eventId)=>{
                 },
                 body: {
                     eventId:parseInt(eventId)
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:'退出成功'});
+                }else{
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'退出不成功'});
+                    }
+
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+//退出群活动
+export let exitFieldTimeActivity=(eventId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/allow/deleteMyEvents',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    eventId:eventId+""
                 }
             }).then((json)=>{
                 if (json.re == 1) {

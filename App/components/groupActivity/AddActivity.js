@@ -26,7 +26,6 @@ import ActionSheet from 'react-native-actionsheet';
 import DatePicker from 'react-native-datepicker';
 import DateFilter from '../../utils/DateFilter';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
-import AddYard from './AddYard';
 import {
     releaseActivity
 } from '../../action/ActivityActions';
@@ -36,7 +35,7 @@ import CreateGroup from './CreateGroup';
 import Coach from '../../components/Coach';
 import SelectTime from './SelectTime';
 import AddField from './AddField';
-import SexModal from './SexModal';
+
 
 import {
     fetchMyGroupList,disableMyGroupOnFresh,enableActivityOnFresh
@@ -82,6 +81,16 @@ class AddActivity extends Component{
     setField(field){
         var event = this.state.event;
         event.field= field;
+        var a=field.split(",");
+        if(a.length>1){
+            var event = this.state.event;
+            event.isChooseYardTime= 1;
+            this.setState({event:event})
+        }else{
+            var event = this.state.event;
+            event.isChooseYardTime= 0;
+            this.setState({event:event})
+        }
         this.setState({event:event});
 
     }
@@ -101,19 +110,7 @@ class AddActivity extends Component{
         }
     }
 
-    navigate2SexModal()
-    {
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                name: 'AddField',
-                component:SexModal,
-                params: {
-                    //setPlace:this.setEventPlace.bind(this)
-                }
-            })
-        }
-    }
+
 
     navigate2VenueInspect()
     {
@@ -297,7 +294,7 @@ class AddActivity extends Component{
             doingFetch: false,
             selectTime:false,
             eventTime:null,
-            event:{eventName:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,yardTotal:null,eventMaxMemNum:null,
+            event:{eventName:null,isChooseYardTime:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,yardTotal:null,eventMaxMemNum:null,
                    memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
                    groupName:null,groupId:null,cost:null,costType:null,field:null,filedNum:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
 
@@ -515,7 +512,7 @@ class AddActivity extends Component{
                                             <View
                                                 style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                                 <Text style={{color:'#888',fontSize:13}}>请选择场地：</Text>
-                                                {/*<AddYard/>*/}
+
                                             </View> :
                                             <View
                                                 style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>

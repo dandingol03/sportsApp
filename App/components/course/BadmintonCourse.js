@@ -100,7 +100,7 @@ class BadmintonCourse extends Component {
 
     navigate2CourseRecord()
     {
-
+        
     }
 
     goBack() {
