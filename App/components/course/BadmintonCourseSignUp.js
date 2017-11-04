@@ -23,7 +23,7 @@ import _ from 'lodash';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import CoursePay from './CoursePay';
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
@@ -42,7 +42,7 @@ import{
     checkPersonIsMember
 
 } from '../../action/CourseActions';
-import {getAccessToken,} from '../../action/UserActions';
+import {getAccessToken,wechatPay2} from '../../action/UserActions';
 
 import{
     onRelativePersonsUpdate,
@@ -65,7 +65,9 @@ class BadmintonCourseSignUp extends Component {
             event: {},
             relative:props.relative,
             isSelfCheck:true,
-            num:1               //代表课程的数量
+            num:1 , //代表课程的数量
+            total:150.0,
+            pay:{payment:'',payType:'1'},
         };
     }
 
@@ -74,6 +76,67 @@ class BadmintonCourseSignUp extends Component {
         this.setState(nextProps)
     }
 
+    navigate2BadmintonCoursePay() {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'CoursePay',
+                component: CoursePay,
+                params: {
+                   total:this.state.total
+                }
+            })
+        }
+    }
+
+    wechatPay(pay,courseId){
+
+        this.props.dispatch(wechatPay2(pay,courseId)).then((json)=>{
+            if(json.re==1){
+                if(pay.payType=='1'){
+                    var prepayId = json.data.prepayid;
+                    var sign = json.data.sign;
+                    var timeStamp = json.data.timestamp;
+                    var noncestr = json.data.noncestr;
+                    var wechatPayData=
+                        {
+                            partnerId: '1485755962',  // 商家向财付通申请的商家id
+                            prepayId: prepayId,   // 预支付订单
+                            nonceStr: noncestr,   // 随机串，防重发
+                            timeStamp: timeStamp,  // 时间戳，防重发
+                            package: 'Sign=WXPay',    // 商家根据财付通文档填写的数据和签名
+                            sign: sign // 商家根据微信开放平台文档对数据做的签名
+                        };
+
+                    WeChat.pay(wechatPayData).then(
+                        (result)=>{
+                            console.log(result);
+                            Alert.alert('信息','支付成功',[{text:'确认',onPress:()=>{
+                                this.goBack();
+                            }}]);
+
+
+                        },
+                        (error)=>{
+                            console.log(error);
+                        }
+                    )
+                }
+                else{
+                    Alert.alert('信息','支付成功',[{text:'确认',onPress:()=>{
+                        this.goBack();
+                    }}]);
+                }
+
+
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
+            }
+
+        })
+    }
 
     showScaleAnimationDialog() {
         this.scaleAnimationDialog.show();
@@ -302,6 +365,8 @@ class BadmintonCourseSignUp extends Component {
                                                           if(num>0)
                                                           {
                                                               num=num-1+'';
+                                                              var total=classInfo.cost*this.state.num;
+                                                              this.setState({total:total});
                                                           }
                                                           else{
                                                               num=0+''
@@ -342,6 +407,8 @@ class BadmintonCourseSignUp extends Component {
                                                          var num= parseInt(this.state.num);
                                                           num=num+1;
                                                           this.setState({num:num+''});
+                                                          var total=classInfo.cost*this.state.num;
+                                                          this.setState({total:total});
                                                       }}
                                     >
                                         <Text style={{color:'#fff',width:10,fontWeight:'bold'}}>+</Text>
@@ -398,10 +465,17 @@ class BadmintonCourseSignUp extends Component {
                                               };
                                               this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{
                                                   if(json.re==1){
-                                                      Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
+                                                     /* Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
                                                           this.goBack();
                                                           this.props.setMyCourseList();
-                                                      }}]);
+                                                      }}]);*/
+                                                      //this.navigate2BadmintonCoursePay();
+                                                      var pay=this.state.pay;
+                                                      pay.payType = '1';
+                                                      pay.payment=this.state.total;
+                                                      this.setState({pay:pay});
+                                                      this.wechatPay(this.state.pay,classInfo.courseId);
+
                                                   }else if(json.re==-1){
                                                       Alert.alert('信息',json.data,[{text:'确认',onPress:()=>{
                                                           this.goBack();
@@ -416,7 +490,7 @@ class BadmintonCourseSignUp extends Component {
                                           }
                                       }}
                     >
-                        <Text style={{color:'#fff',fontWeight:'bold'}}>报名</Text>
+                        <Text style={{color:'#fff',fontWeight:'bold'}}>购买</Text>
                     </TouchableOpacity>
                 </View>
                 </View>

@@ -30,7 +30,7 @@ import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 import {getAccessToken,} from '../../action/UserActions';
 var {height, width,scale} = Dimensions.get('window');
 
-class ActivityPay extends Component{
+class CoursePay extends Component{
     goBack(){
         const { navigator } = this.props;
         if(navigator) {
@@ -260,7 +260,7 @@ const mapStateToProps = (state, ownProps) => {
     return props
 }
 
-export default connect(mapStateToProps)(ActivityPay);
+export default connect(mapStateToProps)(CoursePay);
 
 
 

@@ -328,7 +328,7 @@ export let addBadmintonClassMermberInfo=(info)=>{
 
                     classId:parseInt(info.classId),
                     personId:personIdStr,
-                    courseCount:courseCount
+                    courseCount:parseInt(courseCount)
 
                 }
             }).then((json)=>{
