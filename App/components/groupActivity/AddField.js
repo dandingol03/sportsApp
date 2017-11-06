@@ -1,6 +1,7 @@
-/**
+/*
+/!**
  * Created by youli on 2017/10/23.
- */
+ *!/
 
 import React,{Component} from 'react';
 
@@ -291,3 +292,4 @@ var styles = StyleSheet.create({
 
 module.exports = AddField;
 
+*/

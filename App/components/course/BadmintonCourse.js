@@ -302,7 +302,7 @@ class BadmintonCourse extends Component {
             actions.push({value:'课程定制',show:OPTION_NEVER});//教练作为用户
             actions.push({value:'查看定制列表',show:OPTION_NEVER});
             actions.push({value:'上课记录',show:OPTION_NEVER});
-            actions.push({value:'上课记录',show:OPTION_NEVER});
+
         }
 
         return (

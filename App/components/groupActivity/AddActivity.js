@@ -1,3 +1,4 @@
+/*
 
 import React,{Component} from 'react';
 import {
@@ -45,9 +46,9 @@ import {
     getAccessToken,
 } from '../../action/UserActions';
 
-/**
+/!**
  * 发布活动
- */
+ *!/
 class AddActivity extends Component{
 
     goBack(){
@@ -332,7 +333,7 @@ class AddActivity extends Component{
                     <ScrollView style={{height:height-200,width:width,backgroundColor:'#fff',padding:5}}>
 
 
-                        {/*活动类型*/}
+                        {/!*活动类型*!/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动类型：</Text>
@@ -368,7 +369,7 @@ class AddActivity extends Component{
                             </TouchableOpacity>
                         </View>
 
-                        {/*活动名称*/}
+                        {/!*活动名称*!/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动名称：</Text>
@@ -391,7 +392,7 @@ class AddActivity extends Component{
                             </View>
                         </View>
 
-                        {/*活动时间*/}
+                        {/!*活动时间*!/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动时间：</Text>
@@ -417,7 +418,7 @@ class AddActivity extends Component{
 
                         </View>
 
-                        {/*活动地点*/}
+                        {/!*活动地点*!/}
                         <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动地点：</Text>
@@ -468,34 +469,34 @@ class AddActivity extends Component{
                         </View>
 
 
-                        {/*/!*场地需求*!/*/}
+                        {/!*!/!*场地需求*!/!*!/}
 
-                        {/*{*/}
-                            {/*(this.state.event.time.isSchedule==0)?*/}
-                                {/*<View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>*/}
-                                    {/*<View style={{flex:1}}>*/}
-                                        {/*<Text>场地数目：</Text>*/}
-                                    {/*</View>*/}
-                                    {/*<View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
-                            {/*borderRadius:10}}>*/}
-                                        {/*<TextInputWrapper*/}
-                                            {/*placeholderTextColor='#888'*/}
-                                            {/*textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}*/}
-                                            {/*placeholder="请输入需要的场地数目:"*/}
-                                            {/*val={this.state.event.eventMaxMemNum}*/}
-                                            {/*onChangeText={*/}
-                                    {/*(value)=>{*/}
-                                        {/*this.setState({event:Object.assign(this.state.event,{filedNum:value})})*/}
-                                    {/*}}*/}
-                                            {/*onCancel={*/}
-                                    {/*()=>{this.setState({event:Object.assign(this.state.event,{filedNum:null})});}*/}
-                                {/*}*/}
-                                        {/*/>*/}
-                                    {/*</View>*/}
-                                {/*</View>:null*/}
-                        {/*}*/}
+                        {/!*{*!/}
+                            {/!*(this.state.event.time.isSchedule==0)?*!/}
+                                {/!*<View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>*!/}
+                                    {/!*<View style={{flex:1}}>*!/}
+                                        {/!*<Text>场地数目：</Text>*!/}
+                                    {/!*</View>*!/}
+                                    {/!*<View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*!/}
+                            {/!*borderRadius:10}}>*!/}
+                                        {/!*<TextInputWrapper*!/}
+                                            {/!*placeholderTextColor='#888'*!/}
+                                            {/!*textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}*!/}
+                                            {/!*placeholder="请输入需要的场地数目:"*!/}
+                                            {/!*val={this.state.event.eventMaxMemNum}*!/}
+                                            {/!*onChangeText={*!/}
+                                    {/!*(value)=>{*!/}
+                                        {/!*this.setState({event:Object.assign(this.state.event,{filedNum:value})})*!/}
+                                    {/!*}}*!/}
+                                            {/!*onCancel={*!/}
+                                    {/!*()=>{this.setState({event:Object.assign(this.state.event,{filedNum:null})});}*!/}
+                                {/!*}*!/}
+                                        {/!*!/>*!/}
+                                    {/!*</View>*!/}
+                                {/!*</View>:null*!/}
+                        {/!*}*!/}
 
-                        {/*活动场地*/}
+                        {/!*活动场地*!/}
                         {
                             this.state.event.eventPlace!=null?
                             <View
@@ -528,7 +529,7 @@ class AddActivity extends Component{
                             </View>:null
                         }
 
-                        {/*邀请群组*/}
+                        {/!*邀请群组*!/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
 
@@ -566,7 +567,7 @@ class AddActivity extends Component{
                         </View>
 
 
-                        {/*付费方式*/}
+                        {/!*付费方式*!/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>付费方式：</Text>
@@ -604,7 +605,7 @@ class AddActivity extends Component{
 
 
 
-                        {/*人均费用*/}
+                        {/!*人均费用*!/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>人均费用：</Text>
@@ -704,7 +705,7 @@ class AddActivity extends Component{
                         }
 
 
-                        {/*邀请教练*/}
+                        {/!*邀请教练*!/}
                         <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>邀请教练：</Text>
@@ -771,7 +772,7 @@ class AddActivity extends Component{
 
                         </View>
 
-                        {/*邀请陪练*/}
+                        {/!*邀请陪练*!/}
                         <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>邀请陪练：</Text>
@@ -838,7 +839,7 @@ class AddActivity extends Component{
 
                         </View>
 
-                        {/*活动说明*/}
+                        {/!*活动说明*!/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动说明：</Text>
@@ -901,3 +902,4 @@ module.exports = connect(state=>({
     })
 )(AddActivity);
 
+*/
