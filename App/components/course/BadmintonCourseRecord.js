@@ -32,6 +32,8 @@ var { height, width } = Dimensions.get('window');
 
 import{
     fetchCourses,
+    fetchCoursesByCreatorId,
+    onCoursesOfCoachUpdate,
     onCoursesUpdate,
 } from '../../action/CourseActions';
 
@@ -39,7 +41,7 @@ import {getAccessToken,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 
-class BadmintonCourse extends Component {
+class BadmintonCourseRecord extends Component {
 
     //导航至定制（for 教练）
     navigate2BadmintonCourseForCoach() {
@@ -98,7 +100,7 @@ class BadmintonCourse extends Component {
         }
     }
 
-    navigate2CourseRecord(creatorId)
+    navigate2CourseRecord()
     {
         const { navigator } = this.props;
         if (navigator) {
@@ -106,7 +108,7 @@ class BadmintonCourse extends Component {
                 name: 'BadmintonCourseRecord',
                 component: BadmintonCourseRecord,
                 params: {
-                    creatorId:creatorId
+
                 }
             })
         }
@@ -121,10 +123,10 @@ class BadmintonCourse extends Component {
 
     setMyCourseList()
     {
-        this.props.dispatch(fetchCourses()).then((json)=>{
+        this.props.dispatch(fetchCoursesByCreatorId(creatorId)).then((json)=>{
             if(json.re==1)
             {
-                this.props.dispatch(onCoursesUpdate(json.data))
+                this.props.dispatch(onCoursesOfCoachUpdate(json.data))
             }else{
                 if(json.re==-100){
                     this.props.dispatch(getAccessToken(false));
@@ -136,10 +138,10 @@ class BadmintonCourse extends Component {
     renderRow(rowData, sectionId, rowId) {
         return (
             <TouchableOpacity style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
-                onPress={()=>{
-                    this.navigate2CourseSignUp(rowData);
+                              onPress={()=>{
+                                  this.navigate2CourseSignUp(rowData);
 
-                }}
+                              }}
             >
                 <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
                     <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
@@ -208,11 +210,11 @@ class BadmintonCourse extends Component {
                 },           // Configuration
             ).start();
         }.bind(this), 2000);
-
-        this.props.dispatch(fetchCourses()).then((json)=>{
+        var creatorId=this.props.creatorId;
+        this.props.dispatch(fetchCoursesByCreatorId(creatorId)).then((json)=>{
             if(json.re==1)
             {
-                this.props.dispatch(onCoursesUpdate(json.data))
+                this.props.dispatch(onCoursesOfCoachUpdate(json.data))
             }else{
                 if(json.re==-100){
                     this.props.dispatch(getAccessToken(false));
@@ -324,17 +326,17 @@ class BadmintonCourse extends Component {
                              if(this.props.userType=='1'){
                                  if(i==0)
                                  {
-                                    this.navigate2BadmintonCourseForCoach();
+                                     this.navigate2BadmintonCourseForCoach();
                                  }
-                                if(i==1)
-                                {
-                                    this.navigate2BadmintonCourseForUser();
-                                }
-                                  if(i==2)
-                                {
-                                    this.navigate2CustomCourseList();
-                                }
-                                 if(i==3)
+                                 /* if(i==1)
+                                 {
+                                     this.navigate2BadmintonCourseForUser();
+                                 }*/
+                                 if(i==1)
+                                 {
+                                     this.navigate2CustomCourseList();
+                                 }
+                                 if(i==2)
                                  {
                                      this.navigate2CourseRecord();
                                  }
@@ -359,11 +361,11 @@ class BadmintonCourse extends Component {
                                     placeholder="按教练名进行搜索"
                                     val={this.state.coachName}
                                     onChangeText={(coachName) => {
-                                    this.setState({ coachName: coachName })
-                                }}
+                                        this.setState({ coachName: coachName })
+                                    }}
                                     onConfirm={() => {
-                                    alert('dw')
-                                }}
+                                        alert('dw')
+                                    }}
                                 />
 
                             </View>
@@ -372,23 +374,23 @@ class BadmintonCourse extends Component {
 
                         {/*筛选*/}
                         <View style={{
-                        height: 45 * height / 736, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 8,
-                        borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ddd', backgroundColor: '#fff'
-                    }}>
+                            height: 45 * height / 736, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 8,
+                            borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ddd', backgroundColor: '#fff'
+                        }}>
                             <View style={{ flexDirection: 'row', flex: 1 }}>
                                 <View style={{ flex: 3, justifyContent: 'center', alignItems: 'flex-start', paddingLeft: 15 }}>
                                     <Text style={{ fontSize: 13, color: '#008B00' }}>默认</Text>
                                 </View>
                                 <TouchableOpacity style={{ flexDirection: 'row', flex: 2, justifyContent: 'flex-end', alignItems: 'center', }}
                                                   onPress={() => {
-                                    if (this.state.filter.cost == 'ascend')//升序
-                                    {
-                                        this.setState({ filter: Object.assign(this.state.filter, { cost: 'descend' }) })
-                                    } else {
-                                        //降序
-                                        this.setState({ filter: Object.assign(this.state.filter, { cost: 'ascend' }) })
-                                    }
-                                }}
+                                                      if (this.state.filter.cost == 'ascend')//升序
+                                                      {
+                                                          this.setState({ filter: Object.assign(this.state.filter, { cost: 'descend' }) })
+                                                      } else {
+                                                          //降序
+                                                          this.setState({ filter: Object.assign(this.state.filter, { cost: 'ascend' }) })
+                                                      }
+                                                  }}
                                 >
                                     <Text style={{ fontSize: 13 }}>花销</Text>
                                     {
@@ -422,10 +424,10 @@ class BadmintonCourse extends Component {
     componentDidMount()
     {
         InteractionManager.runAfterInteractions(() => {
-            this.props.dispatch(fetchCourses()).then((json)=>{
+            this.props.dispatch(fetchCoursesByCreatorId(creatorId)).then((json)=>{
                 if(json.re==1)
                 {
-                    this.props.dispatch(onCoursesUpdate(json.data))
+                    this.props.dispatch(onCoursesOfCoachUpdate(json.data))
                 }else{
                     if(json.re==-100){
                         this.props.dispatch(getAccessToken(false));
@@ -458,12 +460,11 @@ const mapStateToProps = (state, ownProps) => {
 
     const props = {
         userType: state.user.usertype.perTypeCode,
-        courses:state.course.courses,
-        creatorId:state.user.personInfo.personId
+        courses:state.course.courses
     }
     return props
 }
 
 
-export default connect(mapStateToProps)(BadmintonCourse);
+export default connect(mapStateToProps)(BadmintonCourseRecord);
 

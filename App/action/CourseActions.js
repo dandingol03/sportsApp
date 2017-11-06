@@ -44,7 +44,7 @@ export let fetchMyCourses=()=>{
 
 
 //显示教练需要教学的课
-export let fetchCoursesOfCoach=(creatorId)=>{
+export let fetchCoursesByCreatorId=(creatorId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
@@ -147,16 +147,18 @@ export let onCoursesUpdate=(courses)=>{
     }
 }
 
-export let onCoursesOfCoachUpdate=(coursesOfCoach)=>{
+export let onCoursesOfCoachUpdate=(courses)=>{
     return (dispatch,getState)=>{
         dispatch({
             type:ON_COURSES_OF_COACH_UPDATE,
             payload:{
-                coursesOfCoach
+                courses
             }
         })
     }
 }
+
+
 
 
 //拉取定制

@@ -465,10 +465,10 @@ class BadmintonCourseSignUp extends Component {
                                               };
                                               this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{
                                                   if(json.re==1){
-                                                     /* Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
-                                                          this.goBack();
-                                                          this.props.setMyCourseList();
-                                                      }}]);*/
+                                                      Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
+                                                          /*this.goBack();
+                                                          this.props.setMyCourseList();*/
+                                                      }}]);
                                                       //this.navigate2BadmintonCoursePay();
                                                       var pay=this.state.pay;
                                                       pay.payType = '1';
@@ -490,7 +490,7 @@ class BadmintonCourseSignUp extends Component {
                                           }
                                       }}
                     >
-                        <Text style={{color:'#fff',fontWeight:'bold'}}>购买</Text>
+                        <Text style={{color:'#fff',fontWeight:'bold'}}>报名</Text>
                     </TouchableOpacity>
                 </View>
                 </View>
