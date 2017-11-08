@@ -424,7 +424,7 @@ class BadmintonCourseRecord extends Component {
     componentDidMount()
     {
         InteractionManager.runAfterInteractions(() => {
-            this.props.dispatch(fetchCoursesByCreatorId(creatorId)).then((json)=>{
+            this.props.dispatch(fetchCoursesByCreatorId(this.props.creatorId)).then((json)=>{
                 if(json.re==1)
                 {
                     this.props.dispatch(onCoursesOfCoachUpdate(json.data))

@@ -9,10 +9,12 @@ import {
     ON_MY_COURSES_UPDATE,
     DISABLE_MY_COURSES_ONFRESH,
     ON_CUSTOM_COURSE_UPDATE,
-
     ENABLE_MY_CUSTOM_COURSES_ONFRESH,
     DISABLE_MY_CUSTOM_COURSES_ONFRESH,
-    SET_MY_CUSTOM_COURSES
+    SET_MY_CUSTOM_COURSES,
+    DISABLE_COURSES_OF_COACH_ONFRESH,
+    ENABLE_COURSES_OF_COACH_ONFRESH,
+    SET_COURSES_OF_COACH
 } from '../constants/CourseConstants'
 
 //拉取个人已报名课程
@@ -59,7 +61,13 @@ export let fetchCoursesByCreatorId=(creatorId)=>{
                     creatorId:creatorId
                 }
             }).then((json)=>{
-                resolve(json)
+                if(json.re==1)
+                {
+                    var coursesOfCoach=json.data;
+                    dispatch(onCoursesOfCoachUpdate(coursesOfCoach));
+                    resolve({re:1,data:coursesOfCoach})
+                   //resolve(json);
+                }
 
             }).catch((e)=>{
                 alert(e);
@@ -67,6 +75,12 @@ export let fetchCoursesByCreatorId=(creatorId)=>{
             })
 
         })
+    }
+}
+export let setcoursesOfCoach=(coursesOfCoach)=>{
+    return {
+        type:SET_COURSES_OF_COACH,
+        coursesOfCoach:coursesOfCoach
     }
 }
 
@@ -151,9 +165,7 @@ export let onCoursesOfCoachUpdate=(courses)=>{
     return (dispatch,getState)=>{
         dispatch({
             type:ON_COURSES_OF_COACH_UPDATE,
-            payload:{
-                courses
-            }
+            coursesOfCoach:courses
         })
     }
 }
@@ -383,7 +395,17 @@ export let addBadmintonClassMermberInfo=(info)=>{
         })
     }
 }
+export let enableCoursesOfCoachOnFresh=()=>{
+    return {
+        type:ENABLE_COURSES_OF_COACH_ONFRESH,
+    }
+}
 
+export let disableCoursesOfCoachOnFresh=()=>{
+    return {
+        type:DISABLE_COURSES_OF_COACH_ONFRESH,
+    }
+}
 //发布用户定制课程
 export let distributeCustomerPlan=(plan,remark)=>{
     return (dispatch,getState)=>{
