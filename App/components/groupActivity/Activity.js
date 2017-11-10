@@ -12,7 +12,8 @@ import {
     TouchableOpacity,
     RefreshControl,
     Animated,
-    Easing
+    Easing,
+    ToastAndroid
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -25,11 +26,14 @@ import MyActivity from './MyActivity';
 import ActivityDetail from './ActivityDetail';
 import ActivityPay from './ActivityPay';
 import ChooseField from './ChooseField';
+import GroupJPush from './GroupJPush';
 import {
     fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity,fetchEventMemberList,exitActivity,exitFieldTimeActivity
 } from '../../action/ActivityActions';
 
 import {getAccessToken,} from '../../action/UserActions';
+import WechatShare from '../WechatShare';
+var WeChat=require('react-native-wechat');
 
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
 /**
@@ -158,24 +162,27 @@ class Activity extends Component {
             alert('该活动人数已满！');
 
         }else{
-            this.props.dispatch(signUpActivity(event.eventId)).then((json)=>{
-                if(json.re==1){
-                    Alert.alert('信息','报名成功,是否立即支付？',[{text:'是',onPress:()=>{
 
-                        this.navigate2ActivityPay(event);
-                        this.setMyActivityList();
-                    }},
-                        {text:'否',onPress:()=>{
-                           // this.goBack();
-                            this.setMyActivityList();
-                        }},
-                    ]);
-                }else{
-                    if(json.re==-100){
-                        this.props.dispatch(getAccessToken(false));
-                    }
-                }
-            })
+            this.navigate2ActivityPay(event);
+            this.setMyActivityList();
+            // this.props.dispatch(signUpActivity(event.eventId)).then((json)=>{
+            //     if(json.re==1){
+            //         Alert.alert('信息','报名成功,是否立即支付？',[{text:'是',onPress:()=>{
+            //
+            //             this.navigate2ActivityPay(event);
+            //             this.setMyActivityList();
+            //         }},
+            //             {text:'否',onPress:()=>{
+            //                // this.goBack();
+            //                 this.setMyActivityList();
+            //             }},
+            //         ]);
+            //     }else{
+            //         if(json.re==-100){
+            //             this.props.dispatch(getAccessToken(false));
+            //         }
+            //     }
+            // })
         }
     }
 
@@ -255,6 +262,8 @@ class Activity extends Component {
         }else{
             var eventNowMemNum=members.length;
         }
+
+        var flag=1;
         var row=(
             <View style={{flex:1,backgroundColor:'#fff',marginTop:5,marginBottom:5,}}>
                 <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
@@ -281,21 +290,16 @@ class Activity extends Component {
                     }
 
 
-                    {/*                    {
-                     rowData.==0?
+
+
                      <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
                      onPress={()=>{
-                     this.navigate2ActivityDetail(rowData,'公开活动');
+                     this.sharetoPyq(rowData);
                      }}>
-                     <Text style={{marginRight:5,color:'#66CDAA'}}>详情</Text>
+                     <Text style={{marginRight:5,color:'#66CDAA'}}>分享</Text>
                      <Icon name={'angle-right'} size={25} color="#66CDAA"/>
-                     </TouchableOpacity>:
-                     <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
-                     >
-                     <Text style={{marginRight:5,color:'#f00'}}>活动过期</Text>
                      </TouchableOpacity>
 
-                     }*/}
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
                         {
                             rowData.money!=0 && rowData.money!=null && rowData.money!=undefined && rowData.isSignUp==1?
@@ -400,11 +404,20 @@ class Activity extends Component {
                             <View>
                             {
                                 rowData.isChooseYardTime==1?
+                                <View >
+                                    {
+                                        rowData.isChooseYardTime==1?
                                 <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
                     ,borderRadius:6}}
                                                   onPress={()=>{this.navigate2ActivityChooseField(rowData)}}>
                                     <Text style={{color:'#f00',fontSize:12}}>我要报名</Text>
                                 </TouchableOpacity>:
+                                    <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}>
+                                        <Text style={{color:'#f00',fontSize:12}}>我要报名</Text>
+                                    </TouchableOpacity>
+                                    }
+                                </View>:
                                     <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
                     ,borderRadius:6}}
                                                       onPress={()=>{this.signUpActivity(rowData,eventNowMemNum)}}>
@@ -470,13 +483,32 @@ class Activity extends Component {
 
                     {/*</View>*/}
 
-
-
-
                 </View>
+
+
+
             </View>
         );
         return row;
+    }
+
+    sharetoPyq(rowData){
+        WeChat.isWXAppInstalled().then((isInstalled) => {
+            if (isInstalled) {
+                WeChat.shareToTimeline({
+                    type: 'news',
+                    title:rowData.eventName,
+                    description:'活动'+rowData.eventName+'在'+rowData.eventPlaceName+'举行，'+'活动时间为'+rowData.startTimeStr+'---'+rowData.endTimeStr,
+                    thumbImage:'https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike72%2C5%2C5%2C72%2C24/sign=f96438a8b1389b502cf2e800e45c8eb8/d043ad4bd11373f04db74d29ac0f4bfbfaed04ff.jpg',
+                    webpageUrl:'http://211.87.225.204:8080/badmintionhot/ShareTimeLine.html',
+                })
+                    .catch((error) => {
+                        console(error.message);
+                    });
+            } else {
+                console('没有安装微信软件，请您安装微信之后再试');
+            }
+        });
     }
 
     fetchData(){
@@ -502,6 +534,8 @@ class Activity extends Component {
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
             signupedShow:false,
+
+
         }
     }
 
