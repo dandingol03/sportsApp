@@ -167,8 +167,6 @@ class SexModal extends Component{
                         <Text style={{color:'#fff',}}>确认</Text>
                     </TouchableOpacity>
                 </View>
-
-
             </View>
         );
     }
