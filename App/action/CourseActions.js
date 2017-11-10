@@ -271,6 +271,38 @@ export let distributeCourse=(course,venue,memberId,demandId)=>{
     }
 }
 
+export let modifyCourse=(course,venue,memberId,demandId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/modifyCourse',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    info:{
+                        course,
+                        venue,
+                        memberId,
+                        demandId,
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+
 export let fetchClassSchedule=(classId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {

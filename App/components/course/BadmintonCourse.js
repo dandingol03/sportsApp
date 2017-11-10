@@ -22,6 +22,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import TextInputWrapper from 'react-native-text-input-wrapper'
 import CreateBadmintonCourse from './CreateBadmintonCourse';
+import BadmintonCourseRecord from './BadmintonCourseRecord'
 import CreateCustomerPlan from './CreateCustomerPlan';
 import CustomerCourseList from './CustomerCourseList';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
@@ -336,7 +337,7 @@ class BadmintonCourse extends Component {
                                 }
                                  if(i==3)
                                  {
-                                     this.navigate2CourseRecord();
+                                     this.navigate2CourseRecord(this.props.creatorId);
                                  }
 
                              }else{
@@ -454,16 +455,20 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = (state, ownProps) => {
-
+//const mapStateToProps = (state, ownProps) => {
+/*
     const props = {
         userType: state.user.usertype.perTypeCode,
         courses:state.course.courses,
         creatorId:state.user.personInfo.personId
     }
     return props
-}
+}*/
+//export default connect(mapStateToProps)(BadmintonCourse);
 
-
-export default connect(mapStateToProps)(BadmintonCourse);
-
+module.exports = connect(state=>({
+    userType: state.user.usertype.perTypeCode,
+    creatorId:state.user.personInfo.personId,
+    courses:state.course.courses
+    })
+)(BadmintonCourse);

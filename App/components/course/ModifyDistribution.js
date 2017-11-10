@@ -33,11 +33,10 @@ import SelectVenue from '../../components/venue/SelectVenue';
 const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 const scaleAnimation = new ScaleAnimation();
 const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
-
 import{
-    distributeCourse
+    distributeCourse,
+    modifyCourse
 } from '../../action/CourseActions';
-
 import {getAccessToken,} from '../../action/UserActions';
 
 class ModifyBadmintonCourse extends Component{
@@ -69,7 +68,6 @@ class ModifyBadmintonCourse extends Component{
     {
         var place = coursePlace;
         place.unitId = parseInt(coursePlace.unitId);
-
         this.setState({venue:place});
 
     }
@@ -157,12 +155,15 @@ class ModifyBadmintonCourse extends Component{
         this.state={
             dialogShow: false,
             modalVisible:false,
-            course:{courseName:null,maxNumber:null,classCount:null,cost:null,costType:null,detail:null,coursePlace:null,unitId:null,scheduleDes:''},
+            course:{courseId:this.props.course.courseId,courseName:this.props.course.courseName,maxNumber:this.props.course.maxNumber,
+                classCount:this.props.course.classCount,cost:this.props.course.cost,
+                costType:this.props.course.costType,detail:this.props.course.detail,coursePlace:this.props.course.coursePlace,unitId:this.props.course.unitId,scheduleDes:this.props.course.scheduleDes},
             doingFetch: false,
             isRefreshing: false,
             time:null,
             timeList:[],
             costTypeButtons:['取消','按人支付','按小时支付','按班支付'],
+            venue:this.props.venue
         }
         this.showScaleAnimationDialog = this.showScaleAnimationDialog.bind(this);
     }
@@ -219,7 +220,7 @@ class ModifyBadmintonCourse extends Component{
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
                             <TextInputWrapper
-                                placeholderTextColor='#888'
+                                placeholderTextColor='#000'
                                 textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
                                 placeholder={this.props.course.courseName}
                                 val={this.state.course.className}
@@ -242,9 +243,9 @@ class ModifyBadmintonCourse extends Component{
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
                             <TextInputWrapper
-                                placeholderTextColor='#888'
+                                placeholderTextColor='#000'
                                 textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder={this.props.course.classCount}
+                                placeholder={this.props.course.maxNumber+''}
                                 val={this.state.course.maxNumber}
                                 onChangeText={
                                     (value)=>{
@@ -260,7 +261,7 @@ class ModifyBadmintonCourse extends Component{
                     {/*支付方式*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
-                            <Text>收费类型：</Text>
+                            <Text style={{color:'#000',fontSize:13}}>收费类型：</Text>
                         </View>
                         <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
@@ -268,10 +269,10 @@ class ModifyBadmintonCourse extends Component{
                             {
                                 this.state.course.costTypeStr==null?
                                     <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#888',fontSize:13}}>请选择支付方式：</Text>
+                                        <Text style={{color:'#000',fontSize:13}}>{this.state.costTypeButtons[this.state.course.costType]}</Text>
                                     </View> :
                                     <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#444',fontSize:13}}>{this.state.course.costTypeStr}</Text>
+                                        <Text style={{color:'#000',fontSize:13}}>{this.state.costTypeButtons[this.state.course.costType]}</Text>
                                     </View>
 
                             }
@@ -302,8 +303,8 @@ class ModifyBadmintonCourse extends Component{
                             borderRadius:10}}>
                             <TextInputWrapper
                                 placeholderTextColor='#888'
-                                textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入课程花费"
+                                textInputStyle={{marginLeft:20,fontSize:13,color:'#000'}}
+                                placeholder={this.props.course.cost+''}
                                 val={this.state.course.cost}
                                 onChangeText={
                                     (value)=>{
@@ -326,7 +327,7 @@ class ModifyBadmintonCourse extends Component{
                             <TextInputWrapper
                                 placeholderTextColor='#888'
                                 textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入课次"
+                                placeholder={this.props.course.classCount+''}
                                 val={this.state.course.classCount}
                                 onChangeText={
                                     (value)=>{
@@ -349,7 +350,7 @@ class ModifyBadmintonCourse extends Component{
                             <TextInputWrapper
                                 placeholderTextColor='#888'
                                 textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入课程说明"
+                                placeholder={this.props.course.detail+''}
                                 val={this.state.course.detail}
                                 onChangeText={
                                     (value)=>{
@@ -375,8 +376,8 @@ class ModifyBadmintonCourse extends Component{
                                                   onPress={()=>{
                                                       this.navigate2VenueInspect();
                                                   }}>
-                                    <Text style={{marginLeft:20,fontSize:13,color:'#888'}}>
-                                        请选择课程场馆
+                                    <Text style={{marginLeft:20,fontSize:13,color:'#000'}}>
+                                        {this.props.course.unitName}
                                     </Text>
                                 </TouchableOpacity>:
                                 <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
@@ -412,7 +413,7 @@ class ModifyBadmintonCourse extends Component{
                                 this.setState({course:Object.assign(this.state.course,{scheduleDes:text})});
                             }}
                             value={this.state.course.scheduleDes}
-                            placeholder='请描述上课时间...'
+                            placeholder={this.props.course.scheduleDes}
                             placeholderTextColor="#aaa"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -431,12 +432,11 @@ class ModifyBadmintonCourse extends Component{
                         justifyContent:'center'}}
                                       onPress={()=>{
                                           if(this.props.memberId!==null&&this.props.memberId!==undefined){
-                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,parseInt(this.props.memberId),parseInt(this.props.demandId)))
+                                              this.props.dispatch(modifyCourse(this.props.course,this.state.venue,parseInt(this.props.memberId),parseInt(this.props.demandId)))
                                                   .then((json)=>{
                                                       if(json.re==1){
-                                                          Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
+                                                          Alert.alert('信息','课程编辑成功',[{text:'确认',onPress:()=>{
                                                               this.goBack();
-                                                              this.props.setMyCourseList();
                                                           }}]);
                                                       }else{
                                                           if(json.re==-100){
@@ -445,12 +445,11 @@ class ModifyBadmintonCourse extends Component{
                                                       }
                                                   })
                                           }else{
-                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,null))
+                                              this.props.dispatch(modifyCourse(this.state.course,this.state.venue,null))
                                                   .then((json)=>{
                                                       if(json.re==1){
-                                                          Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
+                                                          Alert.alert('信息','课程编辑成功',[{text:'确认',onPress:()=>{
                                                               this.goBack();
-                                                              this.props.setMyCourseList();
                                                           }}]);
                                                       }else{
                                                           if(json.re==-100){
@@ -461,7 +460,7 @@ class ModifyBadmintonCourse extends Component{
                                           }
 
                                       }}>
-                        <Text style={{color:'#fff',fontSize:15}}>发布</Text>
+                        <Text style={{color:'#fff',fontSize:15}}>确定修改</Text>
                     </TouchableOpacity>
                 </View>
 
