@@ -33,18 +33,18 @@ import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native
 var { height, width } = Dimensions.get('window');
 
 import {
-    fetchCourses,
-    fetchCoursesByCreatorId,
-    onCoursesOfCoachUpdate,
+    onStudentsCourseRecordUpdate,
     onCoursesUpdate,
-    disableCoursesOfCoachOnFresh, enableCoursesOfCoachOnFresh,
+    disableStudentsCourseRecordOnFresh,
+    enableStudentsCourseRecordOnFresh,
+    fetchStudentsCourseRecord
 } from '../../action/CourseActions';
 
 import {getAccessToken,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 
-class BadmintonCourseRecord extends Component {
+class StudentsCourseRecord extends Component {
 
     //导航至定制（for 教练）
     navigate2BadmintonCourseForCoach() {
@@ -101,7 +101,7 @@ class BadmintonCourseRecord extends Component {
         }
     }
 
-
+   
 
     navigate2CourseRecord()
     {
@@ -141,10 +141,10 @@ class BadmintonCourseRecord extends Component {
 
     setMyCourseList()
     {
-        this.props.dispatch(fetchCoursesByCreatorId(creatorId)).then((json)=>{
+        this.props.dispatch(fetchStudentsCourseRecord(courseId,memberId)).then((json)=>{
             if(json.re==1)
             {
-                this.props.dispatch(onCoursesOfCoachUpdate(json.data))
+                this.props.dispatch(onStudentsCourseRecordUpdate(json.data))
             }else{
                 if(json.re==-100){
                     this.props.dispatch(getAccessToken(false));
@@ -166,7 +166,7 @@ class BadmintonCourseRecord extends Component {
 
                         <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
                             <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                {rowData.courseName}
+                                学习内容{rowData.content}
                             </Text>
                         </View>
 
@@ -268,17 +268,17 @@ class BadmintonCourseRecord extends Component {
 
     }
 
-    fetchCoursesByCreatorId(creatorId){
+    fetchStudentsCourseRecord(couRseId,memberId){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
-        this.props.dispatch(fetchCoursesByCreatorId(creatorId)).then((json)=> {
+        this.props.dispatch(fetchStudentsCourseRecord(courseId,memberId)).then((json)=> {
             if(json.re==-100){
                 this.props.dispatch(getAccessToken(false));
             }
-            this.props.dispatch(disableCoursesOfCoachOnFresh());
+            this.props.dispatch(disableStudentsCourseRecordOnFresh());
             this.setState({doingFetch:false,isRefreshing:false})
         }).catch((e)=>{
-            this.props.dispatch(disableCoursesOfCoachOnFresh());
+            this.props.dispatch(disableStudentsCourseRecordOnFresh());
             this.setState({doingFetch:false,isRefreshing:false});
             alert(e)
         });
@@ -299,7 +299,7 @@ class BadmintonCourseRecord extends Component {
                 },           // Configuration
             ).start();
         }.bind(this), 500);
-        this.props.dispatch(enableCoursesOfCoachOnFresh());
+        this.props.dispatch(enableStudentsCourseRecordOnFresh());
 
     }
 
@@ -322,21 +322,21 @@ class BadmintonCourseRecord extends Component {
     }
 
     render() {
-        var coursesOfCoachListView=null;
-        var {coursesOfCoach,coursesOfCoachOnFresh}=this.props;
+        var studentsCourseRecordListView=null;
+        var {studentsCourseRecord,studentsCourseRecordOnFresh}=this.props;
         //var competitionList=this.state.competitionList;
-        if(coursesOfCoachOnFresh==true)
+        if(studentsCourseRecordOnFresh==true)
         {
             if(this.state.doingFetch==false)
                 this.fetchCoursesByCreatorId(this.props.creatorId);
         }else{
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-            if (coursesOfCoach !== undefined && coursesOfCoach !== null && coursesOfCoach.length > 0)
+            if (studentsCourseRecord !== undefined && studentsCourseRecord !== null && studentsCourseRecord.length > 0)
             {
-                coursesOfCoachListView = (
+                studentsCourseRecordListView = (
                     <ListView
                         automaticallyAdjustContentInsets={false}
-                        dataSource={ds.cloneWithRows(coursesOfCoach)}
+                        dataSource={ds.cloneWithRows(studentsCourseRecord)}
                         renderRow={this.renderRow.bind(this)}
                     />
                 );
@@ -364,9 +364,9 @@ class BadmintonCourseRecord extends Component {
                                     />
                                 }
                             >
-                                {coursesOfCoachListView}
+                                {studentsCourseRecordListView}
                                 {
-                                    coursesOfCoachListView==null?
+                                    studentsCourseRecordListView==null?
                                         null:
                                         <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
                                             <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
@@ -426,9 +426,9 @@ export default connect(mapStateToProps)(MyDistribution);
 */
 
 module.exports = connect(state=>({
-        userType: state.user.usertype.perTypeCode,
-        coursesOfCoach:state.course.coursesOfCoach,
-        coursesOfCoachOnFresh:state.course.coursesOfCoachOnFresh,
-        creatorId:state.user.personInfo.personId
+    userType: state.user.usertype.perTypeCode,
+    studentsCourseRecord:state.course.studentsCourseRecord,
+    studentsCourseRecordOnFresh:state.course.studentsCourseRecordOnFresh,
+    creatorId:state.user.personInfo.personId
     })
-)(BadmintonCourseRecord);
+)(StudentsCourseRecord);

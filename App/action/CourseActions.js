@@ -14,8 +14,15 @@ import {
     SET_MY_CUSTOM_COURSES,
     DISABLE_COURSES_OF_COACH_ONFRESH,
     ENABLE_COURSES_OF_COACH_ONFRESH,
-    SET_COURSES_OF_COACH
+    ENABLE_STUDENTS_ONFRESH,
+    DISABLE_STUDENTS_ONFRESH,
+    ON_STUDENTS_UPDATE,
+    DISABLE_STUDENTS_COURSE_RECORD_ONFRESH,
+    ENABLE_STUDENTS_COURSE_RECORD_ONFRESH
+
+
 } from '../constants/CourseConstants'
+import course from "../reducers/CourseReducer";
 
 //拉取个人已报名课程
 export let fetchMyCourses=()=>{
@@ -112,18 +119,41 @@ export let onMyCoursesUpdate=(myCourses)=>{
         dispatch({
             type:ON_MY_COURSES_UPDATE,
             payload:{
-                myCourses
+                myCourses:myCourses
             }
         })
     }
 }
 
+export let onStudentsUpdate=(students)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_STUDENTS_UPDATE,
+                students:students
+
+        })
+    }
+}
+export let onStudentsCourseRecordUpdate=(studentsCourseRecord)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_STUDENTS_COURSE_RECORD_UPDATE,
+            studentsCourseRecord:studentsCourseRecord
+
+        })
+    }
+}
+
+export let disableStudentsCourseRecordOnFresh=()=>{
+    return {
+        type:DISABLE_STUDNETS_COURSE_RECORD_ONFRESH,
+    }
+}
 export let disableMyCoursesOnFresh=()=>{
     return {
         type:DISABLE_MY_COURSES_ONFRESH,
     }
 }
-
 //拉取课程
 export let fetchCourses=()=>{
     return (dispatch,getState)=>{
@@ -328,6 +358,72 @@ export let fetchClassSchedule=(classId)=>{
     }
 }
 
+export let fetchStudents=(courseId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/getBadmintonCourseMemberFormListOfCourse',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    courseId:courseId
+                }
+            }).then((json)=>{
+                if(json.re==1)
+                {
+                    var students=json.data;
+                    dispatch(onStudentsUpdate(students));
+                    resolve({re:1,data:students})
+                    //resolve(json);
+                }
+
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let fetchStudentsCourseRecord=(courseId,memberId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/getCourseMemberClassRecordFormListOfMember',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    courseId:courseId,
+                    memberId:memberId
+                }
+            }).then((json)=>{
+                if(json.re==1)
+                {
+                    var students=json.data;
+                    dispatch(onStudentsCourseRecordUpdate(studentsCourseRecord));
+                    resolve({re:1,data:studentsCourseRecord})
+                    //resolve(json);
+                }
+
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+
 export let fetchPersonRelative =()=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
@@ -427,17 +523,34 @@ export let addBadmintonClassMermberInfo=(info)=>{
         })
     }
 }
+
 export let enableCoursesOfCoachOnFresh=()=>{
     return {
         type:ENABLE_COURSES_OF_COACH_ONFRESH,
     }
 }
 
+export let enableStudentsOnFresh=()=>{
+    return {
+        type:ENABLE_STUDENTS_ONFRESH,
+    }
+}
+export let enableStudentsCourseRecordOnFresh=()=>{
+    return {
+        type:ENABLE_STUDENTS_ONFRESH,
+    }
+}
 export let disableCoursesOfCoachOnFresh=()=>{
     return {
         type:DISABLE_COURSES_OF_COACH_ONFRESH,
     }
 }
+export let disableStudentsOnFresh=()=>{
+    return {
+        type:DISABLE_STUDENTS_ONFRESH,
+    }
+}
+
 //发布用户定制课程
 export let distributeCustomerPlan=(plan,remark)=>{
     return (dispatch,getState)=>{
