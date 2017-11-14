@@ -236,10 +236,10 @@ class StudentPayInformation extends Component {
 
     }
 
-    fetchStudentsPay(courseId){
+    fetchStudentsPay(courseId,memberId){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
-        this.props.dispatch(fetchStudentsPay(courseId)).then((json)=> {
+        this.props.dispatch(fetchStudentsPay(courseId,memberId)).then((json)=> {
             if(json.re==-100){
                 this.props.dispatch(getAccessToken(false));
             }
@@ -296,7 +296,7 @@ class StudentPayInformation extends Component {
         if(studentsPayOnFresh==true)
         {
             if(this.state.doingFetch==false)
-                this.fetchStudentsPay(this.props.courseId);
+                this.fetchStudentsPay(this.props.courseId,this.props.memberId);
         }else{
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             if (studentsPay !== undefined && studentsPay !== null && studentsPay.length > 0)
@@ -315,7 +315,7 @@ class StudentPayInformation extends Component {
 
         return (
             <View style={styles.container}>
-                <Toolbar width={width} title="我的学生" actions={[]} navigator={this.props.navigator}>
+                <Toolbar width={width} title="缴费记录" actions={[]} navigator={this.props.navigator}>
 
                     {<View style={{flex:5,backgroundColor:'#eee'}}>
                         <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:5,paddingBottom:5,}}>

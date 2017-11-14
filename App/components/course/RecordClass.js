@@ -28,23 +28,19 @@ import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
-
-
 var { height, width } = Dimensions.get('window');
-
 import {
-    onStudentsCourseRecordUpdate,
-    onCoursesUpdate,
-    disableStudentsCourseRecordOnFresh,
-    enableStudentsCourseRecordOnFresh,
-    fetchStudentsCourseRecord
+    onCourseClassUpdate,
+    disableCourseClassOnFresh,
+    enableCourseClassOnFresh,
+    fetchCourseClass
 } from '../../action/CourseActions';
 
 import {getAccessToken,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 
-class StudentsCourseRecord extends Component {
+class RecordClass extends Component {
 
     //导航至定制（for 教练）
     navigate2BadmintonCourseForCoach() {
@@ -101,7 +97,7 @@ class StudentsCourseRecord extends Component {
         }
     }
 
-   
+
 
     navigate2CourseRecord()
     {
@@ -119,16 +115,16 @@ class StudentsCourseRecord extends Component {
 
 
     navigate2StudentInformation(courseId){
-    const { navigator } = this.props;
+        const { navigator } = this.props;
         if (navigator) {
-        navigator.push({
-        name: 'StudentInformation',
-        component: StudentInformation,
-        params: {
-                 courseId:courseId
-              }
-         })
-      }
+            navigator.push({
+                name: 'StudentInformation',
+                component: StudentInformation,
+                params: {
+                    courseId:courseId
+                }
+            })
+        }
     }
 
 
@@ -141,10 +137,10 @@ class StudentsCourseRecord extends Component {
 
     setMyCourseList()
     {
-        this.props.dispatch(fetchStudentsCourseRecord(courseId,memberId)).then((json)=>{
+        this.props.dispatch(fetchCourseClass(courseId,memberId)).then((json)=>{
             if(json.re==1)
             {
-                this.props.dispatch(onStudentsCourseRecordUpdate(json.data))
+                this.props.dispatch(onCourseClassUpdate(json.data))
             }else{
                 if(json.re==-100){
                     this.props.dispatch(getAccessToken(false));
@@ -211,17 +207,17 @@ class StudentsCourseRecord extends Component {
 
     }
 
-    fetchStudentsCourseRecord(courseId,memberId){
+    fetchCourseClass(courseId){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
-        this.props.dispatch(fetchStudentsCourseRecord(courseId,memberId)).then((json)=> {
+        this.props.dispatch(fetchCourseClass(courseId)).then((json)=> {
             if(json.re==-100){
                 this.props.dispatch(getAccessToken(false));
             }
-            this.props.dispatch(disableStudentsCourseRecordOnFresh());
+            this.props.dispatch(disableCourseClassOnFresh());
             this.setState({doingFetch:false,isRefreshing:false})
         }).catch((e)=>{
-            this.props.dispatch(disableStudentsCourseRecordOnFresh());
+            this.props.dispatch(disableCourseClassOnFresh());
             this.setState({doingFetch:false,isRefreshing:false});
             alert(e)
         });
@@ -242,7 +238,7 @@ class StudentsCourseRecord extends Component {
                 },           // Configuration
             ).start();
         }.bind(this), 500);
-        this.props.dispatch(enableStudentsCourseRecordOnFresh());
+        this.props.dispatch(enableCourseClassOnFresh());
 
     }
 
@@ -265,21 +261,21 @@ class StudentsCourseRecord extends Component {
     }
 
     render() {
-        var studentsCourseRecordListView=null;
-        var {studentsCourseRecord,studentsCourseRecordOnFresh}=this.props;
+        var ourseClassListView=null;
+        var {courseClass,courseClassOnFresh}=this.props;
         //var competitionList=this.state.competitionList;
-        if(studentsCourseRecordOnFresh==true)
+        if(courseClassOnFresh==true)
         {
             if(this.state.doingFetch==false)
-                this.fetchStudentsCourseRecord(this.props.courseId,this.props.memberId);
+                this.fetchcourseClass(this.props.courseId);
         }else{
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-            if (studentsCourseRecord !== undefined && studentsCourseRecord !== null && studentsCourseRecord.length > 0)
+            if (courseClass !== undefined && courseClass !== null && courseClass.length > 0)
             {
-                studentsCourseRecordListView = (
+                courseClassListView = (
                     <ListView
                         automaticallyAdjustContentInsets={false}
-                        dataSource={ds.cloneWithRows(studentsCourseRecord)}
+                        dataSource={ds.cloneWithRows(courseClass)}
                         renderRow={this.renderRow.bind(this)}
                     />
                 );
@@ -307,9 +303,9 @@ class StudentsCourseRecord extends Component {
                                     />
                                 }
                             >
-                                {studentsCourseRecordListView}
+                                {courseClassListView}
                                 {
-                                    studentsCourseRecordListView==null?
+                                    courseClassListView==null?
                                         null:
                                         <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
                                             <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
@@ -369,9 +365,9 @@ export default connect(mapStateToProps)(MyDistribution);
 */
 
 module.exports = connect(state=>({
-    userType: state.user.usertype.perTypeCode,
-    studentsCourseRecord:state.course.studentsCourseRecord,
-    studentsCourseRecordOnFresh:state.course.studentsCourseRecordOnFresh,
-    creatorId:state.user.personInfo.personId
+        userType: state.user.usertype.perTypeCode,
+        courseClass:state.course.courseClass,
+        courseClassOnFresh:state.course.courseClassOnFresh,
+        creatorId:state.user.personInfo.personId
     })
-)(StudentsCourseRecord);
+)(RecordClass);

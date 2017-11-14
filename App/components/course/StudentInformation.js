@@ -25,6 +25,8 @@ import CreateBadmintonCourse from './CreateBadmintonCourse';
 import CreateCustomerPlan from './CreateCustomerPlan';
 import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
+import StudentsCourseRecord from './StudentsCourseRecord';
+import StudentPayInformation from './StudentPayInformation';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
@@ -114,6 +116,20 @@ class StudentInformation extends Component {
         }
     }
 
+    navigate2StudentPayInformation(courseId,memberId){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'StudentPayInformation',
+                component: StudentPayInformation,
+                params: {
+                    courseId:courseId,
+                    memberId:memberId
+                }
+            })
+        }
+    }
+
     navigate2StudentsCourseRecord(courseId,memberId)
     {
         const { navigator } = this.props;
@@ -122,6 +138,8 @@ class StudentInformation extends Component {
                 name: 'StudentsCourseRecord',
                 component: StudentsCourseRecord,
                 params: {
+                    courseId:courseId,
+                    memberId:memberId
 
                 }
             })
@@ -248,7 +266,7 @@ class StudentInformation extends Component {
 
 
                                       onPress={() => {
-                                          this.navigate2StudentInformation(rowData.courseId);
+                                          this.navigate2StudentPayInformation(rowData.courseId,rowData.memberId);
                                       }
                                       }>
                         <Text style={{color: '#66CDAA', fontSize: 12}}>缴费记录</Text>

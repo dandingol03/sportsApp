@@ -18,7 +18,14 @@ import {
     DISABLE_STUDENTS_ONFRESH,
     ON_STUDENTS_UPDATE,
     DISABLE_STUDENTS_COURSE_RECORD_ONFRESH,
-    ENABLE_STUDENTS_COURSE_RECORD_ONFRESH
+    ENABLE_STUDENTS_COURSE_RECORD_ONFRESH,
+    ON_STUDENTS_COURSE_RECORD_UPDATE,
+    ENABLE_STUDENTS_PAY_ONFRESH,
+    DISABLE_STUDENTS_PAY_ONFRESH,
+    ON_STUDENTS_PAY_UPDATE,
+    ON_COURSE_CLASS_UPDATE,
+    ENABLE_COURSE_CLASS_ONFRESH,
+    DISABLE_COURSE_CLASS_ONFRESH,
 
 
 } from '../constants/CourseConstants'
@@ -84,6 +91,40 @@ export let fetchCoursesByCreatorId=(creatorId)=>{
         })
     }
 }
+
+export let fetchCourseClass=(courseId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/getBadmintonCourseClassFormListOfCourse',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    courseId:courseId
+                }
+            }).then((json)=>{
+                if(json.re==1)
+                {
+                    var courseClass=json.data;
+                    dispatch(onCourseClassUpdate(courseClass));
+                    resolve({re:1,data:courseClass})
+                    //resolve(json);
+                }
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+
 export let setcoursesOfCoach=(coursesOfCoach)=>{
     return {
         type:SET_COURSES_OF_COACH,
@@ -144,14 +185,31 @@ export let onStudentsCourseRecordUpdate=(studentsCourseRecord)=>{
     }
 }
 
-export let disableStudentsCourseRecordOnFresh=()=>{
-    return {
-        type:DISABLE_STUDNETS_COURSE_RECORD_ONFRESH,
+export let onCourseClassUpdate=(courseClass)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_COURSE_CLASS_UPDATE,
+            courseClass:courseClass
+
+        })
     }
 }
+
+export let disableStudentsCourseRecordOnFresh=()=>{
+    return {
+        type:DISABLE_STUDENTS_COURSE_RECORD_ONFRESH,
+    }
+}
+
+
 export let disableMyCoursesOnFresh=()=>{
     return {
         type:DISABLE_MY_COURSES_ONFRESH,
+    }
+}
+export let disableCourseClassOnFresh=()=>{
+    return {
+        type:DISABLE_COURSE_CLASS_ONFRESH,
     }
 }
 //拉取课程
@@ -214,6 +272,12 @@ export let setMyCustomCourses=(myCustomCourses)=>{
 export let enableMyCustomCoursesOnFresh=()=>{
     return {
         type:ENABLE_MY_CUSTOM_COURSES_ONFRESH,
+    }
+}
+
+export let enableCourseClassOnFresh=()=>{
+    return {
+        type:ENABLE_COURSE_CLASS_ONFRESH,
     }
 }
 
@@ -407,7 +471,7 @@ export let fetchStudentsCourseRecord=(courseId,memberId)=>{
             }).then((json)=>{
                 if(json.re==1)
                 {
-                    var students=json.data;
+                    var studentsCourseRecord=json.data;
                     dispatch(onStudentsCourseRecordUpdate(studentsCourseRecord));
                     resolve({re:1,data:studentsCourseRecord})
                     //resolve(json);
@@ -537,7 +601,7 @@ export let enableStudentsOnFresh=()=>{
 }
 export let enableStudentsCourseRecordOnFresh=()=>{
     return {
-        type:ENABLE_STUDENTS_ONFRESH,
+        type:ENABLE_STUDENTS_COURSE_RECORD_ONFRESH,
     }
 }
 export let disableCoursesOfCoachOnFresh=()=>{
@@ -671,5 +735,62 @@ export let cancleCustomCourse=(courseId)=>{
             })
 
         });
+    }
+}
+
+export let fetchStudentsPay=(courseId,memberId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/getBadmintonCoursePayFormListOfMember',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    courseId:courseId,
+                    memberId:memberId
+                }
+            }).then((json)=>{
+                if(json.re==1)
+                {
+                    var studentsPay=json.data;
+                    dispatch(onStudentsUpdate(studentsPay));
+                    resolve({re:1,data:studentsPay})
+                    //resolve(json);
+                }
+
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+
+
+        })
+    }
+}
+
+export let enableStudentsPayOnFresh=()=>{
+    return {
+        type:ENABLE_STUDENTS_PAY_ONFRESH,
+    }
+}
+
+export let disableStudentsPayOnFresh=()=>{
+    return {
+        type:DISABLE_STUDENTS_PAY_ONFRESH,
+    }
+}
+
+export let onStudentsPayUpdate=(studentsPay)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_STUDENTS_PAY_UPDATE,
+            studentsPay:studentsPay
+
+        })
     }
 }

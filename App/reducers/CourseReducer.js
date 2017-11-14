@@ -13,13 +13,15 @@ import {
     ENABLE_STUDENTS_ONFRESH,
     DISABLE_STUDENTS_ONFRESH,
     ON_STUDENTS_UPDATE,
-    DISABLE_STUDETNS_COURSE_RECORD_ONFRESH,
+    DISABLE_STUDENTS_COURSE_RECORD_ONFRESH,
     ENABLE_STUDENTS_COURSE_RECORD_ONFRESH,
-    ON_STUDENTS_COURSE_RECORD_UPDATE
-
-
-
-
+    ON_STUDENTS_COURSE_RECORD_UPDATE,
+    ENABLE_STUDENTS_PAY_ONFRESH,
+    DISABLE_STUDENTS_PAY_ONFRESH,
+    ON_STUDENTS_PAY_UPDATE,
+    ON_COURSE_CLASS_UPDATE,
+    ENABLE_COURSE_CLASS_ONFRESH,
+    DISABLE_COURSE_CLASS_ONFRESH,
 } from '../constants/CourseConstants';
 
 const initialState = {
@@ -37,9 +39,13 @@ const initialState = {
     studentsOnFresh:true,
     //学生的课程情况
     studentsCourseRecord:null,
-    studentsCourseRecordOnFresh:true
+    studentsCourseRecordOnFresh:true,
+     //学生付钱情况
+    studentsPay:null,
+    studentsPayOnFresh:true,
 
-
+    courseClass:courseClass,
+    courseClassOnFresh:true
 };
 
 let course = (state = initialState, action) => {
@@ -90,7 +96,7 @@ let course = (state = initialState, action) => {
             return Object.assign({}, state, {
                 studentsCourseRecordOnFresh:true
             })
-        case DISABLE_STUDETNS_COURSE_RECORD_ONFRESH:
+        case DISABLE_STUDENTS_COURSE_RECORD_ONFRESH:
             return Object.assign({}, state, {
                 studentsCourseRecordOnFresh:false
             })
@@ -121,6 +127,35 @@ let course = (state = initialState, action) => {
         case DISABLE_MY_CUSTOM_COURSES_ONFRESH:
             return Object.assign({}, state, {
                 myCustomCourseOnFresh:false
+            })
+
+        //学生缴费情况
+        case  ON_STUDENTS_PAY_UPDATE:
+            // var {coursesOfCoach}=action.payload
+            return Object.assign({}, state, {
+                studentsPay:action.studentsPay
+            })
+        case ENABLE_STUDENTS_PAY_ONFRESH:
+            return Object.assign({}, state, {
+                studentsPayOnFresh:true
+            })
+        case DISABLE_STUDENTS_PAY_ONFRESH:
+            return Object.assign({}, state, {
+                studentsPayOnFresh:false
+            })
+
+        case  ON_COURSE_CLASS_UPDATE:
+            // var {coursesOfCoach}=action.payload
+            return Object.assign({}, state, {
+                courseClass:action.courseClass
+            })
+        case ENABLE_COURSE_CLASS_ONFRESH:
+            return Object.assign({}, state, {
+                courseClassOnFresh:true
+            })
+        case DISABLE_COURSE_CLASS_ONFRESH:
+            return Object.assign({}, state, {
+                courseClassOnFresh:false
             })
 
         default:

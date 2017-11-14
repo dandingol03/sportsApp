@@ -26,10 +26,9 @@ import CreateCustomerPlan from './CreateCustomerPlan';
 import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
+import RecordClass from './RecordClass';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
-
-
 var { height, width } = Dimensions.get('window');
 
 import {
@@ -101,7 +100,18 @@ class BadmintonCourseRecord extends Component {
         }
     }
 
+    navigate2RecordClass(rowData){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name:'RecordClass',
+                component:RecordClass,
+                params: {
 
+                }
+            })
+        }
+    }
 
     navigate2CourseRecord()
     {
@@ -248,7 +258,7 @@ class BadmintonCourseRecord extends Component {
 
 
                                       onPress={() => {
-                                          this.navigate2ModifyDistribution(rowData);
+                                          this.navigate2RecordClass(rowData);
                                       }
                                       }>
                         <Text style={{color: '#66CDAA', fontSize: 12}}>课程记录</Text>
