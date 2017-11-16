@@ -158,11 +158,12 @@ class CreateBadmintonCourse extends Component{
             dialogShow: false,
             modalVisible:false,
             course:{courseName:null,maxNumber:null,classCount:null,cost:null,costType:null,detail:null,coursePlace:null,unitId:null,scheduleDes:''},
-            doingFetch: false,
+            docouingFetch: false,
             isRefreshing: false,
             time:null,
             timeList:[],
             costTypeButtons:['取消','按人支付','按小时支付','按班支付'],
+            venue:null
         }
         this.showScaleAnimationDialog = this.showScaleAnimationDialog.bind(this);
     }

@@ -26,6 +26,7 @@ import CreateCustomerPlan from './CreateCustomerPlan';
 import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
+import AddClass from './AddClass';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 var { height, width } = Dimensions.get('window');
@@ -113,6 +114,19 @@ class RecordClass extends Component {
         }
     }
 
+    navigate2ModifyClass()
+    {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'ModifyClass',
+                component: ModifyClass,
+                params: {
+
+                }
+            })
+        }
+    }
 
     navigate2StudentInformation(courseId){
         const { navigator } = this.props;
@@ -122,6 +136,31 @@ class RecordClass extends Component {
                 component: StudentInformation,
                 params: {
                     courseId:courseId
+                }
+            })
+        }
+    }
+
+    navigate2AddClass(courseId){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'AddClass',
+                component: AddClass,
+                params: {
+
+                }
+            })
+        }
+    }
+    navigate2ClassSignUp(courseId){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'ClassSignUp',
+                component: ClassSignUp,
+                params: {
+
                 }
             })
         }
@@ -160,7 +199,7 @@ class RecordClass extends Component {
 
                         <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
                             <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                学习内容{rowData.content}
+                                上课时间：{rowData.startTime}
                             </Text>
                         </View>
 
@@ -168,7 +207,7 @@ class RecordClass extends Component {
                         <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
                             <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
                             <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-                                训练地点{rowData.placeUnitName}
+                                训练地点：{rowData.uintName}
                             </Text>
                         </View>
                     </View>
@@ -183,7 +222,7 @@ class RecordClass extends Component {
 
                         <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
                             <Text style={{ color: '#fff', fontSize: 12 }}>
-                                训练时间：{rowData.classDate}
+                                实到人员：{rowData.joinCount}
                             </Text>
                         </View>
 
@@ -196,6 +235,51 @@ class RecordClass extends Component {
                     </View>
                 </View>
 
+
+
+                <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
+                    <TouchableOpacity style={{
+                        flex: 1,
+                        borderWidth: 1,
+                        borderColor: '#66CDAA',
+                        padding: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 6,
+                        marginLeft:30,
+
+                    }}
+
+
+                                      onPress={() => {
+                                          this.navigate2ModifyClass();
+                                      }
+                                      }>
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>编辑课程信息</Text>
+                    </TouchableOpacity>
+                    {<View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
+
+                    </View>}
+                    <TouchableOpacity style={{
+                        flex: 1,
+                        borderWidth: 1,
+                        borderColor: '#66CDAA',
+                        padding: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 6,
+                        marginRight:30,
+
+                    }}
+
+
+                                      onPress={() => {
+                                          this.navigate2ClassSignUp(rowData.courseId,rowData.memberId);
+                                      }
+                                      }>
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>开始上课</Text>
+                    </TouchableOpacity>
+                </View>
             </TouchableOpacity>
 
 
@@ -261,13 +345,13 @@ class RecordClass extends Component {
     }
 
     render() {
-        var ourseClassListView=null;
+        var courseClassListView=null;
         var {courseClass,courseClassOnFresh}=this.props;
         //var competitionList=this.state.competitionList;
         if(courseClassOnFresh==true)
         {
             if(this.state.doingFetch==false)
-                this.fetchcourseClass(this.props.courseId);
+                this.fetchCourseClass(this.props.courseId);
         }else{
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             if (courseClass !== undefined && courseClass !== null && courseClass.length > 0)
@@ -317,11 +401,32 @@ class RecordClass extends Component {
                         </Animated.View>
                     </View>}
 
+                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#66CDAA',
+                        position:'absolute',bottom:8}}>
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
+                            padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}>
+                            <Text style={{color:'#fff',}}>我发起的活动</Text>
+                        </TouchableOpacity>
 
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
+                            padding:10,margin:5}} onPress={()=>{this.navigate2AddClass();}}>
+                            <Text style={{color:'#fff',}}>我要添加课程</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:8,left:width*0.5-25}}>
+                        <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,
+                            borderWidth:1,borderColor:'#eee',borderRadius:50}}
+                        >
+                            <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
+                        </TouchableOpacity>
+                    </View>
 
                 </Toolbar>
 
             </View>
+
+
         )
     }
 

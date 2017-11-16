@@ -26,6 +26,9 @@ import {
     ON_COURSE_CLASS_UPDATE,
     ENABLE_COURSE_CLASS_ONFRESH,
     DISABLE_COURSE_CLASS_ONFRESH,
+    ON_CLASS_MEMBER_UPDATE,
+    DISABLE_CLASS_MEMBER_ONFRESH,
+    ENABLE_CLASS_MEMBER_ONFRESH
 
 
 } from '../constants/CourseConstants'
@@ -99,7 +102,7 @@ export let fetchCourseClass=(courseId)=>{
             var state=getState();
 
             Proxy.postes({
-                url: Config.server + '/func/allow/getBadmintonCourseClassFormListOfCourse',
+                url: Config.server + '/func/course/getBadmintonCourseClassFormListOfCourse',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -124,6 +127,70 @@ export let fetchCourseClass=(courseId)=>{
     }
 }
 
+export let addClass=(courseId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/saveOrUpdateBadmintonCourseClass',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    classId:classId
+                }
+            }).then((json)=>{
+                if(json.re==1)
+                {
+                    var courseClass=json.data;
+                    dispatch(onCourseClassUpdate(courseClass));
+                    resolve({re:1,data:courseClass})
+                    //resolve(json);
+                }
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let fetchClassMember=(courseId,classId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/getBadmintonCourseClassRecordFormListOfClass',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    courseId:courseId,
+                    classId:classId
+                }
+            }).then((json)=>{
+                if(json.re==1)
+                {
+                    var classMember=json.data;
+                    dispatch(onClassMemberUpdate(classMember));
+                    resolve({re:1,data:classMember})
+                    //resolve(json);
+                }
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
 
 export let setcoursesOfCoach=(coursesOfCoach)=>{
     return {
@@ -175,6 +242,17 @@ export let onStudentsUpdate=(students)=>{
         })
     }
 }
+
+export let onClassMemberUpdate=(classMember)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_CLASS_MEMBER_UPDATE,
+            classMember:classMember
+
+        })
+    }
+}
+
 export let onStudentsCourseRecordUpdate=(studentsCourseRecord)=>{
     return (dispatch,getState)=>{
         dispatch({
@@ -210,6 +288,12 @@ export let disableMyCoursesOnFresh=()=>{
 export let disableCourseClassOnFresh=()=>{
     return {
         type:DISABLE_COURSE_CLASS_ONFRESH,
+    }
+}
+
+export let disableClassMemberOnFresh=()=>{
+    return {
+        type:DISABLE_CLASS_MEMBER_ONFRESH,
     }
 }
 //拉取课程
@@ -776,6 +860,12 @@ export let fetchStudentsPay=(courseId,memberId)=>{
 export let enableStudentsPayOnFresh=()=>{
     return {
         type:ENABLE_STUDENTS_PAY_ONFRESH,
+    }
+}
+
+export let enableClassMemberOnFresh=()=>{
+    return {
+        type:ENABLE_CLASS_MEMBER_ONFRESH,
     }
 }
 

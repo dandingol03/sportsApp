@@ -41,7 +41,7 @@ import{
 
 import {getAccessToken,} from '../../action/UserActions';
 
-class AddClass extends Component{
+class ModifyClass extends Component{
 
     goBack(){
         const { navigator } = this.props;
@@ -302,10 +302,10 @@ class AddClass extends Component{
                             backgroundColor:'#eee',borderRadius:10 }}
                                           onPress={()=>{this.navigate2ClassSchedule();}}>
                             {
-                                    <View
-                                        style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#888',fontSize:13}}>请选择开始时间：</Text>
-                                    </View>
+                                <View
+                                    style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                    <Text style={{color:'#888',fontSize:13}}>请选择开始时间：</Text>
+                                </View>
                             }
 
                         </TouchableOpacity>
@@ -490,6 +490,6 @@ module.exports = connect(state=>({
         myGroupList:state.activity.myGroupList,
         groupOnFresh:state.activity.groupOnFresh
     })
-)(AddClass);
+)(ModifyClass);
 
 
