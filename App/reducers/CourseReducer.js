@@ -22,6 +22,9 @@ import {
     ON_COURSE_CLASS_UPDATE,
     ENABLE_COURSE_CLASS_ONFRESH,
     DISABLE_COURSE_CLASS_ONFRESH,
+    ON_CLASS_MEMBER_UPDATE,
+    DISABLE_CLASS_MEMBER_ONFRESH,
+    ENABLE_CLASS_MEMBER_ONFRESH
 } from '../constants/CourseConstants';
 
 const initialState = {
@@ -43,9 +46,12 @@ const initialState = {
      //学生付钱情况
     studentsPay:null,
     studentsPayOnFresh:true,
+    //学生的课程记录
+    courseClass:null,
+    courseClassOnFresh:true,
 
-    courseClass:courseClass,
-    courseClassOnFresh:true
+    classMember:null,
+    classMemberOnFresh:true
 };
 
 let course = (state = initialState, action) => {
@@ -156,6 +162,20 @@ let course = (state = initialState, action) => {
         case DISABLE_COURSE_CLASS_ONFRESH:
             return Object.assign({}, state, {
                 courseClassOnFresh:false
+            })
+
+        case  ON_CLASS_MEMBER_UPDATE:
+            // var {coursesOfCoach}=action.payload
+            return Object.assign({}, state, {
+                classMember:action.classMember
+            })
+        case ENABLE_CLASS_MEMBER_ONFRESH:
+            return Object.assign({}, state, {
+                classMemberOnFresh:true
+            })
+        case DISABLE_CLASS_MEMBER_ONFRESH:
+            return Object.assign({}, state, {
+                classMemberOnFresh:false
             })
 
         default:
