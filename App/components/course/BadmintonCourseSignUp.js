@@ -23,7 +23,7 @@ import _ from 'lodash';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import CoursePay from './CoursePay';
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
@@ -32,7 +32,7 @@ const scaleAnimation = new ScaleAnimation();
 const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 
 import AddRelativeModal from './AddRelativeModal';
-
+import TextInputWrapper from 'react-native-text-input-wrapper';
 
 var { height, width } = Dimensions.get('window');
 
@@ -42,7 +42,7 @@ import{
     checkPersonIsMember
 
 } from '../../action/CourseActions';
-import {getAccessToken,} from '../../action/UserActions';
+import {getAccessToken,wechatPay2} from '../../action/UserActions';
 
 import{
     onRelativePersonsUpdate,
@@ -64,7 +64,10 @@ class BadmintonCourseSignUp extends Component {
             isRefreshing: false,
             event: {},
             relative:props.relative,
-            isSelfCheck:true
+            isSelfCheck:true,
+            num:1 , //代表课程的数量
+            total:150.0,
+            pay:{payment:'',payType:'1'},
         };
     }
 
@@ -73,6 +76,67 @@ class BadmintonCourseSignUp extends Component {
         this.setState(nextProps)
     }
 
+    navigate2BadmintonCoursePay() {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'CoursePay',
+                component: CoursePay,
+                params: {
+                   total:this.state.total
+                }
+            })
+        }
+    }
+
+    wechatPay(pay,courseId){
+
+        this.props.dispatch(wechatPay2(pay,courseId)).then((json)=>{
+            if(json.re==1){
+                if(pay.payType=='1'){
+                    var prepayId = json.data.prepayid;
+                    var sign = json.data.sign;
+                    var timeStamp = json.data.timestamp;
+                    var noncestr = json.data.noncestr;
+                    var wechatPayData=
+                        {
+                            partnerId: '1485755962',  // 商家向财付通申请的商家id
+                            prepayId: prepayId,   // 预支付订单
+                            nonceStr: noncestr,   // 随机串，防重发
+                            timeStamp: timeStamp,  // 时间戳，防重发
+                            package: 'Sign=WXPay',    // 商家根据财付通文档填写的数据和签名
+                            sign: sign // 商家根据微信开放平台文档对数据做的签名
+                        };
+
+                    WeChat.pay(wechatPayData).then(
+                        (result)=>{
+                            console.log(result);
+                            Alert.alert('信息','支付成功',[{text:'确认',onPress:()=>{
+                                this.goBack();
+                            }}]);
+
+
+                        },
+                        (error)=>{
+                            console.log(error);
+                        }
+                    )
+                }
+                else{
+                    Alert.alert('信息','支付成功',[{text:'确认',onPress:()=>{
+                        this.goBack();
+                    }}]);
+                }
+
+
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
+            }
+
+        })
+    }
 
     showScaleAnimationDialog() {
         this.scaleAnimationDialog.show();
@@ -179,7 +243,6 @@ class BadmintonCourseSignUp extends Component {
 
 
                             <View style={{flex:1}}></View>
-
                             <Text style={{fontSize:13,color:'#008B00',fontWeight:'bold'}}>
                                 {classInfo.unitName}
                             </Text>
@@ -208,6 +271,7 @@ class BadmintonCourseSignUp extends Component {
                             <View style={{flexDirection:'row',alignItems:'center',marginLeft:12}}>
                                 <Text style={{color:'#222',fontSize:13}}>已报名人数{classInfo.signNumber}</Text>
                             </View>
+
 
                         </View>
 
@@ -247,7 +311,7 @@ class BadmintonCourseSignUp extends Component {
                             >
                                 <Icon name={'plus'} size={15} color="#fff"/>
                             </TouchableOpacity>
-                        </View>
+                                      </View>
 
 
                         <View style={{flexDirection:'row',padding:4,paddingHorizontal:10,marginTop:4}}>
@@ -273,66 +337,162 @@ class BadmintonCourseSignUp extends Component {
                     </View>
 
 
+
+
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:10}}>
-                        <TouchableOpacity style={{width:width/2,backgroundColor:'#00BCD4',padding:8,paddingHorizontal:12,borderRadius:2,
-                            flexDirection:'row',justifyContent:'center'}}
-                            onPress={()=>{
+
+                    { classInfo.costType=="2"?
+                          <View style={{flex:1}}>
+                                <View style={{
+                                    height: 30,
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    backgroundColor: '#fff',
+                                    margin: 5,
+
+                                    }}>
+
+                                    <View style={{flex: 2}}>
+                                        <Text>购买数量：</Text>
+                                    </View>
 
 
-                               var {relative,isSelfCheck}=this.state
-
-                               var persons=[];
-
-                               if(relative&&relative.length>0)
-                               {
-                                   relative.map((person,i)=>{
-                                       if(person.checked==true)
-                                           persons.push({personId:person.personId,username:person.username})
-                                   })
-                               }
-
-                               //TODO:加入校验
-                               if(classInfo.signNumber+persons.length==classInfo.maxNumber){
-
-                                  Alert.alert('信息','人数已满，请选择其他课程',[{text:'确认',onPress:()=>{
-                                                 console.log();
-                                            }}]);
-
-                               }else{
-                                   var info = {
-                                        isSelfCheck:isSelfCheck,
-                                        persons:persons,
-                                        classId:classInfo.courseId,
-                                        creatorId:classInfo.creatorId,
-                                        signNumber:classInfo.signNumber,
-                                        maxNumber:classInfo.maxNumber,
-                                        };
+                                 <TouchableOpacity style={{padding:10,paddingHorizontal:12,backgroundColor:'#eee',width:10,
+                                        justifyContent:'center',flexDirection:'row',flex:0.5}}
+                                                      onPress={()=>{
+                                                          var num= parseInt(this.state.num);
+                                                          if(num>0)
+                                                          {
+                                                              num=num-1+'';
+                                                              var total=classInfo.cost*this.state.num;
+                                                              this.setState({total:total});
+                                                          }
+                                                          else{
+                                                              num=0+''
+                                                          }
+                                                         this.setState({num:num});
+                                                      }}
+                                    >
+                                     <Text style={{color:'#fff',width:10,fontWeight:'bold'}}>-</Text>
+                                    </TouchableOpacity>
 
 
-                                   this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{
-                                            if(json.re==1){
-                                                Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
-                                                  this.goBack();
-                                                   this.props.setMyCourseList();
-                                                }}]);
-                                            }else if(json.re==-1){
-                                                Alert.alert('信息',json.data,[{text:'确认',onPress:()=>{
-                                                  this.goBack();
-                                                   this.props.setMyCourseList();
-                                                }}]);
-                                            }else if(json.re==-100){
-                                                 this.props.dispatch(getAccessToken(false));
-                                            }
-                                            console.log();
-                                        })
+                                    <View style={{
+                                        flex: 1.5,
+                                        padding:10,
+                                        flexDirection: 'row',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        backgroundColor: '#F5F5F5',
+                                        width:10
 
-                               }
-                            }}
-                        >
-                            <Text style={{color:'#fff',fontWeight:'bold'}}>报名</Text>
-                        </TouchableOpacity>
+                                    }}>
+                                        <TextInputWrapper
+                                            textInputStyle={{marginLeft: 5, fontSize: 13, color: '#000'}}
+                                            editable = {true}
+                                            val={this.state.num}
+                                            placeholder='1'
+                                            placeholderTextColor= '#000'
+                                            onChangeText={
+                                                (value) => {
+                                                    this.setState({num:value})
+                                                }}
+                                        />
+                                    </View>
+
+                                    {<TouchableOpacity style={{padding:10,paddingHorizontal:12,backgroundColor:'#eee',width:10,
+                                        justifyContent:'center',flexDirection:'row',flex:0.5,marginRight:40}}
+                                                      onPress={()=>{
+                                                         var num= parseInt(this.state.num);
+                                                          num=num+1;
+                                                          this.setState({num:num+''});
+                                                          var total=classInfo.cost*this.state.num;
+                                                          this.setState({total:total});
+                                                      }}
+                                    >
+                                        <Text style={{color:'#fff',width:10,fontWeight:'bold'}}>+</Text>
+                                    </TouchableOpacity>
+                                    }
+                                    <View style={{marginRight:10}}>
+                                    <Text style={{color:'#FF0000',width:50,fontWeight:'bold',flexDirection: 'row'}}> ￥{classInfo.cost*this.state.num}</Text>
+                                    </View>
+                                </View>
+
+                                {/*  <view style={{flex:1}}>
+                              <Text style={{color:'#fff',fontSize:13}}>
+                                 总额： ￥
+                              </Text>
+                                  </view>*/}
+
+                            </View>:null
+
+                        }
+
+
                     </View>
 
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:20}}>
+                    <TouchableOpacity style={{width:width/2,backgroundColor:'#00BCD4',padding:8,borderRadius:2,
+                        flexDirection:'column',justifyContent:'center',alignItems: 'center'}}
+                                      onPress={()=>{
+                                          var {relative,isSelfCheck}=this.state
+                                          var persons=[];
+                                          if(relative&&relative.length>0)
+                                          {
+                                              relative.map((person,i)=>{
+                                                  if(person.checked==true)
+                                                      persons.push({personId:person.personId,username:person.username})
+                                              })
+                                          }
+
+                                          //TODO:加入校验
+                                          if(classInfo.signNumber+persons.length==classInfo.maxNumber){
+
+                                              Alert.alert('信息','人数已满，请选择其他课程',[{text:'确认',onPress:()=>{
+                                                  console.log();
+                                              }}]);
+
+                                          }else{
+                                              var info = {
+                                                  isSelfCheck:isSelfCheck,
+                                                  persons:persons,
+                                                  classId:classInfo.courseId,
+                                                  creatorId:classInfo.creatorId,
+                                                  signNumber:classInfo.signNumber,
+                                                  maxNumber:classInfo.maxNumber,
+                                                  classCount:classInfo.costType==1?classInfo.classCount:this.state.num,
+                                              };
+                                              this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{
+                                                  if(json.re==1){
+                                                      Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
+                                                          /*this.goBack();
+                                                          this.props.setMyCourseList();*/
+                                                      }}]);
+                                                      //this.navigate2BadmintonCoursePay();
+                                                      var pay=this.state.pay;
+                                                      pay.payType = '1';
+                                                      pay.payment=this.state.total;
+                                                      this.setState({pay:pay});
+                                                      this.wechatPay(this.state.pay,classInfo.courseId);
+
+                                                  }else if(json.re==-1){
+                                                      Alert.alert('信息',json.data,[{text:'确认',onPress:()=>{
+                                                          this.goBack();
+                                                          this.props.setMyCourseList();
+                                                      }}]);
+                                                  }else if(json.re==-100){
+                                                      this.props.dispatch(getAccessToken(false));
+                                                  }
+                                                  console.log();
+                                              })
+
+                                          }
+                                      }}
+                    >
+                        <Text style={{color:'#fff',fontWeight:'bold'}}>报名</Text>
+                    </TouchableOpacity>
+                </View>
                 </View>
 
 

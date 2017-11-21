@@ -9,10 +9,12 @@ import {
     ON_MY_COURSES_UPDATE,
     DISABLE_MY_COURSES_ONFRESH,
     ON_CUSTOM_COURSE_UPDATE,
-
     ENABLE_MY_CUSTOM_COURSES_ONFRESH,
     DISABLE_MY_CUSTOM_COURSES_ONFRESH,
-    SET_MY_CUSTOM_COURSES
+    SET_MY_CUSTOM_COURSES,
+    DISABLE_COURSES_OF_COACH_ONFRESH,
+    ENABLE_COURSES_OF_COACH_ONFRESH,
+    SET_COURSES_OF_COACH
 } from '../constants/CourseConstants'
 
 //拉取个人已报名课程
@@ -44,7 +46,7 @@ export let fetchMyCourses=()=>{
 
 
 //显示教练需要教学的课
-export let fetchCoursesOfCoach=(creatorId)=>{
+export let fetchCoursesByCreatorId=(creatorId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
@@ -59,7 +61,13 @@ export let fetchCoursesOfCoach=(creatorId)=>{
                     creatorId:creatorId
                 }
             }).then((json)=>{
-                resolve(json)
+                if(json.re==1)
+                {
+                    var coursesOfCoach=json.data;
+                    dispatch(onCoursesOfCoachUpdate(coursesOfCoach));
+                    resolve({re:1,data:coursesOfCoach})
+                   //resolve(json);
+                }
 
             }).catch((e)=>{
                 alert(e);
@@ -67,6 +75,12 @@ export let fetchCoursesOfCoach=(creatorId)=>{
             })
 
         })
+    }
+}
+export let setcoursesOfCoach=(coursesOfCoach)=>{
+    return {
+        type:SET_COURSES_OF_COACH,
+        coursesOfCoach:coursesOfCoach
     }
 }
 
@@ -147,16 +161,16 @@ export let onCoursesUpdate=(courses)=>{
     }
 }
 
-export let onCoursesOfCoachUpdate=(coursesOfCoach)=>{
+export let onCoursesOfCoachUpdate=(courses)=>{
     return (dispatch,getState)=>{
         dispatch({
             type:ON_COURSES_OF_COACH_UPDATE,
-            payload:{
-                coursesOfCoach
-            }
+            coursesOfCoach:courses
         })
     }
 }
+
+
 
 
 //拉取定制
@@ -257,6 +271,38 @@ export let distributeCourse=(course,venue,memberId,demandId)=>{
     }
 }
 
+export let modifyCourse=(course,venue,memberId,demandId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/modifyCourse',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    info:{
+                        course,
+                        venue,
+                        memberId,
+                        demandId,
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+
 export let fetchClassSchedule=(classId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
@@ -345,7 +391,7 @@ export let addBadmintonClassMermberInfo=(info)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
             var selfPersonId = state.user.personInfo.personId;
-
+            var courseCount=info.classCount;
 
             if(info.isSelfCheck==true){
 
@@ -368,6 +414,7 @@ export let addBadmintonClassMermberInfo=(info)=>{
 
                     classId:parseInt(info.classId),
                     personId:personIdStr,
+                    courseCount:parseInt(courseCount)
 
                 }
             }).then((json)=>{
@@ -380,7 +427,17 @@ export let addBadmintonClassMermberInfo=(info)=>{
         })
     }
 }
+export let enableCoursesOfCoachOnFresh=()=>{
+    return {
+        type:ENABLE_COURSES_OF_COACH_ONFRESH,
+    }
+}
 
+export let disableCoursesOfCoachOnFresh=()=>{
+    return {
+        type:DISABLE_COURSES_OF_COACH_ONFRESH,
+    }
+}
 //发布用户定制课程
 export let distributeCustomerPlan=(plan,remark)=>{
     return (dispatch,getState)=>{

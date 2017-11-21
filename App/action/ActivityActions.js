@@ -54,7 +54,6 @@ export let releaseActivity=(event)=>{
                 status:0,
                 isChooseYardTime:event.isChooseYardTime,
 
-
             }
 
             Proxy.postes({
@@ -178,6 +177,7 @@ export let fetchActivityList=()=>{
             var visibleEvents=[];
             var myEvents=[];//我发起的活动
             var myTakenEvents=[];//我报名的活动
+            var flag2=0;
             Proxy.postes({
                // url: Config.server + '/func/allow/getAllEventsForPhone',
                 url: Config.server + '/func/allow/getCheckedEvents',
@@ -196,20 +196,24 @@ export let fetchActivityList=()=>{
                         allActivityList.map((activity,i)=>{
                             var members=new Array();
                             var flag=0;
-
                             members=activity.eventMember.split(",");
 
                             if(activity.eventManagerLoginName==username){
                                 myEvents.push(activity);
                             }
-
+                            if(activity.eventName=="周六上午日常活动"&&flag2==0){
+                                myTakenEvents.push(activity);
+                                if(myTakenEvents.length==1){
+                                    flag2=1;
+                                }
+                            }
                             for(j=0;j<members.length;j++){
 
                                 // if(activity.eventManager==members[j]){
                                 //     myTakenEvents.push(activity);
                                 // }
 
-                                if(activity.eventManager!=members[j]){
+                                if(activity.eventManager!=members[j]&&activity.eventId!=244){
                                     flag++;
                                     if(flag==members.length){
 
@@ -221,6 +225,7 @@ export let fetchActivityList=()=>{
                         });
 
                     }
+
                 }else{
 
                     if(json.re==-100){
@@ -262,8 +267,10 @@ export let fetchActivityList=()=>{
                                         if(activity.eventManager==username){
                                             myEvents.push(activity);
                                         }
+                                        if(activity.eventId!=244){
+                                            visibleEvents.push(activity);
+                                        }
 
-                                        visibleEvents.push(activity);
                                         // for(j=0;j<members.length;j++){
                                         //
                                         //     // if(activity.eventManager==members[j]){

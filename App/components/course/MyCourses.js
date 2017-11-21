@@ -225,7 +225,7 @@ class MyCourses extends Component {
                                 简介：
                             </Text>
                             <Text style={{ color: '#343434', fontSize: 13 }}>
-                                {rowData.detail}
+                                {rowData.classbrief}
                             </Text>
                         </View>
                     </View>

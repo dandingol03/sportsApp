@@ -1009,3 +1009,69 @@ export let wechatPay=(pay,eventId)=>{
         })
     }
 }
+
+//课程支付
+export let wechatPay2=(pay,courseId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/node/addPaymentInfo2',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    pay:pay,
+                    courseId:parseInt(courseId)
+                }
+            }).then((json)=>{
+                if(json.re==1){
+
+                    var total_fee = pay.payment*100;
+                    var nonce_str = Math.random().toString(36).substr(2, 15);
+                    var out_trade_no = json.data;
+
+                    Proxy.postes({
+                        url: Config.server + '/func/node/wechatPay',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: {
+                            info:{
+                                app_id:'wx9068ac0e88c09e7a',//应用ID
+                                mch_id:'1485755962',//商户号
+                                nonce_str:nonce_str,//随机字符串
+                                notify_url:Config.server +'/func/allow/minirepay',
+                                out_trade_no:out_trade_no,
+                                total_fee:total_fee,
+                                attach:'山东体育热科技有限公司',
+                                body:'课程费用',
+
+                            }
+
+                        }
+                    }).then((json)=>{
+                        resolve(json)
+
+                    }).catch((e)=>{
+                        alert(e);
+                        reject(e);
+                    })
+
+                }
+                else{
+                    console.log('添加支付订单信息不完整');
+
+                }
+
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+
+        })
+    }
+}

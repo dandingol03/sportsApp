@@ -27,6 +27,11 @@ import ActivityDetail from './ActivityDetail';
 import ActivityPay from './ActivityPay';
 import ChooseField from './ChooseField';
 import GroupJPush from './GroupJPush';
+import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
+const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+const scaleAnimation = new ScaleAnimation();
+const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
+import QrcodeModal from './QrcodeModal';
 import {
     fetchActivityList,disableActivityOnFresh,enableActivityOnFresh,signUpActivity,fetchEventMemberList,exitActivity,exitFieldTimeActivity
 } from '../../action/ActivityActions';
@@ -65,7 +70,6 @@ class Activity extends Component {
             ).start();
         }.bind(this), 500);
         this.props.dispatch(enableActivityOnFresh());
-
     }
 
     setMyActivityList()
@@ -162,27 +166,19 @@ class Activity extends Component {
             alert('该活动人数已满！');
 
         }else{
-
-            this.navigate2ActivityPay(event);
-            this.setMyActivityList();
-            // this.props.dispatch(signUpActivity(event.eventId)).then((json)=>{
-            //     if(json.re==1){
-            //         Alert.alert('信息','报名成功,是否立即支付？',[{text:'是',onPress:()=>{
             //
-            //             this.navigate2ActivityPay(event);
-            //             this.setMyActivityList();
-            //         }},
-            //             {text:'否',onPress:()=>{
-            //                // this.goBack();
-            //                 this.setMyActivityList();
-            //             }},
-            //         ]);
-            //     }else{
-            //         if(json.re==-100){
-            //             this.props.dispatch(getAccessToken(false));
-            //         }
-            //     }
-            // })
+            // this.navigate2ActivityPay(event);
+            // this.setMyActivityList();
+            this.props.dispatch(signUpActivity(event.eventId)).then((json)=>{
+                if(json.re==1){
+                        this.navigate2ActivityPay(event);
+                        this.setMyActivityList();
+                }else{
+                    if(json.re==-100){
+                        this.props.dispatch(getAccessToken(false));
+                    }
+                }
+            })
         }
     }
 
@@ -294,16 +290,25 @@ class Activity extends Component {
 
                      <TouchableOpacity style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center'}}
                      onPress={()=>{
-                     this.sharetoPyq(rowData);
+                     this.sharetoSomeone.show();
+                     this.state.share=rowData;
                      }}>
                      <Text style={{marginRight:5,color:'#66CDAA'}}>分享</Text>
                      <Icon name={'angle-right'} size={25} color="#66CDAA"/>
                      </TouchableOpacity>
 
+
+
                     <View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>
                         {
                             rowData.money!=0 && rowData.money!=null && rowData.money!=undefined && rowData.isSignUp==1?
-                                <Text style={{color:'#f00',fontSize:13}}>已支付</Text>:
+                                <View>
+                                            <TouchableOpacity style={{flex:2,borderWidth:1,borderColor:'#66CDAA',padding:7,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}
+                                                              onPress={()=>{this.usernameDialog.show()}}>
+                                                <Text style={{color:'#f00',fontSize:12}}>已支付</Text>
+                                            </TouchableOpacity>
+                                </View>:
                                 <View>
                                     {
                                         ( rowData.Money==0 || rowData.Money==null || rowData.Money==undefined )&& rowData.isSignUp==1?
@@ -466,23 +471,6 @@ class Activity extends Component {
 
                     }
 
-                    {/*<View style={{flex:2,justifyContent:'center',alignItems: 'center'}}>*/}
-                    {/*{*/}
-                    {/*rowData.Money!=0 && rowData.Money!=null && rowData.Money!=undefined && rowData.isSignUp==1?*/}
-                    {/*<Text style={{color:'#f00',fontSize:13}}>已支付</Text>:*/}
-                    {/*<View>*/}
-                    {/*{*/}
-                    {/*( rowData.Money==0 || rowData.Money==null || rowData.Money==undefined )&& rowData.isSignUp==1?*/}
-                    {/*<Text style={{color:'#f00',fontSize:13}}>未支付</Text>:*/}
-                    {/*null*/}
-                    {/*}*/}
-
-                    {/*</View>*/}
-                    {/*}*/}
-
-
-                    {/*</View>*/}
-
                 </View>
 
 
@@ -511,6 +499,24 @@ class Activity extends Component {
         });
     }
 
+    sharetoperson(rowData){
+        WeChat.isWXAppInstalled().then((isInstalled) => {
+            if (isInstalled) {
+                WeChat.shareToSession({
+                    type: 'news',
+                    title:rowData.eventName,
+                    description:'活动'+rowData.eventName+'在'+rowData.eventPlaceName+'举行，'+'活动时间为'+rowData.startTimeStr+'---'+rowData.endTimeStr,
+                    thumbImage:'https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike72%2C5%2C5%2C72%2C24/sign=f96438a8b1389b502cf2e800e45c8eb8/d043ad4bd11373f04db74d29ac0f4bfbfaed04ff.jpg',
+                    webpageUrl:'http://211.87.225.204:8080/badmintionhot/ShareTimeLine.html',
+                })
+                    .catch((error) => {
+                        console(error.message);
+                    });
+            } else {
+                console('没有安装微信软件，请您安装微信之后再试');
+            }
+        });
+    }
     fetchData(){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
@@ -534,21 +540,40 @@ class Activity extends Component {
             isRefreshing: false,
             fadeAnim: new Animated.Value(1),
             signupedShow:false,
-
+            //myTakenEvents:{isSignUp:null,eventId:null,eventId:null,eventBrief:null,money:null,eventName:null},
+            myTakenEvents:{},
+            share:{},
+            event:{eventName:null,startTimeStr:null,eventPlaceName:null,isChooseYardTime:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,yardTotal:null,eventMaxMemNum:null,
+                memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
+                groupName:null,groupId:null,cost:null,costType:null,field:null,filedNum:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
 
         }
     }
 
     render() {
 
+
+        this.state.event.eventId='244';
+        this.state.event.eventMaxMemNum='100';
+        this.state.event.cost=15;
+        this.state.event.eventName='周末日常活动';
+        this.state.event.eventBrief='周末日常活动';
+        this.state.event.eventPlaceName='山东大学-宇宙级羽毛球馆';
+        this.state.event.startTimeStr='2017-11-18 08:00-2017-12-18 17:00'
         var activityListView=null;
         var {activityList,activityOnFresh,visibleEvents,myEvents,myTakenEvents}=this.props;
-
+        //this.state.myTakenEvents.isSignUp=myTakenEvents.isSignUp;
         if(activityOnFresh==true)
         {
             if(this.state.doingFetch==false)
                 this.fetchData();
         }else {
+            myTakenEvents.map((myTakenEvents,i)=>{
+                // this.state.myTakenEvents.isSignUp=myTakenEvents.isSignUp;
+                // this.state.myTakenEvents.eventName=myTakenEvents.eventName;
+                // this.state.myTakenEvents.eventBrief=myTakenEvents.eventBrief;
+                this.state.myTakenEvents=myTakenEvents;
+            })
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             if (visibleEvents !== undefined && visibleEvents !== null && visibleEvents.length > 0) {
 
@@ -571,6 +596,103 @@ class Activity extends Component {
                          onPress={(i)=>{
                          }}
                 >
+                    <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
+                            <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
+                                <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
+                            </View>
+                            <View style={{marginTop:10,width:200}}>
+                                <View style={{flex:3,flexDirection:'row',marginBottom:0}}>
+                                    <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                        <Icon name={'star'} size={16} color="#66CDAA"/>
+                                    </View>
+                                    <View style={{flex:7}}>
+                                        <Text style={{color:'#000',justifyContent:'flex-start',alignItems: 'center'}}>{this.state.myTakenEvents.eventName}</Text>
+                                    </View>
+                                </View>
+                                <View style={{flex:3,flexDirection:'row',marginBottom:0}}>
+                                    <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                        <Icon name={'circle'} size={12} color="#aaa"/>
+                                    </View>
+                                    <View style={{flex:7}}>
+                                        <Text style={{color:'#000',justifyContent:'flex-start',alignItems: 'center'}}>{this.state.myTakenEvents.eventPlaceName}</Text>
+                                    </View>
+                                </View>
+                                <View style={{width:140,justifyContent:'center',alignItems: 'center'}}>
+                                    <View>
+                                        <Text style={{color:'#343434'}}>{this.state.myTakenEvents.eventBrief}</Text>
+                                    </View>
+                                </View>
+                            </View>
+
+
+
+
+                        <View style={{flex:2,flexDirection:'column',justifyContent:'center',alignItems: 'center',marginLeft:20}}>
+                            {
+                                this.state.myTakenEvents.money!=0 && this.state.myTakenEvents.money!=null && this.state.myTakenEvents.money!=undefined && this.state.myTakenEvents.isSignUp==1?
+                                    <View>
+                                        <TouchableOpacity style={{height:25,borderWidth:1,borderColor:'#66CDAA',padding:7,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}
+                                                          onPress={()=>{this.usernameDialog.show()}}>
+                                            <Text style={{color:'#f00',fontSize:12}}>已支付</Text>
+                                        </TouchableOpacity>
+                                    </View>:
+                                    <View>
+                                        {
+                                            ( this.state.myTakenEvents.Money==0 || this.state.myTakenEvents.Money==null || this.state.myTakenEvents.Money==undefined )&& this.state.myTakenEvents.isSignUp==1?
+                                                <TouchableOpacity style={{height:25,marginBottom:10,borderWidth:1,borderColor:'#66CDAA',padding:7,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}
+                                                                  onPress={()=>{this.isActivityPay(this.state.myTakenEvents)}}>
+                                                    <Text style={{color:'#f00',fontSize:12}}>未支付</Text>
+                                                </TouchableOpacity>:
+                                                null
+                                        }
+
+                                    </View>
+                            }
+
+
+
+                            {
+                                this.state.myTakenEvents.isSignUp==0 ?
+                                    <View>
+                                        {
+
+                                                <TouchableOpacity style={{height:30,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}
+                                                                  onPress={()=>{this.signUpActivity(this.state.myTakenEvents,1)}}>
+                                                    <Text style={{color:'#f00',fontSize:12}}>我要报名</Text>
+                                                </TouchableOpacity>
+                                        }
+
+                                    </View>:
+
+                                    <View>
+                                        {
+                                            this.state.myTakenEvents.money==0||this.state.myTakenEvents.money==null?
+                                                <View>
+                                                    <TouchableOpacity style={{height:30,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}
+                                                                      onPress={()=>{this.exitActivity(this.state.myTakenEvents)}}
+                                                    >
+                                                        <Text style={{color:'#f00',fontSize:12}}>取消报名</Text>
+                                                    </TouchableOpacity>
+                                                </View>:
+                                                <View>
+                                                    <TouchableOpacity style={{height:30,borderWidth:1,borderColor:'#66CDAA',padding:5,justifyContent:'center',alignItems:'center'
+                    ,borderRadius:6}}
+                                                    >
+                                                        <Text style={{color:'#f00',fontSize:12}}>报名成功</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+
+                                        }
+
+                                    </View>
+                            }
+                        </View>
+
+                    </View>
 
                     {/*内容区*/}
                     <View style={{flex:5,backgroundColor:'#eee'}}>
@@ -625,7 +747,67 @@ class Activity extends Component {
                         </TouchableOpacity>
                     </View>
 
+                    <PopupDialog
+                        ref={(popupDialog) => {
+                        this.usernameDialog = popupDialog;
+                    }}
+                        dialogAnimation={scaleAnimation}
+                        actions={[]}
+                        width={0.8}
+                        height={0.3}
+                    >
+
+                        <QrcodeModal
+                            onClose={()=>{
+                                this.usernameDialog.dismiss();
+                            }}
+                        />
+
+                    </PopupDialog>
+
+
+                    <PopupDialog
+                        ref={(popupDialog) => {
+                        this.sharetoSomeone = popupDialog;
+                    }}
+                        dialogAnimation={scaleAnimation}
+                        actions={[]}
+                        width={0.8}
+                        height={0.25}
+                    >
+                    <View style={{flex:1,padding:10,alignItems:"center",flexDirection:"row",justifyContent:"center"}}>
+
+                        <View style={{flex:1,flexDirection:"column",alignItems:"center"}}>
+                            <TouchableOpacity style={{flex:1,alignItems:"center",justifyContent:"center"}}
+                                onPress={()=>{
+                                    this.sharetoSomeone.dismiss();
+                                    this.sharetoperson(this.state.share);
+
+                                }}
+                            >
+                            <Icon name={'user-circle'} size={45} color='#00CD00'/>
+                            <Text>好友</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flex:1,flexDirection:"column",alignItems:"center"}}>
+                            <TouchableOpacity style={{flex:1,alignItems:"center",justifyContent:"center"}}
+                                onPress={()=>{
+                                    this.sharetoPyq(this.state.share);
+                                    this.sharetoSomeone.dismiss();
+                                }}
+                            >
+                            <Icon name={'wechat'} size={45} color='#00CD00'/>
+                            <Text>朋友圈</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+
+
+                    </PopupDialog>
+
                 </Toolbar>
+
 
             </View>
         );

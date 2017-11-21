@@ -22,6 +22,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import TextInputWrapper from 'react-native-text-input-wrapper'
 import CreateBadmintonCourse from './CreateBadmintonCourse';
+import BadmintonCourseRecord from './BadmintonCourseRecord'
 import CreateCustomerPlan from './CreateCustomerPlan';
 import CustomerCourseList from './CustomerCourseList';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
@@ -38,7 +39,6 @@ import{
 import {getAccessToken,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
-import BadmintonCourseOfCoach from './BadmintonCourseOfCoach';
 
 class BadmintonCourse extends Component {
 
@@ -99,20 +99,19 @@ class BadmintonCourse extends Component {
         }
     }
 
-    navigate2BadmintonCourseOfCoach(rowData)
+    navigate2CourseRecord(creatorId)
     {
         const { navigator } = this.props;
         if (navigator) {
             navigator.push({
-                name: 'BadmintonCourseOfCoach',
-                component: BadmintonCourseOfCoach,
+                name: 'BadmintonCourseRecord',
+                component: BadmintonCourseRecord,
                 params: {
-                 creatorId:rowData.creatorId
+                    creatorId:creatorId
                 }
             })
         }
     }
-
 
     goBack() {
         const { navigator } = this.props;
@@ -312,7 +311,8 @@ class BadmintonCourse extends Component {
             actions.push({value:'创建课程',show:OPTION_NEVER});
             actions.push({value:'课程定制',show:OPTION_NEVER});//教练作为用户
             actions.push({value:'查看定制列表',show:OPTION_NEVER});
-            actions.push({value:'课程记录',show:OPTION_NEVER});
+            actions.push({value:'上课记录',show:OPTION_NEVER});
+
         }
 
         return (
@@ -327,7 +327,7 @@ class BadmintonCourse extends Component {
                                  {
                                     this.navigate2BadmintonCourseForCoach();
                                  }
-                                 if(i==1)
+                                if(i==1)
                                 {
                                     this.navigate2BadmintonCourseForUser();
                                 }
@@ -335,10 +335,10 @@ class BadmintonCourse extends Component {
                                 {
                                     this.navigate2CustomCourseList();
                                 }
-                                {if(i==3)
-                                {
-                                    this.navigate2BadmintonCourseOfCoach(this.state.personId);
-                                }}
+                                 if(i==3)
+                                 {
+                                     this.navigate2CourseRecord(this.props.creatorId);
+                                 }
 
                              }else{
                                  this.navigate2BadmintonCourseForUser()
@@ -455,21 +455,20 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = (state, ownProps) => {
-
+//const mapStateToProps = (state, ownProps) => {
+/*
     const props = {
         userType: state.user.usertype.perTypeCode,
-        courses:state.course.courses
+        courses:state.course.courses,
+        creatorId:state.user.personInfo.personId
     }
     return props
-}
+}*/
+//export default connect(mapStateToProps)(BadmintonCourse);
 
-
-export default connect(mapStateToProps)(BadmintonCourse);
-/*module.exports = connect(state=>({
-        accessToken:state.user.accessToken,
-        personId:state.user.personInfo.personId,
-        user:state.user.user,
-
+module.exports = connect(state=>({
+    userType: state.user.usertype.perTypeCode,
+    creatorId:state.user.personInfo.personId,
+    courses:state.course.courses
     })
-)(BadmintonCourse);*/
+)(BadmintonCourse);
