@@ -153,7 +153,7 @@ class Register extends Component {
             info: {
                 mobilePhone: '',
                 username: '',
-                password: '',
+                password: '1',
                 userType: 0,
                 sportLevel: null,
             },
@@ -241,14 +241,19 @@ class Register extends Component {
                                             this.state.fadeCancel,
                                             {toValue: 1},
                                         ).start();
+
                                     } else {
                                         Animated.timing(
                                             this.state.fadeCancel,
                                             {toValue: 0},
                                         ).start();
 
+
                                     }
-                                    this.setState({info: Object.assign(this.state.info, {mobilePhone: phoneNum})});
+
+                                        this.setState({info: Object.assign(this.state.info, {mobilePhone: phoneNum})});
+
+
                                 }}
                                 onBlur={() => {
                                     if (this.state.fadeCancel == 0) {
@@ -261,7 +266,7 @@ class Register extends Component {
                                     }
                                 }}
                                 value={this.state.info.mobilePhone}
-                                placeholder=' 请输入手机号码'
+                                placeholder=' 请输入手机号码   （可不填）'
                                 placeholderTextColor="#aaa"
                                 underlineColorAndroid="transparent"
                                 keyboardType="numeric"
@@ -382,7 +387,9 @@ class Register extends Component {
                                                 {toValue: 0},
                                             ).start();
                                         }
-                                        this.setState({info: Object.assign(this.state.info, {password: password})});
+
+                                            this.setState({info: Object.assign(this.state.info, {password: password})});
+
                                     }}
                                     onBlur={() => {
                                         if (this.state.fadePasswordCancel == 0) {
@@ -396,7 +403,7 @@ class Register extends Component {
                                     }}
                                     secureTextEntry={true}
                                     value={this.state.password}
-                                    placeholder=' 密码（6-16位字母和数字）'
+                                    placeholder=' 请输入密码  （可不填，默认初始值为1）'
                                     placeholderTextColor="#aaa"
                                     underlineColorAndroid="transparent"
                                 />

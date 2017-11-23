@@ -19,7 +19,7 @@ import {
 import {connect} from 'react-redux';
 var WeChat = require('react-native-wechat');
 import TextInputWrapper from 'react-native-text-input-wrapper';
-
+import QRCode from 'react-native-qrcode'
 import {
     wechatPay,
 } from '../../action/UserActions';

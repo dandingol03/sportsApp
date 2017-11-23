@@ -39,7 +39,11 @@ import{
 import {getAccessToken,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
-
+import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
+const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+const scaleAnimation = new ScaleAnimation();
+const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
+var WeChat=require('react-native-wechat');
 class BadmintonCourse extends Component {
 
     //导航至定制（for 教练）
@@ -158,6 +162,19 @@ class BadmintonCourse extends Component {
                                 {rowData.creatorName}教练
                             </Text>
                         </View>
+                        <View style={{flex:1,flexDirection:"row",alignItems:"center",justifyContent:"center",marginLeft:35}}>
+                            <TouchableOpacity style={{flex:1,alignItems:"center",justifyContent:"center",flexDirection:"row"}}
+                                onPress={()=>{
+                                    this.sharetoSomeone.show();
+                                    this.state.share=rowData;
+                                }}
+                            >
+                                <Text style={{fontSize:15}}>分享</Text>
+                                <Icon name={"share-alt"} size={16}/>
+                            </TouchableOpacity>
+
+
+                        </View>
                     </View>
 
                     <View style={{ padding: 3, paddingHorizontal: 12 }}>
@@ -249,7 +266,8 @@ class BadmintonCourse extends Component {
             menuVisible: false,
             filter: {
                 cost: 'ascend'
-            }
+            },
+            share:{}
         };
     }
 
@@ -414,10 +432,87 @@ class BadmintonCourse extends Component {
                         </Animated.View>
 
                     </View>
+                    <PopupDialog
+                        ref={(popupDialog) => {
+                        this.sharetoSomeone = popupDialog;
+                    }}
+                        dialogAnimation={scaleAnimation}
+                        actions={[]}
+                        width={0.8}
+                        height={0.25}
+                    >
+                        <View style={{flex:1,padding:10,alignItems:"center",flexDirection:"row",justifyContent:"center"}}>
+
+                            <View style={{flex:1,flexDirection:"column",alignItems:"center"}}>
+                                <TouchableOpacity style={{flex:1,alignItems:"center",justifyContent:"center"}}
+                                                  onPress={()=>{
+                                    this.sharetoSomeone.dismiss();
+                                    this.sharetoperson(this.state.share);
+
+                                }}
+                                >
+                                    <Icon name={'user-circle'} size={45} color='#00CD00'/>
+                                    <Text>好友</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{flex:1,flexDirection:"column",alignItems:"center"}}>
+                                <TouchableOpacity style={{flex:1,alignItems:"center",justifyContent:"center"}}
+                                                  onPress={()=>{
+                                    this.sharetoPyq(this.state.share);
+                                    this.sharetoSomeone.dismiss();
+                                }}
+                                >
+                                    <Icon name={'wechat'} size={45} color='#00CD00'/>
+                                    <Text>朋友圈</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
+
+
+                    </PopupDialog>
                 </Toolbar>
 
             </View>
         )
+    }
+
+    sharetoPyq(rowData){
+        WeChat.isWXAppInstalled().then((isInstalled) => {
+            if (isInstalled) {
+                WeChat.shareToTimeline({
+                    type: 'news',
+                    title:rowData.courseName,
+                    description:'活动'+rowData.courseName+'在'+rowData.unitName+'举行',
+                    thumbImage:'https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike72%2C5%2C5%2C72%2C24/sign=f96438a8b1389b502cf2e800e45c8eb8/d043ad4bd11373f04db74d29ac0f4bfbfaed04ff.jpg',
+                    webpageUrl:'http://211.87.225.204:8080/badmintionhot/ShareTimeLine.html',
+                })
+                    .catch((error) => {
+                        console(error.message);
+                    });
+            } else {
+                console('没有安装微信软件，请您安装微信之后再试');
+            }
+        });
+    }
+
+    sharetoperson(rowData){
+        WeChat.isWXAppInstalled().then((isInstalled) => {
+            if (isInstalled) {
+                WeChat.shareToSession({
+                    type: 'news',
+                    title:rowData.courseName,
+                    description:'活动'+rowData.courseName+'在'+rowData.unitName+'举行',
+                    thumbImage:'https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike72%2C5%2C5%2C72%2C24/sign=f96438a8b1389b502cf2e800e45c8eb8/d043ad4bd11373f04db74d29ac0f4bfbfaed04ff.jpg',
+                    webpageUrl:'http://211.87.225.204:8080/badmintionhot/ShareTimeLine.html',
+                })
+                    .catch((error) => {
+                        console(error.message);
+                    });
+            } else {
+                console('没有安装微信软件，请您安装微信之后再试');
+            }
+        });
     }
 
     componentDidMount()

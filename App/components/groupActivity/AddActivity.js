@@ -1,4 +1,3 @@
-/*
 
 import React,{Component} from 'react';
 import {
@@ -46,9 +45,9 @@ import {
     getAccessToken,
 } from '../../action/UserActions';
 
-/!**
+/**
  * 发布活动
- *!/
+ */
 class AddActivity extends Component{
 
     goBack(){
@@ -82,16 +81,6 @@ class AddActivity extends Component{
     setField(field){
         var event = this.state.event;
         event.field= field;
-        var a=field.split(",");
-        if(a.length>1){
-            var event = this.state.event;
-            event.isChooseYardTime= 1;
-            this.setState({event:event})
-        }else{
-            var event = this.state.event;
-            event.isChooseYardTime= 0;
-            this.setState({event:event})
-        }
         this.setState({event:event});
 
     }
@@ -104,8 +93,8 @@ class AddActivity extends Component{
                 name: 'AddField',
                 component:AddField,
                 params: {
-                        yardTotal:this.state.event.yardTotal,
-                        setField:this.setField.bind(this)
+                    yardTotal:this.state.event.yardTotal,
+                    setField:this.setField.bind(this)
                 }
             })
         }
@@ -180,7 +169,9 @@ class AddActivity extends Component{
 
     release()
     {
-        var event = this.state.event;
+
+            var event = this.state.event;
+
         this.props.dispatch(releaseActivity(event)).then((json)=>{
             if(json.re==1){
                 Alert.alert('信息','新活动创建成功',[{text:'确认',onPress:()=>{
@@ -195,6 +186,26 @@ class AddActivity extends Component{
 
         });
     }
+
+    release2()
+    {
+            this.state.event.cost=60;
+            var event = this.state.event;
+        this.props.dispatch(releaseActivity(event)).then((json)=>{
+            if(json.re==1){
+                Alert.alert('信息','新活动创建成功',[{text:'确认',onPress:()=>{
+                    this.goBack()
+                }}]);
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+
+                }
+            }
+
+        });
+    }
+
 
 
     //对象水平
@@ -235,7 +246,7 @@ class AddActivity extends Component{
                     myGroupList.map((group,i)=>{
                         if(group.groupName==groupName){
                             groupId = group.groupId;
-                           // groupNum =  group.groupInfo.groupNowMemNum;
+                            // groupNum =  group.groupInfo.groupNowMemNum;
                         }
                     })
                 }
@@ -296,8 +307,8 @@ class AddActivity extends Component{
             selectTime:false,
             eventTime:null,
             event:{eventName:null,isChooseYardTime:null,eventBrief:'',eventType:null,eventPlace:null,unitId:null,feeDes:null,yardTotal:null,eventMaxMemNum:null,
-                   memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
-                   groupName:null,groupId:null,cost:null,costType:null,field:null,filedNum:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
+                memberLevel:null,hasCoach:0,hasSparring:0,coachId:null,coachName:null,sparringId:null,sparringName:null,
+                groupName:null,groupId:null,cost:null,costType:null,field:null,filedNum:null,time:{startTime:null,endTime:null,eventWeek:null,isSchedule:null,},},
 
             memberLevelButtons:['取消','业余小白','初级爱好者','业余高手','专业运动员'],
             eventTypeButtons:['取消','公开','组内'],
@@ -333,7 +344,7 @@ class AddActivity extends Component{
                     <ScrollView style={{height:height-200,width:width,backgroundColor:'#fff',padding:5}}>
 
 
-                        {/!*活动类型*!/}
+                        {/*活动类型*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动类型：</Text>
@@ -369,7 +380,7 @@ class AddActivity extends Component{
                             </TouchableOpacity>
                         </View>
 
-                        {/!*活动名称*!/}
+                        {/*活动名称*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动名称：</Text>
@@ -392,33 +403,33 @@ class AddActivity extends Component{
                             </View>
                         </View>
 
-                        {/!*活动时间*!/}
+                        {/*活动时间*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动时间：</Text>
                             </View>
                             <TouchableOpacity style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
                             backgroundColor:'#eee',borderRadius:10 }}
-                                               onPress={()=>{this.navigate2ActivitySchedule();}}>
+                                              onPress={()=>{this.navigate2ActivitySchedule();}}>
                                 {
 
                                     this.state.event.time.startTime==null?
 
-                                    <View
-                                        style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#888',fontSize:13}}>请选择活动时间：</Text>
-                                    </View>:
-                                <View
-                                    style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                    <Text style={{fontSize:13}}>{this.state.event.time.startTimeView}-{this.state.event.time.endTimeView} </Text>
-                                </View>
+                                        <View
+                                            style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                            <Text style={{color:'#888',fontSize:13}}>请选择活动时间：</Text>
+                                        </View>:
+                                        <View
+                                            style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                            <Text style={{fontSize:13}}>{this.state.event.time.startTimeView}-{this.state.event.time.endTimeView} </Text>
+                                        </View>
                                 }
 
                             </TouchableOpacity>
 
                         </View>
 
-                        {/!*活动地点*!/}
+                        {/*活动地点*/}
                         <View style={{flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动地点：</Text>
@@ -469,67 +480,66 @@ class AddActivity extends Component{
                         </View>
 
 
-                        {/!*!/!*场地需求*!/!*!/}
+                        {/*/!*场地需求*!/*/}
+                        {/*{*/}
+                        {/*(this.state.event.time.isSchedule==0)?*/}
+                        {/*<View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>*/}
+                        {/*<View style={{flex:1}}>*/}
+                        {/*<Text>场地数目：</Text>*/}
+                        {/*</View>*/}
+                        {/*<View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*/}
+                        {/*borderRadius:10}}>*/}
+                        {/*<TextInputWrapper*/}
+                        {/*placeholderTextColor='#888'*/}
+                        {/*textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}*/}
+                        {/*placeholder="请输入需要的场地数目:"*/}
+                        {/*val={this.state.event.eventMaxMemNum}*/}
+                        {/*onChangeText={*/}
+                        {/*(value)=>{*/}
+                        {/*this.setState({event:Object.assign(this.state.event,{filedNum:value})})*/}
+                        {/*}}*/}
+                        {/*onCancel={*/}
+                        {/*()=>{this.setState({event:Object.assign(this.state.event,{filedNum:null})});}*/}
+                        {/*}*/}
+                        {/*/>*/}
+                        {/*</View>*/}
+                        {/*</View>:null*/}
+                        {/*}*/}
 
-                        {/!*{*!/}
-                            {/!*(this.state.event.time.isSchedule==0)?*!/}
-                                {/!*<View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:3}}>*!/}
-                                    {/!*<View style={{flex:1}}>*!/}
-                                        {/!*<Text>场地数目：</Text>*!/}
-                                    {/!*</View>*!/}
-                                    {/!*<View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',*!/}
-                            {/!*borderRadius:10}}>*!/}
-                                        {/!*<TextInputWrapper*!/}
-                                            {/!*placeholderTextColor='#888'*!/}
-                                            {/!*textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}*!/}
-                                            {/!*placeholder="请输入需要的场地数目:"*!/}
-                                            {/!*val={this.state.event.eventMaxMemNum}*!/}
-                                            {/!*onChangeText={*!/}
-                                    {/!*(value)=>{*!/}
-                                        {/!*this.setState({event:Object.assign(this.state.event,{filedNum:value})})*!/}
-                                    {/!*}}*!/}
-                                            {/!*onCancel={*!/}
-                                    {/!*()=>{this.setState({event:Object.assign(this.state.event,{filedNum:null})});}*!/}
-                                {/!*}*!/}
-                                        {/!*!/>*!/}
-                                    {/!*</View>*!/}
-                                {/!*</View>:null*!/}
-                        {/!*}*!/}
-
-                        {/!*活动场地*!/}
+                        {/*活动场地*/}
                         {
                             this.state.event.eventPlace!=null?
-                            <View
-                                style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
-                                <View style={{flex:1}}>
-                                    <Text>活动场地：</Text>
-                                </View>
-                                <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                            borderRadius:10}}
-                                                  onPress={()=>{this.navigate2AddField()}}>
-
-                                    {
-                                        this.state.event.field == null ?
-                                            <View
-                                                style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                                <Text style={{color:'#888',fontSize:13}}>请选择场地：</Text>
-
-                                            </View> :
-                                            <View
-                                                style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                                <Text
-                                                    style={{color:'#444',fontSize:13}}>{this.state.event.field}</Text>
-                                            </View>
-                                    }
-                                    <View
-                                        style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
-                                        <Icon name={'angle-right'} size={30} color="#fff"/>
+                                <View
+                                    style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
+                                    <View style={{flex:1}}>
+                                        <Text>活动场地：</Text>
                                     </View>
-                                </TouchableOpacity>
-                            </View>:null
+                                    <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                                      onPress={()=>{this.navigate2AddField()}}>
+
+                                        {
+                                            this.state.event.field == null ?
+                                                <View
+                                                    style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text style={{color:'#888',fontSize:13}}>请选择场地：</Text>
+
+                                                </View> :
+                                                <View
+                                                    style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                                    <Text
+                                                        style={{color:'#444',fontSize:13}}>{this.state.event.field}</Text>
+                                                </View>
+                                        }
+                                        <View
+                                            style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
+                                            <Icon name={'angle-right'} size={30} color="#fff"/>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>:null
                         }
 
-                        {/!*邀请群组*!/}
+                        {/*邀请群组*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
 
@@ -567,7 +577,7 @@ class AddActivity extends Component{
                         </View>
 
 
-                        {/!*付费方式*!/}
+                        {/*付费方式*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>付费方式：</Text>
@@ -605,7 +615,10 @@ class AddActivity extends Component{
 
 
 
-                        {/!*人均费用*!/}
+                        {/*人均费用*/}
+
+                        {
+                            this.state.event.costTypeCode!=6?
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>人均费用：</Text>
@@ -626,17 +639,18 @@ class AddActivity extends Component{
                                 }
                                 />
                             </View>
-                        </View>
+                        </View>:null
+                        }
 
                         {
                             (this.state.feeDes!=null&&this.state.feeDes!=undefined)?
                                 <View style={{height:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',marginLeft:5}}>
-                                <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'}}>
-                                    <Text style={{fontSize:12,color:'#aaa'}}>
-                                        (Tips：{this.state.feeDes})
-                                    </Text>
-                                </View>
-                            </View>:null
+                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'}}>
+                                        <Text style={{fontSize:12,color:'#aaa'}}>
+                                            (Tips：{this.state.feeDes})
+                                        </Text>
+                                    </View>
+                                </View>:null
 
                         }
 
@@ -705,7 +719,7 @@ class AddActivity extends Component{
                         }
 
 
-                        {/!*邀请教练*!/}
+                        {/*邀请教练*/}
                         <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>邀请教练：</Text>
@@ -714,44 +728,44 @@ class AddActivity extends Component{
                             {
                                 this.state.event.coachId==null?
 
-                                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
+                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
-                                            {
-                                                this.state.event.hasCoach==1?
-                                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
+                                        {
+                                            this.state.event.hasCoach==1?
+                                                <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
                                         ,borderWidth:1,borderColor:'#66CDAA'}}>
-                                                        <Text style={{color:'#fff'}}>是</Text>
-                                                    </View>:
-                                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                                    <Text style={{color:'#fff'}}>是</Text>
+                                                </View>:
+                                                <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
-                                                                      onPress={()=>{
+                                                                  onPress={()=>{
                                             this.setState({event:Object.assign(this.state.event,{hasCoach:1})});
                                             this.navigate2Coach('coach');
                                         }}
-                                                    >
-                                                        <Text style={{color:'#666'}}>是</Text>
-                                                    </TouchableOpacity>
-                                            }
+                                                >
+                                                    <Text style={{color:'#666'}}>是</Text>
+                                                </TouchableOpacity>
+                                        }
 
-                                            {
-                                                this.state.event.hasCoach==0?
-                                                    <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
+                                        {
+                                            this.state.event.hasCoach==0?
+                                                <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
                                         ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
-                                                        <Text style={{color:'#fff'}}>否</Text>
-                                                    </View>:
-                                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
+                                                    <Text style={{color:'#fff'}}>否</Text>
+                                                </View>:
+                                                <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
-                                                                      onPress={()=>{
+                                                                  onPress={()=>{
                                               this.setState({event:Object.assign(this.state.event,{hasCoach:0})});
                                           }}
-                                                    >
-                                                        <Text style={{color:'#888'}}>否</Text>
-                                                    </TouchableOpacity>
+                                                >
+                                                    <Text style={{color:'#888'}}>否</Text>
+                                                </TouchableOpacity>
 
-                                            }
+                                        }
 
-                                        </View> :
+                                    </View> :
                                     <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
                                         <Text style={{marginLeft:20,fontSize:13,color:'#222'}}>
@@ -772,7 +786,7 @@ class AddActivity extends Component{
 
                         </View>
 
-                        {/!*邀请陪练*!/}
+                        {/*邀请陪练*/}
                         <View style={{height:30*height/568,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>邀请陪练：</Text>
@@ -781,43 +795,43 @@ class AddActivity extends Component{
                             {
                                 this.state.event.sparringId==null?
 
-                                        <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
+                                    <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center'
                                 }}>
 
-                                            {
-                                                this.state.event.hasSparring==1?
-                                                    <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
+                                        {
+                                            this.state.event.hasSparring==1?
+                                                <View style={{flex:1,flexDirection:'row',justifyContent:'center',backgroundColor:'#66CDAA',padding:5,borderRadius:3
                                         ,borderWidth:1,borderColor:'#66CDAA'}}>
-                                                        <Text style={{color:'#fff'}}>是</Text>
-                                                    </View>:
-                                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
+                                                    <Text style={{color:'#fff'}}>是</Text>
+                                                </View>:
+                                                <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',borderColor:'#eee',padding:5,borderWidth:1,
                                         }}
-                                                                      onPress={()=>{
+                                                                  onPress={()=>{
                                             this.setState({event:Object.assign(this.state.event,{hasSparring:1})});
                                             this.navigate2Coach('sparring');
                                         }}
-                                                    >
-                                                        <Text style={{color:'#666'}}>是</Text>
-                                                    </TouchableOpacity>
-                                            }
+                                                >
+                                                    <Text style={{color:'#666'}}>是</Text>
+                                                </TouchableOpacity>
+                                        }
 
-                                            {
-                                                this.state.event.hasSparring==0?
-                                                    <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
+                                        {
+                                            this.state.event.hasSparring==0?
+                                                <View style={{flex:1,borderRadius:3,flexDirection:'row',justifyContent:'center',padding:5
                                         ,marginRight:1,backgroundColor:'#66CDAA',borderWidth:1,borderColor:'#66CDAA'}}>
-                                                        <Text style={{color:'#fff'}}>否</Text>
-                                                    </View>:
-                                                    <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
+                                                    <Text style={{color:'#fff'}}>否</Text>
+                                                </View>:
+                                                <TouchableOpacity style={{flex:1,borderRadius:3,backgroundColor:'#fff',flexDirection:'row',justifyContent:'center',padding:5,
                                         marginRight:1}}
-                                                                      onPress={()=>{
+                                                                  onPress={()=>{
                                               this.setState({event:Object.assign(this.state.event,{hasSparring:0})})
                                           }}
-                                                    >
-                                                        <Text style={{color:'#888'}}>否</Text>
-                                                    </TouchableOpacity>
-                                            }
+                                                >
+                                                    <Text style={{color:'#888'}}>否</Text>
+                                                </TouchableOpacity>
+                                        }
 
-                                        </View>
+                                    </View>
                                     :
                                     <View style={{height:30,flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}>
@@ -839,7 +853,7 @@ class AddActivity extends Component{
 
                         </View>
 
-                        {/!*活动说明*!/}
+                        {/*活动说明*/}
                         <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:5}}>
                             <View style={{flex:1}}>
                                 <Text>活动说明：</Text>
@@ -872,7 +886,15 @@ class AddActivity extends Component{
                         </View>
                     </ScrollView>
 
-
+                    {
+                        this.state.event.costTypeCode==6?
+                        <TouchableOpacity style={{height:30,width:width*0.6,marginLeft:width*0.2,backgroundColor:'#66CDAA',margin:10,
+                marginBottom:10,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
+                                          onPress={()=>{
+                                      this.release2();
+                                      }}>
+                            <Text style={{color:'#fff',fontSize:15}}>发 布</Text>
+                        </TouchableOpacity>:
                     <TouchableOpacity style={{height:30,width:width*0.6,marginLeft:width*0.2,backgroundColor:'#66CDAA',margin:10,
                 marginBottom:10,justifyContent:'center',alignItems: 'center',borderRadius:10,}}
                                       onPress={()=>{
@@ -880,7 +902,7 @@ class AddActivity extends Component{
                                       }}>
                         <Text style={{color:'#fff',fontSize:15}}>发 布</Text>
                     </TouchableOpacity>
-
+                    }
                 </Toolbar>
 
             </View>
@@ -902,4 +924,3 @@ module.exports = connect(state=>({
     })
 )(AddActivity);
 
-*/

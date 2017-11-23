@@ -220,7 +220,6 @@ export let fetchActivityList=()=>{
                                         visibleEvents.push(activity);
                                     }
                                 }
-
                             }
                         });
 

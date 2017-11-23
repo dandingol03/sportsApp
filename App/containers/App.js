@@ -11,6 +11,7 @@ import {
     BackAndroid,
     TouchableOpacity,
     TouchableHighlight,
+    Alert
 } from 'react-native';
 import {getAccessToken} from '../action/UserActions';
 
@@ -21,12 +22,14 @@ import {
     closeMessage
 } from '../action/JpushActions';
 
-import JPush,{JpushEventReceiveMessage,JpushEventOpenMessage} from 'react-native-jpush';
+import JPushModule from 'jpush-react-native';
 import { connect } from 'react-redux';
 
 import { Navigator } from 'react-native-deprecated-custom-components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TabNavigator from 'react-native-tab-navigator';
+import ActivityDetail from '../components/groupActivity/ActivityDetail';
+import GroupJPush from '../components/groupActivity/GroupJPush';
 
 import {
     PAGE_LOGIN,
@@ -107,6 +110,19 @@ class App extends Component {
                 </View>
             </TabNavigator.Item>
         );
+    }
+    navigate2ActivityDetail(eventId)
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'ActivityDetail',
+                component: ActivityDetail,
+                params: {
+                    eventId:eventId
+                }
+            })
+        }
     }
     // onNotificationRecv(payload)
     // {
@@ -362,22 +378,28 @@ class App extends Component {
     componentDidMount()
     {
         //TODO:fetch username and password in cache
-        //JPush.requestPermissions()
+        //  JPush.requestPermissions()
 
-        JPush.getRegistrationID().then(function (res){
-            if(res&&res!=''){
-                var registrationID=res;
-                console.log('jPush获得registrationId='+registrationID);
+
+        JPushModule.notifyJSDidLoad((resultCode)=>{
+            if(resultCode===0){
+
             }
-        })
+        });
+        // The Ocean   Mike Perry/Shy Martin
 
+        JPushModule.addReceiveNotificationListener((map)=>{
+            console.log("alertContent:"+ map.alertContent);
+            console.log("extras:"+ map.extras);
+            // var extra = JSON.parse(map.extras);
+            // console.log(extra.key +":" +extra.value);
+        });
 
-        this.pushlisteners = [
-            JPush.addEventListener(JpushEventReceiveMessage, this.onReceiveMessage.bind(this)),
-            JPush.addEventListener(JpushEventOpenMessage, this.onOpenMessage.bind(this)),
-        ]
-
-            //console.log("Opening notification!");
+        JPushModule.addReceiveOpenNotificationListener((map)=>{
+            data=map._data;
+            JPushModule.jumpToPushActivity("GroupPushActivity")
+        });
+        //console.log("Opening notification!");
 
 
 
@@ -405,13 +427,9 @@ class App extends Component {
                 console.log('jPush获得registrationId='+registrationId);
             }
         })
-       // this.onNotificationRecv(notification);
+        // this.onNotificationRecv(notification);
     }
 
-    onOpenMessage(message) {
-        console.log(message);
-
-    }
 }
 
 

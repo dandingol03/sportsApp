@@ -26,7 +26,7 @@ import BadmintonCourse from '../components/course/BadmintonCourse';
 import Mall from './mall/FirstPage';
 import Activity from '../components/groupActivity/Activity';
 import Competition from '../components/competition/CompetitionList';
-
+import SexModal from '../components/groupActivity/SexModal';
 import PopupDialog,{ScaleAnimation} from 'react-native-popup-dialog';
 const scaleAnimation = new ScaleAnimation();
 
@@ -106,6 +106,20 @@ class Home extends Component {
             navigator.push({
                 name: 'BadmintonCourse',
                 component: BadmintonCourse,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    navigate2SexModal()
+    {
+        const {navigator} =this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'SexModal',
+                component: SexModal,
                 params: {
 
                 }
@@ -334,9 +348,9 @@ class Home extends Component {
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                                       onPress={ ()=>{
-                                         //this.navigate2Market(vegetable);
-                                         alert('暂未开通');
-                                         console.log('找教练');
+                                         this.navigate2SexModal();
+                                        // alert('暂未开通');s
+                                         //console.log('找教练');
                                        }}>
                                         {/*<Icon name="video-camera" size={30} color="#8968CD" />*/}
                                         <Image resizeMode="stretch" source={require('../../img/zhibo-@2x.png')} />

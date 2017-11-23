@@ -951,20 +951,10 @@ class ChooseField extends Component {
     }
     signUpFieldTimeActivity(event,select,starttime,endtime)
     {
-
+      //  this.props.dispatch(signUpFieldTimeActivity(event.eventId,this.state.select,this.state.starttime,this.state.endtime));
             this.props.dispatch(signUpFieldTimeActivity(event,select,starttime,endtime)).then((json)=>{
                 if(json.re==1){
-                    Alert.alert('信息','报名成功,是否立即支付？',[{text:'是',onPress:()=>{
-
-                        this.navigate2ActivityPay(event);
-                       // this.setMyActivityList();
-                        this.goBack()
-                    }},
-                        {text:'否',onPress:()=>{
-                            this.goBack();
-                            //this.setMyActivityList();
-                        }},
-                    ]);
+                    this.navigate2ActivityPay(event,select,starttime,endtime);
                 }else{
                     if(json.re==-100){
                        // this.props.dispatch(getAccessToken(false));
@@ -975,7 +965,7 @@ class ChooseField extends Component {
     }
 
 
-    navigate2ActivityPay(event)
+    navigate2ActivityPay(event,select,starttime,endtime)
     {
         const { navigator } = this.props;
         if(navigator) {
@@ -983,7 +973,10 @@ class ChooseField extends Component {
                 name: 'ActivityPay',
                 component: ActivityPay,
                 params: {
-                    activity:event
+                    activity:event,
+                    select:select,
+                    starttime:starttime,
+                    endtime:endtime
                 }
             })
         }

@@ -26,23 +26,25 @@ import CreateCustomerPlan from './CreateCustomerPlan';
 import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
-import RecordClass from './RecordClass';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
+
+
 var { height, width } = Dimensions.get('window');
+
 import {
-    fetchCourses,
-    fetchCoursesByCreatorId,
-    onCoursesOfCoachUpdate,
+    onStudentsCourseRecordUpdate,
     onCoursesUpdate,
-    disableCoursesOfCoachOnFresh, enableCoursesOfCoachOnFresh,
+    disableStudentsCourseRecordOnFresh,
+    enableStudentsCourseRecordOnFresh,
+    fetchStudentsCourseRecord
 } from '../../action/CourseActions';
 
 import {getAccessToken,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 
-class BadmintonCourseRecord extends Component {
+class StudentsCourseRecord extends Component {
 
     //导航至定制（for 教练）
     navigate2BadmintonCourseForCoach() {
@@ -99,18 +101,7 @@ class BadmintonCourseRecord extends Component {
         }
     }
 
-    navigate2RecordClass(rowData){
-        const { navigator } = this.props;
-        if (navigator) {
-            navigator.push({
-                name:'RecordClass',
-                component:RecordClass,
-                params: {
-                    courseId:rowData.courseId
-                }
-            })
-        }
-    }
+   
 
     navigate2CourseRecord()
     {
@@ -150,10 +141,10 @@ class BadmintonCourseRecord extends Component {
 
     setMyCourseList()
     {
-        this.props.dispatch(fetchCoursesByCreatorId(creatorId)).then((json)=>{
+        this.props.dispatch(fetchStudentsCourseRecord(courseId,memberId)).then((json)=>{
             if(json.re==1)
             {
-                this.props.dispatch(onCoursesOfCoachUpdate(json.data))
+                this.props.dispatch(onStudentsCourseRecordUpdate(json.data))
             }else{
                 if(json.re==-100){
                     this.props.dispatch(getAccessToken(false));
@@ -166,8 +157,6 @@ class BadmintonCourseRecord extends Component {
         return (
             <TouchableOpacity style={{ flexDirection: 'column', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
                               onPress={()=>{
-
-
                               }}
             >
                 <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -175,7 +164,7 @@ class BadmintonCourseRecord extends Component {
 
                         <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
                             <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                {rowData.courseName}
+                                学习内容{rowData.content}
                             </Text>
                         </View>
 
@@ -183,88 +172,33 @@ class BadmintonCourseRecord extends Component {
                         <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
                             <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
                             <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-                                {rowData.creatorName}教练
+                                训练地点{rowData.placeUnitName}
                             </Text>
                         </View>
                     </View>
 
                     <View style={{ padding: 3, paddingHorizontal: 12 }}>
                         <Text style={{ color: '#444', fontSize: 13 }}>
-                            {rowData.detail}
+                            训练场地:{rowData.yards}
                         </Text>
                     </View>
 
                     <View style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ color: '#f00', fontSize: 12, width: 50 }}>
-                            ￥{rowData.cost}
-                        </Text>
 
                         <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
                             <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.classCount}课次
+                                训练时间：{rowData.classDate}
                             </Text>
                         </View>
 
                         <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
                             <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.unitName}
+                                备注：{rowData.remark}
                             </Text>
                         </View>
 
-
                     </View>
                 </View>
-
-                {/*<View style={{ width: 70, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Icon name={'angle-right'} size={34} color="#444" style={{ backgroundColor: 'transparent', marginTop: -10 }} />
-                </View>*/}
-
-                <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        borderWidth: 1,
-                        borderColor: '#66CDAA',
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 6,
-                        marginLeft:30,
-
-                    }}
-
-
-                                      onPress={() => {
-                                          this.navigate2StudentInformation(rowData.courseId);
-                                      }
-                                      }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>学员信息</Text>
-                    </TouchableOpacity>
-
-                    {<View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
-
-                    </View>}
-
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        borderWidth: 1,
-                        borderColor: '#66CDAA',
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 6,
-                        marginRight:30
-                    }}
-
-
-                                      onPress={() => {
-                                          this.navigate2RecordClass(rowData);
-                                      }
-                                      }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>课程记录</Text>
-                    </TouchableOpacity>
-
-                </View>
-
 
             </TouchableOpacity>
 
@@ -277,17 +211,17 @@ class BadmintonCourseRecord extends Component {
 
     }
 
-    fetchCoursesByCreatorId(creatorId){
+    fetchStudentsCourseRecord(courseId,memberId){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
-        this.props.dispatch(fetchCoursesByCreatorId(creatorId)).then((json)=> {
+        this.props.dispatch(fetchStudentsCourseRecord(courseId,memberId)).then((json)=> {
             if(json.re==-100){
                 this.props.dispatch(getAccessToken(false));
             }
-            this.props.dispatch(disableCoursesOfCoachOnFresh());
+            this.props.dispatch(disableStudentsCourseRecordOnFresh());
             this.setState({doingFetch:false,isRefreshing:false})
         }).catch((e)=>{
-            this.props.dispatch(disableCoursesOfCoachOnFresh());
+            this.props.dispatch(disableStudentsCourseRecordOnFresh());
             this.setState({doingFetch:false,isRefreshing:false});
             alert(e)
         });
@@ -308,7 +242,7 @@ class BadmintonCourseRecord extends Component {
                 },           // Configuration
             ).start();
         }.bind(this), 500);
-        this.props.dispatch(enableCoursesOfCoachOnFresh());
+        this.props.dispatch(enableStudentsCourseRecordOnFresh());
 
     }
 
@@ -331,21 +265,21 @@ class BadmintonCourseRecord extends Component {
     }
 
     render() {
-        var coursesOfCoachListView=null;
-        var {coursesOfCoach,coursesOfCoachOnFresh}=this.props;
+        var studentsCourseRecordListView=null;
+        var {studentsCourseRecord,studentsCourseRecordOnFresh}=this.props;
         //var competitionList=this.state.competitionList;
-        if(coursesOfCoachOnFresh==true)
+        if(studentsCourseRecordOnFresh==true)
         {
             if(this.state.doingFetch==false)
-                this.fetchCoursesByCreatorId(this.props.creatorId);
+                this.fetchStudentsCourseRecord(this.props.courseId,this.props.memberId);
         }else{
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-            if (coursesOfCoach !== undefined && coursesOfCoach !== null && coursesOfCoach.length > 0)
+            if (studentsCourseRecord !== undefined && studentsCourseRecord !== null && studentsCourseRecord.length > 0)
             {
-                coursesOfCoachListView = (
+                studentsCourseRecordListView = (
                     <ListView
                         automaticallyAdjustContentInsets={false}
-                        dataSource={ds.cloneWithRows(coursesOfCoach)}
+                        dataSource={ds.cloneWithRows(studentsCourseRecord)}
                         renderRow={this.renderRow.bind(this)}
                     />
                 );
@@ -373,9 +307,9 @@ class BadmintonCourseRecord extends Component {
                                     />
                                 }
                             >
-                                {coursesOfCoachListView}
+                                {studentsCourseRecordListView}
                                 {
-                                    coursesOfCoachListView==null?
+                                    studentsCourseRecordListView==null?
                                         null:
                                         <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
                                             <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
@@ -435,9 +369,9 @@ export default connect(mapStateToProps)(MyDistribution);
 */
 
 module.exports = connect(state=>({
-        userType: state.user.usertype.perTypeCode,
-        coursesOfCoach:state.course.coursesOfCoach,
-        coursesOfCoachOnFresh:state.course.coursesOfCoachOnFresh,
-        creatorId:state.user.personInfo.personId
+    userType: state.user.usertype.perTypeCode,
+    studentsCourseRecord:state.course.studentsCourseRecord,
+    studentsCourseRecordOnFresh:state.course.studentsCourseRecordOnFresh,
+    creatorId:state.user.personInfo.personId
     })
-)(BadmintonCourseRecord);
+)(StudentsCourseRecord);

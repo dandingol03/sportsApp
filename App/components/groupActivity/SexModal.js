@@ -1,7 +1,4 @@
 
-
-
-
 import React,{Component} from 'react';
 
 import  {
@@ -24,6 +21,7 @@ import {
     enableCompetitionItemOnFresh,
 } from '../../action/CompetitionActions';
 import { connect } from 'react-redux';
+import QRCode from 'react-native-qrcode';
 var {height, width} = Dimensions.get('window');
 class SexModal extends Component{
 
@@ -77,96 +75,14 @@ class SexModal extends Component{
         return (
 
             <View style={{flex: 1, backgroundColor: '#fff'}}>
-
-                {/*团队名*/}
-                <View style={{
-                        height: 30,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: '#fff',
-                        margin: 5
-                    }}>
-                    <View style={{flex: 1}}>
-                        <Text>团队名：</Text>
-                    </View>
-                    <View style={{
-                            flex: 3,
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            backgroundColor: '#eee',
-                            borderRadius: 10
-                        }}>
-                        <TextInputWrapper
-                            placeholderTextColor='#888'
-                            textInputStyle={{marginLeft: 20, fontSize: 13, color: '#222'}}
-                            placeholder="请输入团队名"
-                            val={this.state.team.teamName}
-                            onChangeText={
-                                    (value) => {
-                                        this.setState({team:Object.assign(this.state.team,{teamName:value})})
-                                    }}
-                        />
-                    </View>
+                <View style={styles.card}>
+                    <QRCode
+                        value={"您已成功支付"+this.state.team+"元"}
+                        size={200}
+                        bgColor='purple'
+                        fgColor='white'/>
                 </View>
 
-
-                {/*备注*/}
-                <View style={{
-                        height: 30,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: '#fff',
-                        margin: 5
-                    }}>
-                    <View style={{flex: 1}}>
-                        <Text>备注：</Text>
-                    </View>
-                    <View style={{
-                            flex: 3,
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            backgroundColor: '#eee',
-                            borderRadius: 10
-                        }}>
-                        <TextInputWrapper
-                            placeholderTextColor='#888'
-                            textInputStyle={{marginLeft: 20, fontSize: 13, color: '#222'}}
-                            placeholder="请输入备注"
-                            val={this.state.team.remark}
-                            onChangeText={
-                                    (value) => {
-                                        this.setState({team:Object.assign(this.state.team,{remark:value})})
-                                    }}
-                            onCancel={
-                                    () => {
-                                        this.setState({team:Object.assign(this.state.team,{remark:null})})
-                                    }
-                                }
-                        />
-                    </View>
-                </View>
-
-                <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:40}}>
-                    <TouchableOpacity style={{padding:10,paddingHorizontal:12,backgroundColor:'#66CDAA',borderRadius:4,width:width/2,
-                            justifyContent:'center',flexDirection:'row'}}
-                                      onPress={()=>{
-                                              if(this.doCheck()==true)
-                                              {
-                                                  if(this.props.onConfirm)
-                                                      this.props.onConfirm(this.state.team);
-
-                                              }
-                                              this.close();
-                                              this.props.dispatch(enableCompetitionItemOnFresh());
-                                          }}
-                    >
-                        <Text style={{color:'#fff',}}>确认</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
         );
     }

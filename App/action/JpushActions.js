@@ -6,7 +6,7 @@ import Proxy from '../utils/Proxy'
 import {
     Platform
 } from 'react-native';
-import JPush from 'react-native-jpush'
+//import JPush from 'react-native-jpush'
 // var RNFS = require('react-native-fs');
 // import RNFetchBlob from 'react-native-fetch-blob'
 import {
@@ -108,53 +108,53 @@ export let downloadGeneratedTTS=(payload)=>{
         });
     }
 }
-
-export let updateRegistrationId=function (payload) {
-
-    return new Promise((resolve, reject) => {
-        if(Platform.OS=='ios'||Platform.OS=='android')
-        {
-            JPush.getRegistrationID().then(function (res) {
-                if(res&&res!='')
-                {
-                    var {accessToken} =payload;
-                    var registrationId=res;
-                    console.log('jPush获得registrationId='+registrationId);
-                    Proxy.postes({
-                        url: Config.server + '/svr/request',
-                        headers: {
-                            'Authorization': "Bearer " + accessToken,
-                            'Content-Type': 'application/json'
-                        },
-                        body: {
-                            request: 'activatePersonOnline',
-                            info:{
-                                registrationId:registrationId
-                            }
-                        }
-                    }).then(function (json) {
-
-                        if (json.re == 1) {
-                        }
-                        resolve(json);
-
-                    }).catch(function (err) {
-                        reject(err)
-                        alert(err);
-                    })
-
-                }else{
-                    resolve({re:2,data:'registrationId无法获得'});
-                }
-            });
-
-        }else{
-            resolve({re:1,data:null});
-        }
-
-    })
-
-}
+//
+// export let updateRegistrationId=function (payload) {
+//
+//     return new Promise((resolve, reject) => {
+//         if(Platform.OS=='ios'||Platform.OS=='android')
+//         {
+//             JPush.getRegistrationID().then(function (res) {
+//                 if(res&&res!='')
+//                 {
+//                     var {accessToken} =payload;
+//                     var registrationId=res;
+//                     console.log('jPush获得registrationId='+registrationId);
+//                     Proxy.postes({
+//                         url: Config.server + '/svr/request',
+//                         headers: {
+//                             'Authorization': "Bearer " + accessToken,
+//                             'Content-Type': 'application/json'
+//                         },
+//                         body: {
+//                             request: 'activatePersonOnline',
+//                             info:{
+//                                 registrationId:registrationId
+//                             }
+//                         }
+//                     }).then(function (json) {
+//
+//                         if (json.re == 1) {
+//                         }
+//                         resolve(json);
+//
+//                     }).catch(function (err) {
+//                         reject(err)
+//                         alert(err);
+//                     })
+//
+//                 }else{
+//                     resolve({re:2,data:'registrationId无法获得'});
+//                 }
+//             });
+//
+//         }else{
+//             resolve({re:1,data:null});
+//         }
+//
+//     })
+//
+// }
 
 //审车单体推送
 export let sendCustomMessage=(payload)=>{
