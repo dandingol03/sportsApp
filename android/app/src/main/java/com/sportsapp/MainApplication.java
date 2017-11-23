@@ -3,7 +3,8 @@ package com.sportsapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.horcrux.svg.SvgPackage;
+import com.theweflex.react.WeChatPackage;
+import cn.jpush.reactnativejpush.JPushPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
@@ -32,15 +33,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SvgPackage(),
+            new WeChatPackage(),
+            new JPushPackage(false,false),
             new ImagePickerPackage(),
             new RCTCameraPackage(),
             new RNSensitiveInfoPackage(),
             new PickerViewPackage(),
             new VectorIconsPackage(),
               new BaiduMapPackage(getApplicationContext()),
-              new AnExampleReactPackage(),
-            new WeChatPackage()
+              new AnExampleReactPackage()
       );
     }
   };

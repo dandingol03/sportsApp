@@ -8,9 +8,9 @@
 		<string>wechat</string>
 	</array>
 	<key>CFBundleGetInfoString</key>
-	<string></string>
+	<string/>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -60,7 +60,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Your message to user when the camera is accessed for the first time</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Your message to user when the microsphone is accessed for the first time</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -77,6 +77,7 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Feather.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

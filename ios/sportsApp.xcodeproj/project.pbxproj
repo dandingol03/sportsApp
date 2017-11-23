@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -74,6 +73,14 @@
 		D0A3C6379BFF43D585FA6331 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 998FDD822B8A4FFF9990610C /* libRNVectorIcons.a */; };
 		E5748E789ADD45F2AFA34CE8 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B34FD1B1A5BA48C9AC878C5C /* libRNImagePicker.a */; };
 		FF7D1A3C4D2D464A8CC2856E /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64056C70EAF341A0BB63E20C /* MaterialIcons.ttf */; };
+		0547FF24186E47A29D8A6D73 /* libRCTJPushModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F4285D036249419BC91047 /* libRCTJPushModule.a */; };
+		823ECD6AEF5E4448804DB938 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD73034F6174C109EA37AED /* UserNotifications.framework */; };
+		EB27284E07E84DC1B3B6F1D0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C35DABE6AD95411B8A055ACB /* CFNetwork.framework */; };
+		FD1428D32F984016AEC92727 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27BB71D43E445B297582F79 /* CoreFoundation.framework */; };
+		9BD81A6DB1F141ECA0E234EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857059FE8EB045E09D957BBF /* Foundation.framework */; };
+		CF15D394EFB44F6685CC9CCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7CEC6A7E1904109919A3FBA /* UIKit.framework */; };
+		BAD27E4E42094C498BA7E716 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D9E1B78DFBB4D20B0C96214 /* libresolv.tbd */; };
+		019A0AC0CFD7401DAE11151E /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A300CA4110EF4FA497FDE016 /* Feather.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -401,6 +408,15 @@
 		B34FD1B1A5BA48C9AC878C5C /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		BD2EC0645B8C4522B05B4DEB /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		DDA8CFE9E4A64A9A95E522EF /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		392C20DA186A4A08AB4AA96B /* RCTJPushModule.xcodeproj */ = {isa = PBXFileReference; name = "RCTJPushModule.xcodeproj"; path = "../node_modules/jpush-react-native/ios/RCTJPushModule.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		26F4285D036249419BC91047 /* libRCTJPushModule.a */ = {isa = PBXFileReference; name = "libRCTJPushModule.a"; path = "libRCTJPushModule.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		7AD73034F6174C109EA37AED /* UserNotifications.framework */ = {isa = PBXFileReference; name = "UserNotifications.framework"; path = "System/Library/Frameworks/UserNotifications.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		C35DABE6AD95411B8A055ACB /* CFNetwork.framework */ = {isa = PBXFileReference; name = "CFNetwork.framework"; path = "System/Library/Frameworks/CFNetwork.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		B27BB71D43E445B297582F79 /* CoreFoundation.framework */ = {isa = PBXFileReference; name = "CoreFoundation.framework"; path = "System/Library/Frameworks/CoreFoundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		857059FE8EB045E09D957BBF /* Foundation.framework */ = {isa = PBXFileReference; name = "Foundation.framework"; path = "System/Library/Frameworks/Foundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		A7CEC6A7E1904109919A3FBA /* UIKit.framework */ = {isa = PBXFileReference; name = "UIKit.framework"; path = "System/Library/Frameworks/UIKit.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		5D9E1B78DFBB4D20B0C96214 /* libresolv.tbd */ = {isa = PBXFileReference; name = "libresolv.tbd"; path = "usr/lib/libresolv.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		A300CA4110EF4FA497FDE016 /* Feather.ttf */ = {isa = PBXFileReference; name = "Feather.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,6 +469,13 @@
 				ABD6190D5C274BAD919A2082 /* libRCTCamera.a in Frameworks */,
 				E5748E789ADD45F2AFA34CE8 /* libRNImagePicker.a in Frameworks */,
 				AD29549624DD43EBBE2B52F3 /* libRNSVG.a in Frameworks */,
+				0547FF24186E47A29D8A6D73 /* libRCTJPushModule.a in Frameworks */,
+				823ECD6AEF5E4448804DB938 /* UserNotifications.framework in Frameworks */,
+				EB27284E07E84DC1B3B6F1D0 /* CFNetwork.framework in Frameworks */,
+				FD1428D32F984016AEC92727 /* CoreFoundation.framework in Frameworks */,
+				9BD81A6DB1F141ECA0E234EB /* Foundation.framework in Frameworks */,
+				CF15D394EFB44F6685CC9CCF /* UIKit.framework in Frameworks */,
+				BAD27E4E42094C498BA7E716 /* libresolv.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +639,12 @@
 				2A2834E91EE679B60049BED9 /* BaiduMapAPI_Radar.framework */,
 				2A2834EA1EE679B60049BED9 /* BaiduMapAPI_Search.framework */,
 				2A2834EB1EE679B60049BED9 /* BaiduMapAPI_Utils.framework */,
+				7AD73034F6174C109EA37AED /* UserNotifications.framework */,
+				C35DABE6AD95411B8A055ACB /* CFNetwork.framework */,
+				B27BB71D43E445B297582F79 /* CoreFoundation.framework */,
+				857059FE8EB045E09D957BBF /* Foundation.framework */,
+				A7CEC6A7E1904109919A3FBA /* UIKit.framework */,
+				5D9E1B78DFBB4D20B0C96214 /* libresolv.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -707,6 +736,7 @@
 				DDA8CFE9E4A64A9A95E522EF /* Octicons.ttf */,
 				8103C60FD06C4632BC7B233B /* SimpleLineIcons.ttf */,
 				0441A7778AF843EFB369DB6D /* Zocial.ttf */,
+				A300CA4110EF4FA497FDE016 /* Feather.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -734,6 +764,7 @@
 				0D4FF4A3814340E08D1E7E84 /* RCTCamera.xcodeproj */,
 				14C51D9C90D543EA8B44B863 /* RNImagePicker.xcodeproj */,
 				41D86753BEEF4E56B4A659C9 /* RNSVG.xcodeproj */,
+				392C20DA186A4A08AB4AA96B /* RCTJPushModule.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1258,6 +1289,7 @@
 				04125A96362B4E77B1E3F520 /* SimpleLineIcons.ttf in Resources */,
 				B633305B885442F085C60483 /* Zocial.ttf in Resources */,
 				2AED38461F0F150800FD55DE /* mapapi.bundle in Resources */,
+				019A0AC0CFD7401DAE11151E /* Feather.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1389,12 +1421,14 @@
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = sportsAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1425,12 +1459,14 @@
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = sportsAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1468,6 +1504,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap",
 					"$(SRCROOT)/../node_modules/react-native/Libraries",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = sportsApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1506,6 +1543,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap",
 					"$(SRCROOT)/../node_modules/react-native/Libraries",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = sportsApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1545,11 +1583,13 @@
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = "sportsApp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1590,11 +1630,13 @@
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
 				);
 				INFOPLIST_FILE = "sportsApp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1636,6 +1678,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.sportsApp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1661,6 +1704,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
