@@ -348,8 +348,7 @@ class Home extends Component {
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                                       onPress={ ()=>{
-                                         this.navigate2SexModal();
-                                        // alert('暂未开通');s
+                                             alert('暂未开通');
                                          //console.log('找教练');
                                        }}>
                                         {/*<Icon name="video-camera" size={30} color="#8968CD" />*/}
