@@ -111,6 +111,60 @@ class App extends Component {
             </TabNavigator.Item>
         );
     }
+
+    _createNavigatorItem1(route,icon)
+    {
+        var component=Home;
+        switch (route) {
+            case '首页':
+                break;
+            case '消息':
+                component=Notice;
+                break;
+            case '发现':
+                component=Found;
+                break;
+            case '我的':
+                component=My;
+                break;
+            default:
+                break;
+        }
+
+        return (
+            <TabNavigator.Item
+                selected={this.state.selectedTab === route}
+                title={route}
+                titleStyle={{color:'#C6C5CA',fontSize:13}}
+                selectedTitleStyle={{color:'#34C87A'}}
+                renderIcon={() => <Icon name={icon} size={26} color="#C6C5CA" />}
+                renderSelectedIcon={() => <Icon name={icon} size={26} color='#66CDAA' />}
+                onPress={() => {
+                    this.setState({ selectedTab: route });
+                    this.props.dispatch(updateRootTab({tab:route}));
+                }}
+                tabStyle={{backgroundColor:'transparent',}}
+                onSelectedStyle={{backgroundColor:'#eeecf3',}}
+            >
+
+                <View style={{flex:1,}}>
+                    <Navigator
+                        initialRoute={{ name: route, component:component }}
+                        configureScene={(route) => {
+                            return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
+                          }}
+                        renderScene={(route, navigator) => {
+                            let Component = route.component;
+                            //this.props.dispatch(updateNavigator({route:route.name,navigator:navigator}))
+                            return (<Component {...route.params} navigator={navigator} />);
+                          }}
+
+                    />
+
+                </View>
+            </TabNavigator.Item>
+        );
+    }
     navigate2ActivityDetail(eventId)
     {
         const { navigator } = this.props;
@@ -291,7 +345,7 @@ class App extends Component {
             tab:'home',
             selectedTab:props.tab.rootTab,
             name:null,
-
+            share:1,
         }
     }
 
@@ -324,6 +378,25 @@ class App extends Component {
 
 
             return (
+
+
+        //         <View>
+        //             {
+        //                 this.state.share==1?
+        //     <TabNavigator  tabBarStyle={defaultStyle} sceneStyle={defaultSceneStyle}>
+        //     {this._createNavigatorItem('首页','home')}
+        //     {this._createNavigatorItem('消息','comment-o')}
+        //     {this._createNavigatorItem('发现','search')}
+        //     {this._createNavigatorItem('我的','user-o')}
+        // </TabNavigator>:                <TabNavigator  tabBarStyle={defaultStyle} sceneStyle={defaultSceneStyle}>
+        //     {this._createNavigatorItem('首页','home')}
+        //     {this._createNavigatorItem('消息','comment-o')}
+        //     {this._createNavigatorItem('发现','search')}
+        //     {this._createNavigatorItem('我的','user-o')}
+        // </TabNavigator>
+        //             }
+        //         </View>
+
 
                 <TabNavigator  tabBarStyle={defaultStyle} sceneStyle={defaultSceneStyle}>
                     {this._createNavigatorItem('首页','home')}
@@ -396,8 +469,10 @@ class App extends Component {
         });
 
         JPushModule.addReceiveOpenNotificationListener((map)=>{
-            data=map._data;
-            JPushModule.jumpToPushActivity("GroupPushActivity")
+            data=map.extras;
+            this.state.share=map.extras;
+
+            //JPushModule.jumpToPushActivity("GroupPushActivity")
         });
         //console.log("Opening notification!");
 
