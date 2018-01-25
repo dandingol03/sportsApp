@@ -18,7 +18,9 @@ import {
     ON_SELF_LEVEL_UPDATE,
     UPDATE_PORTRAIT,
     ON_SPORT_LEVEL_UPDATE,
-    ON_MOBILE_PHONE_UPDATE
+    ON_MOBILE_PHONE_UPDATE,
+    ON_UNIVERSITY_UPDATE,
+
 
 } from '../constants/UserConstants';
 
@@ -130,6 +132,11 @@ let user = (state = initialState, action) => {
             var  {mobilePhone}=action.payload;
             return Object.assign({}, state, {
                 personInfo:Object.assign(state.personInfo,{mobilePhone:mobilePhone})
+            })
+        case ON_UNIVERSITY_UPDATE:
+            var  {university}=action.payload;
+            return Object.assign({}, state, {
+                personInfo:Object.assign(state.personInfo,{university:university})
             })
         case UPDATE_PORTRAIT:
             var data=action.payload;

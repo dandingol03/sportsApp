@@ -27,6 +27,7 @@ import ActivityDetail from './ActivityDetail';
 import ActivityPay from './ActivityPay';
 import ChooseField from './ChooseField';
 import GroupJPush from './GroupJPush';
+import goFieldOrder from './FieldOrder'
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
 const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 const scaleAnimation = new ScaleAnimation();
@@ -90,6 +91,19 @@ class Activity extends Component {
         }
     }
 
+    navigate2goFieldOrder(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'go_FieldOrder',
+                component: goFieldOrder,
+                params: {
+
+                }
+            })
+        }
+    }
+
     navigate2MyActivity(myEvents,flag){
         const { navigator } = this.props;
         if(navigator) {
@@ -103,6 +117,8 @@ class Activity extends Component {
             })
         }
     }
+
+
 
     navigate2ActivityDetail(rowData,flag){
 
@@ -591,11 +607,22 @@ class Activity extends Component {
 
             <View style={{flex:1}}>
 
-                <Toolbar width={width} title="群活动" navigator={this.props.navigator}
-                         actions={[]}
-                         onPress={(i)=>{
-                         }}
-                >
+                <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
+                backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
+                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
+                                      onPress={()=>{this.goBack();}}>
+                        <Icon name={'angle-left'} size={30} color="#fff"/>
+                    </TouchableOpacity>
+                    <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
+                        <Text style={{color:'#fff',fontSize:18}}>群活动</Text>
+                    </View>
+                    <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
+                        <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
+                                          onPress={()=>{this.navigate2goFieldOrder();}}>
+                            <Text style={{color:'#fff',fontSize:18}}>场地预约</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
                     <View style={{flex:1,flexDirection:'row',padding:5,borderBottomWidth:1,borderColor:'#ddd',backgroundColor:'transparent',}}>
                             <View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
                                 <Image resizeMode="stretch" style={{height:40,width:40,borderRadius:20}} source={require('../../../img/portrait.jpg')}/>
@@ -721,7 +748,6 @@ class Activity extends Component {
                                 }
 
                             </ScrollView>
-
                         </Animated.View>
                     </View>
 
@@ -805,10 +831,6 @@ class Activity extends Component {
 
 
                     </PopupDialog>
-
-                </Toolbar>
-
-
             </View>
         );
     }

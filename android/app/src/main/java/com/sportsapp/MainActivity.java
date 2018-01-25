@@ -1,5 +1,7 @@
 package com.sportsapp;
 
+import android.os.Bundle;
+
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -11,5 +13,17 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "sportsApp";
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MyActivityManager.addActivity(this);//加一个Activity
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyActivityManager.removeActivity(this);//移除一个Activity
     }
 }

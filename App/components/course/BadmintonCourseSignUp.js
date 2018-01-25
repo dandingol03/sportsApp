@@ -311,7 +311,7 @@ class BadmintonCourseSignUp extends Component {
                             >
                                 <Icon name={'plus'} size={15} color="#fff"/>
                             </TouchableOpacity>
-                                      </View>
+                        </View>
 
 
                         <View style={{flexDirection:'row',padding:4,paddingHorizontal:10,marginTop:4}}>

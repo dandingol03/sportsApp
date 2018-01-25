@@ -105,20 +105,20 @@ class CoachDetail extends Component{
                         <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:2,flexDirection:'row',justifyContent:'flex-start',alignItems: 'flex-start'}}>
                                 <Icon name={'star'} size={16} color="#66CDAA"/>
-                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>教练等级：</Text>
+                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>教练星级：</Text>
                             </View>
                             <View style={{flex:5,color:'#343434',justifyContent:'flex-start',alignItems: 'flex-start'}}>
-                                <Text style={{color:'#343434',justifyContent:'flex-start'}}>{coachLevelList[coachDetail.coachLevel]}</Text>
+                                <Text style={{color:'#343434',justifyContent:'flex-start'}}>{coachDetail.coachLevel}</Text>
                             </View>
                         </View>
 
                         <View style={{flex:1,flexDirection:'row',marginBottom:3}}>
                             <View style={{flex:2,flexDirection:'row',justifyContent:'flex-start',alignItems: 'flex-start'}}>
                                 <Icon name={'star'} size={16} color="#66CDAA"/>
-                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>运动水平：</Text>
+                                <Text style={{color:'#343434',justifyContent:'flex-start',alignItems: 'center'}}>教练资质：</Text>
                             </View>
                             <View style={{flex:5,color:'#343434',justifyContent:'flex-start',alignItems: 'flex-start'}}>
-                                <Text style={{color:'#343434',justifyContent:'flex-start'}}>{sportLevelList[coachDetail.sportLevel]}</Text>
+                                <Text style={{color:'#343434',justifyContent:'flex-start'}}>{coachDetail.sportLevel}</Text>
                             </View>
                         </View>
 

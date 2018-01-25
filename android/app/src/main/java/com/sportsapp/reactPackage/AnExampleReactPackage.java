@@ -6,6 +6,7 @@ import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.sportsapp.protogenesis.Bridge;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class AnExampleReactPackage implements ReactPackage {
 
 
         modules.add(new UpdateModule(reactContext));
+        modules.add(new Bridge(reactContext));
         return modules;
     }
 

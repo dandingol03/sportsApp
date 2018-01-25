@@ -282,21 +282,21 @@ class My extends Component{
                                 <Text>我的群</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
-                                          onPress={()=>{
-                            this.navigate2MyInformation();
-                        }}
-                        >
+                        {/*<TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}*/}
+                                          {/*onPress={()=>{*/}
+                            {/*this.navigate2MyInformation();*/}
+                        {/*}}*/}
+                        {/*>*/}
 
-                            <View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:30,padding:5,margin:5,
-                            justifyContent:'center',alignItems: 'center'}}>
-                                <Icon name={'user'} size={20} color="#fff"/>
-                            </View>
-                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
-                                <Text>我的资料</Text>
-                            </View>
+                            {/*<View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:30,padding:5,margin:5,*/}
+                            {/*justifyContent:'center',alignItems: 'center'}}>*/}
+                                {/*<Icon name={'user'} size={20} color="#fff"/>*/}
+                            {/*</View>*/}
+                            {/*<View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>*/}
+                                {/*<Text>我的资料</Text>*/}
+                            {/*</View>*/}
 
-                        </TouchableOpacity>
+                        {/*</TouchableOpacity>*/}
 
 
 

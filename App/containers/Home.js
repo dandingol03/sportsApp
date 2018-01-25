@@ -22,17 +22,19 @@ var {height, width} = Dimensions.get('window');
 
 import ViewPager from 'react-native-viewpager';
 
+
 import BadmintonCourse from '../components/course/BadmintonCourse';
 import Mall from './mall/FirstPage';
 import Activity from '../components/groupActivity/Activity';
 import Competition from '../components/competition/CompetitionList';
 import SexModal from '../components/groupActivity/SexModal';
+import CoachMessage from '../components/my/MyInformation'
 import PopupDialog,{ScaleAnimation} from 'react-native-popup-dialog';
 const scaleAnimation = new ScaleAnimation();
 
 import MobilePhoneModal from '../components/my/modal/ValidateMobilePhoneModal';
 import ValidateMyInformationModal from '../components/my/modal/ValidateMyInformationModal';
-
+import Bridge from '../native/Bridge'
 import {
     fetchNewsInfo,
     updateNewsInfo
@@ -45,7 +47,9 @@ import {
     getAccessToken
 } from '../action/UserActions';
 
-
+import  {
+    getRTMPPushUrl
+} from '../action/LiveActions';
 
 var IMGS = [
     require('../../img/tt1@2x.png'),
@@ -62,6 +66,19 @@ class Home extends Component {
             navigator.push({
                 name: 'activity',
                 component: Activity,
+                params: {
+
+                }
+            })
+        }
+    }
+
+    navigate2CoachMessage(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'CoachMressage',
+                component: CoachMessage,
                 params: {
 
                 }
@@ -302,7 +319,7 @@ class Home extends Component {
                         </View>
 
                         {/*内容区*/}
-                        <View style={{flex:5,justifyContent:'center',backgroundColor:'#eee'}}>
+                        <View style={{flex:6,justifyContent:'center',backgroundColor:'#eee'}}>
 
                             <View style={{flex:2,backgroundColor:'#fff',padding:0,marginBottom:10}}>
                                 <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',}}>
@@ -322,19 +339,18 @@ class Home extends Component {
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                                       onPress={ ()=>{
-                                        this.navigate2Activity();
+                                        this.navigate2CoachMessage();
                                       }}>
-                                        {/*<Icon name="group" size={30} color="#66CDAA" />*/}
                                         <Image resizeMode="stretch" source={require('../../img/dd@2x.png')} />
                                         <View style={{marginTop:0,paddingTop:15}}>
-                                            <Text style={{fontSize:13,color:'#646464'}}>群活动</Text>
+                                            <Text style={{fontSize:13,color:'#646464'}}>教练资料</Text>
                                         </View>
                                     </TouchableOpacity>
 
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                                       onPress={ ()=>{
-                                          this.navigate2Competition();
+                                          alert("暂未开通");
                                       }}>
 
                                         {/*<Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>*/}
@@ -348,7 +364,21 @@ class Home extends Component {
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                                       onPress={ ()=>{
-                                             alert('暂未开通');
+                                                          Bridge.raisePLStream("rtmp://pili-publish.sportshot.cn/sportshot/EEvvee?e=1514770702&token=2M63A85U1GpU37_hxw6zmCYt7ia0YPIEpOjLeJt5:IxdRrye8Aw1zqausvxn7OpZOwfw=")
+
+                                          {/*var date=new Date()*/}
+                                          {/*var dateStr=''*/}
+                                          {/*this.props.dispatch(getRTMPPushUrl({*/}
+                                              {/*time:3600,*/}
+                                              {/*loginName:this.props.username,*/}
+                                              {/*title:'test',*/}
+                                              {/*brief:'nothing big deal',*/}
+                                              {/*longbrief:'the same'*/}
+                                          {/*})).then((json)=>{*/}
+                                            {/*//开直播*/}
+                                            {/*Bridge.raisePLStream("rtmp://pili-publish.sportshot.cn/sportshot/EEvvee?e=1514539138&token=2M63A85U1GpU37_hxw6zmCYt7ia0YPIEpOjLeJt5:IgSHYwr6QmazFJrt9fqMCu2nbKA=")*/}
+                                          {/*})*/}
+                                             //alert('暂未开通');
                                          //console.log('找教练');
                                        }}>
                                         {/*<Icon name="video-camera" size={30} color="#8968CD" />*/}
@@ -369,6 +399,18 @@ class Home extends Component {
                                             <Text style={{fontSize:13,color:'#646464'}}>商城</Text>
                                         </View>
                                     </TouchableOpacity>
+
+{/*                                    <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
+                                                      onPress={ ()=>{
+                                          this.navigate2Mall();
+                                      }}>
+
+                                        /!*<Icon name="shopping-cart" size={36} color="#EEAD0E" style={{backgroundColor:'transparent'}}/>*!/
+                                        <Image resizeMode="stretch" source={require('../../img/shangc-@2x.png')} />
+                                        <View style={{marginTop:0,paddingTop:15}}>
+                                            <Text style={{fontSize:13,color:'#646464'}}>暑假班</Text>
+                                        </View>
+                                    </TouchableOpacity>*/}
 
                                 </View>
 

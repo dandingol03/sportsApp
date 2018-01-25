@@ -1,9 +1,20 @@
 package com.sportsapp;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.brentvatne.react.ReactVideoPackage;
 import com.facebook.react.ReactApplication;
+import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.BaseActivityEventListener;
+import com.qiniu.pili.droid.streaming.StreamingEnv;
 import com.theweflex.react.WeChatPackage;
+
+import cn.jpush.android.api.JPushInterface;
 import cn.jpush.reactnativejpush.JPushPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
@@ -40,10 +51,19 @@ public class MainApplication extends Application implements ReactApplication {
             new RNSensitiveInfoPackage(),
             new PickerViewPackage(),
             new VectorIconsPackage(),
+            new ReactVideoPackage(),
+              new RNFetchBlobPackage(),
               new BaiduMapPackage(getApplicationContext()),
               new AnExampleReactPackage()
+
       );
     }
+
+  };
+
+
+  private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener(){
+
   };
 
   @Override
@@ -55,5 +75,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    StreamingEnv.init(getApplicationContext());
   }
+
 }

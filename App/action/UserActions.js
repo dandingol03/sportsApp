@@ -10,6 +10,7 @@ import {
     UPDATE_TRAINER_INFO,
     UPDATE_PERSON_INFO_AUXILIARY,
     UPDATE_USERTYPE,
+
     ACCESS_TOKEN_ACK,
     SESSION_ID,
     ON_USER_NAME_UPDATE,
@@ -22,6 +23,15 @@ import {
     ON_PER_BIRTHDAY_UPDATE,
     ON_PER_ID_CARD_UPDATE,
     ON_RELATIVE_PERSON_UPDATE,
+    ON_UNIVERSITY_UPDATE,
+    ON_COACHPHTOTO0_UPDATE,
+    ON_COACHPHTOTO1_UPDATE,
+    ON_COACHPHTOTO2_UPDATE,
+    ON_COACHPHTOTO3_UPDATE,
+    ON_COACHLEVEL_UPDATE,
+    ON_HEIGHTWEIGHT_UPDATE,
+    ON_WORKCITY_UPDATE,
+    ON_COACHBRIEF_UPDATE,
     UPDATE_PORTRAIT
 } from '../constants/UserConstants'
 
@@ -194,7 +204,71 @@ export let onSportLevelUpdate=(sportLevel)=>{
         })
     }
 }
+export let onUniversityUpdate=(university)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_UNIVERSITY_UPDATE,
+            payload: {
+                university
+            }
+        })
+    }
+}
+export let onCoachPhoto0Update=(coachphoto)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_COACHPHTOTO0_UPDATE,
+            payload: {
+                coachphoto
+            }
+        })
+    }
+}
 
+export let onCoachPhoto1Update=(coachphoto)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_COACHPHTOTO1_UPDATE,
+            payload: {
+                coachphoto
+            }
+        })
+    }
+}
+
+export let onCoachPhoto2Update=(coachphoto)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_COACHPHTOTO2_UPDATE,
+            payload: {
+                coachphoto
+            }
+        })
+    }
+}
+
+export let onCoachPhoto3Update=(coachphoto)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_COACHPHTOTO3_UPDATE,
+            payload: {
+                coachphoto
+            }
+        })
+    }
+}
+
+
+export let onCoachLevelUpdate=(coachlevel)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_COACHLEVEL_UPDATE,
+            payload: {
+                coachlevel
+            }
+        })
+    }
+}
 //手机号更改
 export let updateMobilePhone=(mobilePhone)=>{
     return (dispatch,getState)=>{
@@ -263,6 +337,256 @@ export let updatePerName=(perName)=>{
                 },
                 body: {
                         perName:perName
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+//毕业院校修改
+export let updateUniversity=(university)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateUniversity',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    university:university
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let updateCoachPhoto0=(coachphoto)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateCoachPhoto0',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    coachphoto:coachphoto
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let updateCoachPhoto1=(coachphoto)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateCoachPhoto1',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    coachphoto:coachphoto
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let updateCoachPhoto2=(coachphoto)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateCoachPhoto2',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    coachphoto:coachphoto
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let updateCoachPhoto3=(coachphoto)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateCoachPhoto3',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    coachphoto:coachphoto
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let updateCoachLevel=(coachlevel)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateCoachLevel',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    coachlevel:coachlevel
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let updateCoachBrief=(coachbrief)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateCoachBrief',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    coachbrief:coachbrief
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let updateMajor=(major)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateMajor',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    major:major
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let updateWorkCity=(workcity)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateWorkCity',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    workcity:workcity
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let updateHeightWeight=(heightweight)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            Proxy.postes({
+                url: Config.server + '/func/node/updateHeightWeight',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: {
+                    heightweight:heightweight
                 }
             }).then((json)=>{
                 resolve(json)
@@ -394,6 +718,52 @@ export let onPerNameUpdate=(perName)=>{
     }
 }
 
+
+export let onCoachBriefUpdate=(coachbrief)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_COACHBRIEF_UPDATE,
+            payload: {
+                coachbrief
+            }
+        })
+    }
+}
+export let onMajorUpdate=(major)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_UNIVERSITY_UPDATE,
+            payload: {
+                major
+            }
+        })
+    }
+}
+
+export let onWorkCityUpdate=(workcity)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_WORKCITY_UPDATE,
+            payload: {
+                workcity
+            }
+        })
+    }
+}
+export let onHeightWeightUpdate=(heightweight)=>{
+    return (dispatch,getState)=>{
+
+        dispatch({
+            type:ON_HEIGHTWEIGHT_UPDATE,
+            payload: {
+                heightweight
+            }
+        })
+    }
+}
 
 //微信
 export let onWeChatUpdate=(wechat)=>{

@@ -29,6 +29,7 @@ export default rootReducer = combineReducers({
     competitions:competitionReducer,
     mycompetition:mycompetitionReducer,
     myprofit:myprofit,
-    notice:noticeReducer
+    notice:noticeReducer,
+
 
 })

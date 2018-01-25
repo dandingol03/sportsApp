@@ -7,6 +7,6 @@ module.exports={
     server:'http://211.87.225.204:8080/badmintonhot',
     //server:'http://211.87.225.199:8080/badmintonhot',
     //server:'http://211.87.225.196:8080/badmintonhot',
-   // server:'http://211.87.225.208:8080/badmintonhot',
+    //server:'http://211.87.225.202:8080/badmintonhot',
     debug:false
 }
