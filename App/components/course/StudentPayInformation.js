@@ -150,82 +150,46 @@ class StudentPayInformation extends Component {
     }
 
     renderRow(rowData, sectionId, rowId) {
+        var time=(new Date(rowData.orderTime)).toLocaleTimeString();
+        var date=new Date(rowData.orderTime);
+        var year=date.getFullYear();
+        var month=date.getMonth()+1;
+        var day=date.getDate();
+        var orderTime=year+'年'+month+'月'+day+'日'+' '+time;
+        var orderTime1=year+'-'+month+'-'+day+' '+time;
         return (
             <TouchableOpacity style={{ flexDirection: 'column', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
                               onPress={()=>{
-                                  this.navigate2CourseSignUp(rowData);
+
 
                               }}
             >
-                <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
 
-                        <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
-                            <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                {rowData.courseName}
-                            </Text>
-                        </View>
-
-
-                        <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
-                            <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
-                            <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-                                {rowData.creatorName}教练
-                            </Text>
-                        </View>
+                <View style={{flexDirection:'row',marginBottom:3}}>
+                    <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                        <Icon name={'circle'} size={10} color="#aaa"/>
                     </View>
-
-                    <View style={{ padding: 3, paddingHorizontal: 12 }}>
-                        <Text style={{ color: '#444', fontSize: 13 }}>
-                            {rowData.detail}
-                        </Text>
-                    </View>
-
-                    <View style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ color: '#f00', fontSize: 12, width: 50 }}>
-                            ￥{rowData.cost}
-                        </Text>
-
-                        <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.classCount}课次
-                            </Text>
-                        </View>
-
-                        <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.unitName}
-                            </Text>
-                        </View>
-
-
-                    </View>
+                    <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                        ￥{rowData.payment}
+                    </Text>
                 </View>
+
+                <View style={{flexDirection:'row',marginBottom:3}}>
+                    <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                        <Icon name={'circle'} size={10} color="#aaa"/>
+                    </View>
+                    <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                        交易时间：{orderTime}
+                    </Text>
+                </View>
+
+
 
                 {/*<View style={{ width: 70, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Icon name={'angle-right'} size={34} color="#444" style={{ backgroundColor: 'transparent', marginTop: -10 }} />
                 </View>*/}
 
-                <View style={{flex:1,flexDirection:'column',width:100,padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        borderWidth: 1,
-                        borderColor: '#66CDAA',
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 6,
-                        marginLeft:30
-                    }}
 
-
-                                      onPress={() => {
-                                          this.navigate2ModifyDistribution(rowData);
-                                      }
-                                      }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>编辑</Text>
-                    </TouchableOpacity>
-                </View>
             </TouchableOpacity>
 
 
@@ -335,7 +299,9 @@ class StudentPayInformation extends Component {
                                 {studentsPayListView}
                                 {
                                     studentsPayListView==null?
-                                        null:
+                                        <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
+                                            <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>没有缴费记录</Text>
+                                        </View>:
                                         <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
                                             <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
                                         </View>
@@ -359,6 +325,9 @@ class StudentPayInformation extends Component {
 
     }
 
+    componentWillUnmount(){
+        this.props.dispatch(enableStudentsPayOnFresh());
+    }
 }
 
 const styles = StyleSheet.create({

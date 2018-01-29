@@ -34,12 +34,12 @@ const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 const scaleAnimation = new ScaleAnimation();
 const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 import{
-    addClass
+    editClass
 } from '../../action/CourseActions';
 import DatePicker from 'react-native-datepicker';
 import {getAccessToken,} from '../../action/UserActions';
 
-class AddClass extends Component{
+class EditClass extends Component{
 
     goBack(){
         const { navigator } = this.props;
@@ -161,7 +161,7 @@ class AddClass extends Component{
         var startinttotal=hourminutes1+intmin1;
 
         if((endmintotal-startinttotal)<60){
-            alert("结束时间必须在开始时间之后至少一小时");
+            alert("结束时间必须在开始时间之后一小时");
         }else{
             if(this.state.selectEndTime==false)
             {
@@ -288,6 +288,21 @@ class AddClass extends Component{
 
 
         return (
+
+      /*  var time=(new Date(rowData.startTime)).toLocaleTimeString();
+        var date=new Date(rowData.startTime);
+        var year=date.getFullYear();
+        var month=date.getMonth()+1;
+        var day=date.getDate();
+        var startTime=year+'年'+month+'月'+day+'日'+' '+time;
+        //var time=time.toLocaleDateString()+" "+time.toLocaleTimeString();
+        var time1=(new Date(rowData.endTime)).toLocaleTimeString();
+        var date1=new Date(rowData.endTime);
+        var year1=date1.getFullYear();
+        var month1=date1.getMonth()+1;
+        var day1=date1.getDate();
+        var endTime=year1+'年'+month1+'月'+day1+'日'+' '+time1;*/
+
             <View style={{flex:1}}>
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',justifyContent:'center',alignItems: 'center',
                     backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
@@ -296,7 +311,7 @@ class AddClass extends Component{
                         <Icon name={'angle-left'} size={30} color="#fff"/>
                     </TouchableOpacity>
                     <View style={{flex:3,justifyContent:'center',alignItems: 'center',}}>
-                        <Text style={{color:'#fff',fontSize:18}}>创建课程</Text>
+                        <Text style={{color:'#fff',fontSize:18}}>编辑课程</Text>
                     </View>
                     <View style={{flex:1,justifyContent:'center',alignItems: 'center',}}>
 
@@ -309,45 +324,7 @@ class AddClass extends Component{
 
 
 
-                   {/* 课程场馆
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
-                        <View style={{flex:1}}>
-                            <Text style={{color:'#343434'}}>课程场馆：</Text>
-                        </View>
 
-                        {
-                            this.state.venue==null?
-                                <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                                    borderRadius:10}}
-                                                  onPress={()=>{
-                                                      this.navigate2VenueInspect();
-                                                  }}>
-                                    <Text style={{marginLeft:20,fontSize:13,color:'#888'}}>
-                                        请选择课程场馆
-                                    </Text>
-                                </TouchableOpacity>:
-                                <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
-                                    borderRadius:10}}
-                                                  onPress={()=>{
-                                                      this.navigate2VenueInspect();
-                                                  }}>
-                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#222',fontSize:13}}>{this.state.venue.name}</Text>
-                                    </View>
-
-                                    <TouchableOpacity style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20,padding:5}}
-                                                      onPress={()=>{
-                                                          var venue = null;
-                                                          this.setState({venue:venue});
-                                                      }}>
-                                        <Ionicons name={'md-close-circle'} size={20} color={'red'}/>
-                                    </TouchableOpacity>
-
-                                </TouchableOpacity>
-
-                        }
-
-                    </View>*/}
 
                     {/*场地*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
@@ -359,7 +336,7 @@ class AddClass extends Component{
                             <TextInputWrapper
                                 placeholderTextColor='#888'
                                 textInputStyle={{marginLeft:20,fontSize:13,color:'#222'}}
-                                placeholder="请输入场地"
+                                placeholder={this.props.class.yards}
                                 val={this.state.yard}
                                 onChangeText={
                                     (value)=>{
@@ -380,19 +357,21 @@ class AddClass extends Component{
                         <TouchableOpacity style={{flex:3,height:30,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
                             backgroundColor:'#eee',borderRadius:10}}
                                           onPress ={()=>{this.show('actionSheet')}}>
+
                             {
                                 this.state.classWeek==null?
                                     <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#888',fontSize:13}}>请选择活动日期：</Text>
+                                        <Text style={{color:'#888',fontSize:13}}>{this.props.classWeek}</Text>
                                     </View> :
                                     <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                         <Text style={{color:'#444',fontSize:13}}>{this.state.classWeek}</Text>
                                     </View>
                             }
 
+
                             <ActionSheet
                                 ref={(p)=>{this.actionSheet=p;}}
-                                title="请选择活动日期"
+                                title={this.props.classWeek}
                                 options={this.state.classWeekButtons}
                                 cancelButtonIndex={CANCEL_INDEX}
                                 destructiveButtonIndex={DESTRUCTIVE_INDEX}
@@ -413,9 +392,10 @@ class AddClass extends Component{
                         <View style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',
                             backgroundColor:'#eee',borderRadius:10,margin:5}}>
                             {
+                                //var time=(new Date)
                                 this.state.startTime==null?
                                     <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#888',fontSize:13}}>请选择：</Text>
+                                        <Text style={{color:'#888',fontSize:13}}>{this.props.startTime}</Text>
                                     </View> :
                                     <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                         <Text style={{color:'#444',fontSize:13}}>{this.state.startTimeView}</Text>
@@ -439,6 +419,7 @@ class AddClass extends Component{
                                     onDateChange={(date) => {
                                         if(this.state.selectStartTime==false)
                                         {
+
                                             this.state.selectStartTime=true;
                                             var startTime = date+':00';
                                             var day = new Date();
@@ -466,7 +447,7 @@ class AddClass extends Component{
                             {
                                 this.state.endTime==null?
                                     <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#888',fontSize:13}}>请选择：</Text>
+                                        <Text style={{color:'#888',fontSize:13}}>{this.props.endTime.substring(0,5)}</Text>
                                     </View> :
                                     <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                         <Text style={{color:'#444',fontSize:13}}>{this.state.endTimeView}</Text>
@@ -488,10 +469,7 @@ class AddClass extends Component{
                                     showIcon={true}
                                     iconComponent={<Icon name={'calendar'} size={20} color="#888"/>}
                                     onDateChange={(date) => {
-
                                         this.verifyTime(date);
-
-
                                         if(this.state.selectEndTime==false)
                                         {
                                         this.state.selectEndTime=true;
@@ -518,7 +496,7 @@ class AddClass extends Component{
                             {
                                 this.state.endTime==null?
                                     <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
-                                        <Text style={{color:'#888',fontSize:13}}>请选择：</Text>
+                                        <Text style={{color:'#888',fontSize:13}}>{this.props.endTime}</Text>
                                     </View> :
                                     <View style={{flex:5,marginLeft:10,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
                                         <Text style={{color:'#444',fontSize:13}}>{this.state.endTimeView}</Text>
@@ -571,7 +549,7 @@ class AddClass extends Component{
                                 this.setState({content:text});
                             }}
                             value={this.state.content}
-                            placeholder='请描述授课内容...'
+                            placeholder={this.props.content}
                             placeholderTextColor="#aaa"
                             underlineColorAndroid="transparent"
                             multiline={true}
@@ -590,10 +568,10 @@ class AddClass extends Component{
                         justifyContent:'center'}}
                                       onPress={()=>{
 
-                                              this.props.dispatch(addClass(this.props.courseId,this.state.yard,this.props.course.unitId,this.state.classWeek,this.state.startTime,this.state.endTime,this.state.content))
+                                              this.props.dispatch(editClass(this.props.class.classId,this.props.course.courseId,this.state.yard,this.props.course.unitId,this.state.classWeek,this.state.startTime,this.state.endTime,this.state.content))
                                                   .then((json)=>{
                                                       if(json.re==1){
-                                                          Alert.alert('信息','添加成功',[{text:'确认',onPress:()=>{
+                                                          Alert.alert('信息','编辑成功',[{text:'确认',onPress:()=>{
                                                               this.goBack();
                                                               this.props.setClassRecord(this.props.courseId);
                                                           }}]);
@@ -620,7 +598,7 @@ class AddClass extends Component{
                                           }*/
 
                                       }}>
-                        <Text style={{color:'#fff',fontSize:15}}>确定添加</Text>
+                        <Text style={{color:'#fff',fontSize:15}}>确定编辑</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -749,6 +727,6 @@ module.exports = connect(state=>({
         myGroupList:state.activity.myGroupList,
         groupOnFresh:state.activity.groupOnFresh
     })
-)(AddClass);
+)(EditClass);
 
 

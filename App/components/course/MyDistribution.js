@@ -80,7 +80,9 @@ class MyDistribution extends Component {
                 name: 'ModifyDistribution',
                 component: ModifyDistribution,
                 params: {
-                       course:course
+                       course:course,
+                       setDistribution:this.setDistribution.bind(this)
+
                 }
             })
         }
@@ -136,9 +138,9 @@ class MyDistribution extends Component {
         }
     }
 
-    setMyCourseList()
+    setDistribution()
     {
-        this.props.dispatch(fetchCoursesByCreatorId(creatorId)).then((json)=>{
+        this.props.dispatch(fetchCoursesByCreatorId(this.props.creatorId)).then((json)=>{
             if(json.re==1)
             {
                 this.props.dispatch(onCoursesOfCoachUpdate(json.data))
@@ -179,6 +181,11 @@ class MyDistribution extends Component {
                     <View style={{ padding: 3, paddingHorizontal: 12 }}>
                         <Text style={{ color: '#444', fontSize: 13 }}>
                             {rowData.detail}
+                        </Text>
+                    </View>
+                    <View style={{ padding: 3, paddingHorizontal: 12 }}>
+                        <Text style={{ color: '#444', fontSize: 13 }}>
+                            课程最大人数：{rowData.maxNumber}
                         </Text>
                     </View>
 

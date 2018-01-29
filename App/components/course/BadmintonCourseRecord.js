@@ -27,6 +27,7 @@ import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
 import RecordClass from './RecordClass';
+
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 var { height, width } = Dimensions.get('window');
@@ -45,7 +46,7 @@ import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 class BadmintonCourseRecord extends Component {
 
     //导航至定制（for 教练）
-    navigate2BadmintonCourseForCoach() {
+    navigate2AddCourse() {
         const { navigator } = this.props;
         if (navigator) {
             navigator.push({
@@ -106,7 +107,8 @@ class BadmintonCourseRecord extends Component {
                 name:'RecordClass',
                 component:RecordClass,
                 params: {
-                    courseId:rowData.courseId
+                    courseId:rowData.courseId,
+                    course:rowData
                 }
             })
         }
@@ -126,6 +128,18 @@ class BadmintonCourseRecord extends Component {
         }
     }
 
+    navigate2AddClass(){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'CreateBadmintonCourse',
+                component: CreateBadmintonCourse,
+                params: {
+                    setMyCourseList:this.setMyCourseList.bind(this)
+                }
+            })
+        }
+    }
 
     navigate2StudentInformation(courseId){
     const { navigator } = this.props;
@@ -210,8 +224,6 @@ class BadmintonCourseRecord extends Component {
                                 {rowData.unitName}
                             </Text>
                         </View>
-
-
                     </View>
                 </View>
 
@@ -240,6 +252,8 @@ class BadmintonCourseRecord extends Component {
                         <Text style={{color: '#66CDAA', fontSize: 12}}>学员信息</Text>
                     </TouchableOpacity>
 
+
+
                     {<View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>}
@@ -263,7 +277,29 @@ class BadmintonCourseRecord extends Component {
                         <Text style={{color: '#66CDAA', fontSize: 12}}>课程记录</Text>
                     </TouchableOpacity>
 
+                    <TouchableOpacity style={{
+                        flex: 1,
+                        borderWidth: 1,
+                        borderColor: '#66CDAA',
+                        padding: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 6,
+                        marginLeft:30
+                    }}
+
+
+                                      onPress={() => {
+                                          this.navigate2ModifyDistribution(rowData);
+                                      }
+                                      }>
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>编辑课程</Text>
+                    </TouchableOpacity>
+
+
                 </View>
+
+
 
 
             </TouchableOpacity>
@@ -390,7 +426,25 @@ class BadmintonCourseRecord extends Component {
 
 
                 </Toolbar>
+                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#66CDAA',
+                    position:'absolute',bottom:8}}>
+                    <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
+                        padding:10,margin:5}}/* onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}*/>
+                        {/* <Text style={{color:'#fff',}}>我发起的活动</Text>*/}
+                    </TouchableOpacity>
 
+                    <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
+                        padding:10,margin:5}} /*onPress={()=>{this.navigate2AddClass();}}*/>
+                        {/* <Text style={{color:'#fff',}}>我要添加课程</Text>*/}
+                    </TouchableOpacity>
+                </View>
+                <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:8,left:width*0.5-25}}>
+                    <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,
+                        borderWidth:1,borderColor:'#eee',borderRadius:50}}
+                                      onPress={()=>{this.navigate2AddCourse();}}>
+                        <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }

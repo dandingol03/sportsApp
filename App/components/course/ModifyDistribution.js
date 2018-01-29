@@ -450,6 +450,7 @@ class ModifyBadmintonCourse extends Component{
                                                       if(json.re==1){
                                                           Alert.alert('信息','课程编辑成功',[{text:'确认',onPress:()=>{
                                                               this.goBack();
+                                                              this.props.setDistribution();
                                                           }}]);
                                                       }else{
                                                           if(json.re==-100){

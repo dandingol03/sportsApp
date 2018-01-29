@@ -23,7 +23,7 @@ var {height, width} = Dimensions.get('window');
 import ViewPager from 'react-native-viewpager';
 
 
-import BadmintonCourse from '../components/course/BadmintonCourse';
+import BadmintonCourse from '../components/course/BadmintonCourseRecord';
 import Mall from './mall/FirstPage';
 import Activity from '../components/groupActivity/Activity';
 import Competition from '../components/competition/CompetitionList';

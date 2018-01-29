@@ -13,11 +13,13 @@ import {
     Animated,
     Easing,
     TextInput,
-    InteractionManager
+    InteractionManager,
+    Alert
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import _ from 'lodash';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CommIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import TextInputWrapper from 'react-native-text-input-wrapper'
@@ -35,6 +37,7 @@ import {
     onClassMemberUpdate,
     disableClassMemberOnFresh,
     enableClassMemberOnFresh,
+    saveOrUpdateBadmintonCourseClassRecords
 } from '../../action/CourseActions';
 
 import {getAccessToken,} from '../../action/UserActions';
@@ -161,7 +164,7 @@ class ClassSignUp extends Component {
         })
     }
 
-    renderRow(rowData, sectionId, rowId) {
+  /*  renderRow(rowData, sectionId, rowId) {
         return (
             <TouchableOpacity style={{ flexDirection: 'column', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
                               onPress={()=>{
@@ -171,100 +174,28 @@ class ClassSignUp extends Component {
             >
                 <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
                     <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
-
                         <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
-                            <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                {rowData.courseName}
-                            </Text>
-                        </View>
-
-
-                        <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
                             <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
                             <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-                                {rowData.creatorName}教练
+                                {rowData.perName}
                             </Text>
+                        </View>
+                        <View style={{flexDirection:'row',marginRight:150,alignItems:'center',justifyContent:'center',paddingHorizontal:10,width:70}}>
+                            {
+                                rowData.select==true?
+                                    <Icon name={'check-square-o'} size={20} color="#666"/>:
+                                    <Icon name={'square-o'} size={20} color="#666"/>
+                            }
                         </View>
                     </View>
 
-                    <View style={{ padding: 3, paddingHorizontal: 12 }}>
-                        <Text style={{ color: '#444', fontSize: 13 }}>
-                            {rowData.detail}
-                        </Text>
-                    </View>
-
-                    <View style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ color: '#f00', fontSize: 12, width: 50 }}>
-                            ￥{rowData.cost}
-                        </Text>
-
-                        <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.classCount}课次
-                            </Text>
-                        </View>
-
-                        <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                {rowData.unitName}
-                            </Text>
-                        </View>
-
-
-                    </View>
                 </View>
 
-                {/*<View style={{ width: 70, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+
+
+                {/!*<View style={{ width: 70, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Icon name={'angle-right'} size={34} color="#444" style={{ backgroundColor: 'transparent', marginTop: -10 }} />
-                </View>*/}
-
-                <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        borderWidth: 1,
-                        borderColor: '#66CDAA',
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 6,
-                        marginLeft:30,
-
-                    }}
-
-
-                                      onPress={() => {
-                                          this.navigate2StudentInformation(rowData.courseId);
-                                      }
-                                      }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>学员信息</Text>
-                    </TouchableOpacity>
-
-                    {<View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
-
-                    </View>}
-
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        borderWidth: 1,
-                        borderColor: '#66CDAA',
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 6,
-                        marginRight:30
-                    }}
-
-
-                                      onPress={() => {
-                                          this.navigate2RecordClass(rowData);
-                                      }
-                                      }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>课程记录</Text>
-                    </TouchableOpacity>
-
-                </View>
-
-
+                </View>*!/}
             </TouchableOpacity>
 
 
@@ -274,7 +205,7 @@ class ClassSignUp extends Component {
 
 
 
-    }
+    }*/
 
     fetchClassMember(courseId,classId){
         this.state.doingFetch=true;
@@ -322,6 +253,8 @@ class ClassSignUp extends Component {
             doingFetch:false,
             isRefreshing:false,
             fadeAnim:new Animated.Value(1),
+            classMember:props.classMember,
+             content:null
         };
     }
 
@@ -333,6 +266,8 @@ class ClassSignUp extends Component {
         var classMemberListView=null;
         var {classMember,classMemberOnFresh}=this.props;
         //var competitionList=this.state.competitionList;
+
+
         if(classMemberOnFresh==true)
         {
             if(this.state.doingFetch==false)
@@ -341,13 +276,86 @@ class ClassSignUp extends Component {
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             if (classMember !== undefined && classMember !== null && classMember.length > 0)
             {
-                classMemberListView = (
+             /*   classMemberListView = (
                     <ListView
                         automaticallyAdjustContentInsets={false}
                         dataSource={ds.cloneWithRows(classMember)}
                         renderRow={this.renderRow.bind(this)}
                     />
-                );
+                );*/
+                var classMembers=[]
+                classMember.map((member,i)=>{
+                    classMembers.push(
+                        <TouchableOpacity key={i} style={{flexDirection:'row',padding:4,paddingHorizontal:10,marginTop:4}}
+                                          onPress={()=> {
+                                             var _classMember=_.cloneDeep(classMember);
+                                              _classMember.map((_member,j)=>{
+                                                if(_member.memberId==member.memberId)
+                                                {
+                                                    if(_member.select==true)
+                                                    {
+                                                        _member.select=false;
+                                                        member.select=false;
+                                                    }
+                                                    else{
+                                                        _member.select=true;
+                                                        member.select=true;
+                                                    }
+                                                }
+                                              })
+                                              this.setState({classMember:_classMember});
+
+                                          }}
+                        >
+                            {member.perName!=null?
+                            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10}}>
+                                <Text>{member.perName}</Text>
+                            </View>:
+                            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10}}>
+                                <Text>{member.perNum}</Text>
+                            </View>}
+
+                            <View style={{flex:1}}></View>
+                            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10,marginRight:10}}>
+                                {
+                                    member.select==true?
+                                        <Icon name={'check-square-o'} size={20} color="#666"/>:
+                                        <Icon name={'square-o'} size={20} cogit lor="#666"/>
+                                }
+                            </View>
+                            <View style={{flex:2}}></View>
+
+
+                            <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',width:200,margin:10,marginTop:5,marginBottom:5}}>
+                                <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10}}>
+
+
+
+
+                                    <TextInputWrapper
+                                    placeholderTextColor='#888'
+                                    textInputStyle={{marginLeft: 20, fontSize: 13, color: '#222'}}
+                                    placeholder="请输入内容"
+                                    val={member.content}
+                                    onChangeText={
+                                        (value) => {
+                                            member.content=value;
+                                            this.setState({classMember: classMember})
+                                        }}
+                                    onCancel={
+                                        () => {
+                                            this.setState({classMember: Object.assign(this.state.classMember, {content: null})});
+                                        }}
+                                    />
+
+
+                                </View>
+                            </View>
+
+                        </TouchableOpacity>
+
+                    )
+                })
             }
         }
 
@@ -355,9 +363,9 @@ class ClassSignUp extends Component {
 
         return (
             <View style={styles.container}>
-                <Toolbar width={width} title="上课记录" actions={[]} navigator={this.props.navigator}>
+                <Toolbar width={width} title="学生签到" actions={[]} navigator={this.props.navigator}>
 
-                    {<View style={{flex:5,backgroundColor:'#eee'}}>
+                   {<View style={{flex:5,backgroundColor:'#eee'}}>
                         <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:5,paddingBottom:5,}}>
                             <ScrollView
                                 refreshControl={
@@ -372,19 +380,93 @@ class ClassSignUp extends Component {
                                     />
                                 }
                             >
-                                {classMemberListView}
+                                {classMembers}
                                 {
-                                    classMemberListView==null?
-                                        null:
+                                    classMembers==null?
+                                        <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
+                                            <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>尚未有学生报名</Text>
+                                        </View>:
                                         <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
                                             <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
                                         </View>
                                 }
+                                { classMembers==null?
+                                    null:
+                                <TouchableOpacity style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
+                                                  onPress={()=>{
+                                                  }}
+                                >
 
+                                    <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
+                                        <TouchableOpacity style={{
+                                            flex: 1,
+                                            borderWidth: 1,
+                                            borderColor: '#66CDAA',
+                                            padding: 5,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            borderRadius: 6,
+                                            marginRight:30,
+
+                                        }}
+
+
+                                                          onPress={() => {
+                                                              this.props.dispatch(saveOrUpdateBadmintonCourseClassRecords(this.state.classMember)).then((json)=>{
+                                                                  if(json.re==1){
+                                                                      Alert.alert('信息','学生签到保存成功！',[{text:'确认',onPress:()=>{
+                                                                          this.goBack();
+                                                                          this.props.setClassRecord(this.props.courseId,);
+
+                                                                      }}]);
+                                                                  }else{
+                                                                      if(json.re==-100){
+                                                                          this.props.dispatch(getAccessToken(false));
+                                                                      }
+                                                                  }
+                                                              })
+                                                          }
+                                                          }>
+                                            <Text style={{color: '#66CDAA', fontSize: 12}}>确定</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </TouchableOpacity>}
                             </ScrollView>
 
                         </Animated.View>
                     </View>}
+
+
+
+
+                       {/* <View style={{flexDirection:'row',padding:4,paddingHorizontal:10,marginTop:4}}>
+
+                            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10}}>
+                                <Text style={{color:'#000000',fontWeight:'bold'}}>用户名</Text>
+                            </View>
+
+                            <View style={{flex:1}}>
+
+                            </View>
+
+                            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10,width:70}}>
+                                <Text style={{color:'#000000',fontWeight:'bold'}}>
+                                    勾选
+                                </Text>
+                            </View>
+
+                            <View style={{flex:1}}>
+
+                            </View>
+
+                            <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',paddingHorizontal:10,width:70}}>
+                                <Text style={{color:'#000000',fontWeight:'bold'}}>
+                                    内容
+                                </Text>
+                            </View>
+
+                        </View>
+*/}
 
 
 
@@ -397,6 +479,9 @@ class ClassSignUp extends Component {
     componentDidMount()
     {
 
+    }
+    componentWillUnmount(){
+        this.props.dispatch(enableClassMemberOnFresh());
     }
 
 }

@@ -136,6 +136,7 @@ class StudentsCourseRecord extends Component {
         const { navigator } = this.props;
         if (navigator) {
             navigator.pop();
+            this.props.enableStudentsCourseRecordOnFresh();
         }
     }
 
@@ -160,44 +161,42 @@ class StudentsCourseRecord extends Component {
                               }}
             >
                 <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
-
-                        <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
-                            <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                学习内容{rowData.content}
-                            </Text>
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            学习内容：{rowData.content}
+                        </Text>
+                    </View>
 
-
-                        <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
-                            <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
-                            <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
+                        <View style={{flexDirection:'row',marginBottom:3}}>
+                            <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                                <Icon name={'circle'} size={10} color="#aaa"/>
+                            </View>
+                            <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
                                 训练地点{rowData.placeUnitName}
                             </Text>
                         </View>
-                    </View>
 
-                    <View style={{ padding: 3, paddingHorizontal: 12 }}>
-                        <Text style={{ color: '#444', fontSize: 13 }}>
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
                             训练场地:{rowData.yards}
                         </Text>
                     </View>
 
-                    <View style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
-
-                        <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                训练时间：{rowData.classDate}
-                            </Text>
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
                         </View>
-
-                        <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                备注：{rowData.remark}
-                            </Text>
-                        </View>
-
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            训练时间：{rowData.classDate}
+                        </Text>
                     </View>
+
                 </View>
 
             </TouchableOpacity>
@@ -267,7 +266,7 @@ class StudentsCourseRecord extends Component {
     render() {
         var studentsCourseRecordListView=null;
         var {studentsCourseRecord,studentsCourseRecordOnFresh}=this.props;
-        //var competitionList=this.state.competitionList;
+        var competitionList=this.state.competitionList;
         if(studentsCourseRecordOnFresh==true)
         {
             if(this.state.doingFetch==false)
@@ -310,7 +309,9 @@ class StudentsCourseRecord extends Component {
                                 {studentsCourseRecordListView}
                                 {
                                     studentsCourseRecordListView==null?
-                                        null:
+                                        <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
+                                            <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>该学生尚未有上课记录</Text>
+                                        </View>:
                                         <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
                                             <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
                                         </View>
@@ -333,6 +334,12 @@ class StudentsCourseRecord extends Component {
     {
 
     }
+
+    componentWillUnmount()
+    {
+            this.props.dispatch(enableStudentsCourseRecordOnFresh());
+    }
+
 
 }
 

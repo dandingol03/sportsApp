@@ -27,6 +27,7 @@ import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
 import AddClass from './AddClass';
+import EditClass from './EditClass';
 import ClassSignUp from './ClassSignUp';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
@@ -129,6 +130,8 @@ class RecordClass extends Component {
         }
     }
 
+
+
     navigate2StudentInformation(courseId){
         const { navigator } = this.props;
         if (navigator) {
@@ -142,42 +145,68 @@ class RecordClass extends Component {
         }
     }
 
-    navigate2AddClass(courseId){
+    navigate2AddClass(){
         const { navigator } = this.props;
         if (navigator) {
             navigator.push({
                 name: 'AddClass',
                 component: AddClass,
                 params: {
+                    course:this.props.course,
+                    courseId:this.props.courseId,
+                    setClassRecord:this.setClassRecord.bind(this)
+                }
+            })
+        }
+    }
+
+    navigate2EditClass(classes,startTime,endTime,classWeek){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'EditClass',
+                component: EditClass,
+                params: {
+                    course:this.props.course,
+                    class:classes,
+                    setClassRecord:this.setClassRecord.bind(this),
+                    startTime:startTime,
+                    endTime:endTime,
+                    classWeek:classWeek,
+                    content:classes.content
 
                 }
             })
         }
     }
-    navigate2ClassSignUp(courseId){
+
+    navigate2ClassSignUp(courseId,classId){
         const { navigator } = this.props;
         if (navigator) {
             navigator.push({
                 name: 'ClassSignUp',
                 component: ClassSignUp,
                 params: {
-
+                    courseId:courseId,
+                    classId:classId,
+                    setClassRecord:this.setClassRecord.bind(this)
                 }
             })
         }
     }
 
-
     goBack() {
         const { navigator } = this.props;
+
         if (navigator) {
             navigator.pop();
         }
+        //this.props.dispatch(enableCourseClassOnFresh())
     }
 
-    setMyCourseList()
+    setClassRecord(courseId)
     {
-        this.props.dispatch(fetchCourseClass(courseId,memberId)).then((json)=>{
+        this.props.dispatch(fetchCourseClass(courseId)).then((json)=>{
             if(json.re==1)
             {
                 this.props.dispatch(onCourseClassUpdate(json.data))
@@ -189,13 +218,178 @@ class RecordClass extends Component {
         })
     }
 
+
     renderRow(rowData, sectionId, rowId) {
+        var time=(new Date(rowData.startTime)).toLocaleTimeString();
+        var date=new Date(rowData.startTime);
+        var year=date.getFullYear();
+        var month=date.getMonth()+1;
+        var day=date.getDate();
+        var startTime=year+'年'+month+'月'+day+'日'+' '+time;
+        var startTime1=year+'-'+month+'-'+day+' '+time;
+        //var time=time.toLocaleDateString()+" "+time.toLocaleTimeString();
+        var time1=(new Date(rowData.endTime)).toLocaleTimeString();
+        var date1=new Date(rowData.endTime);
+        var year1=date1.getFullYear();
+        var month1=date1.getMonth()+1;
+        var day1=date1.getDate();
+        var hour1=date1.getHours();
+        var minute1=date1.getMinutes();
+        var second1=date1.getSeconds();
+        var endTime=year1+'年'+month1+'月'+day1+'日'+' '+time1;
+        var endTime1=year1+'-'+month1+'-'+day1+' '+time1;
+        var a=new Array("日","一","二","三","四","五","六");
+        var week=date.getDay();
+        var classWeek="星期"+a[week]+" "+month+"月"+day+"日";
+        var currentTime=new Date();
+        var currentTimeYear=currentTime.getFullYear();
+        var currentTimeMonth=currentTime.getMonth()+1;
+        var currentTimeDay=currentTime.getDate();
+        var currentTimeTime=(new Date(currentTime)).toLocaleTimeString();
+        var currentTimeHour=currentTime.getHours();
+        var currentTimeMinute=currentTime.getMinutes();
+        var currentTimeSecond=currentTime.getSeconds();
+        var currentTime1=currentTimeYear+'-'+currentTimeMonth+'-'+currentTimeDay+' '+currentTimeTime;
+        var flag=true;
+     /*   var a =DateTime.parse(endTime1);
+        var b=DateTime.parse(currentTime1);
+        if(a>b)
+        {flag=true}
+        else{
+            flag=false;
+        }
+*/
+       if(year1==currentTimeYear)
+        {
+            if(month1==currentTimeMonth)
+            {
+                if(day1==currentTimeDay) {
+
+                        if(hour1==currentTimeHour)
+                        {
+                            if(minute1==currentTimeMinute)
+                            {
+                                if(second1==currentTimeSecond)
+                                {
+                                 flag=true;
+                                }else{
+                                    if (second1 > currentTimeSecond) flag = true;
+                                else flag = false;
+                                }
+                            }
+                            else{
+                                if (minute1 > currentTimeMinute) flag = true;
+                                else flag = false;
+                            }
+                        }
+                        else{
+                            if (hour1 > currentTimeHour) flag = true;
+                            else flag = false;
+                        }
+
+
+                }
+                else{
+                    if (day1 > currentTimeDay) flag = true;
+                    else flag = false;
+                }
+            }
+            else{
+                if (month1 > currentTimeMonth) flag = true;
+                else flag = false;
+            }
+            }
+
+        else{
+            if (year1 > currentTimeYear) flag = true;
+            else flag = false;
+        }
+       /* if(new Date(endTime1.replace(/-/g,"V"))<new Date(currentTime.replace(/-/g,"V")))
+        {
+            flag=false;
+        }*/
+
+
+        /*SimpleDateFormat strdate = new SimpleDateFormat("E");
+        String str = strdate.format(date);*/
         return (
             <TouchableOpacity style={{ flexDirection: 'column', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
                               onPress={()=>{
                               }}
             >
-                <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
+
+                <View style={{flex:3,padding:10}}>
+
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'上课时间：'+startTime}
+                        </Text>
+                    </View>
+
+
+
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'下课时间：'+endTime}
+                        </Text>
+                    </View>
+
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'训练地点：'+rowData.uintName}
+                        </Text>
+                    </View>
+
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'训练场地：'+rowData.yards}
+                        </Text>
+                    </View>
+
+                   {/* <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'训练场地：'+rowData.yards}
+                        </Text>
+                    </View>*/}
+
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'实到人员：'+rowData.joinCount}
+                        </Text>
+                    </View>
+
+                   {rowData.remark!=null?
+                       <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            {'备注：'+rowData.remark}
+                        </Text>
+                    </View>:null}
+
+
+                </View>
+
+               {/* <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
                     <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
 
                         <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
@@ -211,13 +405,15 @@ class RecordClass extends Component {
                                 训练地点：{rowData.uintName}
                             </Text>
                         </View>
+
+                        <View style={{ padding: 3, paddingHorizontal: 12 }}>
+                            <Text style={{ color: '#444', fontSize: 13 }}>
+                                训练场地:{rowData.yards}
+                            </Text>
+                        </View>
                     </View>
 
-                    <View style={{ padding: 3, paddingHorizontal: 12 }}>
-                        <Text style={{ color: '#444', fontSize: 13 }}>
-                            训练场地:{rowData.yards}
-                        </Text>
-                    </View>
+
 
                     <View style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
 
@@ -234,11 +430,12 @@ class RecordClass extends Component {
                         </View>
 
                     </View>
-                </View>
+                </View>*/}
 
 
 
                 <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
+                   {/* {flag==true?
                     <TouchableOpacity style={{
                         flex: 1,
                         borderWidth: 1,
@@ -253,14 +450,17 @@ class RecordClass extends Component {
 
 
                                       onPress={() => {
-                                          this.navigate2ModifyClass();
+                                          this.navigate2EditClass(rowData,time,time1,classWeek);
                                       }
                                       }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>编辑课程信息</Text>
-                    </TouchableOpacity>
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>删除课程信息</Text>
+                    </TouchableOpacity>:null
+                    }*/}
+
                     {<View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>}
+                    {flag==true?
                     <TouchableOpacity style={{
                         flex: 1,
                         borderWidth: 1,
@@ -275,21 +475,34 @@ class RecordClass extends Component {
 
 
                                       onPress={() => {
-                                          this.navigate2ClassSignUp(rowData.courseId,rowData.memberId);
+                                          this.navigate2ClassSignUp(rowData.courseId,rowData.classId);
                                       }
                                       }>
                         <Text style={{color: '#66CDAA', fontSize: 12}}>开始上课</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>:
+                    <TouchableOpacity style={{
+                        flex: 1,
+                        borderWidth: 1,
+                        borderColor: '#66CDAA',
+                        padding: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 6,
+                        marginRight:30,
+
+                    }}
+
+
+                                      onPress={() => {
+                                          this.navigate2ClassSignUp(rowData.courseId,rowData.classId);
+                                      }
+                                      }>
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>查看学生出勤</Text>
+                    </TouchableOpacity>}
                 </View>
             </TouchableOpacity>
 
-
-
-
         )
-
-
-
     }
 
     fetchCourseClass(courseId){
@@ -297,6 +510,7 @@ class RecordClass extends Component {
         this.state.isRefreshing=true;
         this.props.dispatch(fetchCourseClass(courseId)).then((json)=> {
             if(json.re==-100){
+
                 this.props.dispatch(getAccessToken(false));
             }
             this.props.dispatch(disableCourseClassOnFresh());
@@ -338,6 +552,8 @@ class RecordClass extends Component {
             doingFetch:false,
             isRefreshing:false,
             fadeAnim:new Animated.Value(1),
+            classWeek:null
+
         };
     }
 
@@ -348,12 +564,12 @@ class RecordClass extends Component {
     render() {
         var courseClassListView=null;
         var {courseClass,courseClassOnFresh}=this.props;
-        //var competitionList=this.state.competitionList;
+        //courseClassOnFresh=true;
         if(courseClassOnFresh==true)
         {
             if(this.state.doingFetch==false)
                 this.fetchCourseClass(this.props.courseId);
-        }else{
+      }else{
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             if (courseClass !== undefined && courseClass !== null && courseClass.length > 0)
             {
@@ -365,15 +581,23 @@ class RecordClass extends Component {
                     />
                 );
             }
-        }
-
-
+       }
 
         return (
             <View style={styles.container}>
-                <Toolbar width={width} title="上课记录" actions={[]} navigator={this.props.navigator}>
+                {/*<Toolbar width={width} title="上课记录" actions={[]} navigator={this.props.navigator}>*/}
+                <View style={{height:55,width:width,paddingTop:10,flexDirection:'row',justifyContent:'center',alignItems: 'center',
+                    backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
+                    <TouchableOpacity style={{flex:1,justifyContent:'center',alignItems: 'center',}}
+                                      onPress={()=>{this.goBack();}}>
+                        <Icon name={'angle-left'} size={30} color="#fff"/>
+                    </TouchableOpacity>
+                    <View style={{flex:10,justifyContent:'center',alignItems: 'center'}}>
+                        <Text style={{color:'#fff',fontSize:18}}>上课记录</Text>
+                    </View>
+                </View>
 
-                    {<View style={{flex:5,backgroundColor:'#eee'}}>
+                {<View style={{flex:5,backgroundColor:'#eee'}}>
                         <Animated.View style={{opacity: this.state.fadeAnim,height:height-150,paddingTop:5,paddingBottom:5,}}>
                             <ScrollView
                                 refreshControl={
@@ -391,7 +615,9 @@ class RecordClass extends Component {
                                 {courseClassListView}
                                 {
                                     courseClassListView==null?
-                                        null:
+                                        <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
+                                            <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>尚未有课程记录</Text>
+                                        </View>:
                                         <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
                                             <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
                                         </View>
@@ -404,26 +630,26 @@ class RecordClass extends Component {
 
                     <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#66CDAA',
                         position:'absolute',bottom:8}}>
-                        <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
-                            padding:10,margin:5}} onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}>
-                            <Text style={{color:'#fff',}}>我发起的活动</Text>
+                       <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
+                            padding:10,margin:5}}/* onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}*/>
+                           {/* <Text style={{color:'#fff',}}>我发起的活动</Text>*/}
                         </TouchableOpacity>
 
                         <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
-                            padding:10,margin:5}} onPress={()=>{this.navigate2AddClass();}}>
-                            <Text style={{color:'#fff',}}>我要添加课程</Text>
+                            padding:10,margin:5}} /*onPress={()=>{this.navigate2AddClass();}}*/>
+                           {/* <Text style={{color:'#fff',}}>我要添加课程</Text>*/}
                         </TouchableOpacity>
                     </View>
 
                     <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:8,left:width*0.5-25}}>
                         <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,
                             borderWidth:1,borderColor:'#eee',borderRadius:50}}
-                        >
+                                          onPress={()=>{this.navigate2AddClass();}}>
                             <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
                         </TouchableOpacity>
                     </View>
 
-                </Toolbar>
+                {/*</Toolbar>*/}
 
             </View>
 
@@ -434,6 +660,10 @@ class RecordClass extends Component {
     componentDidMount()
     {
 
+    }
+
+    componentWillUnmount(){
+        this.props.dispatch(enableCourseClassOnFresh());
     }
 
 }

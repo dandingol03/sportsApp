@@ -33,7 +33,7 @@ const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 
 import AddRelativeModal from './AddRelativeModal';
 import TextInputWrapper from 'react-native-text-input-wrapper';
-
+var WeChat = require('react-native-wechat');
 var { height, width } = Dimensions.get('window');
 
 import{
@@ -66,7 +66,7 @@ class BadmintonCourseSignUp extends Component {
             relative:props.relative,
             isSelfCheck:true,
             num:1 , //代表课程的数量
-            total:150.0,
+            total:this.props.classInfo.cost,
             pay:{payment:'',payType:'1'},
         };
     }
@@ -90,10 +90,9 @@ class BadmintonCourseSignUp extends Component {
     }
 
     wechatPay(pay,courseId){
-
         this.props.dispatch(wechatPay2(pay,courseId)).then((json)=>{
             if(json.re==1){
-                if(pay.payType=='1'){
+              // if(pay.payType=='1'){
                     var prepayId = json.data.prepayid;
                     var sign = json.data.sign;
                     var timeStamp = json.data.timestamp;
@@ -111,24 +110,23 @@ class BadmintonCourseSignUp extends Component {
                     WeChat.pay(wechatPayData).then(
                         (result)=>{
                             console.log(result);
-                            Alert.alert('信息','支付成功',[{text:'确认',onPress:()=>{
+                           /* Alert.alert('信息','支付成功',[{text:'确认',onPress:()=>{
+                                //this.props.dispatch(addBadmintonClassMermberInfo(info));
                                 this.goBack();
                             }}]);
-
-
+*/
                         },
                         (error)=>{
                             console.log(error);
                         }
                     )
-                }
-                else{
+              //  }
+               /* else{
                     Alert.alert('信息','支付成功',[{text:'确认',onPress:()=>{
                         this.goBack();
                     }}]);
                 }
-
-
+*/
             }else{
                 if(json.re==-100){
                     this.props.dispatch(getAccessToken(false));
@@ -311,7 +309,7 @@ class BadmintonCourseSignUp extends Component {
                             >
                                 <Icon name={'plus'} size={15} color="#fff"/>
                             </TouchableOpacity>
-                        </View>
+                                      </View>
 
 
                         <View style={{flexDirection:'row',padding:4,paddingHorizontal:10,marginTop:4}}>
@@ -365,7 +363,7 @@ class BadmintonCourseSignUp extends Component {
                                                           if(num>0)
                                                           {
                                                               num=num-1+'';
-                                                              var total=classInfo.cost*this.state.num;
+                                                              var total=classInfo.cost*parseInt(this.state.num);
                                                               this.setState({total:total});
                                                           }
                                                           else{
@@ -407,7 +405,7 @@ class BadmintonCourseSignUp extends Component {
                                                          var num= parseInt(this.state.num);
                                                           num=num+1;
                                                           this.setState({num:num+''});
-                                                          var total=classInfo.cost*this.state.num;
+                                                          var total=classInfo.cost*num;
                                                           this.setState({total:total});
                                                       }}
                                     >
@@ -465,11 +463,11 @@ class BadmintonCourseSignUp extends Component {
                                               };
                                               this.props.dispatch(addBadmintonClassMermberInfo(info)).then((json)=>{
                                                   if(json.re==1){
-                                                      Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
-                                                          /*this.goBack();
-                                                          this.props.setMyCourseList();*/
-                                                      }}]);
-                                                      //this.navigate2BadmintonCoursePay();
+                                                   /*  Alert.alert('信息','报名成功,',[{text:'确认',onPress:()=>{
+                                                          this.goBack();
+                                                          this.props.setMyCourseList();
+                                                      }}]);*/
+
                                                       var pay=this.state.pay;
                                                       pay.payType = '1';
                                                       pay.payment=this.state.total;

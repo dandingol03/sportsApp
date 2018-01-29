@@ -149,7 +149,9 @@ class StudentInformation extends Component {
     goBack() {
         const { navigator } = this.props;
         if (navigator) {
+            this.props.dispatch(enableStudentsOnFresh())
             navigator.pop();
+
         }
     }
 
@@ -168,61 +170,121 @@ class StudentInformation extends Component {
     }
 
     renderRow(rowData, sectionId, rowId) {
+        var date=new Date(rowData.joinTime);
+        var year=date.getFullYear();
+        var month=date.getMonth()+1;
+        var day=date.getDate();
+        var joinTime=year+'年'+month+'月'+day+'日';
+       /* var date1=new Date(rowData.endTime);
+        var year1=date1.getFullYear();
+        var month1=date1.getMonth()+1;
+        var day1=date1.getDate();
+        var endTime=year1+'年'+month1+'月'+day1+'日';*/
+        var condition=null;
+        if(rowData.state==1)
+        condition="报名"
+        else
+            condition="结业"
+
         return (
             <TouchableOpacity style={{ flexDirection: 'column', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
                               onPress={()=>{
-                                  this.navigate2CourseSignUp(rowData);
+
 
                               }}
             >
                 <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
+
+
+
+
                     <View style={{ padding: 4, paddingHorizontal: 12 ,flexDirection:'row',}}>
 
                         <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
                             <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                状态：{rowData.state}
-                            </Text>
-                        </View>
-
-
-                        <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
-                            <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
-                            <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
                                 学员编号：{rowData.memberId}
                             </Text>
                         </View>
+
+                        {rowData.perName!=null?
+                            <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
+                                <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
+                                <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
+                                    {rowData.perName}
+                                </Text>
+                            </View>:
+                            <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
+                                <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
+                                <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
+                                    {rowData.perName}
+                                </Text>
+                            </View>
+                        }
                     </View>
 
-                    <View style={{ padding: 3, paddingHorizontal: 12 }}>
-                        <Text style={{ color: '#444', fontSize: 13 }}>
-                            学员姓名：{rowData.perName}
+                 
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            报名时间：{joinTime}
                         </Text>
                     </View>
 
-                    <View style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ color: '#f00', fontSize: 12, width: 50 }}>
-                            报名时间：{rowData.joinTime}
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            购买课次：{rowData.buyCount}
                         </Text>
-
-                        <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                购买课次：{rowData.buyCount}
-                            </Text>
-                        </View>
-
-                        <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                优惠课次：{rowData.giftCount}
-                            </Text>
-                        </View>
-                        <View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 12 }}>
-                                结业时间：{rowData.endTime}
-                            </Text>
-                        </View>
-
-
                     </View>
+
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            优惠课次：{rowData.giftCount}
+                        </Text>
+                    </View>
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            已上课次：{rowData.joinCount}
+                        </Text>
+                    </View>
+                   {/* <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            结业时间：{endTime}
+                        </Text>
+                    </View>
+*/}
+                   {/* <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+
+                        </Text>
+                    </View>*/}
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            状态：{condition}
+                        </Text>
+                    </View>
+
+
+
                 </View>
 
                 {/*<View style={{ width: 70, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -338,7 +400,7 @@ class StudentInformation extends Component {
     render() {
         var studentsListView=null;
         var {students,studentsOnFresh}=this.props;
-        //var competitionList=this.state.competitionList;
+        var competitionList=this.state.competitionList;
         if(studentsOnFresh==true)
         {
             if(this.state.doingFetch==false)
@@ -355,7 +417,7 @@ class StudentInformation extends Component {
                     />
                 );
             }
-        }
+       }
 
 
 
@@ -381,7 +443,9 @@ class StudentInformation extends Component {
                                 {studentsListView}
                                 {
                                     studentsListView==null?
-                                        null:
+                                        <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
+                                            <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>该课程尚未有学生报名</Text>
+                                        </View>:
                                         <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
                                             <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
                                         </View>
@@ -403,6 +467,10 @@ class StudentInformation extends Component {
     componentDidMount()
     {
 
+    }
+
+    componentWillUnmount(){
+        this.props.dispatch(enableStudentsOnFresh());
     }
 
 }
