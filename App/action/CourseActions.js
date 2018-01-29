@@ -31,6 +31,9 @@ import {
     ENABLE_CLASS_MEMBER_ONFRESH
 
 
+
+
+
 } from '../constants/CourseConstants'
 import course from "../reducers/CourseReducer";
 
@@ -127,7 +130,7 @@ export let fetchCourseClass=(courseId)=>{
     }
 }
 
-export let addClass=(courseId)=>{
+export let addClass=(courseId,yard,unitId,classWeek,startTime,endTime,content)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
@@ -139,15 +142,56 @@ export let addClass=(courseId)=>{
                     'Content-Type': 'application/json',
                 },
                 body: {
-                    classId:classId
+                    //classId:classId,
+                    courseId:courseId,
+                    yard:yard,
+                    unitId:unitId,
+                    classWeek:classWeek,
+                    startTime:startTime,
+                    endTime:endTime,
+                    content:content
                 }
             }).then((json)=>{
                 if(json.re==1)
                 {
-                    var courseClass=json.data;
-                    dispatch(onCourseClassUpdate(courseClass));
-                    resolve({re:1,data:courseClass})
-                    //resolve(json);
+                    resolve(json)
+                }
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+
+export let editClass=(classId,courseId,yard,unitId,classWeek,startTime,endTime,content)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/saveOrUpdateBadmintonCourseClass',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    classId:classId,
+                    courseId:courseId,
+                    unitId:unitId,
+                    venue:venue,
+                    classWeek:classWeek,
+                    startTime:startTime,
+                    endTime:endTime,
+                    content:content
+                }
+            }).then((json)=>{
+                if(json.re==1)
+                {
+                    resolve(json)
                 }
 
             }).catch((e)=>{
@@ -395,6 +439,39 @@ export let fetchCustomCourse=()=>{
                         dispatch(setMyCustomCourses(allCustomCourse));
                         resolve({re:json.re,data:allCustomCourse})
                     }
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let saveOrUpdateBadmintonCourseClassRecords=(classMember)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/saveOrUpdateBadmintonCourseClassRecords',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    classMember:classMember,
+
+
+                }
+            }).then((json)=>{
+                if(json.re==-100){
+                    resolve(json)
+                }else{
+
+                        resolve(json)
+
                 }
             }).catch((e)=>{
                 alert(e);
@@ -840,7 +917,7 @@ export let fetchStudentsPay=(courseId,memberId)=>{
                 if(json.re==1)
                 {
                     var studentsPay=json.data;
-                    dispatch(onStudentsUpdate(studentsPay));
+                    dispatch(onStudentsPayUpdate(studentsPay));
                     resolve({re:1,data:studentsPay})
                     //resolve(json);
                 }
