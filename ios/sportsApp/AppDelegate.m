@@ -14,6 +14,7 @@
 
 #import "RCTBaiduMapViewManager.h"
 #import "../Libraries/LinkingIOS/RCTLinkingManager.h"
+#import "PLMediaStreamingKit.h"
 
 @implementation AppDelegate
 
@@ -36,6 +37,13 @@
   [self.window makeKeyAndVisible];
   
   [RCTBaiduMapViewManager initSDK:@"Y28i2b25u7IXcswLeWzap7vhSGqvYBi1"];
+  
+  [PLStreamingEnv initEnv];
+  
+  [PLStreamingEnv setLogLevel:PLStreamLogLevelDebug];
+  [PLStreamingEnv enableFileLogging];
+  
+  
   
   return YES;
 }

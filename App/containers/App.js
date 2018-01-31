@@ -15,21 +15,21 @@ import {
 } from 'react-native';
 import {getAccessToken} from '../action/UserActions';
 
-import {
-    createNotification,
-    downloadGeneratedTTS,
-    alertWithType,
-    closeMessage
-} from '../action/JpushActions';
+// import {
+//     createNotification,
+//     downloadGeneratedTTS,
+//     alertWithType,
+//     closeMessage
+// } from '../action/JpushActions';
 
-import JPushModule from 'jpush-react-native';
+//import JPushModule from 'jpush-react-native';
 import { connect } from 'react-redux';
 
 import { Navigator } from 'react-native-deprecated-custom-components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TabNavigator from 'react-native-tab-navigator';
 import ActivityDetail from '../components/groupActivity/ActivityDetail';
-import GroupJPush from '../components/groupActivity/GroupJPush';
+//import GroupJPush from '../components/groupActivity/GroupJPush';
 
 import {
     PAGE_LOGIN,
@@ -443,9 +443,9 @@ class App extends Component {
         if (Platform.OS === 'android') {
             BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid.bind(this));
         }
-        this.pushlisteners.forEach(listener=> {
-            JPush.removeEventListener(listener);
-        });
+        // this.pushlisteners.forEach(listener=> {
+        //     JPush.removeEventListener(listener);
+        // });
     }
 
     componentDidMount()
@@ -453,27 +453,27 @@ class App extends Component {
         //TODO:fetch username and password in cache
         //  JPush.requestPermissions()
 
-
-        JPushModule.notifyJSDidLoad((resultCode)=>{
-            if(resultCode===0){
-
-            }
-        });
-        // The Ocean   Mike Perry/Shy Martin
-
-        JPushModule.addReceiveNotificationListener((map)=>{
-            console.log("alertContent:"+ map.alertContent);
-            console.log("extras:"+ map.extras);
-            // var extra = JSON.parse(map.extras);
-            // console.log(extra.key +":" +extra.value);
-        });
-
-        JPushModule.addReceiveOpenNotificationListener((map)=>{
-            data=map.extras;
-            this.state.share=map.extras;
-
-            //JPushModule.jumpToPushActivity("GroupPushActivity")
-        });
+        //
+        // JPushModule.notifyJSDidLoad((resultCode)=>{
+        //     if(resultCode===0){
+        //
+        //     }
+        // });
+        // // The Ocean   Mike Perry/Shy Martin
+        //
+        // JPushModule.addReceiveNotificationListener((map)=>{
+        //     console.log("alertContent:"+ map.alertContent);
+        //     console.log("extras:"+ map.extras);
+        //     // var extra = JSON.parse(map.extras);
+        //     // console.log(extra.key +":" +extra.value);
+        // });
+        //
+        // JPushModule.addReceiveOpenNotificationListener((map)=>{
+        //     data=map.extras;
+        //     this.state.share=map.extras;
+        //
+        //     //JPushModule.jumpToPushActivity("GroupPushActivity")
+        // });
         //console.log("Opening notification!");
 
 
@@ -495,13 +495,13 @@ class App extends Component {
 
     onReceiveMessage(message) {
         //TODO:make a notification through
-        var notification=message._data;
-        JPush.getRegistrationID().then(function (res){
-            if(res&&res!=''){
-                var registrationID=res;
-                console.log('jPush获得registrationId='+registrationId);
-            }
-        })
+        // var notification=message._data;
+        // JPush.getRegistrationID().then(function (res){
+        //     if(res&&res!=''){
+        //         var registrationID=res;
+        //         console.log('jPush获得registrationId='+registrationId);
+        //     }
+        // })
         // this.onNotificationRecv(notification);
     }
 

@@ -211,12 +211,12 @@ var  Login =React.createClass({
                                        this.props.dispatch(fetchGames()).then((json)=>{
                                            if(json.data!==null||json.data!==undefined)
                                            {
-                                               Alert.alert('信息','有新的比赛！',[{text:'是',onPress:()=>{
-                                                   this.props.dispatch(enableCompetitionItemOnFresh());
-
-                                               }},
-
-                                               ])   ;
+                                               // Alert.alert('信息','有新的比赛！',[{text:'是',onPress:()=>{
+                                               //     this.props.dispatch(enableCompetitionItemOnFresh());
+                                               //
+                                               // }},
+                                               //
+                                               // ])   ;
 
                                            }
                                           });

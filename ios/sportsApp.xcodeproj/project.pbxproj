@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -12,6 +13,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* sportsAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* sportsAppTests.m */; };
+		019A0AC0CFD7401DAE11151E /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A300CA4110EF4FA497FDE016 /* Feather.ttf */; };
 		04125A96362B4E77B1E3F520 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8103C60FD06C4632BC7B233B /* SimpleLineIcons.ttf */; };
 		08257BC87F3B4CD4827E8E07 /* libRNSensitiveInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92264BC6AD4C4FD8975454FB /* libRNSensitiveInfo.a */; };
 		0BB8186EB7E24F4D9A15152D /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFA9045B53ED4691B133E53A /* EvilIcons.ttf */; };
@@ -59,28 +61,105 @@
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* sportsAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* sportsAppTests.m */; };
 		4123F855953F40E88AEB2CCA /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDA8CFE9E4A64A9A95E522EF /* Octicons.ttf */; };
+		4A3E807B2020329B0021E882 /* RCTPushStreamViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E807A2020329B0021E882 /* RCTPushStreamViewManager.m */; };
+		4A3E807C2020329B0021E882 /* RCTPushStreamViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E807A2020329B0021E882 /* RCTPushStreamViewManager.m */; };
+		4A3E813F20205B400021E882 /* .clang-format in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80E720205B400021E882 /* .clang-format */; };
+		4A3E814020205B400021E882 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80E820205B400021E882 /* .gitignore */; };
+		4A3E814120205B400021E882 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80E920205B400021E882 /* .travis.yml */; };
+		4A3E814220205B400021E882 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80EA20205B400021E882 /* CHANGELOG.md */; };
+		4A3E814320205B400021E882 /* clang-format in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80EB20205B400021E882 /* clang-format */; };
+		4A3E814420205B400021E882 /* Contributing.md in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80EC20205B400021E882 /* Contributing.md */; };
+		4A3E814520205B400021E882 /* format.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80ED20205B400021E882 /* format.sh */; };
+		4A3E814620205B400021E882 /* QNAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80F120205B400021E882 /* QNAssessment.m */; };
+		4A3E814720205B400021E882 /* QNIpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80F320205B400021E882 /* QNIpModel.m */; };
+		4A3E814820205B400021E882 /* QNDnsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80F620205B400021E882 /* QNDnsManager.m */; };
+		4A3E814920205B400021E882 /* QNDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80F820205B400021E882 /* QNDomain.m */; };
+		4A3E814A20205B400021E882 /* QNLruCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80FA20205B400021E882 /* QNLruCache.m */; };
+		4A3E814B20205B400021E882 /* QNNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80FC20205B400021E882 /* QNNetworkInfo.m */; };
+		4A3E814C20205B400021E882 /* QNRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80FE20205B400021E882 /* QNRecord.m */; };
+		4A3E814D20205B400021E882 /* QNDnspodEnterprise.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810320205B400021E882 /* QNDnspodEnterprise.m */; };
+		4A3E814E20205B400021E882 /* QNDnspodFree.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810520205B400021E882 /* QNDnspodFree.m */; };
+		4A3E814F20205B400021E882 /* QNHijackingDetectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810820205B400021E882 /* QNHijackingDetectWrapper.m */; };
+		4A3E815020205B400021E882 /* QNHosts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810A20205B400021E882 /* QNHosts.m */; };
+		4A3E815120205B400021E882 /* QNResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810C20205B400021E882 /* QNResolver.m */; };
+		4A3E815220205B400021E882 /* QNResolvUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810E20205B400021E882 /* QNResolvUtil.m */; };
+		4A3E815320205B400021E882 /* QNTxtResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811020205B400021E882 /* QNTxtResolver.m */; };
+		4A3E815420205B400021E882 /* QNRefresher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811220205B400021E882 /* QNRefresher.m */; };
+		4A3E815520205B400021E882 /* QNDes.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811520205B400021E882 /* QNDes.m */; };
+		4A3E815620205B400021E882 /* QNGetAddrInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811720205B400021E882 /* QNGetAddrInfo.m */; };
+		4A3E815720205B400021E882 /* QNHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811920205B400021E882 /* QNHex.m */; };
+		4A3E815820205B400021E882 /* QNIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811B20205B400021E882 /* QNIP.m */; };
+		4A3E815920205B400021E882 /* HappyDNS.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E811C20205B400021E882 /* HappyDNS.podspec */; };
+		4A3E815A20205B400021E882 /* HappyDNS.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E812020205B400021E882 /* HappyDNS.xcworkspace */; };
+		4A3E815B20205B400021E882 /* DesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812220205B400021E882 /* DesTest.m */; };
+		4A3E815C20205B400021E882 /* DnspodEnterpriseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812320205B400021E882 /* DnspodEnterpriseTest.m */; };
+		4A3E815D20205B400021E882 /* DnspodFreeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812420205B400021E882 /* DnspodFreeTest.m */; };
+		4A3E815E20205B400021E882 /* DnsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812520205B400021E882 /* DnsTest.m */; };
+		4A3E815F20205B400021E882 /* GetAddrInfoTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812620205B400021E882 /* GetAddrInfoTest.m */; };
+		4A3E816020205B400021E882 /* HexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812720205B400021E882 /* HexTest.m */; };
+		4A3E816120205B400021E882 /* HostsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812820205B400021E882 /* HostsTest.m */; };
+		4A3E816220205B400021E882 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E812920205B400021E882 /* Info.plist */; };
+		4A3E816320205B400021E882 /* IPTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812A20205B400021E882 /* IPTest.m */; };
+		4A3E816420205B400021E882 /* LruCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812B20205B400021E882 /* LruCacheTest.m */; };
+		4A3E816520205B400021E882 /* NetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812C20205B400021E882 /* NetworkTest.m */; };
+		4A3E816620205B400021E882 /* ResolverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812D20205B400021E882 /* ResolverTest.m */; };
+		4A3E816720205B400021E882 /* TxtResolverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812E20205B400021E882 /* TxtResolverTest.m */; };
+		4A3E816820205B400021E882 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E812F20205B400021E882 /* LICENSE */; };
+		4A3E816920205B400021E882 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E813020205B400021E882 /* Podfile */; };
+		4A3E816A20205B400021E882 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E813120205B400021E882 /* README.md */; };
+		4A3E816B20205B400021E882 /* uncrustify.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E813220205B400021E882 /* uncrustify.cfg */; };
+		4A3E818220205B650021E882 /* QNNExternalIp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817020205B650021E882 /* QNNExternalIp.m */; };
+		4A3E818320205B650021E882 /* QNNHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817220205B650021E882 /* QNNHttp.m */; };
+		4A3E818420205B650021E882 /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817420205B650021E882 /* QNNNslookup.m */; };
+		4A3E818520205B650021E882 /* QNNPing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817620205B650021E882 /* QNNPing.m */; };
+		4A3E818620205B650021E882 /* QNNQue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817920205B650021E882 /* QNNQue.m */; };
+		4A3E818720205B650021E882 /* QNNRtmp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817B20205B650021E882 /* QNNRtmp.m */; };
+		4A3E818820205B650021E882 /* QNNTcpPing.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817D20205B650021E882 /* QNNTcpPing.m */; };
+		4A3E818920205B650021E882 /* QNNTraceRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817F20205B650021E882 /* QNNTraceRoute.m */; };
+		4A3E818A20205B650021E882 /* QNNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E818120205B650021E882 /* QNNUtil.m */; };
+		4A3E81A120205B890021E882 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E818D20205B890021E882 /* .gitkeep */; };
+		4A3E81A220205B890021E882 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E818F20205B890021E882 /* .gitkeep */; };
+		4A3E81A320205B890021E882 /* amf.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E819120205B890021E882 /* amf.c */; };
+		4A3E81A420205B890021E882 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E819620205B890021E882 /* error.c */; };
+		4A3E81A520205B890021E882 /* hashswf.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E819920205B890021E882 /* hashswf.c */; };
+		4A3E81A620205B890021E882 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E819B20205B890021E882 /* log.c */; };
+		4A3E81A720205B890021E882 /* parseurl.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E819D20205B890021E882 /* parseurl.c */; };
+		4A3E81A820205B890021E882 /* rtmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E819E20205B890021E882 /* rtmp.c */; };
+		4A3E81CE20205B8F0021E882 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E81AB20205B8F0021E882 /* .gitkeep */; };
+		4A3E81CF20205B8F0021E882 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E81AD20205B8F0021E882 /* .gitkeep */; };
+		4A3E81D020205B8F0021E882 /* libfdk-aac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81CC20205B8F0021E882 /* libfdk-aac.a */; };
+		4A3E81D120205B8F0021E882 /* libPLMediaStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81CD20205B8F0021E882 /* libPLMediaStreamingKit.a */; };
+		4A3E81D420205CA30021E882 /* PLPlayerKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4A3E81D320205CA30021E882 /* PLPlayerKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4A3E81D620205CFD0021E882 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81D520205CFD0021E882 /* libbz2.tbd */; };
+		4A3E81D820205D190021E882 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81D720205D190021E882 /* VideoToolbox.framework */; };
+		4A3E81DA20205D250021E882 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81D920205D250021E882 /* CoreMedia.framework */; };
+		4A3E81DC20205D3F0021E882 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81DB20205D3F0021E882 /* AVKit.framework */; };
+		4A3E81DE20205DD70021E882 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81DD20205DD70021E882 /* CoreVideo.framework */; };
+		4A3E81E020205DF00021E882 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81DF20205DF00021E882 /* AVFoundation.framework */; };
+		4A3E81E220205E2F0021E882 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81E120205E2F0021E882 /* Accelerate.framework */; };
+		4A3E81E420205E370021E882 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81E320205E370021E882 /* AudioToolbox.framework */; };
+		4A3E81E620205E410021E882 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81E520205E410021E882 /* CoreAudio.framework */; };
+		4A3E81E820205E4A0021E882 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81E720205E4A0021E882 /* MediaPlayer.framework */; };
+		4A3E81E920205EB20021E882 /* PLPlayerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81D320205CA30021E882 /* PLPlayerKit.framework */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		77E22C1060CF40098E9C5BF5 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD2EC0645B8C4522B05B4DEB /* Entypo.ttf */; };
+		823ECD6AEF5E4448804DB938 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD73034F6174C109EA37AED /* UserNotifications.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		87A033E7C7F0465899D933D0 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A578AACF24744B391C59C76 /* Ionicons.ttf */; };
 		8CEF150E28E74A719CD1ED01 /* libRCTBEEPickerManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 212020669BA5462787C8592E /* libRCTBEEPickerManager.a */; };
+		9BD81A6DB1F141ECA0E234EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857059FE8EB045E09D957BBF /* Foundation.framework */; };
 		ABD6190D5C274BAD919A2082 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 198350BEFBE04389BA868EF7 /* libRCTCamera.a */; };
-		AD29549624DD43EBBE2B52F3 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9D3CDED2B743D98DA6D3C7 /* libRNSVG.a */; };
 		AD35C9441ED959D500FCD913 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = AD35C9431ED959D500FCD913 /* Fonts */; };
 		B633305B885442F085C60483 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0441A7778AF843EFB369DB6D /* Zocial.ttf */; };
+		BAD27E4E42094C498BA7E716 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D9E1B78DFBB4D20B0C96214 /* libresolv.tbd */; };
 		BBE3B162A04446E1912DB626 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01069E0054A6427892A33026 /* Foundation.ttf */; };
 		CF021B91AC67421E9DD6B3B8 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5BA977BB161C4CA0B2EF69DC /* MaterialCommunityIcons.ttf */; };
+		CF15D394EFB44F6685CC9CCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7CEC6A7E1904109919A3FBA /* UIKit.framework */; };
 		D0A3C6379BFF43D585FA6331 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 998FDD822B8A4FFF9990610C /* libRNVectorIcons.a */; };
 		E5748E789ADD45F2AFA34CE8 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B34FD1B1A5BA48C9AC878C5C /* libRNImagePicker.a */; };
-		FF7D1A3C4D2D464A8CC2856E /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64056C70EAF341A0BB63E20C /* MaterialIcons.ttf */; };
-		0547FF24186E47A29D8A6D73 /* libRCTJPushModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F4285D036249419BC91047 /* libRCTJPushModule.a */; };
-		823ECD6AEF5E4448804DB938 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD73034F6174C109EA37AED /* UserNotifications.framework */; };
 		EB27284E07E84DC1B3B6F1D0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C35DABE6AD95411B8A055ACB /* CFNetwork.framework */; };
 		FD1428D32F984016AEC92727 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27BB71D43E445B297582F79 /* CoreFoundation.framework */; };
-		9BD81A6DB1F141ECA0E234EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857059FE8EB045E09D957BBF /* Foundation.framework */; };
-		CF15D394EFB44F6685CC9CCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7CEC6A7E1904109919A3FBA /* UIKit.framework */; };
-		BAD27E4E42094C498BA7E716 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D9E1B78DFBB4D20B0C96214 /* libresolv.tbd */; };
-		019A0AC0CFD7401DAE11151E /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A300CA4110EF4FA497FDE016 /* Feather.ttf */; };
+		FF7D1A3C4D2D464A8CC2856E /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64056C70EAF341A0BB63E20C /* MaterialIcons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,13 +246,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = RNImagePicker;
-		};
-		2A70A2B91EE56BEB00995DD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 41D86753BEEF4E56B4A659C9 /* RNSVG.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
-			remoteInfo = RNSVG;
 		};
 		2A80FDF01ED8428800550906 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -301,6 +373,41 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		4A3E8027202023AE0021E882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2ACC622F1F13664D00C91231 /* RCTWeChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 10D6D7A41F160C250066F0F3;
+			remoteInfo = RCTWeChatTests;
+		};
+		4A3E813720205B400021E882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DF22C0BF1B37B9B90010FEBF;
+			remoteInfo = HappyDNS_Mac;
+		};
+		4A3E813920205B400021E882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DF22C0CA1B37B9B90010FEBF;
+			remoteInfo = HappyDNS_MacTests;
+		};
+		4A3E813B20205B400021E882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DF801F951B3A4F4D00866FDE;
+			remoteInfo = HappyDNS_iOS;
+		};
+		4A3E813D20205B400021E882 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DF801F9F1B3A4F4D00866FDE;
+			remoteInfo = HappyDNS_iOSTests;
+		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -338,6 +445,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4A3E803A202028BF0021E882 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4A3E81D420205CA30021E882 /* PLPlayerKit.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
@@ -366,6 +486,7 @@
 		1C9D3CDED2B743D98DA6D3C7 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		1DE5A0183FE64DACA7D14668 /* RNSensitiveInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSensitiveInfo.xcodeproj; path = "../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo.xcodeproj"; sourceTree = "<group>"; };
 		212020669BA5462787C8592E /* libRCTBEEPickerManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBEEPickerManager.a; sourceTree = "<group>"; };
+		26F4285D036249419BC91047 /* libRCTJPushModule.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTJPushModule.a; sourceTree = "<group>"; };
 		2A2834E51EE679B60049BED9 /* BaiduMapAPI_Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Base.framework; path = "../node_modules/react-native-baidu-map/ios/lib/BaiduMapAPI_Base.framework"; sourceTree = "<group>"; };
 		2A2834E61EE679B60049BED9 /* BaiduMapAPI_Cloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Cloud.framework; path = "../node_modules/react-native-baidu-map/ios/lib/BaiduMapAPI_Cloud.framework"; sourceTree = "<group>"; };
 		2A2834E71EE679B60049BED9 /* BaiduMapAPI_Location.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaiduMapAPI_Location.framework; path = "../node_modules/react-native-baidu-map/ios/lib/BaiduMapAPI_Location.framework"; sourceTree = "<group>"; };
@@ -390,33 +511,176 @@
 		2C90CC864D394847AF2CA794 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* sportsApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sportsApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* sportsApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sportsApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		41D86753BEEF4E56B4A659C9 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
+		4A3E8079202032910021E882 /* RCTPushStreamViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTPushStreamViewManager.h; sourceTree = "<group>"; };
+		4A3E807A2020329B0021E882 /* RCTPushStreamViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTPushStreamViewManager.m; sourceTree = "<group>"; };
+		4A3E80932020498C0021E882 /* PLPlayerKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLPlayerKit.framework; path = ../../../../Downloads/PLPlayerKit.framework; sourceTree = "<group>"; };
+		4A3E80E720205B400021E882 /* .clang-format */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
+		4A3E80E820205B400021E882 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		4A3E80E920205B400021E882 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		4A3E80EA20205B400021E882 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		4A3E80EB20205B400021E882 /* clang-format */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "clang-format"; sourceTree = "<group>"; };
+		4A3E80EC20205B400021E882 /* Contributing.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Contributing.md; sourceTree = "<group>"; };
+		4A3E80ED20205B400021E882 /* format.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = format.sh; sourceTree = "<group>"; };
+		4A3E80F020205B400021E882 /* QNAssessment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNAssessment.h; sourceTree = "<group>"; };
+		4A3E80F120205B400021E882 /* QNAssessment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNAssessment.m; sourceTree = "<group>"; };
+		4A3E80F220205B400021E882 /* QNIpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNIpModel.h; sourceTree = "<group>"; };
+		4A3E80F320205B400021E882 /* QNIpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNIpModel.m; sourceTree = "<group>"; };
+		4A3E80F520205B400021E882 /* QNDnsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnsManager.h; sourceTree = "<group>"; };
+		4A3E80F620205B400021E882 /* QNDnsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnsManager.m; sourceTree = "<group>"; };
+		4A3E80F720205B400021E882 /* QNDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDomain.h; sourceTree = "<group>"; };
+		4A3E80F820205B400021E882 /* QNDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDomain.m; sourceTree = "<group>"; };
+		4A3E80F920205B400021E882 /* QNLruCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNLruCache.h; sourceTree = "<group>"; };
+		4A3E80FA20205B400021E882 /* QNLruCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNLruCache.m; sourceTree = "<group>"; };
+		4A3E80FB20205B400021E882 /* QNNetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNetworkInfo.h; sourceTree = "<group>"; };
+		4A3E80FC20205B400021E882 /* QNNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNetworkInfo.m; sourceTree = "<group>"; };
+		4A3E80FD20205B400021E882 /* QNRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNRecord.h; sourceTree = "<group>"; };
+		4A3E80FE20205B400021E882 /* QNRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNRecord.m; sourceTree = "<group>"; };
+		4A3E80FF20205B400021E882 /* QNResolverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolverDelegate.h; sourceTree = "<group>"; };
+		4A3E810020205B400021E882 /* HappyDNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HappyDNS.h; sourceTree = "<group>"; };
+		4A3E810220205B400021E882 /* QNDnspodEnterprise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodEnterprise.h; sourceTree = "<group>"; };
+		4A3E810320205B400021E882 /* QNDnspodEnterprise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodEnterprise.m; sourceTree = "<group>"; };
+		4A3E810420205B400021E882 /* QNDnspodFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodFree.h; sourceTree = "<group>"; };
+		4A3E810520205B400021E882 /* QNDnspodFree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodFree.m; sourceTree = "<group>"; };
+		4A3E810720205B400021E882 /* QNHijackingDetectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHijackingDetectWrapper.h; sourceTree = "<group>"; };
+		4A3E810820205B400021E882 /* QNHijackingDetectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHijackingDetectWrapper.m; sourceTree = "<group>"; };
+		4A3E810920205B400021E882 /* QNHosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHosts.h; sourceTree = "<group>"; };
+		4A3E810A20205B400021E882 /* QNHosts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHosts.m; sourceTree = "<group>"; };
+		4A3E810B20205B400021E882 /* QNResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolver.h; sourceTree = "<group>"; };
+		4A3E810C20205B400021E882 /* QNResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResolver.m; sourceTree = "<group>"; };
+		4A3E810D20205B400021E882 /* QNResolvUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolvUtil.h; sourceTree = "<group>"; };
+		4A3E810E20205B400021E882 /* QNResolvUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResolvUtil.m; sourceTree = "<group>"; };
+		4A3E810F20205B400021E882 /* QNTxtResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNTxtResolver.h; sourceTree = "<group>"; };
+		4A3E811020205B400021E882 /* QNTxtResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNTxtResolver.m; sourceTree = "<group>"; };
+		4A3E811120205B400021E882 /* QNRefresher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNRefresher.h; sourceTree = "<group>"; };
+		4A3E811220205B400021E882 /* QNRefresher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNRefresher.m; sourceTree = "<group>"; };
+		4A3E811420205B400021E882 /* QNDes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDes.h; sourceTree = "<group>"; };
+		4A3E811520205B400021E882 /* QNDes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDes.m; sourceTree = "<group>"; };
+		4A3E811620205B400021E882 /* QNGetAddrInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNGetAddrInfo.h; sourceTree = "<group>"; };
+		4A3E811720205B400021E882 /* QNGetAddrInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNGetAddrInfo.m; sourceTree = "<group>"; };
+		4A3E811820205B400021E882 /* QNHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHex.h; sourceTree = "<group>"; };
+		4A3E811920205B400021E882 /* QNHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHex.m; sourceTree = "<group>"; };
+		4A3E811A20205B400021E882 /* QNIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNIP.h; sourceTree = "<group>"; };
+		4A3E811B20205B400021E882 /* QNIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNIP.m; sourceTree = "<group>"; };
+		4A3E811C20205B400021E882 /* HappyDNS.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HappyDNS.podspec; sourceTree = "<group>"; };
+		4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = HappyDNS.xcodeproj; sourceTree = "<group>"; };
+		4A3E812020205B400021E882 /* HappyDNS.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = HappyDNS.xcworkspace; sourceTree = "<group>"; };
+		4A3E812220205B400021E882 /* DesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesTest.m; sourceTree = "<group>"; };
+		4A3E812320205B400021E882 /* DnspodEnterpriseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DnspodEnterpriseTest.m; sourceTree = "<group>"; };
+		4A3E812420205B400021E882 /* DnspodFreeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DnspodFreeTest.m; sourceTree = "<group>"; };
+		4A3E812520205B400021E882 /* DnsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DnsTest.m; sourceTree = "<group>"; };
+		4A3E812620205B400021E882 /* GetAddrInfoTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAddrInfoTest.m; sourceTree = "<group>"; };
+		4A3E812720205B400021E882 /* HexTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexTest.m; sourceTree = "<group>"; };
+		4A3E812820205B400021E882 /* HostsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostsTest.m; sourceTree = "<group>"; };
+		4A3E812920205B400021E882 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A3E812A20205B400021E882 /* IPTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPTest.m; sourceTree = "<group>"; };
+		4A3E812B20205B400021E882 /* LruCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LruCacheTest.m; sourceTree = "<group>"; };
+		4A3E812C20205B400021E882 /* NetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkTest.m; sourceTree = "<group>"; };
+		4A3E812D20205B400021E882 /* ResolverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResolverTest.m; sourceTree = "<group>"; };
+		4A3E812E20205B400021E882 /* TxtResolverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TxtResolverTest.m; sourceTree = "<group>"; };
+		4A3E812F20205B400021E882 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4A3E813020205B400021E882 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		4A3E813120205B400021E882 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4A3E813220205B400021E882 /* uncrustify.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = uncrustify.cfg; sourceTree = "<group>"; };
+		4A3E816E20205B650021E882 /* QNNetDiag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNetDiag.h; sourceTree = "<group>"; };
+		4A3E816F20205B650021E882 /* QNNExternalIp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNExternalIp.h; sourceTree = "<group>"; };
+		4A3E817020205B650021E882 /* QNNExternalIp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNExternalIp.m; sourceTree = "<group>"; };
+		4A3E817120205B650021E882 /* QNNHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNHttp.h; sourceTree = "<group>"; };
+		4A3E817220205B650021E882 /* QNNHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNHttp.m; sourceTree = "<group>"; };
+		4A3E817320205B650021E882 /* QNNNslookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNNslookup.h; sourceTree = "<group>"; };
+		4A3E817420205B650021E882 /* QNNNslookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNNslookup.m; sourceTree = "<group>"; };
+		4A3E817520205B650021E882 /* QNNPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNPing.h; sourceTree = "<group>"; };
+		4A3E817620205B650021E882 /* QNNPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNPing.m; sourceTree = "<group>"; };
+		4A3E817720205B650021E882 /* QNNProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNProtocols.h; sourceTree = "<group>"; };
+		4A3E817820205B650021E882 /* QNNQue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNQue.h; sourceTree = "<group>"; };
+		4A3E817920205B650021E882 /* QNNQue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNQue.m; sourceTree = "<group>"; };
+		4A3E817A20205B650021E882 /* QNNRtmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNRtmp.h; sourceTree = "<group>"; };
+		4A3E817B20205B650021E882 /* QNNRtmp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNRtmp.m; sourceTree = "<group>"; };
+		4A3E817C20205B650021E882 /* QNNTcpPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNTcpPing.h; sourceTree = "<group>"; };
+		4A3E817D20205B650021E882 /* QNNTcpPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNTcpPing.m; sourceTree = "<group>"; };
+		4A3E817E20205B650021E882 /* QNNTraceRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNTraceRoute.h; sourceTree = "<group>"; };
+		4A3E817F20205B650021E882 /* QNNTraceRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNTraceRoute.m; sourceTree = "<group>"; };
+		4A3E818020205B650021E882 /* QNNUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNUtil.h; sourceTree = "<group>"; };
+		4A3E818120205B650021E882 /* QNNUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNUtil.m; sourceTree = "<group>"; };
+		4A3E818D20205B890021E882 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		4A3E818F20205B890021E882 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		4A3E819120205B890021E882 /* amf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = amf.c; sourceTree = "<group>"; };
+		4A3E819220205B890021E882 /* amf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amf.h; sourceTree = "<group>"; };
+		4A3E819320205B890021E882 /* bytes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bytes.h; sourceTree = "<group>"; };
+		4A3E819420205B890021E882 /* dh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dh.h; sourceTree = "<group>"; };
+		4A3E819520205B890021E882 /* dhgroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dhgroups.h; sourceTree = "<group>"; };
+		4A3E819620205B890021E882 /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = error.c; sourceTree = "<group>"; };
+		4A3E819720205B890021E882 /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
+		4A3E819820205B890021E882 /* handshake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = handshake.h; sourceTree = "<group>"; };
+		4A3E819920205B890021E882 /* hashswf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hashswf.c; sourceTree = "<group>"; };
+		4A3E819A20205B890021E882 /* http.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = http.h; sourceTree = "<group>"; };
+		4A3E819B20205B890021E882 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
+		4A3E819C20205B890021E882 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
+		4A3E819D20205B890021E882 /* parseurl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parseurl.c; sourceTree = "<group>"; };
+		4A3E819E20205B890021E882 /* rtmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rtmp.c; sourceTree = "<group>"; };
+		4A3E819F20205B890021E882 /* rtmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtmp.h; sourceTree = "<group>"; };
+		4A3E81A020205B890021E882 /* rtmp_sys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtmp_sys.h; sourceTree = "<group>"; };
+		4A3E81AB20205B8F0021E882 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		4A3E81AD20205B8F0021E882 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		4A3E81B120205B8F0021E882 /* PLAudioCaptureConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAudioCaptureConfiguration.h; sourceTree = "<group>"; };
+		4A3E81B220205B8F0021E882 /* PLAudioEffectConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAudioEffectConfiguration.h; sourceTree = "<group>"; };
+		4A3E81B320205B8F0021E882 /* PLAudioEffectCustomConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAudioEffectCustomConfiguration.h; sourceTree = "<group>"; };
+		4A3E81B420205B8F0021E882 /* PLAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAudioPlayer.h; sourceTree = "<group>"; };
+		4A3E81B520205B8F0021E882 /* PLAudioSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAudioSession.h; sourceTree = "<group>"; };
+		4A3E81B620205B8F0021E882 /* PLAudioStreamingConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAudioStreamingConfiguration.h; sourceTree = "<group>"; };
+		4A3E81B720205B8F0021E882 /* PLBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLBuffer.h; sourceTree = "<group>"; };
+		4A3E81B820205B8F0021E882 /* PLCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCommon.h; sourceTree = "<group>"; };
+		4A3E81B920205B8F0021E882 /* PLRTCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLRTCConfiguration.h; sourceTree = "<group>"; };
+		4A3E81BA20205B8F0021E882 /* PLStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStream.h; sourceTree = "<group>"; };
+		4A3E81BB20205B8F0021E882 /* PLStreamStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamStatus.h; sourceTree = "<group>"; };
+		4A3E81BC20205B8F0021E882 /* PLTypeDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLTypeDefines.h; sourceTree = "<group>"; };
+		4A3E81BD20205B8F0021E882 /* PLVideoCaptureConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVideoCaptureConfiguration.h; sourceTree = "<group>"; };
+		4A3E81BE20205B8F0021E882 /* PLVideoStreamingConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVideoStreamingConfiguration.h; sourceTree = "<group>"; };
+		4A3E81C020205B8F0021E882 /* PLCameraStreamingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCameraStreamingKit.h; sourceTree = "<group>"; };
+		4A3E81C120205B8F0021E882 /* PLCameraStreamingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCameraStreamingSession.h; sourceTree = "<group>"; };
+		4A3E81C320205B8F0021E882 /* PLMediaStreamingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLMediaStreamingKit.h; sourceTree = "<group>"; };
+		4A3E81C420205B8F0021E882 /* PLMediaStreamingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLMediaStreamingSession.h; sourceTree = "<group>"; };
+		4A3E81C620205B8F0021E882 /* PLRTCStreamingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLRTCStreamingKit.h; sourceTree = "<group>"; };
+		4A3E81C720205B8F0021E882 /* PLRTCStreamingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLRTCStreamingSession.h; sourceTree = "<group>"; };
+		4A3E81C920205B8F0021E882 /* PLStreamingEnv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingEnv.h; sourceTree = "<group>"; };
+		4A3E81CA20205B8F0021E882 /* PLStreamingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingKit.h; sourceTree = "<group>"; };
+		4A3E81CB20205B8F0021E882 /* PLStreamingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingSession.h; sourceTree = "<group>"; };
+		4A3E81CC20205B8F0021E882 /* libfdk-aac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libfdk-aac.a"; sourceTree = "<group>"; };
+		4A3E81CD20205B8F0021E882 /* libPLMediaStreamingKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPLMediaStreamingKit.a; sourceTree = "<group>"; };
+		4A3E81D320205CA30021E882 /* PLPlayerKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLPlayerKit.framework; path = "PLPlayerKit for dylib framework/PLPlayerKit/PLPlayerKit.framework"; sourceTree = "<group>"; };
+		4A3E81D520205CFD0021E882 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
+		4A3E81D720205D190021E882 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		4A3E81D920205D250021E882 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		4A3E81DB20205D3F0021E882 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		4A3E81DD20205DD70021E882 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		4A3E81DF20205DF00021E882 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4A3E81E120205E2F0021E882 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		4A3E81E320205E370021E882 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4A3E81E520205E410021E882 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		4A3E81E720205E4A0021E882 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		4C9C5E3F53E04DD59AB6E507 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		5AB8EFBD3FF048828239C972 /* RCTBEEPickerManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTBEEPickerManager.xcodeproj; path = "../node_modules/react-native-picker/ios/RCTBEEPickerManager.xcodeproj"; sourceTree = "<group>"; };
 		5BA977BB161C4CA0B2EF69DC /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		5D9E1B78DFBB4D20B0C96214 /* libresolv.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		64056C70EAF341A0BB63E20C /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A578AACF24744B391C59C76 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		7AD73034F6174C109EA37AED /* UserNotifications.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		8103C60FD06C4632BC7B233B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		857059FE8EB045E09D957BBF /* Foundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		92264BC6AD4C4FD8975454FB /* libRNSensitiveInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSensitiveInfo.a; sourceTree = "<group>"; };
 		998FDD822B8A4FFF9990610C /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
+		A300CA4110EF4FA497FDE016 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		A7CEC6A7E1904109919A3FBA /* UIKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AD35C9431ED959D500FCD913 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		AD35C9451ED95A3200FCD913 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		AFA9045B53ED4691B133E53A /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		B27BB71D43E445B297582F79 /* CoreFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B34FD1B1A5BA48C9AC878C5C /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		BD2EC0645B8C4522B05B4DEB /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		C35DABE6AD95411B8A055ACB /* CFNetwork.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DDA8CFE9E4A64A9A95E522EF /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		392C20DA186A4A08AB4AA96B /* RCTJPushModule.xcodeproj */ = {isa = PBXFileReference; name = "RCTJPushModule.xcodeproj"; path = "../node_modules/jpush-react-native/ios/RCTJPushModule.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		26F4285D036249419BC91047 /* libRCTJPushModule.a */ = {isa = PBXFileReference; name = "libRCTJPushModule.a"; path = "libRCTJPushModule.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		7AD73034F6174C109EA37AED /* UserNotifications.framework */ = {isa = PBXFileReference; name = "UserNotifications.framework"; path = "System/Library/Frameworks/UserNotifications.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		C35DABE6AD95411B8A055ACB /* CFNetwork.framework */ = {isa = PBXFileReference; name = "CFNetwork.framework"; path = "System/Library/Frameworks/CFNetwork.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		B27BB71D43E445B297582F79 /* CoreFoundation.framework */ = {isa = PBXFileReference; name = "CoreFoundation.framework"; path = "System/Library/Frameworks/CoreFoundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		857059FE8EB045E09D957BBF /* Foundation.framework */ = {isa = PBXFileReference; name = "Foundation.framework"; path = "System/Library/Frameworks/Foundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		A7CEC6A7E1904109919A3FBA /* UIKit.framework */ = {isa = PBXFileReference; name = "UIKit.framework"; path = "System/Library/Frameworks/UIKit.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		5D9E1B78DFBB4D20B0C96214 /* libresolv.tbd */ = {isa = PBXFileReference; name = "libresolv.tbd"; path = "usr/lib/libresolv.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
-		A300CA4110EF4FA497FDE016 /* Feather.ttf */ = {isa = PBXFileReference; name = "Feather.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -432,6 +696,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A3E81E920205EB20021E882 /* PLPlayerKit.framework in Frameworks */,
+				CF15D394EFB44F6685CC9CCF /* UIKit.framework in Frameworks */,
+				4A3E81E820205E4A0021E882 /* MediaPlayer.framework in Frameworks */,
+				4A3E81E620205E410021E882 /* CoreAudio.framework in Frameworks */,
+				4A3E81E420205E370021E882 /* AudioToolbox.framework in Frameworks */,
+				4A3E81E220205E2F0021E882 /* Accelerate.framework in Frameworks */,
+				2A2834F61EE679F00049BED9 /* QuartzCore.framework in Frameworks */,
+				2A2834F81EE679FE0049BED9 /* OpenGLES.framework in Frameworks */,
+				4A3E81E020205DF00021E882 /* AVFoundation.framework in Frameworks */,
+				4A3E81DE20205DD70021E882 /* CoreVideo.framework in Frameworks */,
+				4A3E81DC20205D3F0021E882 /* AVKit.framework in Frameworks */,
+				4A3E81DA20205D250021E882 /* CoreMedia.framework in Frameworks */,
+				4A3E81D820205D190021E882 /* VideoToolbox.framework in Frameworks */,
+				4A3E81D620205CFD0021E882 /* libbz2.tbd in Frameworks */,
 				2ACC625A1F1366DC00C91231 /* libRCTWeChat.a in Frameworks */,
 				2ACC62591F1366D300C91231 /* libc++.tbd in Frameworks */,
 				2ACC62571F1366C500C91231 /* libz.tbd in Frameworks */,
@@ -449,8 +727,7 @@
 				2A2834FE1EE67A580049BED9 /* Security.framework in Frameworks */,
 				2A2834FC1EE67A180049BED9 /* CoreGraphics.framework in Frameworks */,
 				2A2834FA1EE67A0B0049BED9 /* SystemConfiguration.framework in Frameworks */,
-				2A2834F81EE679FE0049BED9 /* OpenGLES.framework in Frameworks */,
-				2A2834F61EE679F00049BED9 /* QuartzCore.framework in Frameworks */,
+				4A3E81D020205B8F0021E882 /* libfdk-aac.a in Frameworks */,
 				2A2834F41EE679E40049BED9 /* CoreLocation.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -467,14 +744,12 @@
 				8CEF150E28E74A719CD1ED01 /* libRCTBEEPickerManager.a in Frameworks */,
 				08257BC87F3B4CD4827E8E07 /* libRNSensitiveInfo.a in Frameworks */,
 				ABD6190D5C274BAD919A2082 /* libRCTCamera.a in Frameworks */,
+				4A3E81D120205B8F0021E882 /* libPLMediaStreamingKit.a in Frameworks */,
 				E5748E789ADD45F2AFA34CE8 /* libRNImagePicker.a in Frameworks */,
-				AD29549624DD43EBBE2B52F3 /* libRNSVG.a in Frameworks */,
-				0547FF24186E47A29D8A6D73 /* libRCTJPushModule.a in Frameworks */,
 				823ECD6AEF5E4448804DB938 /* UserNotifications.framework in Frameworks */,
 				EB27284E07E84DC1B3B6F1D0 /* CFNetwork.framework in Frameworks */,
 				FD1428D32F984016AEC92727 /* CoreFoundation.framework in Frameworks */,
 				9BD81A6DB1F141ECA0E234EB /* Foundation.framework in Frameworks */,
-				CF15D394EFB44F6685CC9CCF /* UIKit.framework in Frameworks */,
 				BAD27E4E42094C498BA7E716 /* libresolv.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -584,6 +859,8 @@
 		13B07FAE1A68108700A75B9A /* sportsApp */ = {
 			isa = PBXGroup;
 			children = (
+				4A3E807A2020329B0021E882 /* RCTPushStreamViewManager.m */,
+				4A3E8079202032910021E882 /* RCTPushStreamViewManager.h */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -621,6 +898,17 @@
 		2A2834E41EE679B60049BED9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A3E81E720205E4A0021E882 /* MediaPlayer.framework */,
+				4A3E81E520205E410021E882 /* CoreAudio.framework */,
+				4A3E81E320205E370021E882 /* AudioToolbox.framework */,
+				4A3E81E120205E2F0021E882 /* Accelerate.framework */,
+				4A3E81DF20205DF00021E882 /* AVFoundation.framework */,
+				4A3E81DD20205DD70021E882 /* CoreVideo.framework */,
+				4A3E81DB20205D3F0021E882 /* AVKit.framework */,
+				4A3E81D920205D250021E882 /* CoreMedia.framework */,
+				4A3E81D720205D190021E882 /* VideoToolbox.framework */,
+				4A3E81D520205CFD0021E882 /* libbz2.tbd */,
+				4A3E80932020498C0021E882 /* PLPlayerKit.framework */,
 				2ACC62581F1366D300C91231 /* libc++.tbd */,
 				2ACC62561F1366C500C91231 /* libz.tbd */,
 				2A2835031EE682A70049BED9 /* libstdc++.6.0.9.tbd */,
@@ -665,14 +953,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2A70A2991EE56BEB00995DD3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2A70A2BA1EE56BEB00995DD3 /* libRNSVG.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		2A80FDD41ED8428800550906 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -693,6 +973,7 @@
 			isa = PBXGroup;
 			children = (
 				2ACC62481F13664D00C91231 /* libRCTWeChat.a */,
+				4A3E8028202023AE0021E882 /* RCTWeChatTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -703,6 +984,351 @@
 				2AED383C1F0F13FC00FD55DE /* libRCTBaiduMap.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4A3E8010202023AC0021E882 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				998FDD822B8A4FFF9990610C /* libRNVectorIcons.a */,
+				212020669BA5462787C8592E /* libRCTBEEPickerManager.a */,
+				92264BC6AD4C4FD8975454FB /* libRNSensitiveInfo.a */,
+				198350BEFBE04389BA868EF7 /* libRCTCamera.a */,
+				B34FD1B1A5BA48C9AC878C5C /* libRNImagePicker.a */,
+				1C9D3CDED2B743D98DA6D3C7 /* libRNSVG.a */,
+				26F4285D036249419BC91047 /* libRCTJPushModule.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		4A3E80E620205B400021E882 /* happy-dns-objc */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E80E720205B400021E882 /* .clang-format */,
+				4A3E80E820205B400021E882 /* .gitignore */,
+				4A3E80E920205B400021E882 /* .travis.yml */,
+				4A3E80EA20205B400021E882 /* CHANGELOG.md */,
+				4A3E80EB20205B400021E882 /* clang-format */,
+				4A3E80EC20205B400021E882 /* Contributing.md */,
+				4A3E80ED20205B400021E882 /* format.sh */,
+				4A3E80EE20205B400021E882 /* HappyDNS */,
+				4A3E811C20205B400021E882 /* HappyDNS.podspec */,
+				4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */,
+				4A3E812020205B400021E882 /* HappyDNS.xcworkspace */,
+				4A3E812120205B400021E882 /* HappyDNSTests */,
+				4A3E812F20205B400021E882 /* LICENSE */,
+				4A3E813020205B400021E882 /* Podfile */,
+				4A3E813120205B400021E882 /* README.md */,
+				4A3E813220205B400021E882 /* uncrustify.cfg */,
+			);
+			path = "happy-dns-objc";
+			sourceTree = "<group>";
+		};
+		4A3E80EE20205B400021E882 /* HappyDNS */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E80EF20205B400021E882 /* Assessment */,
+				4A3E80F420205B400021E882 /* Common */,
+				4A3E810020205B400021E882 /* HappyDNS.h */,
+				4A3E810120205B400021E882 /* Http */,
+				4A3E810620205B400021E882 /* Local */,
+				4A3E811120205B400021E882 /* QNRefresher.h */,
+				4A3E811220205B400021E882 /* QNRefresher.m */,
+				4A3E811320205B400021E882 /* Util */,
+			);
+			path = HappyDNS;
+			sourceTree = "<group>";
+		};
+		4A3E80EF20205B400021E882 /* Assessment */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E80F020205B400021E882 /* QNAssessment.h */,
+				4A3E80F120205B400021E882 /* QNAssessment.m */,
+				4A3E80F220205B400021E882 /* QNIpModel.h */,
+				4A3E80F320205B400021E882 /* QNIpModel.m */,
+			);
+			path = Assessment;
+			sourceTree = "<group>";
+		};
+		4A3E80F420205B400021E882 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E80F520205B400021E882 /* QNDnsManager.h */,
+				4A3E80F620205B400021E882 /* QNDnsManager.m */,
+				4A3E80F720205B400021E882 /* QNDomain.h */,
+				4A3E80F820205B400021E882 /* QNDomain.m */,
+				4A3E80F920205B400021E882 /* QNLruCache.h */,
+				4A3E80FA20205B400021E882 /* QNLruCache.m */,
+				4A3E80FB20205B400021E882 /* QNNetworkInfo.h */,
+				4A3E80FC20205B400021E882 /* QNNetworkInfo.m */,
+				4A3E80FD20205B400021E882 /* QNRecord.h */,
+				4A3E80FE20205B400021E882 /* QNRecord.m */,
+				4A3E80FF20205B400021E882 /* QNResolverDelegate.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4A3E810120205B400021E882 /* Http */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E810220205B400021E882 /* QNDnspodEnterprise.h */,
+				4A3E810320205B400021E882 /* QNDnspodEnterprise.m */,
+				4A3E810420205B400021E882 /* QNDnspodFree.h */,
+				4A3E810520205B400021E882 /* QNDnspodFree.m */,
+			);
+			path = Http;
+			sourceTree = "<group>";
+		};
+		4A3E810620205B400021E882 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E810720205B400021E882 /* QNHijackingDetectWrapper.h */,
+				4A3E810820205B400021E882 /* QNHijackingDetectWrapper.m */,
+				4A3E810920205B400021E882 /* QNHosts.h */,
+				4A3E810A20205B400021E882 /* QNHosts.m */,
+				4A3E810B20205B400021E882 /* QNResolver.h */,
+				4A3E810C20205B400021E882 /* QNResolver.m */,
+				4A3E810D20205B400021E882 /* QNResolvUtil.h */,
+				4A3E810E20205B400021E882 /* QNResolvUtil.m */,
+				4A3E810F20205B400021E882 /* QNTxtResolver.h */,
+				4A3E811020205B400021E882 /* QNTxtResolver.m */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		4A3E811320205B400021E882 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E811420205B400021E882 /* QNDes.h */,
+				4A3E811520205B400021E882 /* QNDes.m */,
+				4A3E811620205B400021E882 /* QNGetAddrInfo.h */,
+				4A3E811720205B400021E882 /* QNGetAddrInfo.m */,
+				4A3E811820205B400021E882 /* QNHex.h */,
+				4A3E811920205B400021E882 /* QNHex.m */,
+				4A3E811A20205B400021E882 /* QNIP.h */,
+				4A3E811B20205B400021E882 /* QNIP.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		4A3E811E20205B400021E882 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E813820205B400021E882 /* libHappyDNS.dylib */,
+				4A3E813A20205B400021E882 /* HappyDNS_MacTests.xctest */,
+				4A3E813C20205B400021E882 /* libHappyDNS.a */,
+				4A3E813E20205B400021E882 /* HappyDNS_iOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A3E812120205B400021E882 /* HappyDNSTests */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E812220205B400021E882 /* DesTest.m */,
+				4A3E812320205B400021E882 /* DnspodEnterpriseTest.m */,
+				4A3E812420205B400021E882 /* DnspodFreeTest.m */,
+				4A3E812520205B400021E882 /* DnsTest.m */,
+				4A3E812620205B400021E882 /* GetAddrInfoTest.m */,
+				4A3E812720205B400021E882 /* HexTest.m */,
+				4A3E812820205B400021E882 /* HostsTest.m */,
+				4A3E812920205B400021E882 /* Info.plist */,
+				4A3E812A20205B400021E882 /* IPTest.m */,
+				4A3E812B20205B400021E882 /* LruCacheTest.m */,
+				4A3E812C20205B400021E882 /* NetworkTest.m */,
+				4A3E812D20205B400021E882 /* ResolverTest.m */,
+				4A3E812E20205B400021E882 /* TxtResolverTest.m */,
+			);
+			path = HappyDNSTests;
+			sourceTree = "<group>";
+		};
+		4A3E816C20205B650021E882 /* iOS-netdiag */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E816D20205B650021E882 /* NetDiag */,
+			);
+			path = "iOS-netdiag";
+			sourceTree = "<group>";
+		};
+		4A3E816D20205B650021E882 /* NetDiag */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E816E20205B650021E882 /* QNNetDiag.h */,
+				4A3E816F20205B650021E882 /* QNNExternalIp.h */,
+				4A3E817020205B650021E882 /* QNNExternalIp.m */,
+				4A3E817120205B650021E882 /* QNNHttp.h */,
+				4A3E817220205B650021E882 /* QNNHttp.m */,
+				4A3E817320205B650021E882 /* QNNNslookup.h */,
+				4A3E817420205B650021E882 /* QNNNslookup.m */,
+				4A3E817520205B650021E882 /* QNNPing.h */,
+				4A3E817620205B650021E882 /* QNNPing.m */,
+				4A3E817720205B650021E882 /* QNNProtocols.h */,
+				4A3E817820205B650021E882 /* QNNQue.h */,
+				4A3E817920205B650021E882 /* QNNQue.m */,
+				4A3E817A20205B650021E882 /* QNNRtmp.h */,
+				4A3E817B20205B650021E882 /* QNNRtmp.m */,
+				4A3E817C20205B650021E882 /* QNNTcpPing.h */,
+				4A3E817D20205B650021E882 /* QNNTcpPing.m */,
+				4A3E817E20205B650021E882 /* QNNTraceRoute.h */,
+				4A3E817F20205B650021E882 /* QNNTraceRoute.m */,
+				4A3E818020205B650021E882 /* QNNUtil.h */,
+				4A3E818120205B650021E882 /* QNNUtil.m */,
+			);
+			path = NetDiag;
+			sourceTree = "<group>";
+		};
+		4A3E818B20205B890021E882 /* pili-librtmp */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E818C20205B890021E882 /* Assets */,
+				4A3E818E20205B890021E882 /* Classes */,
+			);
+			path = "pili-librtmp";
+			sourceTree = "<group>";
+		};
+		4A3E818C20205B890021E882 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E818D20205B890021E882 /* .gitkeep */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		4A3E818E20205B890021E882 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E818F20205B890021E882 /* .gitkeep */,
+				4A3E819020205B890021E882 /* pili-librtmp */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4A3E819020205B890021E882 /* pili-librtmp */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E819120205B890021E882 /* amf.c */,
+				4A3E819220205B890021E882 /* amf.h */,
+				4A3E819320205B890021E882 /* bytes.h */,
+				4A3E819420205B890021E882 /* dh.h */,
+				4A3E819520205B890021E882 /* dhgroups.h */,
+				4A3E819620205B890021E882 /* error.c */,
+				4A3E819720205B890021E882 /* error.h */,
+				4A3E819820205B890021E882 /* handshake.h */,
+				4A3E819920205B890021E882 /* hashswf.c */,
+				4A3E819A20205B890021E882 /* http.h */,
+				4A3E819B20205B890021E882 /* log.c */,
+				4A3E819C20205B890021E882 /* log.h */,
+				4A3E819D20205B890021E882 /* parseurl.c */,
+				4A3E819E20205B890021E882 /* rtmp.c */,
+				4A3E819F20205B890021E882 /* rtmp.h */,
+				4A3E81A020205B890021E882 /* rtmp_sys.h */,
+			);
+			path = "pili-librtmp";
+			sourceTree = "<group>";
+		};
+		4A3E81A920205B8F0021E882 /* QNPushStream */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81AA20205B8F0021E882 /* Assets */,
+				4A3E81AC20205B8F0021E882 /* Classes */,
+				4A3E81AE20205B8F0021E882 /* Library */,
+			);
+			path = QNPushStream;
+			sourceTree = "<group>";
+		};
+		4A3E81AA20205B8F0021E882 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81AB20205B8F0021E882 /* .gitkeep */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		4A3E81AC20205B8F0021E882 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81AD20205B8F0021E882 /* .gitkeep */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4A3E81AE20205B8F0021E882 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81AF20205B8F0021E882 /* include */,
+				4A3E81CC20205B8F0021E882 /* libfdk-aac.a */,
+				4A3E81CD20205B8F0021E882 /* libPLMediaStreamingKit.a */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		4A3E81AF20205B8F0021E882 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81B020205B8F0021E882 /* Common */,
+				4A3E81BF20205B8F0021E882 /* PLCameraStreamingKit */,
+				4A3E81C220205B8F0021E882 /* PLMediaStreamingKit */,
+				4A3E81C520205B8F0021E882 /* PLRTCStreamingKit */,
+				4A3E81C820205B8F0021E882 /* PLStreamingKit */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		4A3E81B020205B8F0021E882 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81B120205B8F0021E882 /* PLAudioCaptureConfiguration.h */,
+				4A3E81B220205B8F0021E882 /* PLAudioEffectConfiguration.h */,
+				4A3E81B320205B8F0021E882 /* PLAudioEffectCustomConfiguration.h */,
+				4A3E81B420205B8F0021E882 /* PLAudioPlayer.h */,
+				4A3E81B520205B8F0021E882 /* PLAudioSession.h */,
+				4A3E81B620205B8F0021E882 /* PLAudioStreamingConfiguration.h */,
+				4A3E81B720205B8F0021E882 /* PLBuffer.h */,
+				4A3E81B820205B8F0021E882 /* PLCommon.h */,
+				4A3E81B920205B8F0021E882 /* PLRTCConfiguration.h */,
+				4A3E81BA20205B8F0021E882 /* PLStream.h */,
+				4A3E81BB20205B8F0021E882 /* PLStreamStatus.h */,
+				4A3E81BC20205B8F0021E882 /* PLTypeDefines.h */,
+				4A3E81BD20205B8F0021E882 /* PLVideoCaptureConfiguration.h */,
+				4A3E81BE20205B8F0021E882 /* PLVideoStreamingConfiguration.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4A3E81BF20205B8F0021E882 /* PLCameraStreamingKit */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81C020205B8F0021E882 /* PLCameraStreamingKit.h */,
+				4A3E81C120205B8F0021E882 /* PLCameraStreamingSession.h */,
+			);
+			path = PLCameraStreamingKit;
+			sourceTree = "<group>";
+		};
+		4A3E81C220205B8F0021E882 /* PLMediaStreamingKit */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81C320205B8F0021E882 /* PLMediaStreamingKit.h */,
+				4A3E81C420205B8F0021E882 /* PLMediaStreamingSession.h */,
+			);
+			path = PLMediaStreamingKit;
+			sourceTree = "<group>";
+		};
+		4A3E81C520205B8F0021E882 /* PLRTCStreamingKit */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81C620205B8F0021E882 /* PLRTCStreamingKit.h */,
+				4A3E81C720205B8F0021E882 /* PLRTCStreamingSession.h */,
+			);
+			path = PLRTCStreamingKit;
+			sourceTree = "<group>";
+		};
+		4A3E81C820205B8F0021E882 /* PLStreamingKit */ = {
+			isa = PBXGroup;
+			children = (
+				4A3E81C920205B8F0021E882 /* PLStreamingEnv.h */,
+				4A3E81CA20205B8F0021E882 /* PLStreamingKit.h */,
+				4A3E81CB20205B8F0021E882 /* PLStreamingSession.h */,
+			);
+			path = PLStreamingKit;
 			sourceTree = "<group>";
 		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
@@ -763,8 +1389,6 @@
 				1DE5A0183FE64DACA7D14668 /* RNSensitiveInfo.xcodeproj */,
 				0D4FF4A3814340E08D1E7E84 /* RCTCamera.xcodeproj */,
 				14C51D9C90D543EA8B44B863 /* RNImagePicker.xcodeproj */,
-				41D86753BEEF4E56B4A659C9 /* RNSVG.xcodeproj */,
-				392C20DA186A4A08AB4AA96B /* RCTJPushModule.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -781,6 +1405,11 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				4A3E81D320205CA30021E882 /* PLPlayerKit.framework */,
+				4A3E81A920205B8F0021E882 /* QNPushStream */,
+				4A3E818B20205B890021E882 /* pili-librtmp */,
+				4A3E816C20205B650021E882 /* iOS-netdiag */,
+				4A3E80E620205B400021E882 /* happy-dns-objc */,
 				2AED38451F0F150700FD55DE /* mapapi.bundle */,
 				AD35C9431ED959D500FCD913 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* sportsApp */,
@@ -789,6 +1418,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				7B64C08AD15E4BD6A77FE517 /* Resources */,
 				2A2834E41EE679B60049BED9 /* Frameworks */,
+				4A3E8010202023AC0021E882 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -842,6 +1472,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				4A3E803A202028BF0021E882 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -904,7 +1535,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = BY3A7B54BR;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -931,6 +1562,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 4A3E811E20205B400021E882 /* Products */;
+					ProjectRef = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -998,10 +1633,6 @@
 				{
 					ProductGroup = 2A8F70991EE14546006CBA78 /* Products */;
 					ProjectRef = 1DE5A0183FE64DACA7D14668 /* RNSensitiveInfo.xcodeproj */;
-				},
-				{
-					ProductGroup = 2A70A2991EE56BEB00995DD3 /* Products */;
-					ProjectRef = 41D86753BEEF4E56B4A659C9 /* RNSVG.xcodeproj */;
 				},
 				{
 					ProductGroup = AD35C9461ED95A3200FCD913 /* Products */;
@@ -1098,13 +1729,6 @@
 			fileType = archive.ar;
 			path = libRNImagePicker.a;
 			remoteRef = 2A70A2511EE4E35200995DD3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2A70A2BA1EE56BEB00995DD3 /* libRNSVG.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNSVG.a;
-			remoteRef = 2A70A2B91EE56BEB00995DD3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		2A80FDF11ED8428800550906 /* libRNVectorIcons.a */ = {
@@ -1226,6 +1850,41 @@
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		4A3E8028202023AE0021E882 /* RCTWeChatTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RCTWeChatTests.xctest;
+			remoteRef = 4A3E8027202023AE0021E882 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4A3E813820205B400021E882 /* libHappyDNS.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libHappyDNS.dylib;
+			remoteRef = 4A3E813720205B400021E882 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4A3E813A20205B400021E882 /* HappyDNS_MacTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = HappyDNS_MacTests.xctest;
+			remoteRef = 4A3E813920205B400021E882 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4A3E813C20205B400021E882 /* libHappyDNS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libHappyDNS.a;
+			remoteRef = 4A3E813B20205B400021E882 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4A3E813E20205B400021E882 /* HappyDNS_iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = HappyDNS_iOSTests.xctest;
+			remoteRef = 4A3E813D20205B400021E882 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1277,19 +1936,37 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				4A3E816820205B400021E882 /* LICENSE in Resources */,
+				4A3E814220205B400021E882 /* CHANGELOG.md in Resources */,
+				4A3E815A20205B400021E882 /* HappyDNS.xcworkspace in Resources */,
 				77E22C1060CF40098E9C5BF5 /* Entypo.ttf in Resources */,
 				0BB8186EB7E24F4D9A15152D /* EvilIcons.ttf in Resources */,
+				4A3E814020205B400021E882 /* .gitignore in Resources */,
 				0F79082F39814CFEAC1BD304 /* FontAwesome.ttf in Resources */,
 				AD35C9441ED959D500FCD913 /* Fonts in Resources */,
+				4A3E816A20205B400021E882 /* README.md in Resources */,
+				4A3E813F20205B400021E882 /* .clang-format in Resources */,
 				BBE3B162A04446E1912DB626 /* Foundation.ttf in Resources */,
 				87A033E7C7F0465899D933D0 /* Ionicons.ttf in Resources */,
+				4A3E815920205B400021E882 /* HappyDNS.podspec in Resources */,
+				4A3E814520205B400021E882 /* format.sh in Resources */,
 				CF021B91AC67421E9DD6B3B8 /* MaterialCommunityIcons.ttf in Resources */,
 				FF7D1A3C4D2D464A8CC2856E /* MaterialIcons.ttf in Resources */,
+				4A3E81A220205B890021E882 /* .gitkeep in Resources */,
+				4A3E814120205B400021E882 /* .travis.yml in Resources */,
 				4123F855953F40E88AEB2CCA /* Octicons.ttf in Resources */,
 				04125A96362B4E77B1E3F520 /* SimpleLineIcons.ttf in Resources */,
 				B633305B885442F085C60483 /* Zocial.ttf in Resources */,
 				2AED38461F0F150800FD55DE /* mapapi.bundle in Resources */,
+				4A3E81CF20205B8F0021E882 /* .gitkeep in Resources */,
+				4A3E814420205B400021E882 /* Contributing.md in Resources */,
 				019A0AC0CFD7401DAE11151E /* Feather.ttf in Resources */,
+				4A3E816B20205B400021E882 /* uncrustify.cfg in Resources */,
+				4A3E816920205B400021E882 /* Podfile in Resources */,
+				4A3E81A120205B890021E882 /* .gitkeep in Resources */,
+				4A3E816220205B400021E882 /* Info.plist in Resources */,
+				4A3E814320205B400021E882 /* clang-format in Resources */,
+				4A3E81CE20205B8F0021E882 /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1354,8 +2031,55 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A3E814720205B400021E882 /* QNIpModel.m in Sources */,
+				4A3E81A820205B890021E882 /* rtmp.c in Sources */,
+				4A3E815220205B400021E882 /* QNResolvUtil.m in Sources */,
+				4A3E815D20205B400021E882 /* DnspodFreeTest.m in Sources */,
+				4A3E818620205B650021E882 /* QNNQue.m in Sources */,
+				4A3E818220205B650021E882 /* QNNExternalIp.m in Sources */,
+				4A3E814D20205B400021E882 /* QNDnspodEnterprise.m in Sources */,
+				4A3E816320205B400021E882 /* IPTest.m in Sources */,
+				4A3E818420205B650021E882 /* QNNNslookup.m in Sources */,
+				4A3E815720205B400021E882 /* QNHex.m in Sources */,
+				4A3E814F20205B400021E882 /* QNHijackingDetectWrapper.m in Sources */,
+				4A3E815320205B400021E882 /* QNTxtResolver.m in Sources */,
+				4A3E815520205B400021E882 /* QNDes.m in Sources */,
+				4A3E815F20205B400021E882 /* GetAddrInfoTest.m in Sources */,
+				4A3E814E20205B400021E882 /* QNDnspodFree.m in Sources */,
+				4A3E816420205B400021E882 /* LruCacheTest.m in Sources */,
+				4A3E815B20205B400021E882 /* DesTest.m in Sources */,
+				4A3E814C20205B400021E882 /* QNRecord.m in Sources */,
+				4A3E818920205B650021E882 /* QNNTraceRoute.m in Sources */,
+				4A3E816720205B400021E882 /* TxtResolverTest.m in Sources */,
+				4A3E815620205B400021E882 /* QNGetAddrInfo.m in Sources */,
+				4A3E818320205B650021E882 /* QNNHttp.m in Sources */,
+				4A3E807B2020329B0021E882 /* RCTPushStreamViewManager.m in Sources */,
+				4A3E81A320205B890021E882 /* amf.c in Sources */,
+				4A3E815020205B400021E882 /* QNHosts.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				4A3E81A720205B890021E882 /* parseurl.c in Sources */,
+				4A3E816520205B400021E882 /* NetworkTest.m in Sources */,
+				4A3E81A620205B890021E882 /* log.c in Sources */,
+				4A3E816120205B400021E882 /* HostsTest.m in Sources */,
+				4A3E815E20205B400021E882 /* DnsTest.m in Sources */,
+				4A3E814920205B400021E882 /* QNDomain.m in Sources */,
+				4A3E814620205B400021E882 /* QNAssessment.m in Sources */,
+				4A3E818720205B650021E882 /* QNNRtmp.m in Sources */,
+				4A3E815820205B400021E882 /* QNIP.m in Sources */,
+				4A3E81A520205B890021E882 /* hashswf.c in Sources */,
+				4A3E818820205B650021E882 /* QNNTcpPing.m in Sources */,
+				4A3E814A20205B400021E882 /* QNLruCache.m in Sources */,
+				4A3E816020205B400021E882 /* HexTest.m in Sources */,
+				4A3E815C20205B400021E882 /* DnspodEnterpriseTest.m in Sources */,
+				4A3E816620205B400021E882 /* ResolverTest.m in Sources */,
+				4A3E815420205B400021E882 /* QNRefresher.m in Sources */,
+				4A3E814820205B400021E882 /* QNDnsManager.m in Sources */,
+				4A3E81A420205B890021E882 /* error.c in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				4A3E818520205B650021E882 /* QNNPing.m in Sources */,
+				4A3E814B20205B400021E882 /* QNNetworkInfo.m in Sources */,
+				4A3E818A20205B650021E882 /* QNNUtil.m in Sources */,
+				4A3E815120205B400021E882 /* QNResolver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1363,6 +2087,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A3E807C2020329B0021E882 /* RCTPushStreamViewManager.m in Sources */,
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
 				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);
@@ -1488,12 +2213,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Li Xueqing (BY3A7B54BR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Li Xueqing (BY3A7B54BR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = BY3A7B54BR;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/lib";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/lib",
+					"$(PROJECT_DIR)/PLPlayerKit\\ for\\ dylib\\ framework/PLPlayerKit",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1501,15 +2231,22 @@
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
-					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap",
 					"$(SRCROOT)/../node_modules/react-native/Libraries",
-					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
+					"$(SRCROOT)/../ios/iOS-netdiag/NetDiag",
+					"$(SRCROOT)/../ios/pili-librtmp/Classes/pili-librtmp",
+					"$(SRCROOT)/../ios/QNPushStream/Library/include/PLMediaStreamKit",
+					"$(SRCROOT)/../ios/PLPlayerKit.framework/Headers",
+					"$(SRCROOT)/../ios/happy-dns-objc",
 				);
 				INFOPLIST_FILE = sportsApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib",
+					"$(SRCROOT)/../ios",
+					"$(PROJECT_DIR)/QNPushStream/Library",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1517,8 +2254,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.codery.sportsHot;
 				PRODUCT_NAME = sportsApp;
-				PROVISIONING_PROFILE = "043071a2-6b8a-4779-9d50-8f73ddb94db5";
-				PROVISIONING_PROFILE_SPECIFIER = sportsHot;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1528,11 +2265,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Li Xueqing (BY3A7B54BR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Li Xueqing (BY3A7B54BR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BY3A7B54BR;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/lib";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/lib",
+					"$(PROJECT_DIR)/PLPlayerKit\\ for\\ dylib\\ framework/PLPlayerKit",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1540,15 +2282,22 @@
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
-					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/RCTBaiduMap",
 					"$(SRCROOT)/../node_modules/react-native/Libraries",
-					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
+					"$(SRCROOT)/../ios/iOS-netdiag/NetDiag",
+					"$(SRCROOT)/../ios/pili-librtmp/Classes/pili-librtmp",
+					"$(SRCROOT)/../ios/QNPushStream/Library/include/PLMediaStreamKit",
+					"$(SRCROOT)/../ios/PLPlayerKit.framework/Headers",
+					"$(SRCROOT)/../ios/happy-dns-objc",
 				);
 				INFOPLIST_FILE = sportsApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib",
+					"$(SRCROOT)/../ios",
+					"$(PROJECT_DIR)/QNPushStream/Library",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1556,8 +2305,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.codery.sportsHot;
 				PRODUCT_NAME = sportsApp;
-				PROVISIONING_PROFILE = "043071a2-6b8a-4779-9d50-8f73ddb94db5";
-				PROVISIONING_PROFILE_SPECIFIER = sportsHot;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

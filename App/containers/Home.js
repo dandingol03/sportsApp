@@ -35,6 +35,7 @@ const scaleAnimation = new ScaleAnimation();
 import MobilePhoneModal from '../components/my/modal/ValidateMobilePhoneModal';
 import ValidateMyInformationModal from '../components/my/modal/ValidateMyInformationModal';
 import Bridge from '../native/Bridge'
+import LiveHome from '../components/live/LiveHome'
 import {
     fetchNewsInfo,
     updateNewsInfo
@@ -130,13 +131,13 @@ class Home extends Component {
         }
     }
 
-    navigate2SexModal()
+    navigate2LiveHome()
     {
         const {navigator} =this.props;
         if(navigator) {
             navigator.push({
-                name: 'SexModal',
-                component: SexModal,
+                name: 'LiveHome',
+                component: LiveHome,
                 params: {
 
                 }
@@ -364,8 +365,8 @@ class Home extends Component {
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                                       onPress={ ()=>{
-                                                          Bridge.raisePLStream("rtmp://pili-publish.sportshot.cn/sportshot/EEvvee?e=1514770702&token=2M63A85U1GpU37_hxw6zmCYt7ia0YPIEpOjLeJt5:IxdRrye8Aw1zqausvxn7OpZOwfw=")
-
+                                                          //Bridge.raisePLStream("rtmp://pili-publish.sportshot.cn/sportshot/EEvvee?e=1514770702&token=2M63A85U1GpU37_hxw6zmCYt7ia0YPIEpOjLeJt5:IxdRrye8Aw1zqausvxn7OpZOwfw=")
+                                                            this.navigate2LiveHome()
                                           {/*var date=new Date()*/}
                                           {/*var dateStr=''*/}
                                           {/*this.props.dispatch(getRTMPPushUrl({*/}
