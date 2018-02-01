@@ -35,7 +35,8 @@ const scaleAnimation = new ScaleAnimation();
 const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 import{
     distributeCourse,
-    modifyCourse
+    modifyCourse,
+    enableCoursesOfCoachOnFresh
 } from '../../action/CourseActions';
 import {getAccessToken,} from '../../action/UserActions';
 
@@ -259,7 +260,7 @@ class ModifyBadmintonCourse extends Component{
                     </View>
 
                     {/*支付方式*/}
-                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
+                  {/*  <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
                         <View style={{flex:1}}>
                             <Text style={{color:'#000',fontSize:13}}>收费类型：</Text>
                         </View>
@@ -292,7 +293,7 @@ class ModifyBadmintonCourse extends Component{
                                 }
                             />
                         </TouchableOpacity>
-                    </View>
+                    </View>*/}
 
                     {/*课程花费*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
@@ -450,7 +451,7 @@ class ModifyBadmintonCourse extends Component{
                                                       if(json.re==1){
                                                           Alert.alert('信息','课程编辑成功',[{text:'确认',onPress:()=>{
                                                               this.goBack();
-                                                              this.props.setDistribution();
+                                                             // this.props.setDistribution();
                                                           }}]);
                                                       }else{
                                                           if(json.re==-100){
@@ -537,6 +538,10 @@ class ModifyBadmintonCourse extends Component{
     {
         if(this.venueListener)
             this.venueListener.remove();
+    }
+
+    componentWillUnmount(){
+        this.props.dispatch(enableCoursesOfCoachOnFresh());
     }
 
 }

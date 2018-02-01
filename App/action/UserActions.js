@@ -1290,17 +1290,16 @@ export let uploadPortrait=(portrait,personId)=>{
     return (dispatch,getState)=> {
         return new Promise((resolve, reject) => {
             var state=getState();
-            var accessToken=state.user.accessToken;
+          //  var accessToken=state.user.accessToken;
 
             // Create the form data object
             var data = new FormData();
-            data.append('file', {uri: portrait, name: 'portrait.jpg', type: 'multipart/form-data'});
+            data.append('images ', {uri: portrait, name: 'portrait.jpg', type: 'multipart/form-data'});
 
             //限定为jpg后缀
             Proxy.post({
-                url:Config.server+'/svr/request?request=uploadBadmintonPortrait&suffix=jpg&personId='+personId.toString(),
+                url:Config.server+'/func/node/uploadCoachHead?personId='+personId.toString(),
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
                     'Content-Type':'multipart/form-data',
                 },
                 body: data,
@@ -1308,7 +1307,7 @@ export let uploadPortrait=(portrait,personId)=>{
                 resolve(json)
 
             }, (err) =>{
-                reject(err)
+                //reject(err)
             });
         });
     }

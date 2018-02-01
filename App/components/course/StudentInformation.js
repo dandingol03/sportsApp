@@ -202,7 +202,7 @@ class StudentInformation extends Component {
 
                         <View style={{padding:4,flex:1,alignItems:'center',flexDirection:'row'}}>
                             <Text style={{ color: '#222', fontWeight: 'bold', fontSize: 15 }}>
-                                学员编号：{rowData.memberId}
+                                学员身份证号：{rowData.perIdCard}
                             </Text>
                         </View>
 
@@ -222,7 +222,14 @@ class StudentInformation extends Component {
                         }
                     </View>
 
-                 
+                    <View style={{flexDirection:'row',marginBottom:3}}>
+                        <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
+                            <Icon name={'circle'} size={10} color="#aaa"/>
+                        </View>
+                        <Text style={{flex:7,fontSize:13,color:'#343434',justifyContent:'center',alignItems: 'center'}}>
+                            联系方式：{rowData.mobilePhone}
+                        </Text>
+                    </View>
                     <View style={{flexDirection:'row',marginBottom:3}}>
                         <View style={{flex:1,justifyContent:'flex-start',alignItems: 'center'}}>
                             <Icon name={'circle'} size={10} color="#aaa"/>

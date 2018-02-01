@@ -35,7 +35,8 @@ const scaleAnimation = new ScaleAnimation();
 const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 
 import{
-    distributeCourse
+    distributeCourse,
+    enableCoursesOfCoachOnFresh
 } from '../../action/CourseActions';
 
 import {getAccessToken,} from '../../action/UserActions';
@@ -451,7 +452,7 @@ class CreateBadmintonCourse extends Component{
                                                      if(json.re==1){
                                                          Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
                                                             this.goBack();
-                                                            this.props.setMyCourseList();
+                                                            //this.props.setMyCourseList();
                                                             }}]);
                                                      }else{
                                                          if(json.re==-100){
@@ -538,6 +539,7 @@ class CreateBadmintonCourse extends Component{
     {
         if(this.venueListener)
             this.venueListener.remove();
+        this.props.dispatch(enableCoursesOfCoachOnFresh());
     }
 
 }

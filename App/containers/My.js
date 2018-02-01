@@ -413,12 +413,15 @@ class My extends Component{
                             }}
                         onConfirm={(portrait)=>{
                              if (portrait) {
+                                this.portraitDialog.dismiss();
+                                this.setPortrait(portrait);
                                 this.props.dispatch(uploadPortrait(portrait,this.props.personInfo.personId)).then((json)=>{
-                                    if(json.re==1){
-                                        alert('上传成功');
-                                        this.portraitDialog.dismiss();
-                                        this.setPortrait(portrait);
-                                    }
+                                     alert('上传成功');
+
+
+                                    {/*if(json.re==1){*/}
+                                       {/**/}
+                                    {/*}*/}
                                 })
 
                              }else{

@@ -49,7 +49,7 @@ let Proxy={
             fetch(url,options)
                 .then((response) => response.text())
                 .then((res) => {
-                    success(JSON.parse(res));
+                   // success(JSON.parse(res));
                 })
                 .done();
 
