@@ -1296,6 +1296,7 @@ export let uploadPortrait=(portrait,personId)=>{
             var data = new FormData();
             data.append('images ', {uri: portrait, name: 'portrait.jpg', type: 'multipart/form-data'});
 
+
             //限定为jpg后缀
             Proxy.post({
                 url:Config.server+'/func/node/uploadCoachHead?personId='+personId.toString(),

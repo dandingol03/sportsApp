@@ -419,6 +419,7 @@ class My extends Component{
                                      alert('上传成功');
 
 
+
                                     {/*if(json.re==1){*/}
                                        {/**/}
                                     {/*}*/}
