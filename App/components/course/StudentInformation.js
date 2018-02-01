@@ -44,6 +44,7 @@ import {getAccessToken,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 
+
 class StudentInformation extends Component {
 
     //导航至定制（for 教练）
