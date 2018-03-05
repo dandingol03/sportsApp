@@ -21,7 +21,7 @@ RCT_EXPORT_MODULE()
 RCT_EXPORT_METHOD(startPush:(NSString *)name location:(NSString *)location)
 {
   RCTLogInfo(@"Pretending to create an event %@ at %@", name, location);
-  NSURL* pushURL = [NSURL URLWithString:@"rtmp://pili-publish.sportshot.cn/sportshot/EEvvee?e=1517362797&token=2M63A85U1GpU37_hxw6zmCYt7ia0YPIEpOjLeJt5:bd1DR5WDI7mcpmotloXP7_GyAXc="];
+  NSURL* pushURL = [NSURL URLWithString:location];
   [self.session startStreamingWithPushURL:pushURL feedback:^(PLStreamStartStateFeedback feedback) {
     if (feedback == PLStreamStartStateSuccess) {
       NSLog(@"Streaming started.");
