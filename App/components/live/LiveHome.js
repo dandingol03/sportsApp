@@ -31,7 +31,9 @@ import{
 
 import PlayKit from './PlayKit';
 import PushStreaming from './PushStreaming';
-
+import {
+    getRTMPPushUrl
+} from '../../action/LiveActions'
 
 import PlayerView from './PlayerView';
 
@@ -39,6 +41,8 @@ import PushStreamView from './PushStreamView';
 var PushStreamViewManager = NativeModules.PushStreamViewManager;
 
 import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper'
+import {searchMember} from "../../action/CompetitionActions";
+import {getAccessToken} from "../../action/UserActions";
 var {height, width} = Dimensions.get('window');
 
 class LiveHome extends Component{
@@ -124,7 +128,25 @@ class LiveHome extends Component{
     }
 
     startPush(){
-        PushStreamViewManager.startPush('Birthday Party', '4 Privet Drive, Surrey');
+        this.props.dispatch(getRTMPPushUrl()).then((json)=>{
+            var urlsList=null;
+            var pushUrl=null;
+            if(json==null){
+
+            }
+            if(json.re==1){
+                urlsList=json.json;
+                pushUrl=urlsList.rtmppushurl;
+                PushStreamViewManager.startPush('Birthday Party', pushUrl);
+            }else{
+
+                    alert('申请地址失败');
+                    //TODO:微信分享邀请好友
+
+            }
+        });
+
+        //PushStreamViewManager.startPush('Birthday Party', '4 Privet Drive, Surrey');
 
 
     }

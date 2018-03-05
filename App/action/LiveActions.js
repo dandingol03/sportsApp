@@ -17,7 +17,7 @@ let updateRtmpUrl = (payload) => {
 }
 
 //获取直播推流
-export let getRTMPPushUrl = (payload) => {
+export let getRTMPPushUrl = () => {
     return (dispatch, getState) => {
 
         return new Promise((resolve, reject) => {
@@ -25,27 +25,27 @@ export let getRTMPPushUrl = (payload) => {
             var state = getState();
             var accessToken = state.user.accessToken;
 
-            var {time,loginName,title,brief,longbrief}=payload
+           // var {time,loginName,title,brief,longbrief}=payload
             Proxy.postes({
-                url: Config.server + '/func/allow/getRtmpPushUrl',
+                url: Config.server + '/func/allow/testQn',
                 headers: {
                     'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
                 },
                 body: {
-                    time,
-                    hubName:"sportshot",
-                    type:"RTMP",
-                    hubType:1,
-                    streamName:"test",
-                    title,
-                    brief,
-                    longbrief,
+                    time:120,
+                    // hubName:"sportshot",
+                    // type:"RTMP",
+                    // hubType:1,
+                    // streamName:"test",
+                    // title,
+                    // brief,
+                    // longbrief,
 
                 }
             }).then((json) => {
                 dispatch(updateRtmpUrl({ url:json.data }));
-                resolve(json.data)
+                resolve({re:1,json:json.data})
             }).catch((e) => {
                 reject(e)
             })
