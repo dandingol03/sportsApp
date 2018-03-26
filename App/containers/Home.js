@@ -340,11 +340,12 @@ class Home extends Component {
 
                                     <TouchableOpacity style={{flex:1,justifyContent:'flex-start',alignItems:'center',padding:5}}
                                                       onPress={ ()=>{
-                                        this.navigate2CoachMessage();
+                                        //this.navigate2CoachMessage();
+                                                          alert("该模块暂定");
                                       }}>
                                         <Image resizeMode="stretch" source={require('../../img/dd@2x.png')} />
                                         <View style={{marginTop:0,paddingTop:15}}>
-                                            <Text style={{fontSize:13,color:'#646464'}}>教练资料</Text>
+                                            <Text style={{fontSize:13,color:'#646464'}}>暂定</Text>
                                         </View>
                                     </TouchableOpacity>
 

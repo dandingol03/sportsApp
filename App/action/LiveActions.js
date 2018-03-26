@@ -29,7 +29,6 @@ export let getRTMPPushUrl = () => {
             Proxy.postes({
                 url: Config.server + '/func/allow/testQn',
                 headers: {
-                    'Authorization': "Bearer " + accessToken,
                     'Content-Type': 'application/json'
                 },
                 body: {

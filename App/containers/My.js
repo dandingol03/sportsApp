@@ -27,6 +27,7 @@ import CustomCourse from '../components/course/MyCustomCourse';
 import PortraitModal from '../components/my/modal/PortraitModal';
 import VenueInspect from '../components/venue/VenueInspect';
 import MyCompentitionList from '../components/competition/MyCompetitionList';
+import CoachMessage from '../components/my/MyInformation'
 
 import TeamSignUp from '../components/competition/TeamSignUp';
 import Myprofit from '../components/my/Myprofit';
@@ -132,6 +133,18 @@ class My extends Component{
             navigator.push({
                 name: 'VenueInspect',
                 component: VenueInspect,
+                params: {
+
+                }
+            })
+        }
+    }
+    navigate2CoachMessage(){
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'CoachMressage',
+                component: CoachMessage,
                 params: {
 
                 }
@@ -282,21 +295,21 @@ class My extends Component{
                                 <Text>我的群</Text>
                             </View>
                         </TouchableOpacity>
-                        {/*<TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}*/}
-                                          {/*onPress={()=>{*/}
-                            {/*this.navigate2MyInformation();*/}
-                        {/*}}*/}
-                        {/*>*/}
+                        <TouchableOpacity style={{height:45,backgroundColor:'#fff',flexDirection:'row',padding:2,marginBottom:3,paddingLeft:10}}
+                                          onPress={()=>{
+                                              this.navigate2CoachMessage();
+                        }}
+                        >
 
-                            {/*<View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:30,padding:5,margin:5,*/}
-                            {/*justifyContent:'center',alignItems: 'center'}}>*/}
-                                {/*<Icon name={'user'} size={20} color="#fff"/>*/}
-                            {/*</View>*/}
-                            {/*<View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>*/}
-                                {/*<Text>我的资料</Text>*/}
-                            {/*</View>*/}
+                            <View style={{flex:1,backgroundColor:'#FFEC8B',flexDirection:'row',borderRadius:30,padding:5,margin:5,
+                            justifyContent:'center',alignItems: 'center'}}>
+                                <Icon name={'user'} size={20} color="#fff"/>
+                            </View>
+                            <View style={{flex:12,backgroundColor:'#fff',justifyContent:'center',marginLeft:10,paddingLeft:20}}>
+                                <Text>我的资料</Text>
+                            </View>
 
-                        {/*</TouchableOpacity>*/}
+                        </TouchableOpacity>
 
 
 

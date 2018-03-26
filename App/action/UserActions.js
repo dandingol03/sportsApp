@@ -883,7 +883,8 @@ export let registerUser=(payload)=>{
                     userName: username,
                     password:password,
                     phoneNum:mobilePhone,
-                    Trainer:userType
+                    Trainer:1,
+                    LoginType:0
                 }
             }).then((json)=>{
                 resolve(json)
@@ -897,6 +898,87 @@ export let registerUser=(payload)=>{
         });
     }
 }
+
+export let wechatregisterUser=(unionid,nickname)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            //var {userType,username,password,genderCode,mobilePhone,nickName}=payload;
+            Proxy.postes({
+                url: Config.server + '/func/register/wechatuserRegister',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    nickName: nickname,
+                    password:"1",
+                    phoneNum:' ',
+                    Trainer:1,
+                    unionid:unionid,
+                    LoginType:1
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+
+        });
+    }
+}
+export let wechatGetOpenid=(url)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            //var {userType,username,password,genderCode,mobilePhone,nickName}=payload;
+            Proxy.postes({
+                url: url,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+
+        });
+    }
+}
+
+export let wechatGetUserInfo=(url)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            //var {userType,username,password,genderCode,mobilePhone,nickName}=payload;
+            Proxy.postes({
+                url: url,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+
+        });
+    }
+}
+
 
 //用户登录
 // export let doLogin=function(username,password){
@@ -1072,15 +1154,16 @@ export let doLogin=function(username,password){
                                 return {re: 1}
                             } else {
                                 //教练,获取教练信息
-                                return Proxy.postes({
-                                    url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: {
-
-                                    }
-                                })
+                                // return Proxy.postes({
+                                //     url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
+                                //     headers: {
+                                //         'Content-Type': 'application/json',
+                                //     },
+                                //     body: {
+                                //
+                                //     }
+                                // })
+                                return {re: 1}
 
                             }
 

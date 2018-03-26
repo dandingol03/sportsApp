@@ -133,8 +133,8 @@ class Register extends Component {
                     )
                 }
                 Alert.alert(
-                    '错误',
-                    '注册失败'
+                    '注册失败',
+                    '用户名重复'
                 )
             }
         }).catch((e) => {
@@ -425,85 +425,85 @@ class Register extends Component {
                                 </Animated.View>
                             </View>
 
-                            <View style={{flexDirection: 'row', borderBottomWidth: 1, borderColor: '#eee'}}>
-                                <View style={{
-                                    height: 35 * height / 736,
-                                    flexDirection: 'row',
-                                    flex: 1,
-                                    paddingLeft: 15,
-                                    paddingRight: 10,
-                                    paddingTop: 4,
-                                    paddingBottom: 4
-                                }}>
+                            {/*<View style={{flexDirection: 'row', borderBottomWidth: 1, borderColor: '#eee'}}>*/}
+                                {/*<View style={{*/}
+                                    {/*height: 35 * height / 736,*/}
+                                    {/*flexDirection: 'row',*/}
+                                    {/*flex: 1,*/}
+                                    {/*paddingLeft: 15,*/}
+                                    {/*paddingRight: 10,*/}
+                                    {/*paddingTop: 4,*/}
+                                    {/*paddingBottom: 4*/}
+                                {/*}}>*/}
 
-                                    <View style={{flexDirection: 'row', alignItems: 'center', flex: 3}}>
-                                        <Text style={{color: '#999', fontSize: 13}}>
-                                            作为教练注册
-                                        </Text>
-                                    </View>
+                                    {/*<View style={{flexDirection: 'row', alignItems: 'center', flex: 3}}>*/}
+                                        {/*<Text style={{color: '#999', fontSize: 13}}>*/}
+                                            {/*作为教练注册*/}
+                                        {/*</Text>*/}
+                                    {/*</View>*/}
 
-                                    <View style={{flexDirection: 'row', flex: 2, justifyContent: 'center'}}>
+                                    {/*<View style={{flexDirection: 'row', flex: 2, justifyContent: 'center'}}>*/}
 
-                                        <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', flex: 1}}
-                                                          onPress={() => {
-                                                              if (this.state.info.userType != 1) {
-                                                                  Animated.timing(
-                                                                      this.state.fadeSportsLevel,
-                                                                      {toValue: 1},
-                                                                  ).start();
-                                                                  this.setState({info: Object.assign(this.state.info, {userType: 1})})
-                                                              }
-                                                          }}
-                                        >
-                                            {
-                                                this.state.info.userType == 1 ?
-                                                    <Text style={{fontSize: 13, color: 'green'}}>是</Text> :
-                                                    <Text style={{fontSize: 13, color: 'gray'}}>是</Text>
-                                            }
-                                            {
-                                                this.state.info.userType == 1 ?
-                                                    <Ionicons name='md-radio-button-on' size={16} color="green"
-                                                              style={{marginLeft: 4, paddingTop: 2}}/> :
-                                                    <Ionicons name='md-radio-button-off' size={16} color="gray"
-                                                              style={{marginLeft: 4, paddingTop: 2}}/>
-                                            }
-
-
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', flex: 1}}
-                                                          onPress={() => {
-                                                              if (this.state.info.userType == 1) {
-                                                                  Animated.timing(
-                                                                      this.state.fadeSportsLevel,
-                                                                      {toValue: 0},
-                                                                  ).start();
-                                                                  this.setState({info: Object.assign(this.state.info, {userType: 0})})
-                                                              }
-                                                          }}
-                                        >
-                                            {
-                                                this.state.info.userType != 1 ?
-                                                    <Text style={{fontSize: 13, color: 'green'}}>否</Text> :
-                                                    <Text style={{fontSize: 13, color: 'gray'}}>否</Text>
-
-                                            }
-                                            {
-                                                this.state.info.userType != 1 ?
-                                                    <Ionicons name='md-radio-button-on' size={16} color="green"
-                                                              style={{marginLeft: 4, paddingTop: 2}}/> :
-                                                    <Ionicons name='md-radio-button-off' size={16} color="gray"
-                                                              style={{marginLeft: 4, paddingTop: 2}}/>
-                                            }
+                                        {/*<TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', flex: 1}}*/}
+                                                          {/*onPress={() => {*/}
+                                                              {/*if (this.state.info.userType != 1) {*/}
+                                                                  {/*Animated.timing(*/}
+                                                                      {/*this.state.fadeSportsLevel,*/}
+                                                                      {/*{toValue: 1},*/}
+                                                                  {/*).start();*/}
+                                                                  {/*this.setState({info: Object.assign(this.state.info, {userType: 1})})*/}
+                                                              {/*}*/}
+                                                          {/*}}*/}
+                                        {/*>*/}
+                                            {/*{*/}
+                                                {/*this.state.info.userType == 1 ?*/}
+                                                    {/*<Text style={{fontSize: 13, color: 'green'}}>是</Text> :*/}
+                                                    {/*<Text style={{fontSize: 13, color: 'gray'}}>是</Text>*/}
+                                            {/*}*/}
+                                            {/*{*/}
+                                                {/*this.state.info.userType == 1 ?*/}
+                                                    {/*<Ionicons name='md-radio-button-on' size={16} color="green"*/}
+                                                              {/*style={{marginLeft: 4, paddingTop: 2}}/> :*/}
+                                                    {/*<Ionicons name='md-radio-button-off' size={16} color="gray"*/}
+                                                              {/*style={{marginLeft: 4, paddingTop: 2}}/>*/}
+                                            {/*}*/}
 
 
-                                        </TouchableOpacity>
+                                        {/*</TouchableOpacity>*/}
 
-                                    </View>
+                                        {/*<TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', flex: 1}}*/}
+                                                          {/*onPress={() => {*/}
+                                                              {/*if (this.state.info.userType == 1) {*/}
+                                                                  {/*Animated.timing(*/}
+                                                                      {/*this.state.fadeSportsLevel,*/}
+                                                                      {/*{toValue: 0},*/}
+                                                                  {/*).start();*/}
+                                                                  {/*this.setState({info: Object.assign(this.state.info, {userType: 0})})*/}
+                                                              {/*}*/}
+                                                          {/*}}*/}
+                                        {/*>*/}
+                                            {/*{*/}
+                                                {/*this.state.info.userType != 1 ?*/}
+                                                    {/*<Text style={{fontSize: 13, color: 'green'}}>否</Text> :*/}
+                                                    {/*<Text style={{fontSize: 13, color: 'gray'}}>否</Text>*/}
 
-                                </View>
+                                            {/*}*/}
+                                            {/*{*/}
+                                                {/*this.state.info.userType != 1 ?*/}
+                                                    {/*<Ionicons name='md-radio-button-on' size={16} color="green"*/}
+                                                              {/*style={{marginLeft: 4, paddingTop: 2}}/> :*/}
+                                                    {/*<Ionicons name='md-radio-button-off' size={16} color="gray"*/}
+                                                              {/*style={{marginLeft: 4, paddingTop: 2}}/>*/}
+                                            {/*}*/}
 
-                            </View>
+
+                                        {/*</TouchableOpacity>*/}
+
+                                    {/*</View>*/}
+
+                                {/*</View>*/}
+
+                            {/*</View>*/}
                             <View style={{height: 20, flexDirection: 'row', flex: 1}}>
                             </View>
                         </View>

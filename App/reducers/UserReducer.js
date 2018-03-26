@@ -20,6 +20,16 @@ import {
     ON_SPORT_LEVEL_UPDATE,
     ON_MOBILE_PHONE_UPDATE,
     ON_UNIVERSITY_UPDATE,
+    ON_COACHLEVEL_UPDATE,
+    ON_HEIGHTWEIGHT_UPDATE,
+    ON_WORKCITY_UPDATE,
+    ON_MAJOR_UPDATE,
+    ON_COACHBRIEF_UPDATE,
+    ON_COACHPHTOTO0_UPDATE,
+    ON_COACHPHTOTO1_UPDATE,
+    ON_COACHPHTOTO2_UPDATE,
+    ON_COACHPHTOTO3_UPDATE
+
 
 
 } from '../constants/UserConstants';
@@ -127,7 +137,51 @@ let user = (state = initialState, action) => {
             return Object.assign({}, state, {
                 trainer:Object.assign(state.trainer,{sportLevel:sportLevel})
             })
-
+        case ON_COACHLEVEL_UPDATE:
+            var  {coachlevel}=action.payload;
+            return Object.assign({}, state, {
+                trainer:Object.assign(state.trainer,{coachLevel:coachlevel})
+            })
+        case ON_HEIGHTWEIGHT_UPDATE:
+            var  {heightweight}=action.payload;
+            return Object.assign({}, state, {
+                trainer:Object.assign(state.trainer,{heightweight:heightweight})
+            })
+        case ON_MAJOR_UPDATE:
+        var  {major}=action.payload;
+        return Object.assign({}, state, {
+            trainer:Object.assign(state.trainer,{major:major})
+        })
+        case ON_WORKCITY_UPDATE:
+            var  {workcity}=action.payload;
+            return Object.assign({}, state, {
+                trainer:Object.assign(state.trainer,{workcity:workcity})
+            })
+        case ON_COACHBRIEF_UPDATE:
+            var  {brief}=action.payload;
+            return Object.assign({}, state, {
+                trainer:Object.assign(state.trainer,{brief:brief})
+            })
+        case ON_COACHPHTOTO0_UPDATE:
+            var  {coachphoto}=action.payload;
+            return Object.assign({}, state, {
+                trainer:Object.assign(state.trainer,{attachId:coachphoto})
+            })
+        case ON_COACHPHTOTO1_UPDATE:
+            var  {coachphoto}=action.payload;
+            return Object.assign({}, state, {
+                trainer:Object.assign(state.trainer,{attachId1:coachphoto})
+            })
+        case ON_COACHPHTOTO2_UPDATE:
+            var  {coachphoto}=action.payload;
+            return Object.assign({}, state, {
+                trainer:Object.assign(state.trainer,{attachId2:coachphoto})
+            })
+        case ON_COACHPHTOTO3_UPDATE:
+            var  {coachphoto}=action.payload;
+            return Object.assign({}, state, {
+                trainer:Object.assign(state.trainer,{attachId3:coachphoto})
+            })
         case ON_MOBILE_PHONE_UPDATE:
             var  {mobilePhone}=action.payload;
             return Object.assign({}, state, {
@@ -136,7 +190,7 @@ let user = (state = initialState, action) => {
         case ON_UNIVERSITY_UPDATE:
             var  {university}=action.payload;
             return Object.assign({}, state, {
-                personInfo:Object.assign(state.personInfo,{university:university})
+                personInfo:Object.assign(state.trainer,{university:university})
             })
         case UPDATE_PORTRAIT:
             var data=action.payload;
