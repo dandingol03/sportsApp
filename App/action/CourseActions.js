@@ -500,7 +500,13 @@ export let distributeCourse=(course,venue,memberId,demandId)=>{
         return new Promise((resolve, reject) => {
 
             var state=getState();
-
+            var venue1=null;
+            if(venue==null){
+                venue1="未选"
+            }else{
+                venue1=venue;
+            }
+            var indexNum=0;
             Proxy.postes({
                 url: Config.server + '/func/course/distributeCourse',
                 headers: {
@@ -508,10 +514,11 @@ export let distributeCourse=(course,venue,memberId,demandId)=>{
                 },
                 body: {
                     info:{
-                        course,
+                        course ,
                         venue,
                         memberId,
                         demandId,
+                        indexNum
                     }
                 }
             }).then((json)=>{

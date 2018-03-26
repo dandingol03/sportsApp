@@ -381,6 +381,7 @@ class CreateBadmintonCourse extends Component{
                                         请选择课程场馆
                                     </Text>
                                 </TouchableOpacity>:
+
                                 <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
                             borderRadius:10}}
                                                   onPress={()=>{
