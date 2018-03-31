@@ -54,19 +54,15 @@ var  Login =React.createClass({
             fadeCancel: new Animated.Value(0),
             fadePassword:new Animated.Value(0),
             unionid:null,
-
+            isInstalled:false,
         });
     },
 
     WXregister:function(unionid,nickname){
-        // this.props.dispatch(wechatregisterUser(unionid,nickname))
-        //     .then((json)=>{
-        //
-        //     })
-        //     .catch((e)=>{
-        //         alert(e);
-        //     })
+       var url= "https://open.weixin.qq.com/connect/qrconnect?" +
+           "appid=wx9068ac0e88c09e7a&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
     },
+
     WXLogin(){
         let scope = 'snsapi_userinfo';
         let state = '12361231267312';
@@ -94,7 +90,7 @@ var  Login =React.createClass({
                                     this.props.dispatch(wechatGetUserInfo(url1))
                                         .then((json)=>{
                                             unionid=json.unionid;
-                                            nickname=json.nickname;
+                                            nickname="wx"+json.nickname;
                                             this.props.dispatch((wechatregisterUser(unionid,nickname)))
                                                 .then((json)=>{
                                                     var nickname=json.data.nickName;
@@ -372,7 +368,8 @@ var  Login =React.createClass({
                                 </View>
 
                         </View>
-
+                        {
+                            this.state.isInstalled==true?
                         <View style={{flexDirection:'row',justifyContent:'center',marginBottom:10,marginTop:60}}>
                             <View style={{flexDirection:"column",alignItems:"center"}}>
                                 <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}}
@@ -385,7 +382,8 @@ var  Login =React.createClass({
                                     <Text>使用微信快速登录</Text>
                                 </TouchableOpacity>
                             </View>
-                        </View >
+                        </View >:null
+                        }
                         {/*loading模态框*/}
                         <Modal animationType={"fade"} transparent={true} visible={this.state.showProgress}>
 
@@ -430,6 +428,7 @@ var  Login =React.createClass({
 
     componentDidMount() {
 
+
         var username=null;
         var password=null;
         PreferenceStore.get('username').then((val)=>{
@@ -468,7 +467,19 @@ var  Login =React.createClass({
     },
     componentWillUnmount() {
 
+    },
+    componentWillMount(){
+        wechat.registerApp('wx9068ac0e88c09e7a').then(function (res) {
+        })
 
+        wechat.isWXAppInstalled().then((isInstall)=>{
+            if(isInstall){
+                //this.state.isInstalled=true;
+                this.setState({isInstalled:true});
+            }
+        }).catch((er)=>{
+            alert(er)
+        })
 
     }
 

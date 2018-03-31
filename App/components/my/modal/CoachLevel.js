@@ -319,9 +319,9 @@ class CoachLevelModal extends Component{
                         <Text style={{color:'#777',fontSize:12}}>
                             请如实选择您的真实资质情况
                         </Text>
-                        <Text style={{color:'#777',fontSize:12}}>
-                            {field}
-                        </Text>
+                        {/*<Text style={{color:'#777',fontSize:12}}>*/}
+                            {/*{field}*/}
+                        {/*</Text>*/}
 
                     </View>
                 </View>

@@ -560,30 +560,30 @@ class MyInformation extends Component{
                         </TouchableOpacity>
 
                         {/*毕业专业*/}
-                        <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}
-                                          onPress={()=>{
-                                                  this.showMajorDialog();
+                        {/*<TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}*/}
+                                          {/*onPress={()=>{*/}
+                                                  {/*this.showMajorDialog();*/}
 
-                                              }}
-                        >
-                            <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
-                                <Text style={{color:'#555',fontWeight:'bold',fontSize:15}}>
-                                    毕业专业
-                                </Text>
-                            </View>
-                            <View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'flex-end'}}>
-                                {
-                                    this.props.major&&this.props.major!=''?
-                                        <Text style={{color:'#444',fontSize:15}}>
-                                            {this.props.major}
-                                        </Text>:
-                                        <Text style={{color:'#777',fontSize:15}}>
-                                            未设置
-                                        </Text>
-                                }
+                                              {/*}}*/}
+                        {/*>*/}
+                            {/*<View style={{flex:1,flexDirection:'row',alignItems:'center'}}>*/}
+                                {/*<Text style={{color:'#555',fontWeight:'bold',fontSize:15}}>*/}
+                                    {/*毕业专业*/}
+                                {/*</Text>*/}
+                            {/*</View>*/}
+                            {/*<View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'flex-end'}}>*/}
+                                {/*{*/}
+                                    {/*this.props.major&&this.props.major!=''?*/}
+                                        {/*<Text style={{color:'#444',fontSize:15}}>*/}
+                                            {/*{this.props.major}*/}
+                                        {/*</Text>:*/}
+                                        {/*<Text style={{color:'#777',fontSize:15}}>*/}
+                                            {/*未设置*/}
+                                        {/*</Text>*/}
+                                {/*}*/}
 
-                            </View>
-                        </TouchableOpacity>
+                            {/*</View>*/}
+                        {/*</TouchableOpacity>*/}
 
                         {/*教练资质*/}
                         <TouchableOpacity style={{flexDirection:'row',padding:12,paddingHorizontal:10,borderBottomWidth:1,borderColor:'#eee'}}

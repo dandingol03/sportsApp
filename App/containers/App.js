@@ -485,10 +485,10 @@ class App extends Component {
             UpdateAndroid.check()
         }
 
-        WeChat.registerApp('wx9068ac0e88c09e7a').then(function (res) {
-            console.log("羽毛球热微信注册成功！！！！！");
-
-        })
+        // WeChat.registerApp('wx9068ac0e88c09e7a').then(function (res) {
+        //     console.log("羽毛球热微信注册成功！！！！！");
+        //
+        // })
 
     }
 

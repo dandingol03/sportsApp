@@ -954,6 +954,32 @@ export let wechatGetOpenid=(url)=>{
     }
 }
 
+
+export let wechatGetCode=(url)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+            //var {userType,username,password,genderCode,mobilePhone,nickName}=payload;
+            Proxy.postes({
+                url: url,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+
+        });
+    }
+}
+
 export let wechatGetUserInfo=(url)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
@@ -1154,15 +1180,15 @@ export let doLogin=function(username,password){
                                 return {re: 1}
                             } else {
                                 //教练,获取教练信息
-                                // return Proxy.postes({
-                                //     url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
-                                //     headers: {
-                                //         'Content-Type': 'application/json',
-                                //     },
-                                //     body: {
-                                //
-                                //     }
-                                // })
+                                return Proxy.postes({
+                                    url: Config.server + '/func/node/fetchBadmintonTrainerInfo',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: {
+
+                                    }
+                                })
                                 return {re: 1}
 
                             }
