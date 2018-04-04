@@ -27,7 +27,7 @@ import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
 import RecordClass from './RecordClass';
-
+import TalkingFarm from './TalkingFarm';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 var { height, width } = Dimensions.get('window');
@@ -81,6 +81,19 @@ class BadmintonCourseRecord extends Component {
                 component: ModifyDistribution,
                 params: {
                     course:course
+                }
+            })
+        }
+    }
+
+    navigate2TalkingFarm(courseId){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'TalkingFarm',
+                component: TalkingFarm,
+                params: {
+                    courseId:courseId
                 }
             })
         }
@@ -240,8 +253,8 @@ class BadmintonCourseRecord extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                         borderRadius: 6,
-                        marginLeft:30,
-
+                        marginLeft:10,
+                        marginRight:30
                     }}
 
 
@@ -251,12 +264,6 @@ class BadmintonCourseRecord extends Component {
                                       }>
                         <Text style={{color: '#66CDAA', fontSize: 12}}>学员信息</Text>
                     </TouchableOpacity>
-
-
-
-                    {<View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
-
-                    </View>}
 
                     <TouchableOpacity style={{
                         flex: 1,
@@ -268,7 +275,6 @@ class BadmintonCourseRecord extends Component {
                         borderRadius: 6,
                         marginRight:30
                     }}
-
 
                                       onPress={() => {
                                           this.navigate2RecordClass(rowData);
@@ -285,9 +291,8 @@ class BadmintonCourseRecord extends Component {
                         justifyContent: 'center',
                         alignItems: 'center',
                         borderRadius: 6,
-                        marginLeft:30
+                        marginRight:30
                     }}
-
 
                                       onPress={() => {
                                           this.navigate2ModifyDistribution(rowData);
@@ -295,12 +300,24 @@ class BadmintonCourseRecord extends Component {
                                       }>
                         <Text style={{color: '#66CDAA', fontSize: 12}}>编辑课程</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={{
+                        flex: 1,
+                        borderWidth: 1,
+                        borderColor: '#66CDAA',
+                        padding: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 6,
+                    }}
 
+                                      onPress={() => {
+                                          this.navigate2TalkingFarm(rowData.courseId);
+                                      }
+                                      }>
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>讨论组</Text>
+                    </TouchableOpacity>
 
                 </View>
-
-
-
 
             </TouchableOpacity>
 
