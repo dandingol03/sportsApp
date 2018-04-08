@@ -93,6 +93,7 @@ class TalkingFarm extends Component {
     getTalkingFarm() {
         var personinfo = this.state.personInfo;
         var courseId = this.state.courseId;
+        var talklist = this.state.talklist;
         proxy.postes({
             url: Config.server + '/func/node/getchatlistbycourseid',
             headers: {
@@ -103,31 +104,52 @@ class TalkingFarm extends Component {
                 userId: personinfo.personId,
             }
         }).then((json) => {
-
             var data = json.data;
-            if (data !== null && data !== undefined && data !== "") {
+            if (talklist === null) {
+                //this.state.time=data[data.length-1].timestamp;
                 this.setState({talklist: data});
-                _scrollView.scrollToEnd({animated: true});
+                // _scrollView.scrollToEnd({animated: true});
+            }
+            else if (this.state.talklist.length !== data.length && data !== null && data !== undefined && data !== "") {
 
-
+                this.setState({talklist: data});
+                //  _scrollView.scrollToEnd({animated: true});
             }
         }).catch((err) => {
             alert(err);
         });
     }
 
-    componentDidMount() {
+    componentWillMount(){
         this.getTalkingFarm();
+    }
+    componentDidMount() {
+        //this.getTalkingFarm();
+        if (_scrollView !== null) {
+            //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
+            _scrollView.scrollToEnd({animated: true});
+        }
+
         this.timer = setInterval(
             () => {
                 this.getTalkingFarm()
             },
             5000
         );
+
     }
 
     renderRow(rowData) {
-        var date = this.state.time;
+
+        if (this.state.time === null) {
+            this.state.time = rowData.timestamp;
+        }
+        if (rowData.timestamp - this.state.time >= 360000) {
+            this.state.time = rowData.timestamp;
+        } else {
+            rowData.time = null;
+        }
+
         if (rowData.pernum === this.state.personInfo.personId) {
             var row =
                 <View>
@@ -232,6 +254,7 @@ class TalkingFarm extends Component {
                     </Text>
                 </View>
             </View>;
+
         return row;
     }
 
@@ -243,22 +266,26 @@ class TalkingFarm extends Component {
             var sortedCourses = talklist;
 
             talklist = (
-                <ScrollView
+
+                <ListView
                     ref={(scrollView) => {
                         _scrollView = scrollView;
                     }}
-                >
-                    <ListView
-                        automaticallyAdjustContentInsets={false}
-                        dataSource={ds.cloneWithRows(sortedCourses)}
-                        renderRow={this.renderRow.bind(this)}
-                    />
-                </ScrollView>
+                    automaticallyAdjustContentInsets={false}
+                    dataSource={ds.cloneWithRows(sortedCourses)}
+                    renderRow={this.renderRow.bind(this)}
+                />
+
+
             );
+
         } else {
             this.getTalkingFarm();
         }
-
+        if (_scrollView !== null) {
+            //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
+            _scrollView.scrollToEnd({animated: true});
+        }
         return (
             <View style={styles.container}>
                 <View style={{
@@ -269,8 +296,6 @@ class TalkingFarm extends Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#66CDAA',
-
-
                 }}>
                     <TouchableOpacity style={{flex: 1, justifyContent: 'center', alignItems: 'center',}}
                                       onPress={() => {
