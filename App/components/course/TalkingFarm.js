@@ -115,21 +115,25 @@ class TalkingFarm extends Component {
                 this.setState({talklist: data});
                 //  _scrollView.scrollToEnd({animated: true});
             }
+            if (_scrollView !== null && _scrollView !== undefined) {
+                //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
+                _scrollView.scrollToEnd({animated: false});
+            }
         }).catch((err) => {
             alert(err);
         });
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.getTalkingFarm();
     }
+
     componentDidMount() {
         //this.getTalkingFarm();
-        if (_scrollView !== null) {
+        if (_scrollView !== null && _scrollView !== undefined) {
             //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
-            _scrollView.scrollToEnd({animated: true});
+            _scrollView.scrollToEnd({animated: false});
         }
-
         this.timer = setInterval(
             () => {
                 this.getTalkingFarm()
@@ -138,6 +142,14 @@ class TalkingFarm extends Component {
         );
 
     }
+
+    /*    componentDidUpdate() {
+            if (this.refs._scrollView !== null && this.refs._scrollView !== undefined) {
+                //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
+                this.refs._scrollView.scrollToEnd({animated: false});
+            }
+
+        }*/
 
     renderRow(rowData) {
 
@@ -274,6 +286,7 @@ class TalkingFarm extends Component {
                     automaticallyAdjustContentInsets={false}
                     dataSource={ds.cloneWithRows(sortedCourses)}
                     renderRow={this.renderRow.bind(this)}
+
                 />
 
 
@@ -282,10 +295,10 @@ class TalkingFarm extends Component {
         } else {
             this.getTalkingFarm();
         }
-        if (_scrollView !== null) {
+        /*if (this.refs._scrollView !== null && this.refs._scrollView !== undefined) {
             //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
-            _scrollView.scrollToEnd({animated: true});
-        }
+            this.refs._scrollView.scrollToEnd({animated: true});
+        }*/
         return (
             <View style={styles.container}>
                 <View style={{
@@ -311,7 +324,7 @@ class TalkingFarm extends Component {
                     </View>
                 </View>
                 <View style={{height: height - 140}}>
-                    <View style={{flex: 10}}>
+                    <View style={{height: 480}}>
                         {talklist}
                     </View>
                     <View style={{
