@@ -104,21 +104,23 @@ class TalkingFarm extends Component {
                 userId: personinfo.personId,
             }
         }).then((json) => {
-            var data = json.data;
-            if (talklist === null) {
-                //this.state.time=data[data.length-1].timestamp;
-                this.setState({talklist: data});
-                // _scrollView.scrollToEnd({animated: true});
+            if (json.data !== null) {
+                var data = json.data;
+                if (talklist === null || talklist === []) {
+                    this.setState({talklist: data});
+                } else if (talklist !== null && data !== undefined && data !== "") {
+                    if (talklist.length !== data.length){
+                        this.setState({talklist: data});
+                    }
+                }
+                if (_scrollView !== null && _scrollView !== undefined) {
+                    _scrollView.scrollToEnd({animated: false});
+                }
             }
-            else if (this.state.talklist.length !== data.length && data !== null && data !== undefined && data !== "") {
+            else {
 
-                this.setState({talklist: data});
-                //  _scrollView.scrollToEnd({animated: true});
             }
-            if (_scrollView !== null && _scrollView !== undefined) {
-                //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
-                _scrollView.scrollToEnd({animated: false});
-            }
+
         }).catch((err) => {
             alert(err);
         });
