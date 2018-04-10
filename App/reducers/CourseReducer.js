@@ -19,12 +19,20 @@ import {
     ENABLE_STUDENTS_PAY_ONFRESH,
     DISABLE_STUDENTS_PAY_ONFRESH,
     ON_STUDENTS_PAY_UPDATE,
+
     ON_COURSE_CLASS_UPDATE,
     ENABLE_COURSE_CLASS_ONFRESH,
     DISABLE_COURSE_CLASS_ONFRESH,
+
+    ON_GROUP_CONTENTS_UPDATE,
+    ENABLE_GROUP_CONTENTS_ONFRESH,
+    DISABLE_GROUP_CONTENTS_ONFRESH,
+
     ON_CLASS_MEMBER_UPDATE,
     DISABLE_CLASS_MEMBER_ONFRESH,
-    ENABLE_CLASS_MEMBER_ONFRESH
+    ENABLE_CLASS_MEMBER_ONFRESH,
+
+    ON_COURSE_GROUP_UPDATE,
 } from '../constants/CourseConstants';
 
 const initialState = {
@@ -50,8 +58,14 @@ const initialState = {
     courseClass:null,
     courseClassOnFresh:true,
 
+    //分组课程
+    groupContents:null,
+    groupContentsOnFresh:true,
+
     classMember:null,
-    classMemberOnFresh:true
+    classMemberOnFresh:true,
+
+    courseGroup:null
 };
 
 let course = (state = initialState, action) => {
@@ -106,7 +120,6 @@ let course = (state = initialState, action) => {
             return Object.assign({}, state, {
                 studentsCourseRecordOnFresh:false
             })
-
 
         case DISABLE_MY_COURSES_ONFRESH:
             return Object.assign({},state,{
@@ -164,6 +177,20 @@ let course = (state = initialState, action) => {
                 courseClassOnFresh:false
             })
 
+        case  ON_GROUP_CONTENTS_UPDATE:
+            // var {coursesOfCoach}=action.payload
+            return Object.assign({}, state, {
+                groupContents:action.groupContents
+            })
+        case ENABLE_GROUP_CONTENTS_ONFRESH:
+            return Object.assign({}, state, {
+                groupContentsOnFresh:true
+            })
+        case DISABLE_GROUP_CONTENTS_ONFRESH:
+            return Object.assign({}, state, {
+                groupContentsOnFresh:false
+            })
+
         case  ON_CLASS_MEMBER_UPDATE:
             // var {coursesOfCoach}=action.payload
             return Object.assign({}, state, {
@@ -176,6 +203,11 @@ let course = (state = initialState, action) => {
         case DISABLE_CLASS_MEMBER_ONFRESH:
             return Object.assign({}, state, {
                 classMemberOnFresh:false
+            })
+
+        case ON_COURSE_GROUP_UPDATE:
+            return Object.assign({}, state, {
+                courseGroup:action.courseGroup
             })
 
         default:

@@ -29,6 +29,7 @@ import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
 import RecordClass from './RecordClass';
+
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 var { height, width } = Dimensions.get('window');
@@ -43,6 +44,7 @@ import {
 import {getAccessToken,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
+import AddGroup from "./AddGroup";
 
 class ClassSignUp extends Component {
 
@@ -142,6 +144,18 @@ class ClassSignUp extends Component {
       }
     }
 
+    navigate2AddGroup(val) {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'AddGroup',
+                component: AddGroup,
+                params: {
+                    course:val
+                }
+            })
+        }
+    }
 
     goBack() {
         const { navigator } = this.props;
@@ -152,7 +166,7 @@ class ClassSignUp extends Component {
 
     setMyCourseList()
     {
-        this.props.dispatch(fetchClassMember(this.props.courseId,this.proprs)).then((json)=>{
+        this.props.dispatch(fetchClassMember(this.props.course.courseId,this.proprs)).then((json)=>{
             if(json.re==1)
             {
                 this.props.dispatch(onClassMemberUpdate(json.data))
@@ -271,7 +285,7 @@ class ClassSignUp extends Component {
         if(classMemberOnFresh==true)
         {
             if(this.state.doingFetch==false)
-                this.fetchClassMember(this.props.courseId,this.props.classId);
+                this.fetchClassMember(this.props.course.courseId,this.props.classId);
         }else{
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             if (classMember !== undefined && classMember !== null && classMember.length > 0)
@@ -412,11 +426,13 @@ class ClassSignUp extends Component {
 
 
                                                           onPress={() => {
-                                                              this.props.dispatch(saveOrUpdateBadmintonCourseClassRecords(this.state.classMember)).then((json)=>{
+                                                              this.props.dispatch(saveOrUpdateBadmintonCourseClassRecords(this.state.classMember,this.props.course.courseId)).then((json)=>{
                                                                   if(json.re==1){
+                                                                      this.goBack();
+
                                                                       Alert.alert('信息','学生签到保存成功！',[{text:'确认',onPress:()=>{
-                                                                          this.goBack();
-                                                                          this.props.setClassRecord(this.props.courseId,);
+                                                                              this.navigate2AddGroup(this.props.course);
+                                                                         // this.props.setClassRecord(this.props.courseId,);
 
                                                                       }}]);
                                                                   }else{

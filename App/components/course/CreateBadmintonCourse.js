@@ -29,7 +29,7 @@ import {Toolbar,OPTION_SHOW,OPTION_NEVER} from 'react-native-toolbar-wrapper';
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
 import ActionSheet from 'react-native-actionsheet';
 import SelectVenue from '../../components/venue/SelectVenue';
-
+import SelectCoach from './SelectCoach';
 const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 const scaleAnimation = new ScaleAnimation();
 const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
@@ -75,6 +75,15 @@ class CreateBadmintonCourse extends Component{
 
     }
 
+    setCourseCoach(courseCoach)
+    {
+        var coach = courseCoach;
+        //place.unitId = parseInt(coursePlace.unitId);
+
+        this.setState({coached:coach});
+
+    }
+
     navigate2VenueInspect()
     {
         const { navigator } = this.props;
@@ -84,6 +93,20 @@ class CreateBadmintonCourse extends Component{
                 component: VenueInspect,
                 params: {
                     setPlace:this.setCoursePlace.bind(this)
+                }
+            })
+        }
+    }
+
+    navigate2SelectCoach()
+    {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                name: 'SelectCoach',
+                component: SelectCoach,
+                params: {
+                    setCoach:this.setCourseCoach.bind(this)
                 }
             })
         }
@@ -164,7 +187,9 @@ class CreateBadmintonCourse extends Component{
             time:null,
             timeList:[],
             costTypeButtons:['取消','按人支付','按小时支付','按班支付'],
-            venue:null
+            venue:null,
+            coached:null,
+            coachId:null
         }
         this.showScaleAnimationDialog = this.showScaleAnimationDialog.bind(this);
     }
@@ -405,6 +430,48 @@ class CreateBadmintonCourse extends Component{
 
                     </View>
 
+
+                    {/*课程教练*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text style={{color:'#343434'}}>课程教练：</Text>
+                        </View>
+
+                        {
+                            this.state.coached==null?
+                                <TouchableOpacity style={{flex:3,height:28,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                                    borderRadius:10}}
+                                                  onPress={()=>{
+                                                      this.navigate2SelectCoach();
+                                                  }}>
+                                    <Text style={{marginLeft:20,fontSize:13,color:'#888'}}>
+                                        请选择课程教练
+                                    </Text>
+                                </TouchableOpacity>:
+
+                                <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                                    borderRadius:10}}
+                                                  onPress={()=>{
+                                                      this.navigate2SelectCoach();
+                                                  }}>
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#222',fontSize:13}}>{this.state.coached}</Text>
+                                    </View>
+
+                                    <TouchableOpacity style={{width:60,justifyContent:'center',alignItems: 'center',flexDirection:'row',marginLeft:20,padding:5}}
+                                                      onPress={()=>{
+                                                          var coached =null;
+                                                          this.setState({coached:coached});
+                                                      }}>
+                                        <Ionicons name={'md-close-circle'} size={20} color={'red'}/>
+                                    </TouchableOpacity>
+
+                                </TouchableOpacity>
+
+                        }
+
+                    </View>
+
                     {/*上课时间描述*/}
                     <View style={{flex:3,margin:10,marginTop:5,marginBottom:5}}>
                         <Text>上课时间:</Text>
@@ -448,7 +515,7 @@ class CreateBadmintonCourse extends Component{
                                                      }
                                                 })
                                           }else{
-                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,null))
+                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,null,this.state.coached))
                                                 .then((json)=>{
                                                      if(json.re==1){
                                                          Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{

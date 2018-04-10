@@ -13,9 +13,15 @@ import {
     Animated,
     Easing,
     TextInput,
-    InteractionManager
+    InteractionManager,
+    Alert
 } from 'react-native';
 
+import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
+
+const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
+const scaleAnimation = new ScaleAnimation();
+const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -27,7 +33,10 @@ import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
 import RecordClass from './RecordClass';
-
+import SignUpModal from '../my/modal/SignUpModal'
+import AddGroup from './AddGroup';
+import AddClass from  './AddClass';
+import ClassSignUp from './ClassSignUp';
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 var { height, width } = Dimensions.get('window');
@@ -37,9 +46,10 @@ import {
     onCoursesOfCoachUpdate,
     onCoursesUpdate,
     disableCoursesOfCoachOnFresh, enableCoursesOfCoachOnFresh,
+    getGroupMember,createCourseGroup
 } from '../../action/CourseActions';
 
-import {getAccessToken,} from '../../action/UserActions';
+import {getAccessToken, onUsernameUpdate, updateUsername,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 
@@ -54,6 +64,19 @@ class BadmintonCourseRecord extends Component {
                 component: CreateBadmintonCourse,
                 params: {
                     setMyCourseList:this.setMyCourseList.bind(this)
+                }
+            })
+        }
+    }
+    //添加分组
+    navigate2AddGroup(val) {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'AddGroup',
+                component: AddGroup,
+                params: {
+                    course:val
                 }
             })
         }
@@ -128,6 +151,20 @@ class BadmintonCourseRecord extends Component {
         }
     }
 
+    navigate2ClassSignUp(rowData)
+    {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'BadmintonCourseRecord',
+                component: ClassSignUp,
+                params: {
+                        course:rowData,
+                }
+            })
+        }
+    }
+
     navigate2AddClass(){
         const { navigator } = this.props;
         if (navigator) {
@@ -135,7 +172,20 @@ class BadmintonCourseRecord extends Component {
                 name: 'CreateBadmintonCourse',
                 component: CreateBadmintonCourse,
                 params: {
-                    setMyCourseList:this.setMyCourseList.bind(this)
+                    //setMyCourseList:this.setMyCourseList.bind(this)
+                }
+            })
+        }
+    }
+
+    navigate2AddClass1(rowData){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'AddClass',
+                component: AddClass,
+                params: {
+                    courseId:rowData.courseId,
                 }
             })
         }
@@ -271,10 +321,14 @@ class BadmintonCourseRecord extends Component {
 
 
                                       onPress={() => {
-                                          this.navigate2RecordClass(rowData);
+                                          this.setState({course:rowData});
+                                          //this.navigate2RecordClass(rowData);
+                                          //this.showUserNameDialog();
+                                          this.navigate2ClassSignUp(rowData);
+                                          //this.navigate2AddGroup(25);
                                       }
                                       }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>课程记录</Text>
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>上课签到</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{
@@ -296,6 +350,25 @@ class BadmintonCourseRecord extends Component {
                         <Text style={{color: '#66CDAA', fontSize: 12}}>编辑课程</Text>
                     </TouchableOpacity>
 
+
+                    <TouchableOpacity style={{
+                        flex: 1,
+                        borderWidth: 1,
+                        borderColor: '#66CDAA',
+                        padding: 5,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 6,
+                        marginLeft:30
+                    }}
+
+
+                                      onPress={() => {
+                                          this.navigate2AddClass1(rowData);
+                                      }
+                                      }>
+                        <Text style={{color: '#66CDAA', fontSize: 12}}>添加小课</Text>
+                    </TouchableOpacity>
 
                 </View>
 
@@ -356,6 +429,7 @@ class BadmintonCourseRecord extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            course:null,
             doingFetch:false,
             isRefreshing:false,
             fadeAnim:new Animated.Value(1),
@@ -365,7 +439,9 @@ class BadmintonCourseRecord extends Component {
     showScaleAnimationDialog() {
         this.scaleAnimationDialog.show();
     }
-
+    showUserNameDialog() {
+        this.SignUpDialog.show();
+    }
     render() {
         var coursesOfCoachListView=null;
         var {coursesOfCoach,coursesOfCoachOnFresh}=this.props;
@@ -387,8 +463,6 @@ class BadmintonCourseRecord extends Component {
                 );
             }
         }
-
-
 
         return (
             <View style={styles.container}>
@@ -445,6 +519,41 @@ class BadmintonCourseRecord extends Component {
                         <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
                     </TouchableOpacity>
                 </View>
+
+                {/*保存用户名*/}
+                <PopupDialog
+                    ref={(popupDialog) => {
+                        this.SignUpDialog = popupDialog;
+                    }}
+                    dialogAnimation={scaleAnimation}
+                    actions={[]}
+                    width={0.8}
+                    height={0.3}
+                >
+
+                    <SignUpModal
+                        val={this.props.SignUp}
+                        onClose={()=>{
+                            this.SignUpDialog.dismiss();
+                        }}
+                        onConfirm={(val)=>{
+                            this.props.dispatch(getGroupMember(this.state.course.courseId,val))
+                                .then((json)=>{
+                                    if(json.re==1){
+                                        this.SignUpDialog.dismiss();
+                                        Alert.alert("友情提示","签到成功",[{text:"取消"},
+                                            {text:"确认",onPress:()=>this.navigate2AddGroup(this.state.course)}]);
+
+                                    }
+                                })
+                                .catch((e)=>{
+                                    Alert.alert("签到失败");
+                                })
+                            //this.navigate2AddGroup();
+                        }}
+                    />
+
+                </PopupDialog>
             </View>
         )
     }
@@ -473,20 +582,6 @@ const styles = StyleSheet.create({
     }
 });
 
-/*
-const mapStateToProps = (state, ownProps) => {
-
-    const props = {
-        userType: state.user.usertype.perTypeCode,
-        courses:state.course.courses,
-        creatorId:this.props.creatorId
-    }
-    return props
-}
-
-
-export default connect(mapStateToProps)(MyDistribution);
-*/
 
 module.exports = connect(state=>({
         userType: state.user.usertype.perTypeCode,

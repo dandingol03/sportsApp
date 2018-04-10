@@ -40,13 +40,7 @@ class AddField extends Component{
     }
 
     sendFieldToAddActivity(){
-        // var time = {
-        //     isSchedule:this.state.isSchedule,
-        //     eventWeek:this.state.eventWeekNum,
-        //     startTime:this.state.startTime,
-        //     endTime:this.state.endTime,
-        //
-        //     startTimeView:this.state.startTimeView,
+
         var field=""
         this.state.field0.map((field0,i)=>{
             field+=field0.fieldno+","
@@ -69,31 +63,6 @@ class AddField extends Component{
     {
         this.setState(nextProps)
     }
-
-    renderRow(rowData)
-    {
-        if(this.state.selectDay!==rowData){
-            return  (
-                <TouchableOpacity style={{height:25,width:50,borderRadius:10,borderWidth:1,borderColor:'#66CDAA',margin:5,
-                justifyContent:'center',alignItems: 'center'}}
-                                  onPress={()=>{this.setState({selectDay:rowData});}}>
-                    <Text style={{color:'#66CDAA',fontSize:13}}>{rowData}</Text>
-                </TouchableOpacity>
-
-            );
-        }else{
-            return  (
-                <TouchableOpacity style={{height:25,width:50,borderRadius:10,backgroundColor:'#66CDAA',margin:5,
-                justifyContent:'center',alignItems: 'center'}}
-                                  onPress={()=>{this.setState({selectDay:rowData});}}>
-                    <Text style={{color:'#fff',fontSize:13}}>{rowData}</Text>
-                </TouchableOpacity>
-
-            );
-        }
-
-    }
-
 
     constructor(props)
     {

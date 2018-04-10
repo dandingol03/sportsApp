@@ -26,9 +26,16 @@ import {
     ON_COURSE_CLASS_UPDATE,
     ENABLE_COURSE_CLASS_ONFRESH,
     DISABLE_COURSE_CLASS_ONFRESH,
+
+    ON_GROUP_CONTENTS_UPDATE,
+    ENABLE_GROUP_CONTENTS_ONFRESH,
+    DISABLE_GROUP_CONTENTS_ONFRESH,
+
     ON_CLASS_MEMBER_UPDATE,
     DISABLE_CLASS_MEMBER_ONFRESH,
-    ENABLE_CLASS_MEMBER_ONFRESH
+    ENABLE_CLASS_MEMBER_ONFRESH,
+
+    ON_COURSE_GROUP_UPDATE
 
 
 
@@ -64,6 +71,38 @@ export let fetchMyCourses=()=>{
     }
 }
 
+//显示课程分组
+export let fetchCoureseGroupByCourseId=(courseId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/getGroupContents',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    courseId:courseId
+                }
+            }).then((json)=>{
+                if(json.re==1)
+                {
+                    var groupContents=json.data;
+                    dispatch(onGroupContentsUpdate(groupContents));
+                    resolve({re:1,data:groupContents})
+                    //resolve(json);
+                }
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
 
 //显示教练需要教学的课
 export let fetchCoursesByCreatorId=(creatorId)=>{
@@ -165,7 +204,6 @@ export let addClass=(courseId,yard,unitId,classWeek,startTime,endTime,content)=>
         })
     }
 }
-
 
 export let editClass=(classId,courseId,yard,unitId,classWeek,startTime,endTime,content)=>{
     return (dispatch,getState)=>{
@@ -386,7 +424,14 @@ export let onCoursesOfCoachUpdate=(courses)=>{
     }
 }
 
-
+export let onGroupContentsUpdate=(groupContents)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_GROUP_CONTENTS_UPDATE,
+            groupContents:groupContents
+        })
+    }
+}
 
 
 //拉取定制
@@ -449,7 +494,7 @@ export let fetchCustomCourse=()=>{
     }
 }
 
-export let saveOrUpdateBadmintonCourseClassRecords=(classMember)=>{
+export let saveOrUpdateBadmintonCourseClassRecords=(classMember,courseId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
@@ -462,7 +507,7 @@ export let saveOrUpdateBadmintonCourseClassRecords=(classMember)=>{
                 },
                 body: {
                     classMember:classMember,
-
+                    courseId:courseId
 
                 }
             }).then((json)=>{
@@ -495,7 +540,7 @@ export let onCustomCourseUpdate=(customCourse)=>{
 
 
 //发布课程
-export let distributeCourse=(course,venue,memberId,demandId)=>{
+export let distributeCourse=(course,venue,memberId,demandId,coached)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
@@ -518,7 +563,8 @@ export let distributeCourse=(course,venue,memberId,demandId)=>{
                         venue,
                         memberId,
                         demandId,
-                        indexNum
+                        indexNum,
+                        coached
                     }
                 }
             }).then((json)=>{
@@ -762,6 +808,12 @@ export let enableCoursesOfCoachOnFresh=()=>{
     }
 }
 
+export let enableGroupContentsOnFresh=()=>{
+    return {
+        type:ENABLE_GROUP_CONTENTS_ONFRESH,
+    }
+}
+
 export let enableStudentsOnFresh=()=>{
     return {
         type:ENABLE_STUDENTS_ONFRESH,
@@ -775,6 +827,12 @@ export let enableStudentsCourseRecordOnFresh=()=>{
 export let disableCoursesOfCoachOnFresh=()=>{
     return {
         type:DISABLE_COURSES_OF_COACH_ONFRESH,
+    }
+}
+
+export let disableGroupContentshOnFresh=()=>{
+    return {
+        type:DISABLE_GROUP_CONTENTS_ONFRESH,
     }
 }
 export let disableStudentsOnFresh=()=>{
@@ -906,6 +964,78 @@ export let cancleCustomCourse=(courseId)=>{
     }
 }
 
+//获得组成员
+export let getGroupMember=(courseId,perName)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/getCourseGroup',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    courseId:courseId,
+                    //learnerId:learnerId
+                    perName:perName
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:json});
+                    var courseGroup=json.data;
+                    //dispatch(onStudentsPayUpdate(studentsPay));
+                    dispatch(onCourseGroupUpdate(courseGroup));
+                }else{
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'不成功'});
+                    }
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
+//获得组成员
+export let createCourseGroup=(courseId,joinCount)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/createCourseGroup',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    courseId:courseId,
+                    joinCount:joinCount
+                }
+            }).then((json)=>{
+                if (json.re == 1) {
+                    resolve({re:1,data:json});
+                }else{
+                    if(json.re==-100){
+                        resolve(json);
+                    }else{
+                        resolve({re:-1,data:'不成功'});
+                    }
+                }
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        });
+    }
+}
+
 export let fetchStudentsPay=(courseId,memberId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
@@ -967,4 +1097,16 @@ export let onStudentsPayUpdate=(studentsPay)=>{
 
         })
     }
+
+}
+
+export let onCourseGroupUpdate=(courseGroup)=>{
+    return (dispatch,getState)=>{
+        dispatch({
+            type:ON_COURSE_GROUP_UPDATE,
+            courseGroup:courseGroup
+
+        })
+    }
+
 }
