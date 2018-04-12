@@ -102,11 +102,12 @@ class BadmintonCourse extends Component {
 
     navigate2CourseRecord(creatorId)
     {
+        import TalkingFarm from './TalkingFarm';
         const { navigator } = this.props;
         if (navigator) {
             navigator.push({
                 name: 'BadmintonCourseRecord',
-                component: BadmintonCourseRecord,
+                component: TalkingFarm,
                 params: {
                     creatorId:creatorId
                 }

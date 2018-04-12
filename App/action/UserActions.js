@@ -831,6 +831,18 @@ export let onRelativePersonsUpdate=(persons)=>{
         })
     }
 }
+//存储unionid
+export let storeUnionid=(unionid)=>{
+    return (dispatch)=>{
+
+        dispatch({
+            type:GET_UNIONID_INFO,
+            payload: {
+                unionid
+            }
+        })
+    }
+}
 
 //新增用户关联人
 export let addRelativePerson=(payload)=> {
@@ -903,6 +915,7 @@ export let wechatregisterUser=(unionid,nickname)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
             var state=getState();
+            dispatch(storeUnionid(unionid));
             //var {userType,username,password,genderCode,mobilePhone,nickName}=payload;
             Proxy.postes({
                 url: Config.server + '/func/register/wechatuserRegister',

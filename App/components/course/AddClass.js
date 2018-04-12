@@ -590,12 +590,12 @@ class AddClass extends Component{
                         justifyContent:'center'}}
                                       onPress={()=>{
 
-                                              this.props.dispatch(addClass(this.props.courseId,this.state.yard,this.props.course.unitId,this.state.classWeek,this.state.startTime,this.state.endTime,this.state.content))
+                                              this.props.dispatch(addClass(this.props.course.courseId,this.state.yard,this.props.course.unitId,this.state.classWeek,this.state.startTime,this.state.endTime,this.state.content))
                                                   .then((json)=>{
                                                       if(json.re==1){
                                                           Alert.alert('信息','添加成功',[{text:'确认',onPress:()=>{
                                                               this.goBack();
-                                                              this.props.setClassRecord(this.props.courseId);
+                                                              //this.props.setClassRecord(this.props.course.courseId);
                                                           }}]);
                                                       }else{
                                                           if(json.re==-100){

@@ -501,7 +501,7 @@ class CreateBadmintonCourse extends Component{
                         justifyContent:'center'}}
                                       onPress={()=>{
                                           if(this.props.memberId!==null&&this.props.memberId!==undefined){
-                                                this.props.dispatch(distributeCourse(this.state.course,this.state.venue,parseInt(this.props.memberId),parseInt(this.props.demandId)))
+                                                this.props.dispatch(distributeCourse(this.state.course,this.state.venue,parseInt(this.props.memberId),this.state.coached))
                                                 .then((json)=>{
                                                      if(json.re==1){
                                                          Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{

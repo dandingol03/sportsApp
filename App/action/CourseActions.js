@@ -540,7 +540,7 @@ export let onCustomCourseUpdate=(customCourse)=>{
 
 
 //发布课程
-export let distributeCourse=(course,venue,memberId,demandId,coached)=>{
+export let distributeCourse=(course,venue,memberId,coached,demandId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
