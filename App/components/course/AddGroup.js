@@ -18,6 +18,8 @@ import {
 } from 'react-native';
 
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
+import ModalDropdown from 'react-native-modal-dropdown';
+
 
 const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 const scaleAnimation = new ScaleAnimation();
@@ -44,13 +46,15 @@ import {
     onCoursesOfCoachUpdate,
     onCoursesUpdate,
     disableGroupContentshOnFresh, enableCoursesOfCoachOnFresh,
-    fetchCoureseGroupByCourseId, enableGroupContentsOnFresh
+    fetchCoureseGroupByCourseId, enableGroupContentsOnFresh, saveOrUpdateBadmintonCourseClassRecords
 } from '../../action/CourseActions';
 
 import {getAccessToken, onUsernameUpdate, updateUsername,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 import CoachListModal from '../my/modal/CoachListModal';
+import proxy from "../../utils/Proxy";
+import Config from "../../../config";
 class AddGroup extends Component {
 
     //导航至定制（for 教练）
@@ -184,6 +188,21 @@ class AddGroup extends Component {
         })
     }
 
+    renderRow1(rowData,rowId,highlighted) {
+        return(
+
+        <TouchableOpacity style={{ flexDirection: 'column', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
+                          onPress={()=>{
+
+                          }}>
+            <Text>{rowData}</Text>
+            <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
+        </TouchableOpacity>
+
+        )
+    }
+
+
     renderRow(rowData, sectionId, rowId) {
         return (
             <TouchableOpacity style={{ flexDirection: 'column', borderBottomWidth: 1, borderColor: '#ddd', marginTop: 4 }}
@@ -201,36 +220,103 @@ class AddGroup extends Component {
                             </Text>
                         </View>
 
-                        {
-                            this.props.course.coachId!==null?
-                            <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
-                                <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
-                                <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
-                                    {this.props.course.coachId}教练
-                                </Text>
-                            </View>:
-                                <TouchableOpacity style={{padding:4,marginRight:15,flexDirection:'row',alignItems:'center'}}
 
-                                                                          onPress={() => {
-                                                                              //this.navigate2RecordClass(rowData);
-                                                                              this.showCoachListDialog();
-                                                                              //this.setState({coachId:rowData.coachId});
-                                                                              //Alert.alert("asd");
-                                                                          }
-                                                                          }>
-                                    {/*<Text style={{color: '#66CDAA', fontSize: 12}}>1</Text>*/}
-                                    <Icon name={'plus-circle'} size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
+
+
+                        {
+                            rowData.coachId!==null&&rowData.coachId!=="null"?
+                            <View style={{padding:4,marginLeft:10,flexDirection:'row',alignItems:'center'}}>
+                                <TouchableOpacity style={{
+                                    flexDirection:'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 6,
+                                }}
+
+
+                                                  onPress={() => {
+                                                      //alert("asdasd");
+                                                  }
+                                                  }>
+                                    <CommIcon name="account-check" size={24} color="#0adc5e" style={{backgroundColor:'transparent',}}/>
+                                    <Text style={{ color: '#444', fontWeight: 'bold', fontSize: 13,paddingTop:-2 }}>
+                                        {rowData.coachId}教练
+                                    </Text >
                                 </TouchableOpacity>
+                            </View>:
+                                <ModalDropdown defaultValue={"请委派教练"}
+                                               defaultIndex={0} options={this.state.options}
+                                               renderRow={this.renderRow1.bind(this)}
+                                               onSelect={(value)=>{
+
+                                                   proxy.postes({
+                                                       url: Config.server + '/func/allow/delegateCoach',
+                                                       headers: {
+                                                           'Content-Type': 'application/json',
+                                                       },
+                                                       body: {
+                                                           contentId:parseInt(rowData.contentId),
+                                                           coachId:this.state.options[value]+""
+                                                       }
+                                                   }).then((json) => {
+                                                       var data = json.data;
+                                                       if (data !== null && data !== undefined && data !== "") {
+                                                           //alert(data);
+                                                           this.fetchGroupsByContent(this.props.course,this.props.memberId);
+                                                       }
+                                                   }).catch((err) => {
+                                                       alert(err);
+                                                   });
+                                                   //alert(this.state.options[value]);
+
+                                               }}
+                                                />
 
                         }
 
                     </View>
 
                     <View style={{ padding: 3, paddingHorizontal: 12 }}>
+
+                        <Text style={{ color: '#000', fontSize: 14 }}>课前准备：</Text>
                         <Text style={{ color: '#444', fontSize: 13 }}>
-                            上课内容：{rowData.content}
+                            {rowData.basicPart}
                         </Text>
+
                     </View>
+                    <View style={{ padding: 3, paddingHorizontal: 12 }}>
+
+                        <Text style={{ color: '#000', fontSize: 14}}>上课内容：</Text>
+                        <Text style={{ color: '#444', fontSize: 13 }}>
+                            {rowData.content}
+                        </Text>
+
+                    </View>
+                    {
+                    rowData.step!==null?
+                        <View style={{ padding: 3, paddingHorizontal: 12 }}>
+
+                            <Text style={{ color: '#000', fontSize: 14 }}>基本步伐：{rowData.contentId}</Text>
+                            <Text style={{ color: '#444', fontSize: 13 }}>
+                                {rowData.step}
+                            </Text>
+
+                        </View>:null
+                    }
+
+                    {
+                        rowData.stamina!==null?
+                            <View style={{ padding: 3, paddingHorizontal: 12 }}>
+
+                                <Text style={{ color: '#000', fontSize: 13 }}>耐力训练：</Text>
+                                <Text style={{ color: '#444', fontSize: 13 }}>
+                                    {rowData.stamina}
+                                </Text>
+
+                            </View>:null
+                    }
+
+
 
                     <View style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ color: '#f00', fontSize: 12, width: 50 }}>
@@ -243,41 +329,49 @@ class AddGroup extends Component {
                             </Text>
                         </View>
 
-                        {/*<View style={{ backgroundColor: '#ff4730', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>*/}
-                            {/*<Text style={{ color: '#fff', fontSize: 12 }}>*/}
-                                {/*{rowData.unitName}*/}
-                            {/*</Text>*/}
-                        {/*</View>*/}
+                        <TouchableOpacity style={{
+                            flex: 1,
+                            backgroundColor: '#f00',
+                            padding: 5,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 6,
+                            marginLeft:50,
+                        }}
+
+
+                                          onPress={() => {
+                                                
+                                          }
+                                          }>
+                            <Text style={{color: '#fff', fontSize: 12}}>修改上课内容</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-
-                {/*<View style={{ width: 70, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Icon name={'angle-right'} size={34} color="#444" style={{ backgroundColor: 'transparent', marginTop: -10 }} />
-                </View>*/}
 
                 <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
                     {<View style={{flex:1,justifyContent:'center',alignItems: 'center'}}>
 
                     </View>}
 
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        borderWidth: 1,
-                        borderColor: '#66CDAA',
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 6,
-                        marginRight:30
-                    }}
+                    {/*<TouchableOpacity style={{*/}
+                        {/*flex: 1,*/}
+                        {/*borderWidth: 1,*/}
+                        {/*borderColor: '#66CDAA',*/}
+                        {/*padding: 5,*/}
+                        {/*justifyContent: 'center',*/}
+                        {/*alignItems: 'center',*/}
+                        {/*borderRadius: 6,*/}
+                        {/*marginRight:30*/}
+                    {/*}}*/}
 
 
-                                      onPress={() => {
-                                          this.navigate2RecordClass(rowData);
-                                      }
-                                      }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>上课记录</Text>
-                    </TouchableOpacity>
+                                      {/*onPress={() => {*/}
+                                          {/*this.navigate2RecordClass(rowData);*/}
+                                      {/*}*/}
+                                      {/*}>*/}
+                        {/*<Text style={{color: '#66CDAA', fontSize: 12}}>上课记录</Text>*/}
+                    {/*</TouchableOpacity>*/}
                 </View>
 
                 <PopupDialog
@@ -314,10 +408,10 @@ class AddGroup extends Component {
 
     }
 
-    fetchGroupsByContent(courseId){
+    fetchGroupsByContent(course,memberId){
         this.state.doingFetch=true;
         this.state.isRefreshing=true;
-        this.props.dispatch(fetchCoureseGroupByCourseId(courseId)).then((json)=> {
+        this.props.dispatch(fetchCoureseGroupByCourseId(course,memberId)).then((json)=> {
             if(json.re==-100){
                 this.props.dispatch(getAccessToken(false));
             }
@@ -360,11 +454,8 @@ class AddGroup extends Component {
             isRefreshing:false,
             fadeAnim:new Animated.Value(1),
             courseId:null,
-            data:[{type:"初级班",coach:"吴教练",content:"发球",groupNum:"10人",isHaveCoach:true},
-                {type:"初级班",coach:"吴教练",content:"发球",groupNum:"10人",isHaveCoach:false},
-                {type:"初级班",coach:"吴教练",content:"发球",groupNum:"10人",isHaveCoach:false},
-                {type:"初级班",coach:"吴教练",content:"发球",groupNum:"10人",isHaveCoach:true},
-                {type:"初级班",coach:"吴教练",content:"发球",groupNum:"10人",isHaveCoach:true}],
+            options:this.props.course.coachId.split(","),
+
         }
 
     }
@@ -380,12 +471,17 @@ class AddGroup extends Component {
         this.CoachListDialog.show();
     }
     render() {
+        // var options=[];
+        // var str=null;
+        // str=this.props.course.coachId;
+        // options=str.split(",");
+        // this.setState({options:options});
         var groupContentsListView=null;
         var {groupContents,groupContentsOnFresh}=this.props;
         if(groupContentsOnFresh==true)
         {
             if(this.state.doingFetch==false)
-                this.fetchGroupsByContent(this.props.course.courseId);
+                this.fetchGroupsByContent(this.props.course,this.props.memberId);
         }else{
             var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             if ( groupContents!== undefined && groupContents !== null && groupContents.length > 0)
@@ -399,8 +495,6 @@ class AddGroup extends Component {
                 );
             }
         }
-
-
 
         return (
             <View style={styles.container}>
@@ -426,7 +520,8 @@ class AddGroup extends Component {
                                     groupContentsListView==null?
                                         null:
                                         <View style={{justifyContent:'center',alignItems: 'center',backgroundColor:'#eee',padding:10}}>
-                                            <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕</Text>
+                                            <Text style={{color:'#343434',fontSize:13,alignItems: 'center',justifyContent:'center'}}>已经全部加载完毕
+                                                </Text>
                                         </View>
                                 }
 
@@ -434,29 +529,8 @@ class AddGroup extends Component {
 
                         </Animated.View>
                     </View>}
-
-
-
                 </Toolbar>
-                <View style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#66CDAA',
-                    position:'absolute',bottom:8}}>
-                    <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
-                        padding:10,margin:5}}/* onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}*/>
-                        {/* <Text style={{color:'#fff',}}>我发起的活动</Text>*/}
-                    </TouchableOpacity>
 
-                    <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
-                        padding:10,margin:5}} /*onPress={()=>{this.navigate2AddClass();}}*/>
-                        {/* <Text style={{color:'#fff',}}>我要添加课程</Text>*/}
-                    </TouchableOpacity>
-                </View>
-                <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:8,left:width*0.5-25}}>
-                    <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,
-                        borderWidth:1,borderColor:'#eee',borderRadius:50}}
-                                      onPress={()=>{this.navigate2AddCourse();}}>
-                        <Icon name={'plus-circle'} size={35} color='#66CDAA'/>
-                    </TouchableOpacity>
-                </View>
 
                 {/*保存用户名*/}
                 <PopupDialog

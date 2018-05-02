@@ -72,7 +72,7 @@ export let fetchMyCourses=()=>{
 }
 
 //显示课程分组
-export let fetchCoureseGroupByCourseId=(courseId)=>{
+export let fetchCoureseGroupByCourseId=(course,memberId1)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
@@ -84,7 +84,9 @@ export let fetchCoureseGroupByCourseId=(courseId)=>{
                     'Content-Type': 'application/json',
                 },
                 body: {
-                    courseId:courseId
+                    course:course,
+                    memberId:memberId1
+
                 }
             }).then((json)=>{
                 if(json.re==1)
@@ -92,6 +94,7 @@ export let fetchCoureseGroupByCourseId=(courseId)=>{
                     var groupContents=json.data;
                     dispatch(onGroupContentsUpdate(groupContents));
                     resolve({re:1,data:groupContents})
+                    //resolve({re:1,data:groupContents})
                     //resolve(json);
                 }
 
@@ -224,7 +227,8 @@ export let editClass=(classId,courseId,yard,unitId,classWeek,startTime,endTime,c
                     classWeek:classWeek,
                     startTime:startTime,
                     endTime:endTime,
-                    content:content
+                    content:content,
+                    indexNum:0
                 }
             }).then((json)=>{
                 if(json.re==1)
@@ -519,7 +523,7 @@ export let saveOrUpdateBadmintonCourseClassRecords=(classMember,courseId)=>{
 
                 }
             }).catch((e)=>{
-                alert(e);
+                alert("此时不是签到时间");
                 reject(e);
             })
 
@@ -596,6 +600,7 @@ export let modifyCourse=(course,venue,memberId,demandId)=>{
                         venue,
                         memberId,
                         demandId,
+                        indexNum:0,
                     }
                 }
             }).then((json)=>{

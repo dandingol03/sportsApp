@@ -132,6 +132,7 @@ class TalkingFarm extends Component {
 
     componentDidMount() {
         //this.getTalkingFarm();
+        var _scrollView;
         if (_scrollView !== null && _scrollView !== undefined) {
             //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
             _scrollView.scrollToEnd({animated: false});

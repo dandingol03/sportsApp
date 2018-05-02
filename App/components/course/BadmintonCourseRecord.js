@@ -14,7 +14,9 @@ import {
     Easing,
     TextInput,
     InteractionManager,
-    Alert
+    Alert,
+    DeviceEventEmitter,
+    NativeModules,
 } from 'react-native';
 
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
@@ -40,6 +42,8 @@ import AddClass from  './AddClass';
 import ClassSignUp from './ClassSignUp';
 
 import TalkingFarm from './TalkingFarm';
+import Camera from '../getCamera';
+
 
 import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
@@ -50,13 +54,15 @@ import {
     onCoursesOfCoachUpdate,
     onCoursesUpdate,
     disableCoursesOfCoachOnFresh, enableCoursesOfCoachOnFresh,
-    getGroupMember,createCourseGroup
+    getGroupMember, createCourseGroup, saveOrUpdateBadmintonCourseClassRecords
 } from '../../action/CourseActions';
 
 import {getAccessToken, onUsernameUpdate, updateUsername,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
-
+import FaceDetect from '../../native/FaceDetectModule';
+import proxy from "../../utils/Proxy";
+import Config from "../../../config";
 class BadmintonCourseRecord extends Component {
 
     //导航至定制（for 教练）
@@ -73,14 +79,15 @@ class BadmintonCourseRecord extends Component {
         }
     }
     //添加分组
-    navigate2AddGroup(val) {
+    navigate2AddGroup(course,memberId) {
         const { navigator } = this.props;
         if (navigator) {
             navigator.push({
                 name: 'AddGroup',
                 component: AddGroup,
                 params: {
-                    course:val
+                    course:course,
+                    memberId:memberId
                 }
             })
         }
@@ -188,6 +195,19 @@ class BadmintonCourseRecord extends Component {
             navigator.push({
                 name: 'CreateBadmintonCourse',
                 component: CreateBadmintonCourse,
+                params: {
+                    //setMyCourseList:this.setMyCourseList.bind(this)
+                }
+            })
+        }
+    }
+
+    navigate2Camera(){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'Camera',
+                component: Camera,
                 params: {
                     //setMyCourseList:this.setMyCourseList.bind(this)
                 }
@@ -334,8 +354,9 @@ class BadmintonCourseRecord extends Component {
                                           this.setState({course:rowData});
                                           //this.navigate2RecordClass(rowData);
                                           //this.showUserNameDialog();
-                                          this.navigate2ClassSignUp(rowData);
-                                          //this.navigate2AddGroup(25);
+
+                                          //this.navigate2ClassSignUp(rowData);
+                                          FaceDetect.faceDetect();
                                       }
                                       }>
                         <Text style={{color: '#66CDAA', fontSize: 12}}>上课签到</Text>
@@ -442,11 +463,6 @@ class BadmintonCourseRecord extends Component {
 
     }
 
-
-
-
-
-
     constructor(props) {
         super(props);
         this.state = {
@@ -527,11 +543,11 @@ class BadmintonCourseRecord extends Component {
                         padding:10,margin:5}}/* onPress={()=>{this.navigate2MyActivity(myEvents,'我的活动');}}*/>
                         {/* <Text style={{color:'#fff',}}>我发起的活动</Text>*/}
                     </TouchableOpacity>
-
                     <TouchableOpacity style={{flex:1,backgroundColor:'#66CDAA',justifyContent:'center',alignItems: 'center',
                         padding:10,margin:5}} /*onPress={()=>{this.navigate2AddClass();}}*/>
                         {/* <Text style={{color:'#fff',}}>我要添加课程</Text>*/}
                     </TouchableOpacity>
+
                 </View>
                 <View style={{height:50,width:50,borderRadius:25,position:'absolute',bottom:8,left:width*0.5-25}}>
                     <TouchableOpacity style={{flex:1,backgroundColor:'#fff',justifyContent:'center',alignItems: 'center',padding:5,
@@ -570,7 +586,6 @@ class BadmintonCourseRecord extends Component {
                                 .catch((e)=>{
                                     Alert.alert("签到失败");
                                 })
-                            //this.navigate2AddGroup();
                         }}
                     />
 
@@ -582,6 +597,54 @@ class BadmintonCourseRecord extends Component {
     componentDidMount()
     {
 
+    }
+
+    componentWillMount(){
+        DeviceEventEmitter.addListener('EventName',(img)=>{
+            //this.showState();
+            //alert("send success");
+
+            proxy.postes({
+                url: Config.server + '/func/allow/aipface',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    img:img
+                }
+            }).then((json) => {
+                var data = json.data;
+                if(data=="您不属于这个课程"){
+                    alert("您不属于这个课程");
+                }else{
+                    var dataint=parseInt(data);
+                    var data1=new Array();
+                    data1.push({"memberId":dataint,"select":true});
+                    this.props.dispatch(saveOrUpdateBadmintonCourseClassRecords(data1,this.state.course.courseId)).then((json)=>{
+                        if(json.re==1){
+                            //this.goBack();
+                            Alert.alert('信息','学号为'+dataint+'的学生签到成功!',[{text:'确认',onPress:()=>{
+                                    this.navigate2AddGroup(this.state.course,dataint);
+                                    // this.props.setClassRecord(this.props.courseId,);
+
+                                }}]);
+                        }else{
+                            if(json.re==-100){
+                                this.props.dispatch(getAccessToken(false));
+                            }
+                        }
+                    })
+                    //alert("学号为"+dataint+"的学生签到成功");
+                }
+            }).catch((err) => {
+                alert(err);
+            });
+        })
+    }
+
+    showState()
+    {
+        this.setState({content:'已经收到了原生模块发送来的事件'})
     }
 
 }

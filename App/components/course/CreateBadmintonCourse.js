@@ -60,9 +60,24 @@ class CreateBadmintonCourse extends Component{
         }
 
     }
+    //选等级
+    _handlePress1(index) {
+
+        if(index!==0){
+            var classTypeStr = this.state.classTypeButtons[index];
+            var classType = index;
+            this.setState({course:Object.assign(this.state.course,{classType:parseInt(classType).toString(),classTypeStr:classTypeStr})});
+        }
+
+    }
 
     show(actionSheet) {
         this[actionSheet].show();
+    }
+
+
+    show1(actionSheet1) {
+        this[actionSheet1].show();
     }
 
 
@@ -181,12 +196,13 @@ class CreateBadmintonCourse extends Component{
         this.state={
             dialogShow: false,
             modalVisible:false,
-            course:{courseName:null,maxNumber:null,classCount:null,cost:null,costType:null,detail:null,coursePlace:null,unitId:null,scheduleDes:''},
+            course:{courseName:null,maxNumber:null,classCount:null,cost:null,costType:null,classType:null,detail:null,coursePlace:null,unitId:null,scheduleDes:''},
             docouingFetch: false,
             isRefreshing: false,
             time:null,
             timeList:[],
             costTypeButtons:['取消','按人支付','按小时支付','按班支付'],
+            classTypeButtons:['取消','初级班','中级班','高级班'],
             venue:null,
             coached:null,
             coachId:null
@@ -204,7 +220,11 @@ class CreateBadmintonCourse extends Component{
         const CANCEL_INDEX = 0;
         const DESTRUCTIVE_INDEX = 1;
 
+        const CANCEL_INDEX1 = 0;
+        const DESTRUCTIVE_INDEX1 = 1;
+
         const costTypeButtons=['取消','按人支付','按小时支付','按班支付'];
+        const classTypeButtons=['取消','初级班','中级班','高级班'];
 
         var timeList = this.state.timeList;
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -235,8 +255,45 @@ class CreateBadmintonCourse extends Component{
 
                     </View>
                 </View>
-
+                <ScrollView style={{height:height-200,width:width,backgroundColor:'#fff',padding:5}}>
                 <View style={{flex:5,backgroundColor:'#fff'}}>
+                    {/*课程等级*/}
+                    <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:5,marginBottom:5}}>
+                        <View style={{flex:1}}>
+                            <Text style={{color:'#343434'}}>课程等级：</Text>
+                        </View>
+                        <TouchableOpacity style={{flex:3,flexDirection:'row',justifyContent:'flex-start',alignItems: 'center',backgroundColor:'#eee',
+                            borderRadius:10}}
+                                          onPress={()=>{ this.show('actionSheet1'); }}>
+                            {
+                                this.state.course.classTypeStr==null?
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#888',fontSize:13}}>请选择课程等级：</Text>
+                                    </View> :
+                                    <View style={{flex:3,marginLeft:20,justifyContent:'flex-start',alignItems: 'center',flexDirection:'row'}}>
+                                        <Text style={{color:'#444',fontSize:13}}>{this.state.course.classTypeStr}</Text>
+                                    </View>
+
+                            }
+                            <View style={{width:60,flexDirection:'row',justifyContent:'center',alignItems: 'center',marginLeft:20}}>
+                                <Icon name={'angle-right'} size={30} color="#fff"/>
+                            </View>
+                            <ActionSheet
+                                ref={(p) => {
+                                    this.actionSheet1 =p;
+                                }}
+                                title="请选择课程等级"
+                                options={classTypeButtons}
+                                cancelButtonIndex={CANCEL_INDEX1}
+                                destructiveButtonIndex={DESTRUCTIVE_INDEX1}
+                                onPress={
+                                    (data)=>{ this._handlePress1(data); }
+                                }
+                            />
+                        </TouchableOpacity>
+                    </View>
+
+
 
                     {/*课程名称*/}
                     <View style={{height:30,flexDirection:'row',justifyContent:'center',alignItems: 'center',backgroundColor:'#fff',margin:10,marginTop:10,marginBottom:5}}>
@@ -495,46 +552,47 @@ class CreateBadmintonCourse extends Component{
                         </Text>
                     </View>
                 </View>
+                </ScrollView>
 
                 <View style={{flexDirection:'row',height:60,justifyContent:'center',alignItems:'center',width:width}}>
                     <TouchableOpacity style={{width:width*2/3,backgroundColor:'#66CDAA',borderRadius:10,padding:10,flexDirection:'row',
                         justifyContent:'center'}}
                                       onPress={()=>{
                                           if(this.props.memberId!==null&&this.props.memberId!==undefined){
-                                                this.props.dispatch(distributeCourse(this.state.course,this.state.venue,parseInt(this.props.memberId),this.state.coached))
-                                                .then((json)=>{
-                                                     if(json.re==1){
-                                                         Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
-                                                            this.goBack();
-                                                            this.props.setMyCourseList();
-                                                            }}]);
-                                                     }else{
-                                                         if(json.re==-100){
+                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,parseInt(this.props.memberId),this.state.coached))
+                                                  .then((json)=>{
+                                                      if(json.re==1){
+                                                          Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
+                                                                  this.goBack();
+                                                                  this.props.setMyCourseList();
+                                                              }}]);
+                                                      }else{
+                                                          if(json.re==-100){
                                                               this.props.dispatch(getAccessToken(false));
-                                                         }
-                                                     }
-                                                })
+                                                          }
+                                                      }
+                                                  })
                                           }else{
                                               this.props.dispatch(distributeCourse(this.state.course,this.state.venue,null,this.state.coached))
-                                                .then((json)=>{
-                                                     if(json.re==1){
-                                                         Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
-                                                            this.goBack();
-                                                            //this.props.setMyCourseList();
-                                                            }}]);
-                                                     }else{
-                                                         if(json.re==-100){
+                                                  .then((json)=>{
+                                                      if(json.re==1){
+                                                          Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
+                                                                  this.goBack();
+                                                                  //this.props.setMyCourseList();
+                                                              }}]);
+                                                      }else{
+                                                          if(json.re==-100){
                                                               this.props.dispatch(getAccessToken(false));
-                                                         }
-                                                     }
-                                                })
+                                                          }
+                                                      }
+                                                  })
                                           }
 
-                      }}>
+                                      }}>
                         <Text style={{color:'#fff',fontSize:15}}>发布</Text>
                     </TouchableOpacity>
-                </View>
 
+                </View>
 
                 {/* Add CourseTime Modal*/}
                 <Modal
