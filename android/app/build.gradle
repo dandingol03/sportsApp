@@ -96,6 +96,21 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
     }
+
+    signingConfigs{
+        debug{
+            keyAlias 'sportsHot'
+            keyPassword '123456'
+            storeFile file('/Users/lixueqing/Downloads/sportsHot.jks')
+            storePassword '123456'
+        }
+        release{
+            keyAlias 'sportsHot'
+            keyPassword '123456'
+            storeFile file('/Users/lixueqing/Downloads/sportsHot.jks')
+            storePassword '123456'
+        }
+    }
     splits {
         abi {
             reset()
@@ -126,6 +141,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fs')
     compile project(':react-native-fetch-blob')
     compile project(':react-native-video')
     compile project(':jpush-react-native')
@@ -137,6 +153,7 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-baidu-map')
     compile project(':RCTWeChat')
+    compile project(path:':faceplatform-ui')
     compile 'com.qiniu:happy-dns:0.2.7'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'

@@ -1,5 +1,6 @@
 package com.sportsapp.reactPackage;
 
+import com.sportsapp.module.FaceDetectModule;
 import com.sportsapp.module.UpdateModule;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
@@ -21,6 +22,7 @@ public class AnExampleReactPackage implements ReactPackage {
 
         modules.add(new UpdateModule(reactContext));
         modules.add(new Bridge(reactContext));
+        modules.add(new FaceDetectModule(reactContext));
         return modules;
     }
 

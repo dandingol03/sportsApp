@@ -9,15 +9,17 @@ import android.util.Log;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.BaseActivityEventListener;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.qiniu.pili.droid.streaming.StreamingEnv;
 import com.theweflex.react.WeChatPackage;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.reactnativejpush.JPushPackage;
 import com.imagepicker.ImagePickerPackage;
-import com.lwansbrough.RCTCamera.RCTCameraPackage;
+
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import com.beefe.picker.PickerViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -33,6 +35,7 @@ import java.util.List;
 import com.theweflex.react.WeChatPackage;
 
 public class MainApplication extends Application implements ReactApplication {
+  private String img;
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -44,10 +47,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFSPackage(),
             new WeChatPackage(),
             new JPushPackage(false,false),
             new ImagePickerPackage(),
-            new RCTCameraPackage(),
+              new RCTCameraPackage(),
             new RNSensitiveInfoPackage(),
             new PickerViewPackage(),
             new VectorIconsPackage(),
@@ -76,6 +80,14 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     StreamingEnv.init(getApplicationContext());
+  }
+
+  public String  getImg(){
+    return img;
+  }
+
+  public void setImg(String img){
+    this.img=img;
   }
 
 }
