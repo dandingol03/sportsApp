@@ -1,7 +1,9 @@
 import Config from '../../config'
 import Proxy from '../utils/Proxy'
 import PreferenceStore from '../utils/PreferenceStore';
-
+import {
+    Platform
+} from 'react-native'
 
 
 import {
@@ -1157,7 +1159,7 @@ export let doLogin=function(username,password){
                     loginName: username,
                     password: password,
                     loginType:1,
-                    parameter:{appVersion:versionName}
+                    parameter:{appVersion:versionName,appDeviceType:Platform.OS}
                 }
             }).then((json)=>{
 

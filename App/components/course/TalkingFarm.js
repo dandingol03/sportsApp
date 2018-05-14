@@ -55,6 +55,7 @@ class TalkingFarm extends Component {
             time: null,
             courseId: this.props.courseId,
             personInfo: this.props.personInfo,
+            _scrollView:null
         };
     }
 
@@ -91,6 +92,8 @@ class TalkingFarm extends Component {
     }
 
     getTalkingFarm() {
+
+
         var personinfo = this.state.personInfo;
         var courseId = this.state.courseId;
         var talklist = this.state.talklist;
@@ -113,8 +116,8 @@ class TalkingFarm extends Component {
                         this.setState({talklist: data});
                     }
                 }
-                if (_scrollView !== null && _scrollView !== undefined) {
-                    _scrollView.scrollToEnd({animated: false});
+                if (this.state._scrollView !== null && this.state._scrollView !== undefined) {
+                    this.state._scrollView.scrollToEnd({animated: false});
                 }
             }
             else {
@@ -132,10 +135,10 @@ class TalkingFarm extends Component {
 
     componentDidMount() {
         //this.getTalkingFarm();
-        var _scrollView;
-        if (_scrollView !== null && _scrollView !== undefined) {
+
+        if (this.state._scrollView !== null &&this.state._scrollView !== undefined) {
             //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
-            _scrollView.scrollToEnd({animated: false});
+            this.state._scrollView.scrollToEnd({animated: false});
         }
         this.timer = setInterval(
             () => {
@@ -146,13 +149,7 @@ class TalkingFarm extends Component {
 
     }
 
-    /*    componentDidUpdate() {
-            if (this.refs._scrollView !== null && this.refs._scrollView !== undefined) {
-                //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
-                this.refs._scrollView.scrollToEnd({animated: false});
-            }
 
-        }*/
 
     renderRow(rowData) {
 
@@ -284,7 +281,7 @@ class TalkingFarm extends Component {
 
                 <ListView
                     ref={(scrollView) => {
-                         _scrollView = scrollView;
+                         this.state._scrollView = scrollView;
                     }}
                     automaticallyAdjustContentInsets={false}
                     dataSource={ds.cloneWithRows(sortedCourses)}
@@ -298,10 +295,7 @@ class TalkingFarm extends Component {
         } else {
             this.getTalkingFarm();
         }
-        /*if (this.refs._scrollView !== null && this.refs._scrollView !== undefined) {
-            //_scrollView.scrollTo({x: 0, y: 9000, animated: true});
-            this.refs._scrollView.scrollToEnd({animated: true});
-        }*/
+
         return (
             <View style={styles.container}>
                 <View style={{

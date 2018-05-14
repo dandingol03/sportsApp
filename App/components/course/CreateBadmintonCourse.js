@@ -90,12 +90,13 @@ class CreateBadmintonCourse extends Component{
 
     }
 
-    setCourseCoach(courseCoach)
+    setCourseCoach(field,coachId)
     {
-        var coach = courseCoach;
+        var field = field;
         //place.unitId = parseInt(coursePlace.unitId);
 
-        this.setState({coached:coach});
+        this.setState({coached:field});
+        this.setState({coachId:coachId});
 
     }
 
@@ -559,7 +560,7 @@ class CreateBadmintonCourse extends Component{
                         justifyContent:'center'}}
                                       onPress={()=>{
                                           if(this.props.memberId!==null&&this.props.memberId!==undefined){
-                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,parseInt(this.props.memberId),this.state.coached))
+                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,parseInt(this.props.memberId),this.state.coachId))
                                                   .then((json)=>{
                                                       if(json.re==1){
                                                           Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{
@@ -573,7 +574,7 @@ class CreateBadmintonCourse extends Component{
                                                       }
                                                   })
                                           }else{
-                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,null,this.state.coached))
+                                              this.props.dispatch(distributeCourse(this.state.course,this.state.venue,null,this.state.coachId))
                                                   .then((json)=>{
                                                       if(json.re==1){
                                                           Alert.alert('信息','课程已发布成功',[{text:'确认',onPress:()=>{

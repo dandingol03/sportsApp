@@ -54,16 +54,33 @@ import {
     onCoursesOfCoachUpdate,
     onCoursesUpdate,
     disableCoursesOfCoachOnFresh, enableCoursesOfCoachOnFresh,
-    getGroupMember, createCourseGroup, saveOrUpdateBadmintonCourseClassRecords
+    getGroupMember, createCourseGroup, saveOrUpdateBadmintonCourseClassRecords, updateIsHasPhotoStatus,
+    establishEveryDayClass
 } from '../../action/CourseActions';
 
 import {getAccessToken, onUsernameUpdate, updateUsername,} from '../../action/UserActions';
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 import FaceDetect from '../../native/FaceDetectModule';
+import FaceCollection from './FaceCollection';
+import OrderClass from './OrderClass';
 import proxy from "../../utils/Proxy";
 import Config from "../../../config";
 class BadmintonCourseRecord extends Component {
+
+
+    navigate2OrderClass() {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'OrderClass',
+                component: OrderClass,
+                params: {
+                    course:this.state.course
+                }
+            })
+        }
+    }
 
     //导航至定制（for 教练）
     navigate2AddCourse() {
@@ -88,6 +105,22 @@ class BadmintonCourseRecord extends Component {
                 params: {
                     course:course,
                     memberId:memberId
+                }
+            })
+        }
+    }
+
+
+    //照片采集
+    navigate2FaceCollection(course,img) {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'FaceCollection',
+                component: FaceCollection,
+                params: {
+                    course:course,
+                 img:img
                 }
             })
         }
@@ -319,6 +352,9 @@ class BadmintonCourseRecord extends Component {
                 </View>*/}
 
                 <View style={{flex:1,flexDirection:'row',padding:10,borderTopWidth:1,borderColor:'#ddd'}}>
+
+                    {
+                        rowData.isOwner===1?
                     <TouchableOpacity style={{
                         flex: 1,
                         borderWidth: 1,
@@ -337,7 +373,8 @@ class BadmintonCourseRecord extends Component {
                                       }
                                       }>
                         <Text style={{color: '#66CDAA', fontSize: 12}}>学员信息</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>:null
+                    }
 
                     <TouchableOpacity style={{
                         flex: 1,
@@ -352,70 +389,85 @@ class BadmintonCourseRecord extends Component {
 
                                       onPress={() => {
                                           this.setState({course:rowData});
-                                          //this.navigate2RecordClass(rowData);
-                                          //this.showUserNameDialog();
 
-                                          //this.navigate2ClassSignUp(rowData);
-                                          FaceDetect.faceDetect();
+                                          this.props.dispatch(establishEveryDayClass(rowData)).then((json)=>{
+                                              this.sharetoSomeone.show();
+                                          }).catch((e)={
+
+                                          });
+
+
                                       }
                                       }>
                         <Text style={{color: '#66CDAA', fontSize: 12}}>上课签到</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        borderWidth: 1,
-                        borderColor: '#66CDAA',
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 6,
-                        marginRight:30
-                    }}
+                    {
+                        rowData.isOwner==1?
+                        <TouchableOpacity style={{
+                            flex: 1,
+                            borderWidth: 1,
+                            borderColor: '#66CDAA',
+                            padding: 5,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 6,
+                            marginRight: 30
+                        }}
 
-                                      onPress={() => {
-                                          this.navigate2ModifyDistribution(rowData);
-                                      }
-                                      }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>编辑课程</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        borderWidth: 1,
-                        borderColor: '#66CDAA',
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 6,
-                    }}
+                                          onPress={() => {
+                                              this.navigate2ModifyDistribution(rowData);
+                                          }
+                                          }>
+                            <Text style={{color: '#66CDAA', fontSize: 12}}>编辑课程</Text>
+                        </TouchableOpacity>:null
+                    }
+                    {
+                        rowData.isOwner === 1 ?
+                            <TouchableOpacity style={{
+                                flex: 1,
+                                borderWidth: 1,
+                                borderColor: '#66CDAA',
+                                padding: 5,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 6,
+                            }}
 
-                                      onPress={() => {
-                                          this.navigate2TalkingFarm(rowData.courseId);
-                                      }
-                                      }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>讨论组</Text>
-                    </TouchableOpacity>
+                                              onPress={() => {
+                                                  this.navigate2TalkingFarm(rowData.courseId);
+                                              }
+                                              }>
+                                <Text style={{color: '#66CDAA', fontSize: 12}}>讨论组</Text>
+                            </TouchableOpacity>:null
+                    }
 
-                    <TouchableOpacity style={{
-                        flex: 1,
-                        borderWidth: 1,
-                        borderColor: '#66CDAA',
-                        padding: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 6,
-                        marginLeft:30
-                    }}
+                    {
+                        rowData.isOwner===1?
+                        <TouchableOpacity style={{
+                            flex: 1,
+                            borderWidth: 1,
+                            borderColor: '#66CDAA',
+                            padding: 5,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 6,
+                            marginLeft: 30
+                        }}
 
 
-                                      onPress={() => {
-                                          this.navigate2AddClass1(rowData);
-                                      }
-                                      }>
-                        <Text style={{color: '#66CDAA', fontSize: 12}}>添加小课</Text>
-                    </TouchableOpacity>
+                                          onPress={() => {
+                                              this.navigate2AddClass1(rowData);
+                                          }
+                                          }>
+                            <Text style={{color: '#66CDAA', fontSize: 12}}>添加小课</Text>
+                        </TouchableOpacity>:null
+                    }
 
                 </View>
+
+
+
 
             </TouchableOpacity>
 
@@ -590,6 +642,49 @@ class BadmintonCourseRecord extends Component {
                     />
 
                 </PopupDialog>
+
+
+                <PopupDialog
+                    ref={(popupDialog) => {
+                        this.sharetoSomeone = popupDialog;
+                    }}
+                    dialogAnimation={scaleAnimation}
+                    actions={[]}
+                    width={0.8}
+                    height={0.25}
+                >
+                    <View style={{flex:1,padding:10,alignItems:"center",flexDirection:"row",justifyContent:"center"}}>
+
+                        <View style={{flex:1,flexDirection:"column",alignItems:"center"}}>
+                            <TouchableOpacity style={{flex:1,alignItems:"center",justifyContent:"center"}}
+                                              onPress={()=>{
+                                                  this.sharetoSomeone.dismiss();
+                                                      FaceDetect.faceDetect();
+
+
+                                              }}
+                            >
+                                <Icon name={'user-circle'} size={45} color='#00CD00'/>
+                                <Text>现场签到</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flex:1,flexDirection:"column",alignItems:"center"}}>
+                            <TouchableOpacity style={{flex:1,alignItems:"center",justifyContent:"center"}}
+                                              onPress={()=>{
+                                                  this.sharetoSomeone.dismiss();
+                                                  this.navigate2OrderClass();
+
+                                              }}
+                            >
+                                <CommIcon name="account-check" size={45} color="#0adc5e" />
+                                <Text>预约签到</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+
+
+                </PopupDialog>
             </View>
         )
     }
@@ -615,14 +710,19 @@ class BadmintonCourseRecord extends Component {
             }).then((json) => {
                 var data = json.data;
                 if(data=="您不属于这个课程"){
-                    alert("您不属于这个课程");
+                    Alert.alert('信息','采集照片成功，请选择对应学员上传照片',[{text:'确认',onPress:()=>{
+                            this.navigate2FaceCollection(this.state.course,img);
+
+                        }}]);
                 }else{
+
                     var dataint=parseInt(data);
                     var data1=new Array();
                     data1.push({"memberId":dataint,"select":true});
                     this.props.dispatch(saveOrUpdateBadmintonCourseClassRecords(data1,this.state.course.courseId)).then((json)=>{
                         if(json.re==1){
                             //this.goBack();
+
                             Alert.alert('信息','学号为'+dataint+'的学生签到成功!',[{text:'确认',onPress:()=>{
                                     this.navigate2AddGroup(this.state.course,dataint);
                                     // this.props.setClassRecord(this.props.courseId,);

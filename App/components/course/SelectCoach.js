@@ -169,9 +169,11 @@ class SelectCoach extends Component {
 
     render()
     {
-        var field=""
-        this.state.coached.map((field0,i)=>{
-            field+=field0.state+","
+        var field="";
+        var coachId="";
+        this.state.coached.map((coach,i)=>{
+            field+=coach.state+",";
+            coachId+=coach.coachId+",";
         });
         field=field.substring(0,field.length-1);
 
@@ -198,12 +200,12 @@ class SelectCoach extends Component {
                                                   if(_person.checked==true)
                                                   {
                                                       _person.checked = false;
-                                                      this.removeItem({state: person.perName,perName:person.perName});
+                                                      this.removeItem({state: person.perName,perName:person.perName,coachId:person.trainerId});
                                                       //this.removeItem1({state:person.trainerId,trainerId:person.trainerId});
 
                                                   }
                                                   else{
-                                                      this.addItem({state:person.perName,perName:person.perName});
+                                                      this.addItem({state:person.perName,perName:person.perName,coachId:person.trainerId});
                                                       _person.checked=true;
 
                                                       //this.addItem1({state:person.trainerId,trainerId:person.trainerId});
@@ -306,7 +308,7 @@ class SelectCoach extends Component {
                             justifyContent:'center'}}
                                           onPress={()=>{
                                               this.goBack();
-                                              this.props.setCoach(field);
+                                              this.props.setCoach(field,coachId);
                                           }}>
                             <Text style={{color:'#fff',fontSize:15}}>确定</Text>
                         </TouchableOpacity>

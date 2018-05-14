@@ -35,9 +35,9 @@ import CustomerCourseList from './CustomerCourseList';
 import ModifyDistribution from './ModifyDistribution';
 import StudentInformation from './StudentInformation';
 import RecordClass from './RecordClass';
-import SignUpModal from '../my/modal/SignUpModal'
-
-import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper'
+import SignUpModal from '../my/modal/SignUpModal';
+import ShowSchemePerson from './ShowSchemePerson';
+import {Toolbar,OPTION_SHOW,OPTION_NEVER,ACTION_ADD} from 'react-native-toolbar-wrapper';
 import ScrollableTabView, { DefaultTabBar, ScrollableTabBar } from 'react-native-scrollable-tab-view';
 var { height, width } = Dimensions.get('window');
 import {
@@ -53,6 +53,7 @@ import {getAccessToken, onUsernameUpdate, updateUsername,} from '../../action/Us
 
 import BadmintonCourseSignUp from './BadmintonCourseSignUp';
 import CoachListModal from '../my/modal/CoachListModal';
+import ChangeClassDetail from './ChangeClassDetail';
 import proxy from "../../utils/Proxy";
 import Config from "../../../config";
 class AddGroup extends Component {
@@ -153,6 +154,22 @@ class AddGroup extends Component {
         }
     }
 
+    navigate2ShowSchemePerson(groupType){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'ShowSchemePerson',
+                component: ShowSchemePerson,
+                params: {
+                    //setMyCourseList:this.setMyCourseList.bind(this)
+                    course:this.props.course,
+                    memberId:this.props.memberId,
+                    groupType:groupType
+                }
+            })
+        }
+    }
+
     navigate2StudentInformation(courseId){
         const { navigator } = this.props;
         if (navigator) {
@@ -161,6 +178,22 @@ class AddGroup extends Component {
                 component: StudentInformation,
                 params: {
                     courseId:courseId
+                }
+            })
+        }
+    }
+
+    navigate2ChangeClassDetail(rowData){
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                name: 'ChangeClassDetail',
+                component: ChangeClassDetail,
+                params: {
+                    classDetail:rowData,
+                    course:this.props.course,
+                    memberId:this.props.memberId,
+                    fetchGroupsByContent:this.fetchGroupsByContent.bind(this)
                 }
             })
         }
@@ -256,11 +289,12 @@ class AddGroup extends Component {
                                                        },
                                                        body: {
                                                            contentId:parseInt(rowData.contentId),
-                                                           coachId:this.state.options[value]+""
+                                                           coachId:this.state.trainerId[value]+"",
+                                                           course:this.props.course
                                                        }
                                                    }).then((json) => {
                                                        var data = json.data;
-                                                       if (data !== null && data !== undefined && data !== "") {
+                                                       if (data !== null && data !== undefined && data !==  "") {
                                                            //alert(data);
                                                            this.fetchGroupsByContent(this.props.course,this.props.memberId);
                                                        }
@@ -296,7 +330,7 @@ class AddGroup extends Component {
                     rowData.step!==null?
                         <View style={{ padding: 3, paddingHorizontal: 12 }}>
 
-                            <Text style={{ color: '#000', fontSize: 14 }}>基本步伐：{rowData.contentId}</Text>
+                            <Text style={{ color: '#000', fontSize: 14 }}>基本步伐：</Text>
                             <Text style={{ color: '#444', fontSize: 13 }}>
                                 {rowData.step}
                             </Text>
@@ -319,15 +353,32 @@ class AddGroup extends Component {
 
 
                     <View style={{ paddingTop: 12, paddingBottom: 4, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ color: '#f00', fontSize: 12, width: 50 }}>
-                            {rowData.groupName}
-                        </Text>
 
-                        <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 10 }}>
+
+                        <View style={{ backgroundColor: '#66CDAA', borderRadius: 6, padding: 4, paddingHorizontal: 6, marginLeft: 0 }}>
                             <Text style={{ color: '#fff', fontSize: 12 }}>
                                 已经上课次数：{rowData.groupType}
                             </Text>
                         </View>
+
+                        <TouchableOpacity style={{
+                            flex: 1,
+                            backgroundColor: '#66CDAA',
+                            padding: 5,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 6,
+                            marginLeft:20,
+                        }}
+
+
+                                          onPress={() => {
+                                              this.navigate2ShowSchemePerson(rowData.groupType);
+                                              //alert("asd");
+                                          }
+                                          }>
+                            <Text style={{color: '#fff', fontSize: 12}}>上课人员表</Text>
+                        </TouchableOpacity>
 
                         <TouchableOpacity style={{
                             flex: 1,
@@ -336,12 +387,13 @@ class AddGroup extends Component {
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 6,
-                            marginLeft:50,
+                            marginLeft:30,
                         }}
 
 
                                           onPress={() => {
-                                                
+                                                this.navigate2ChangeClassDetail(rowData);
+                                                //alert("asd");
                                           }
                                           }>
                             <Text style={{color: '#fff', fontSize: 12}}>修改上课内容</Text>
@@ -449,15 +501,19 @@ class AddGroup extends Component {
 
     constructor(props) {
         super(props);
+        var coachId1=this.props.course.coachId;
+        var coachId2=coachId1.substring(0,coachId1.length-1);
+        var trainerId1=this.props.course.trainerId;
+        var trainerId2=trainerId1.substring(0,coachId1.length-1);
         this.state = {
             doingFetch:false,
             isRefreshing:false,
             fadeAnim:new Animated.Value(1),
             courseId:null,
-            options:this.props.course.coachId.split(","),
+            options:coachId2.split(","),
+            trainerId:trainerId2.split(",")
 
         }
-
     }
 
     showScaleAnimationDialog() {

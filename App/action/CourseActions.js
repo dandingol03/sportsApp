@@ -35,6 +35,10 @@ import {
     DISABLE_CLASS_MEMBER_ONFRESH,
     ENABLE_CLASS_MEMBER_ONFRESH,
 
+    ON_ORDER_MEMBER_UPDATE,
+    DISABLE_ORDER_MEMBER_ONFRESH,
+    ENABLE_ORDER_MEMBER_ONFRESH,
+
     ON_COURSE_GROUP_UPDATE
 
 
@@ -44,6 +48,89 @@ import {
 } from '../constants/CourseConstants'
 import course from "../reducers/CourseReducer";
 
+
+export let checkCourseMemberPay=(member)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/establishEveryDayClass',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    course:course
+
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let establishEveryDayClass=(course)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/establishEveryDayClass',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    course:course
+
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+
+
+export let updateIsHasPhotoStatus=(memberId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/updateIsHasPhotoStatus',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                        memberId:parseInt(memberId)
+
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
 //拉取个人已报名课程
 export let fetchMyCourses=()=>{
     return (dispatch,getState)=>{
@@ -86,7 +173,6 @@ export let fetchCoureseGroupByCourseId=(course,memberId1)=>{
                 body: {
                     course:course,
                     memberId:memberId1
-
                 }
             }).then((json)=>{
                 if(json.re==1)
@@ -96,6 +182,7 @@ export let fetchCoureseGroupByCourseId=(course,memberId1)=>{
                     resolve({re:1,data:groupContents})
                     //resolve({re:1,data:groupContents})
                     //resolve(json);
+
                 }
 
             }).catch((e)=>{
@@ -245,6 +332,37 @@ export let editClass=(classId,courseId,yard,unitId,classWeek,startTime,endTime,c
     }
 }
 
+export let fetchOrderMember=(courseId)=> {
+    return (dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+
+            var state = getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/fetchOrderMember',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    courseId: courseId,
+                }
+            }).then((json) => {
+                if (json.re == 1) {
+                    var OrderMember = json.data;
+                    dispatch(onOrderMemberUpdate(OrderMember));
+                    resolve({re: 1, data: OrderMember})
+                    //resolve(json);
+                }
+
+            }).catch((e) => {
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
 export let fetchClassMember=(courseId,classId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
@@ -339,6 +457,18 @@ export let onClassMemberUpdate=(classMember)=>{
     }
 }
 
+
+
+    export let onOrderMemberUpdate=(OrderMember)=>{
+        return (dispatch,getState)=>{
+            dispatch({
+                type:ON_ORDER_MEMBER_UPDATE,
+                OrderMember:OrderMember
+
+            })
+        }
+    }
+
 export let onStudentsCourseRecordUpdate=(studentsCourseRecord)=>{
     return (dispatch,getState)=>{
         dispatch({
@@ -382,6 +512,12 @@ export let disableClassMemberOnFresh=()=>{
         type:DISABLE_CLASS_MEMBER_ONFRESH,
     }
 }
+
+    export let disableOrderMemberOnFresh=()=>{
+        return {
+            type:DISABLE_ORDER_MEMBER_ONFRESH,
+        }
+    }
 //拉取课程
 export let fetchCourses=()=>{
     return (dispatch,getState)=>{
@@ -531,6 +667,39 @@ export let saveOrUpdateBadmintonCourseClassRecords=(classMember,courseId)=>{
     }
 }
 
+export let SignUpOrderMember=(OrderMember,courseId)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/SignUpOrderMember',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    OrderMember:OrderMember,
+                    courseId:courseId
+
+                }
+            }).then((json)=>{
+                if(json.re==-100){
+                    resolve(json)
+                }else{
+
+                    resolve(json)
+
+                }
+            }).catch((e)=>{
+                alert("此时不是签到时间");
+                reject(e);
+            })
+
+        })
+    }
+}
+
 export let onCustomCourseUpdate=(customCourse)=>{
     return (dispatch,getState)=>{
         dispatch({
@@ -544,7 +713,7 @@ export let onCustomCourseUpdate=(customCourse)=>{
 
 
 //发布课程
-export let distributeCourse=(course,venue,memberId,coached,demandId)=>{
+export let distributeCourse=(course,venue,memberId,coach,demandId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
 
@@ -555,6 +724,8 @@ export let distributeCourse=(course,venue,memberId,coached,demandId)=>{
             }else{
                 venue1=venue;
             }
+            var coachId=null;
+            coachId=coach.substring(0,coach.length-1);
             var indexNum=0;
             Proxy.postes({
                 url: Config.server + '/func/course/distributeCourse',
@@ -568,7 +739,7 @@ export let distributeCourse=(course,venue,memberId,coached,demandId)=>{
                         memberId,
                         demandId,
                         indexNum,
-                        coached
+                        coachId
                     }
                 }
             }).then((json)=>{
@@ -616,6 +787,35 @@ export let modifyCourse=(course,venue,memberId,demandId)=>{
 }
 
 
+export let modifyClassDetail=(classDetail)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/course/modifyClassDetail',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    info:{
+                        classDetail
+                    }
+                }
+            }).then((json)=>{
+                resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+
 export let fetchClassSchedule=(classId)=>{
     return (dispatch,getState)=>{
         return new Promise((resolve, reject) => {
@@ -631,6 +831,39 @@ export let fetchClassSchedule=(classId)=>{
                 }
             }).then((json)=>{
                 resolve(json)
+
+            }).catch((e)=>{
+                alert(e);
+                reject(e);
+            })
+
+        })
+    }
+}
+
+export let ShowSchemePersons=(course,memberId,groupType)=>{
+    return (dispatch,getState)=>{
+        return new Promise((resolve, reject) => {
+            var state=getState();
+
+            Proxy.postes({
+                url: Config.server + '/func/allow/ShowSchemePersons',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: {
+                    course:course,
+                    memberId:memberId,
+                    groupType:groupType
+                }
+            }).then((json)=>{
+                if(json.re==1)
+                {
+                    var students=json.data;
+                    resolve({re:1,data:students})
+
+                }
+
 
             }).catch((e)=>{
                 alert(e);
@@ -1087,6 +1320,13 @@ export let enableClassMemberOnFresh=()=>{
         type:ENABLE_CLASS_MEMBER_ONFRESH,
     }
 }
+
+    export let enableOrderMemberOnFresh=()=>{
+        return {
+            type:ENABLE_ORDER_MEMBER_ONFRESH,
+        }
+    }
+
 
 export let disableStudentsPayOnFresh=()=>{
     return {

@@ -195,9 +195,6 @@ class StudentPayInformation extends Component {
 
 
         )
-
-
-
     }
 
     fetchStudentsPay(courseId,memberId){

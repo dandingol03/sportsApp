@@ -500,21 +500,6 @@ const styles = StyleSheet.create({
     }
 });
 
-/*
-const mapStateToProps = (state, ownProps) => {
-
-    const props = {
-        userType: state.user.usertype.perTypeCode,
-        courses:state.course.courses,
-        creatorId:this.props.creatorId
-    }
-    return props
-}
-
-
-export default connect(mapStateToProps)(MyDistribution);
-*/
-
 module.exports = connect(state=>({
         userType: state.user.usertype.perTypeCode,
         students:state.course.studentsOfCourse,

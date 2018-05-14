@@ -32,6 +32,10 @@ import {
     DISABLE_CLASS_MEMBER_ONFRESH,
     ENABLE_CLASS_MEMBER_ONFRESH,
 
+    ON_ORDER_MEMBER_UPDATE,
+    DISABLE_ORDER_MEMBER_ONFRESH,
+    ENABLE_ORDER_MEMBER_ONFRESH,
+
     ON_COURSE_GROUP_UPDATE,
 } from '../constants/CourseConstants';
 
@@ -64,6 +68,9 @@ const initialState = {
 
     classMember:null,
     classMemberOnFresh:true,
+
+    OrderMember:null,
+    OrderMemberOnFresh:true,
 
     courseGroup:null
 };
@@ -203,6 +210,20 @@ let course = (state = initialState, action) => {
         case DISABLE_CLASS_MEMBER_ONFRESH:
             return Object.assign({}, state, {
                 classMemberOnFresh:false
+            })
+
+        case  ON_ORDER_MEMBER_UPDATE:
+            // var {coursesOfCoach}=action.payload
+            return Object.assign({}, state, {
+                OrderMember:action.OrderMember
+            })
+        case ENABLE_ORDER_MEMBER_ONFRESH:
+            return Object.assign({}, state, {
+                OrderMemberOnFresh:true
+            })
+        case DISABLE_ORDER_MEMBER_ONFRESH:
+            return Object.assign({}, state, {
+                OrderMemberOnFresh:false
             })
 
         case ON_COURSE_GROUP_UPDATE:
