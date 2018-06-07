@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) UIWindow *window;
 
+//关键代码
+@property (nonatomic, strong) UINavigationController *nav;
 @end

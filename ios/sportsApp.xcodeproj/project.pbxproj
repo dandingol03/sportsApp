@@ -27,6 +27,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1C45A8C1DC924A12BFD9112A /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBFCB9E1D30A47B0B78E1572 /* libRNFS.a */; };
 		2A2834F41EE679E40049BED9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2834F31EE679E40049BED9 /* CoreLocation.framework */; };
 		2A2834F61EE679F00049BED9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2834F51EE679F00049BED9 /* QuartzCore.framework */; };
 		2A2834F81EE679FE0049BED9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A2834F71EE679FE0049BED9 /* OpenGLES.framework */; };
@@ -63,51 +64,6 @@
 		4123F855953F40E88AEB2CCA /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDA8CFE9E4A64A9A95E522EF /* Octicons.ttf */; };
 		4A3E807B2020329B0021E882 /* RCTPushStreamViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E807A2020329B0021E882 /* RCTPushStreamViewManager.m */; };
 		4A3E807C2020329B0021E882 /* RCTPushStreamViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E807A2020329B0021E882 /* RCTPushStreamViewManager.m */; };
-		4A3E813F20205B400021E882 /* .clang-format in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80E720205B400021E882 /* .clang-format */; };
-		4A3E814020205B400021E882 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80E820205B400021E882 /* .gitignore */; };
-		4A3E814120205B400021E882 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80E920205B400021E882 /* .travis.yml */; };
-		4A3E814220205B400021E882 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80EA20205B400021E882 /* CHANGELOG.md */; };
-		4A3E814320205B400021E882 /* clang-format in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80EB20205B400021E882 /* clang-format */; };
-		4A3E814420205B400021E882 /* Contributing.md in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80EC20205B400021E882 /* Contributing.md */; };
-		4A3E814520205B400021E882 /* format.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E80ED20205B400021E882 /* format.sh */; };
-		4A3E814620205B400021E882 /* QNAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80F120205B400021E882 /* QNAssessment.m */; };
-		4A3E814720205B400021E882 /* QNIpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80F320205B400021E882 /* QNIpModel.m */; };
-		4A3E814820205B400021E882 /* QNDnsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80F620205B400021E882 /* QNDnsManager.m */; };
-		4A3E814920205B400021E882 /* QNDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80F820205B400021E882 /* QNDomain.m */; };
-		4A3E814A20205B400021E882 /* QNLruCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80FA20205B400021E882 /* QNLruCache.m */; };
-		4A3E814B20205B400021E882 /* QNNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80FC20205B400021E882 /* QNNetworkInfo.m */; };
-		4A3E814C20205B400021E882 /* QNRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E80FE20205B400021E882 /* QNRecord.m */; };
-		4A3E814D20205B400021E882 /* QNDnspodEnterprise.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810320205B400021E882 /* QNDnspodEnterprise.m */; };
-		4A3E814E20205B400021E882 /* QNDnspodFree.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810520205B400021E882 /* QNDnspodFree.m */; };
-		4A3E814F20205B400021E882 /* QNHijackingDetectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810820205B400021E882 /* QNHijackingDetectWrapper.m */; };
-		4A3E815020205B400021E882 /* QNHosts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810A20205B400021E882 /* QNHosts.m */; };
-		4A3E815120205B400021E882 /* QNResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810C20205B400021E882 /* QNResolver.m */; };
-		4A3E815220205B400021E882 /* QNResolvUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E810E20205B400021E882 /* QNResolvUtil.m */; };
-		4A3E815320205B400021E882 /* QNTxtResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811020205B400021E882 /* QNTxtResolver.m */; };
-		4A3E815420205B400021E882 /* QNRefresher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811220205B400021E882 /* QNRefresher.m */; };
-		4A3E815520205B400021E882 /* QNDes.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811520205B400021E882 /* QNDes.m */; };
-		4A3E815620205B400021E882 /* QNGetAddrInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811720205B400021E882 /* QNGetAddrInfo.m */; };
-		4A3E815720205B400021E882 /* QNHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811920205B400021E882 /* QNHex.m */; };
-		4A3E815820205B400021E882 /* QNIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E811B20205B400021E882 /* QNIP.m */; };
-		4A3E815920205B400021E882 /* HappyDNS.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E811C20205B400021E882 /* HappyDNS.podspec */; };
-		4A3E815A20205B400021E882 /* HappyDNS.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E812020205B400021E882 /* HappyDNS.xcworkspace */; };
-		4A3E815B20205B400021E882 /* DesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812220205B400021E882 /* DesTest.m */; };
-		4A3E815C20205B400021E882 /* DnspodEnterpriseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812320205B400021E882 /* DnspodEnterpriseTest.m */; };
-		4A3E815D20205B400021E882 /* DnspodFreeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812420205B400021E882 /* DnspodFreeTest.m */; };
-		4A3E815E20205B400021E882 /* DnsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812520205B400021E882 /* DnsTest.m */; };
-		4A3E815F20205B400021E882 /* GetAddrInfoTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812620205B400021E882 /* GetAddrInfoTest.m */; };
-		4A3E816020205B400021E882 /* HexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812720205B400021E882 /* HexTest.m */; };
-		4A3E816120205B400021E882 /* HostsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812820205B400021E882 /* HostsTest.m */; };
-		4A3E816220205B400021E882 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E812920205B400021E882 /* Info.plist */; };
-		4A3E816320205B400021E882 /* IPTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812A20205B400021E882 /* IPTest.m */; };
-		4A3E816420205B400021E882 /* LruCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812B20205B400021E882 /* LruCacheTest.m */; };
-		4A3E816520205B400021E882 /* NetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812C20205B400021E882 /* NetworkTest.m */; };
-		4A3E816620205B400021E882 /* ResolverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812D20205B400021E882 /* ResolverTest.m */; };
-		4A3E816720205B400021E882 /* TxtResolverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E812E20205B400021E882 /* TxtResolverTest.m */; };
-		4A3E816820205B400021E882 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E812F20205B400021E882 /* LICENSE */; };
-		4A3E816920205B400021E882 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E813020205B400021E882 /* Podfile */; };
-		4A3E816A20205B400021E882 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E813120205B400021E882 /* README.md */; };
-		4A3E816B20205B400021E882 /* uncrustify.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E813220205B400021E882 /* uncrustify.cfg */; };
 		4A3E818220205B650021E882 /* QNNExternalIp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817020205B650021E882 /* QNNExternalIp.m */; };
 		4A3E818320205B650021E882 /* QNNHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817220205B650021E882 /* QNNHttp.m */; };
 		4A3E818420205B650021E882 /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3E817420205B650021E882 /* QNNNslookup.m */; };
@@ -129,7 +85,6 @@
 		4A3E81CF20205B8F0021E882 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4A3E81AD20205B8F0021E882 /* .gitkeep */; };
 		4A3E81D020205B8F0021E882 /* libfdk-aac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81CC20205B8F0021E882 /* libfdk-aac.a */; };
 		4A3E81D120205B8F0021E882 /* libPLMediaStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81CD20205B8F0021E882 /* libPLMediaStreamingKit.a */; };
-		4A3E81D420205CA30021E882 /* PLPlayerKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4A3E81D320205CA30021E882 /* PLPlayerKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4A3E81D620205CFD0021E882 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81D520205CFD0021E882 /* libbz2.tbd */; };
 		4A3E81D820205D190021E882 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81D720205D190021E882 /* VideoToolbox.framework */; };
 		4A3E81DA20205D250021E882 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81D920205D250021E882 /* CoreMedia.framework */; };
@@ -140,7 +95,93 @@
 		4A3E81E420205E370021E882 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81E320205E370021E882 /* AudioToolbox.framework */; };
 		4A3E81E620205E410021E882 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81E520205E410021E882 /* CoreAudio.framework */; };
 		4A3E81E820205E4A0021E882 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81E720205E4A0021E882 /* MediaPlayer.framework */; };
-		4A3E81E920205EB20021E882 /* PLPlayerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A3E81D320205CA30021E882 /* PLPlayerKit.framework */; };
+		502CA97520ABC158000EDC49 /* VideoCaptureDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA97120ABC158000EDC49 /* VideoCaptureDevice.m */; };
+		502CA9BA20B29F5A000EDC49 /* PLMediaStreamingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502CA9B920B29F59000EDC49 /* PLMediaStreamingKit.framework */; };
+		502CA9BC20B29F64000EDC49 /* HappyDNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502CA9BB20B29F64000EDC49 /* HappyDNS.framework */; };
+		502CA9BD20B29FB7000EDC49 /* HappyDNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502CA9BB20B29F64000EDC49 /* HappyDNS.framework */; };
+		502CA9BE20B29FB7000EDC49 /* HappyDNS.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 502CA9BB20B29F64000EDC49 /* HappyDNS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		502CA9BF20B29FBD000EDC49 /* PLMediaStreamingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502CA9B920B29F59000EDC49 /* PLMediaStreamingKit.framework */; };
+		502CA9C020B29FBD000EDC49 /* PLMediaStreamingKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 502CA9B920B29F59000EDC49 /* PLMediaStreamingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		502CAA1A20B2A176000EDC49 /* uncrustify.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 502CA9C220B2A175000EDC49 /* uncrustify.cfg */; };
+		502CAA1B20B2A176000EDC49 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 502CA9C320B2A175000EDC49 /* LICENSE */; };
+		502CAA1C20B2A176000EDC49 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 502CA9C420B2A175000EDC49 /* CHANGELOG.md */; };
+		502CAA1E20B2A176000EDC49 /* HappyDNS.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 502CA9C620B2A175000EDC49 /* HappyDNS.xcworkspace */; };
+		502CAA1F20B2A176000EDC49 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 502CA9C720B2A175000EDC49 /* README.md */; };
+		502CAA2020B2A176000EDC49 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 502CA9C820B2A175000EDC49 /* .gitignore */; };
+		502CAA2120B2A176000EDC49 /* Contributing.md in Resources */ = {isa = PBXBuildFile; fileRef = 502CA9C920B2A175000EDC49 /* Contributing.md */; };
+		502CAA2220B2A176000EDC49 /* .clang-format in Resources */ = {isa = PBXBuildFile; fileRef = 502CA9CA20B2A175000EDC49 /* .clang-format */; };
+		502CAA2320B2A176000EDC49 /* QNDes.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9D020B2A175000EDC49 /* QNDes.m */; };
+		502CAA2420B2A176000EDC49 /* QNHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9D120B2A175000EDC49 /* QNHex.m */; };
+		502CAA2520B2A176000EDC49 /* QNGetAddrInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9D220B2A175000EDC49 /* QNGetAddrInfo.m */; };
+		502CAA2620B2A176000EDC49 /* QNIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9D320B2A175000EDC49 /* QNIP.m */; };
+		502CAA2720B2A176000EDC49 /* QNAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9DB20B2A175000EDC49 /* QNAssessment.m */; };
+		502CAA2820B2A176000EDC49 /* QNIpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9DC20B2A175000EDC49 /* QNIpModel.m */; };
+		502CAA2920B2A176000EDC49 /* QNTxtResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9E020B2A175000EDC49 /* QNTxtResolver.m */; };
+		502CAA2A20B2A176000EDC49 /* QNHijackingDetectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9E420B2A175000EDC49 /* QNHijackingDetectWrapper.m */; };
+		502CAA2B20B2A176000EDC49 /* QNResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9E620B2A175000EDC49 /* QNResolver.m */; };
+		502CAA2C20B2A176000EDC49 /* QNResolvUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9E720B2A175000EDC49 /* QNResolvUtil.m */; };
+		502CAA2D20B2A176000EDC49 /* QNHosts.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9E820B2A175000EDC49 /* QNHosts.m */; };
+		502CAA2E20B2A176000EDC49 /* QNDnsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9EB20B2A175000EDC49 /* QNDnsManager.m */; };
+		502CAA2F20B2A176000EDC49 /* QNLruCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9ED20B2A175000EDC49 /* QNLruCache.m */; };
+		502CAA3020B2A176000EDC49 /* QNNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9F020B2A175000EDC49 /* QNNetworkInfo.m */; };
+		502CAA3120B2A176000EDC49 /* QNDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9F220B2A175000EDC49 /* QNDomain.m */; };
+		502CAA3220B2A176000EDC49 /* QNRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9F420B2A175000EDC49 /* QNRecord.m */; };
+		502CAA3320B2A176000EDC49 /* QNDnspodFree.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9F720B2A175000EDC49 /* QNDnspodFree.m */; };
+		502CAA3420B2A176000EDC49 /* QNDnspodEnterprise.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9FA20B2A175000EDC49 /* QNDnspodEnterprise.m */; };
+		502CAA3520B2A176000EDC49 /* QNRefresher.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9FB20B2A175000EDC49 /* QNRefresher.m */; };
+		502CAA3720B2A176000EDC49 /* IPTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9FE20B2A175000EDC49 /* IPTest.m */; };
+		502CAA3820B2A176000EDC49 /* DnspodFreeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CA9FF20B2A175000EDC49 /* DnspodFreeTest.m */; };
+		502CAA3920B2A176000EDC49 /* HexTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0020B2A175000EDC49 /* HexTest.m */; };
+		502CAA3A20B2A176000EDC49 /* DesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0120B2A175000EDC49 /* DesTest.m */; };
+		502CAA3B20B2A176000EDC49 /* TxtResolverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0220B2A175000EDC49 /* TxtResolverTest.m */; };
+		502CAA3C20B2A176000EDC49 /* DnsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0320B2A175000EDC49 /* DnsTest.m */; };
+		502CAA3D20B2A176000EDC49 /* DnspodEnterpriseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0420B2A175000EDC49 /* DnspodEnterpriseTest.m */; };
+		502CAA3E20B2A176000EDC49 /* HostsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0520B2A175000EDC49 /* HostsTest.m */; };
+		502CAA3F20B2A176000EDC49 /* NetworkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0620B2A175000EDC49 /* NetworkTest.m */; };
+		502CAA4020B2A176000EDC49 /* LruCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0720B2A175000EDC49 /* LruCacheTest.m */; };
+		502CAA4120B2A176000EDC49 /* ResolverTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0820B2A175000EDC49 /* ResolverTest.m */; };
+		502CAA4220B2A176000EDC49 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 502CAA0920B2A175000EDC49 /* Info.plist */; };
+		502CAA4320B2A176000EDC49 /* GetAddrInfoTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CAA0A20B2A175000EDC49 /* GetAddrInfoTest.m */; };
+		502CAA4420B2A176000EDC49 /* HappyDNS.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 502CAA0B20B2A175000EDC49 /* HappyDNS.podspec */; };
+		502CAA4520B2A176000EDC49 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 502CAA0C20B2A175000EDC49 /* .travis.yml */; };
+		502CAA4620B2A176000EDC49 /* format.sh in Resources */ = {isa = PBXBuildFile; fileRef = 502CAA0D20B2A175000EDC49 /* format.sh */; };
+		502CAA4D20B2A59B000EDC49 /* com.baidu.idl.face.model.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 502CAA4920B2A59A000EDC49 /* com.baidu.idl.face.model.bundle */; };
+		502CAA4E20B2A59B000EDC49 /* com.baidu.idl.face.faceSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 502CAA4A20B2A59B000EDC49 /* com.baidu.idl.face.faceSDK.bundle */; };
+		502CAA5020B2A59B000EDC49 /* idl-license.face-ios in Resources */ = {isa = PBXBuildFile; fileRef = 502CAA4C20B2A59B000EDC49 /* idl-license.face-ios */; };
+		502CAA5420B2AD7A000EDC49 /* IDLFaceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502CAA5320B2AD7A000EDC49 /* IDLFaceSDK.framework */; };
+		502CAA6820B3EA71000EDC49 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 502CAA5920B3EA6F000EDC49 /* Main.storyboard */; };
+		502CAA6920B3EA71000EDC49 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 502CAA5B20B3EA6F000EDC49 /* LaunchScreen.storyboard */; };
+		508FA3CF20B9079100C47AA9 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 508FA38120B9079100C47AA9 /* LICENSE */; };
+		508FA3D020B9079100C47AA9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 508FA38220B9079100C47AA9 /* README.md */; };
+		508FA3D120B9079100C47AA9 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA38420B9079100C47AA9 /* UIProgressView+AFNetworking.m */; };
+		508FA3D220B9079100C47AA9 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA38620B9079100C47AA9 /* UIRefreshControl+AFNetworking.m */; };
+		508FA3D320B9079100C47AA9 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA38920B9079100C47AA9 /* AFNetworkActivityIndicatorManager.m */; };
+		508FA3D420B9079100C47AA9 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA38F20B9079100C47AA9 /* UIImageView+AFNetworking.m */; };
+		508FA3D520B9079100C47AA9 /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA39220B9079100C47AA9 /* UIButton+AFNetworking.m */; };
+		508FA3D620B9079100C47AA9 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA39320B9079100C47AA9 /* UIActivityIndicatorView+AFNetworking.m */; };
+		508FA3D720B9079100C47AA9 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA39420B9079100C47AA9 /* UIWebView+AFNetworking.m */; };
+		508FA3D820B9079100C47AA9 /* AFAutoPurgingImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA39520B9079100C47AA9 /* AFAutoPurgingImageCache.m */; };
+		508FA3D920B9079100C47AA9 /* AFImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA39720B9079100C47AA9 /* AFImageDownloader.m */; };
+		508FA3DA20B9079100C47AA9 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA39D20B9079100C47AA9 /* AFURLResponseSerialization.m */; };
+		508FA3DB20B9079100C47AA9 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA39E20B9079100C47AA9 /* AFHTTPSessionManager.m */; };
+		508FA3DC20B9079100C47AA9 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA3A020B9079100C47AA9 /* AFURLSessionManager.m */; };
+		508FA3DD20B9079100C47AA9 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA3A120B9079100C47AA9 /* AFURLRequestSerialization.m */; };
+		508FA3DE20B9079100C47AA9 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA3A320B9079100C47AA9 /* AFNetworkReachabilityManager.m */; };
+		508FA3DF20B9079100C47AA9 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA3A420B9079100C47AA9 /* AFSecurityPolicy.m */; };
+		508FA3ED20B907A900C47AA9 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 508FA3E120B907A900C47AA9 /* LICENSE */; };
+		508FA3EE20B907A900C47AA9 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA3E320B907A900C47AA9 /* SVRadialGradientLayer.m */; };
+		508FA3EF20B907A900C47AA9 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA3E620B907A900C47AA9 /* SVProgressAnimatedView.m */; };
+		508FA3F020B907A900C47AA9 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA3E820B907A900C47AA9 /* SVProgressHUD.m */; };
+		508FA3F120B907A900C47AA9 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 508FA3E920B907A900C47AA9 /* SVIndefiniteAnimatedView.m */; };
+		508FA3F220B907A900C47AA9 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 508FA3EA20B907A900C47AA9 /* SVProgressHUD.bundle */; };
+		508FA3F320B907A900C47AA9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 508FA3EC20B907A900C47AA9 /* README.md */; };
+		50A272DD20C2786300669DA2 /* FaceViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A272DC20C2786300669DA2 /* FaceViewManager.m */; };
+		50A2732820C53A7F00669DA2 /* DetectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2732720C53A7F00669DA2 /* DetectionViewController.m */; };
+		50A2732D20C53AB100669DA2 /* RemindView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2732A20C53AB100669DA2 /* RemindView.m */; };
+		50A2732E20C53AB100669DA2 /* CircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2732B20C53AB100669DA2 /* CircleView.m */; };
+		50A2733120C53B3400669DA2 /* ImageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2733020C53B3400669DA2 /* ImageUtils.m */; };
+		50A2733520C60FC800669DA2 /* FaceBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2733420C60FC800669DA2 /* FaceBaseViewController.m */; };
+		50A2734320C7B24000669DA2 /* NextNativeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2734220C7B24000669DA2 /* NextNativeViewController.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		77E22C1060CF40098E9C5BF5 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD2EC0645B8C4522B05B4DEB /* Entypo.ttf */; };
 		823ECD6AEF5E4448804DB938 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD73034F6174C109EA37AED /* UserNotifications.framework */; };
@@ -161,6 +202,18 @@
 		FD1428D32F984016AEC92727 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B27BB71D43E445B297582F79 /* CoreFoundation.framework */; };
 		FF7D1A3C4D2D464A8CC2856E /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64056C70EAF341A0BB63E20C /* MaterialIcons.ttf */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		502CA9A320B24A72000EDC49 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = text.plist;
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# builtin-copyPlist\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
 		00C302AB1ABCB8CE00DB3ED1 /* PBXContainerItemProxy */ = {
@@ -380,30 +433,44 @@
 			remoteGlobalIDString = 10D6D7A41F160C250066F0F3;
 			remoteInfo = RCTWeChatTests;
 		};
-		4A3E813720205B400021E882 /* PBXContainerItemProxy */ = {
+		502CA8CB20859057000EDC49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+			containerPortal = D44E3C1A4399485281AB376A /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
+			remoteInfo = RNFS;
+		};
+		502CA8CD20859057000EDC49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D44E3C1A4399485281AB376A /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6456441F1EB8DA9100672408;
+			remoteInfo = "RNFS-tvOS";
+		};
+		502CAA1220B2A175000EDC49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 502CA9CB20B2A175000EDC49 /* HappyDNS.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DF22C0BF1B37B9B90010FEBF;
 			remoteInfo = HappyDNS_Mac;
 		};
-		4A3E813920205B400021E882 /* PBXContainerItemProxy */ = {
+		502CAA1420B2A175000EDC49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+			containerPortal = 502CA9CB20B2A175000EDC49 /* HappyDNS.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DF22C0CA1B37B9B90010FEBF;
 			remoteInfo = HappyDNS_MacTests;
 		};
-		4A3E813B20205B400021E882 /* PBXContainerItemProxy */ = {
+		502CAA1620B2A175000EDC49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+			containerPortal = 502CA9CB20B2A175000EDC49 /* HappyDNS.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DF801F951B3A4F4D00866FDE;
 			remoteInfo = HappyDNS_iOS;
 		};
-		4A3E813D20205B400021E882 /* PBXContainerItemProxy */ = {
+		502CAA1820B2A175000EDC49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+			containerPortal = 502CA9CB20B2A175000EDC49 /* HappyDNS.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DF801F9F1B3A4F4D00866FDE;
 			remoteInfo = HappyDNS_iOSTests;
@@ -452,7 +519,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4A3E81D420205CA30021E882 /* PLPlayerKit.framework in CopyFiles */,
+				502CA9BE20B29FB7000EDC49 /* HappyDNS.framework in CopyFiles */,
+				502CA9C020B29FBD000EDC49 /* PLMediaStreamingKit.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,74 +581,6 @@
 		2D02E4901E0B4A5D006451C7 /* sportsApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sportsApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A3E8079202032910021E882 /* RCTPushStreamViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTPushStreamViewManager.h; sourceTree = "<group>"; };
 		4A3E807A2020329B0021E882 /* RCTPushStreamViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTPushStreamViewManager.m; sourceTree = "<group>"; };
-		4A3E80932020498C0021E882 /* PLPlayerKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLPlayerKit.framework; path = ../../../../Downloads/PLPlayerKit.framework; sourceTree = "<group>"; };
-		4A3E80E720205B400021E882 /* .clang-format */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
-		4A3E80E820205B400021E882 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		4A3E80E920205B400021E882 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
-		4A3E80EA20205B400021E882 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		4A3E80EB20205B400021E882 /* clang-format */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "clang-format"; sourceTree = "<group>"; };
-		4A3E80EC20205B400021E882 /* Contributing.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Contributing.md; sourceTree = "<group>"; };
-		4A3E80ED20205B400021E882 /* format.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = format.sh; sourceTree = "<group>"; };
-		4A3E80F020205B400021E882 /* QNAssessment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNAssessment.h; sourceTree = "<group>"; };
-		4A3E80F120205B400021E882 /* QNAssessment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNAssessment.m; sourceTree = "<group>"; };
-		4A3E80F220205B400021E882 /* QNIpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNIpModel.h; sourceTree = "<group>"; };
-		4A3E80F320205B400021E882 /* QNIpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNIpModel.m; sourceTree = "<group>"; };
-		4A3E80F520205B400021E882 /* QNDnsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnsManager.h; sourceTree = "<group>"; };
-		4A3E80F620205B400021E882 /* QNDnsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnsManager.m; sourceTree = "<group>"; };
-		4A3E80F720205B400021E882 /* QNDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDomain.h; sourceTree = "<group>"; };
-		4A3E80F820205B400021E882 /* QNDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDomain.m; sourceTree = "<group>"; };
-		4A3E80F920205B400021E882 /* QNLruCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNLruCache.h; sourceTree = "<group>"; };
-		4A3E80FA20205B400021E882 /* QNLruCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNLruCache.m; sourceTree = "<group>"; };
-		4A3E80FB20205B400021E882 /* QNNetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNetworkInfo.h; sourceTree = "<group>"; };
-		4A3E80FC20205B400021E882 /* QNNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNetworkInfo.m; sourceTree = "<group>"; };
-		4A3E80FD20205B400021E882 /* QNRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNRecord.h; sourceTree = "<group>"; };
-		4A3E80FE20205B400021E882 /* QNRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNRecord.m; sourceTree = "<group>"; };
-		4A3E80FF20205B400021E882 /* QNResolverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolverDelegate.h; sourceTree = "<group>"; };
-		4A3E810020205B400021E882 /* HappyDNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HappyDNS.h; sourceTree = "<group>"; };
-		4A3E810220205B400021E882 /* QNDnspodEnterprise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodEnterprise.h; sourceTree = "<group>"; };
-		4A3E810320205B400021E882 /* QNDnspodEnterprise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodEnterprise.m; sourceTree = "<group>"; };
-		4A3E810420205B400021E882 /* QNDnspodFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodFree.h; sourceTree = "<group>"; };
-		4A3E810520205B400021E882 /* QNDnspodFree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodFree.m; sourceTree = "<group>"; };
-		4A3E810720205B400021E882 /* QNHijackingDetectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHijackingDetectWrapper.h; sourceTree = "<group>"; };
-		4A3E810820205B400021E882 /* QNHijackingDetectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHijackingDetectWrapper.m; sourceTree = "<group>"; };
-		4A3E810920205B400021E882 /* QNHosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHosts.h; sourceTree = "<group>"; };
-		4A3E810A20205B400021E882 /* QNHosts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHosts.m; sourceTree = "<group>"; };
-		4A3E810B20205B400021E882 /* QNResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolver.h; sourceTree = "<group>"; };
-		4A3E810C20205B400021E882 /* QNResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResolver.m; sourceTree = "<group>"; };
-		4A3E810D20205B400021E882 /* QNResolvUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolvUtil.h; sourceTree = "<group>"; };
-		4A3E810E20205B400021E882 /* QNResolvUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResolvUtil.m; sourceTree = "<group>"; };
-		4A3E810F20205B400021E882 /* QNTxtResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNTxtResolver.h; sourceTree = "<group>"; };
-		4A3E811020205B400021E882 /* QNTxtResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNTxtResolver.m; sourceTree = "<group>"; };
-		4A3E811120205B400021E882 /* QNRefresher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNRefresher.h; sourceTree = "<group>"; };
-		4A3E811220205B400021E882 /* QNRefresher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNRefresher.m; sourceTree = "<group>"; };
-		4A3E811420205B400021E882 /* QNDes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDes.h; sourceTree = "<group>"; };
-		4A3E811520205B400021E882 /* QNDes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDes.m; sourceTree = "<group>"; };
-		4A3E811620205B400021E882 /* QNGetAddrInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNGetAddrInfo.h; sourceTree = "<group>"; };
-		4A3E811720205B400021E882 /* QNGetAddrInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNGetAddrInfo.m; sourceTree = "<group>"; };
-		4A3E811820205B400021E882 /* QNHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHex.h; sourceTree = "<group>"; };
-		4A3E811920205B400021E882 /* QNHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHex.m; sourceTree = "<group>"; };
-		4A3E811A20205B400021E882 /* QNIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNIP.h; sourceTree = "<group>"; };
-		4A3E811B20205B400021E882 /* QNIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNIP.m; sourceTree = "<group>"; };
-		4A3E811C20205B400021E882 /* HappyDNS.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HappyDNS.podspec; sourceTree = "<group>"; };
-		4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = HappyDNS.xcodeproj; sourceTree = "<group>"; };
-		4A3E812020205B400021E882 /* HappyDNS.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = HappyDNS.xcworkspace; sourceTree = "<group>"; };
-		4A3E812220205B400021E882 /* DesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesTest.m; sourceTree = "<group>"; };
-		4A3E812320205B400021E882 /* DnspodEnterpriseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DnspodEnterpriseTest.m; sourceTree = "<group>"; };
-		4A3E812420205B400021E882 /* DnspodFreeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DnspodFreeTest.m; sourceTree = "<group>"; };
-		4A3E812520205B400021E882 /* DnsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DnsTest.m; sourceTree = "<group>"; };
-		4A3E812620205B400021E882 /* GetAddrInfoTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAddrInfoTest.m; sourceTree = "<group>"; };
-		4A3E812720205B400021E882 /* HexTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexTest.m; sourceTree = "<group>"; };
-		4A3E812820205B400021E882 /* HostsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostsTest.m; sourceTree = "<group>"; };
-		4A3E812920205B400021E882 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4A3E812A20205B400021E882 /* IPTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPTest.m; sourceTree = "<group>"; };
-		4A3E812B20205B400021E882 /* LruCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LruCacheTest.m; sourceTree = "<group>"; };
-		4A3E812C20205B400021E882 /* NetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkTest.m; sourceTree = "<group>"; };
-		4A3E812D20205B400021E882 /* ResolverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResolverTest.m; sourceTree = "<group>"; };
-		4A3E812E20205B400021E882 /* TxtResolverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TxtResolverTest.m; sourceTree = "<group>"; };
-		4A3E812F20205B400021E882 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		4A3E813020205B400021E882 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
-		4A3E813120205B400021E882 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4A3E813220205B400021E882 /* uncrustify.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = uncrustify.cfg; sourceTree = "<group>"; };
 		4A3E816E20205B650021E882 /* QNNetDiag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNetDiag.h; sourceTree = "<group>"; };
 		4A3E816F20205B650021E882 /* QNNExternalIp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNExternalIp.h; sourceTree = "<group>"; };
 		4A3E817020205B650021E882 /* QNNExternalIp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNExternalIp.m; sourceTree = "<group>"; };
@@ -646,7 +646,6 @@
 		4A3E81CB20205B8F0021E882 /* PLStreamingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingSession.h; sourceTree = "<group>"; };
 		4A3E81CC20205B8F0021E882 /* libfdk-aac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libfdk-aac.a"; sourceTree = "<group>"; };
 		4A3E81CD20205B8F0021E882 /* libPLMediaStreamingKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPLMediaStreamingKit.a; sourceTree = "<group>"; };
-		4A3E81D320205CA30021E882 /* PLPlayerKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PLPlayerKit.framework; path = "PLPlayerKit for dylib framework/PLPlayerKit/PLPlayerKit.framework"; sourceTree = "<group>"; };
 		4A3E81D520205CFD0021E882 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		4A3E81D720205D190021E882 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		4A3E81D920205D250021E882 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -658,11 +657,151 @@
 		4A3E81E520205E410021E882 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		4A3E81E720205E4A0021E882 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		4C9C5E3F53E04DD59AB6E507 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		502CA97020ABC158000EDC49 /* VideoCaptureDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoCaptureDevice.h; sourceTree = "<group>"; };
+		502CA97120ABC158000EDC49 /* VideoCaptureDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoCaptureDevice.m; sourceTree = "<group>"; };
+		502CA9B920B29F59000EDC49 /* PLMediaStreamingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PLMediaStreamingKit.framework; sourceTree = "<group>"; };
+		502CA9BB20B29F64000EDC49 /* HappyDNS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HappyDNS.framework; sourceTree = "<group>"; };
+		502CA9C220B2A175000EDC49 /* uncrustify.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = uncrustify.cfg; sourceTree = "<group>"; };
+		502CA9C320B2A175000EDC49 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		502CA9C420B2A175000EDC49 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		502CA9C620B2A175000EDC49 /* HappyDNS.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = HappyDNS.xcworkspace; sourceTree = "<group>"; };
+		502CA9C720B2A175000EDC49 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		502CA9C820B2A175000EDC49 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		502CA9C920B2A175000EDC49 /* Contributing.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Contributing.md; sourceTree = "<group>"; };
+		502CA9CA20B2A175000EDC49 /* .clang-format */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
+		502CA9CB20B2A175000EDC49 /* HappyDNS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = HappyDNS.xcodeproj; sourceTree = "<group>"; };
+		502CA9D020B2A175000EDC49 /* QNDes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDes.m; sourceTree = "<group>"; };
+		502CA9D120B2A175000EDC49 /* QNHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHex.m; sourceTree = "<group>"; };
+		502CA9D220B2A175000EDC49 /* QNGetAddrInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNGetAddrInfo.m; sourceTree = "<group>"; };
+		502CA9D320B2A175000EDC49 /* QNIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNIP.m; sourceTree = "<group>"; };
+		502CA9D420B2A175000EDC49 /* QNDes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDes.h; sourceTree = "<group>"; };
+		502CA9D520B2A175000EDC49 /* QNHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHex.h; sourceTree = "<group>"; };
+		502CA9D620B2A175000EDC49 /* QNIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNIP.h; sourceTree = "<group>"; };
+		502CA9D720B2A175000EDC49 /* QNGetAddrInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNGetAddrInfo.h; sourceTree = "<group>"; };
+		502CA9D820B2A175000EDC49 /* QNRefresher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNRefresher.h; sourceTree = "<group>"; };
+		502CA9DA20B2A175000EDC49 /* QNIpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNIpModel.h; sourceTree = "<group>"; };
+		502CA9DB20B2A175000EDC49 /* QNAssessment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNAssessment.m; sourceTree = "<group>"; };
+		502CA9DC20B2A175000EDC49 /* QNIpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNIpModel.m; sourceTree = "<group>"; };
+		502CA9DD20B2A175000EDC49 /* QNAssessment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNAssessment.h; sourceTree = "<group>"; };
+		502CA9DF20B2A175000EDC49 /* QNHijackingDetectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHijackingDetectWrapper.h; sourceTree = "<group>"; };
+		502CA9E020B2A175000EDC49 /* QNTxtResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNTxtResolver.m; sourceTree = "<group>"; };
+		502CA9E120B2A175000EDC49 /* QNResolvUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolvUtil.h; sourceTree = "<group>"; };
+		502CA9E220B2A175000EDC49 /* QNResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolver.h; sourceTree = "<group>"; };
+		502CA9E320B2A175000EDC49 /* QNHosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHosts.h; sourceTree = "<group>"; };
+		502CA9E420B2A175000EDC49 /* QNHijackingDetectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHijackingDetectWrapper.m; sourceTree = "<group>"; };
+		502CA9E520B2A175000EDC49 /* QNTxtResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNTxtResolver.h; sourceTree = "<group>"; };
+		502CA9E620B2A175000EDC49 /* QNResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResolver.m; sourceTree = "<group>"; };
+		502CA9E720B2A175000EDC49 /* QNResolvUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResolvUtil.m; sourceTree = "<group>"; };
+		502CA9E820B2A175000EDC49 /* QNHosts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHosts.m; sourceTree = "<group>"; };
+		502CA9EA20B2A175000EDC49 /* QNNetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNetworkInfo.h; sourceTree = "<group>"; };
+		502CA9EB20B2A175000EDC49 /* QNDnsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnsManager.m; sourceTree = "<group>"; };
+		502CA9EC20B2A175000EDC49 /* QNDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDomain.h; sourceTree = "<group>"; };
+		502CA9ED20B2A175000EDC49 /* QNLruCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNLruCache.m; sourceTree = "<group>"; };
+		502CA9EE20B2A175000EDC49 /* QNRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNRecord.h; sourceTree = "<group>"; };
+		502CA9EF20B2A175000EDC49 /* QNResolverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolverDelegate.h; sourceTree = "<group>"; };
+		502CA9F020B2A175000EDC49 /* QNNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNetworkInfo.m; sourceTree = "<group>"; };
+		502CA9F120B2A175000EDC49 /* QNLruCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNLruCache.h; sourceTree = "<group>"; };
+		502CA9F220B2A175000EDC49 /* QNDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDomain.m; sourceTree = "<group>"; };
+		502CA9F320B2A175000EDC49 /* QNDnsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnsManager.h; sourceTree = "<group>"; };
+		502CA9F420B2A175000EDC49 /* QNRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNRecord.m; sourceTree = "<group>"; };
+		502CA9F520B2A175000EDC49 /* HappyDNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HappyDNS.h; sourceTree = "<group>"; };
+		502CA9F720B2A175000EDC49 /* QNDnspodFree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodFree.m; sourceTree = "<group>"; };
+		502CA9F820B2A175000EDC49 /* QNDnspodEnterprise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodEnterprise.h; sourceTree = "<group>"; };
+		502CA9F920B2A175000EDC49 /* QNDnspodFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodFree.h; sourceTree = "<group>"; };
+		502CA9FA20B2A175000EDC49 /* QNDnspodEnterprise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodEnterprise.m; sourceTree = "<group>"; };
+		502CA9FB20B2A175000EDC49 /* QNRefresher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNRefresher.m; sourceTree = "<group>"; };
+		502CA9FC20B2A175000EDC49 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		502CA9FE20B2A175000EDC49 /* IPTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPTest.m; sourceTree = "<group>"; };
+		502CA9FF20B2A175000EDC49 /* DnspodFreeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DnspodFreeTest.m; sourceTree = "<group>"; };
+		502CAA0020B2A175000EDC49 /* HexTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexTest.m; sourceTree = "<group>"; };
+		502CAA0120B2A175000EDC49 /* DesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesTest.m; sourceTree = "<group>"; };
+		502CAA0220B2A175000EDC49 /* TxtResolverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TxtResolverTest.m; sourceTree = "<group>"; };
+		502CAA0320B2A175000EDC49 /* DnsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DnsTest.m; sourceTree = "<group>"; };
+		502CAA0420B2A175000EDC49 /* DnspodEnterpriseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DnspodEnterpriseTest.m; sourceTree = "<group>"; };
+		502CAA0520B2A175000EDC49 /* HostsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostsTest.m; sourceTree = "<group>"; };
+		502CAA0620B2A175000EDC49 /* NetworkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkTest.m; sourceTree = "<group>"; };
+		502CAA0720B2A175000EDC49 /* LruCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LruCacheTest.m; sourceTree = "<group>"; };
+		502CAA0820B2A175000EDC49 /* ResolverTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResolverTest.m; sourceTree = "<group>"; };
+		502CAA0920B2A175000EDC49 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		502CAA0A20B2A175000EDC49 /* GetAddrInfoTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetAddrInfoTest.m; sourceTree = "<group>"; };
+		502CAA0B20B2A175000EDC49 /* HappyDNS.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HappyDNS.podspec; sourceTree = "<group>"; };
+		502CAA0C20B2A175000EDC49 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		502CAA0D20B2A175000EDC49 /* format.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = format.sh; sourceTree = "<group>"; };
+		502CAA4920B2A59A000EDC49 /* com.baidu.idl.face.model.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = com.baidu.idl.face.model.bundle; sourceTree = "<group>"; };
+		502CAA4A20B2A59B000EDC49 /* com.baidu.idl.face.faceSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = com.baidu.idl.face.faceSDK.bundle; sourceTree = "<group>"; };
+		502CAA4B20B2A59B000EDC49 /* IDLFaceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDLFaceSDK.framework; sourceTree = "<group>"; };
+		502CAA4C20B2A59B000EDC49 /* idl-license.face-ios */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "idl-license.face-ios"; sourceTree = "<group>"; };
+		502CAA5320B2AD7A000EDC49 /* IDLFaceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IDLFaceSDK.framework; sourceTree = "<group>"; };
+		502CAA5A20B3EA6F000EDC49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../../../../Downloads/TurnstileDemo/TurnstileDemo/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		502CAA5C20B3EA6F000EDC49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../../../../Downloads/TurnstileDemo/TurnstileDemo/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		508FA38120B9079100C47AA9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		508FA38220B9079100C47AA9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		508FA38420B9079100C47AA9 /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
+		508FA38520B9079100C47AA9 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+AFNetworking.h"; sourceTree = "<group>"; };
+		508FA38620B9079100C47AA9 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
+		508FA38720B9079100C47AA9 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
+		508FA38820B9079100C47AA9 /* AFImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageDownloader.h; sourceTree = "<group>"; };
+		508FA38920B9079100C47AA9 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
+		508FA38A20B9079100C47AA9 /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAutoPurgingImageCache.h; sourceTree = "<group>"; };
+		508FA38B20B9079100C47AA9 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
+		508FA38C20B9079100C47AA9 /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
+		508FA38D20B9079100C47AA9 /* UIImage+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AFNetworking.h"; sourceTree = "<group>"; };
+		508FA38E20B9079100C47AA9 /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
+		508FA38F20B9079100C47AA9 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		508FA39020B9079100C47AA9 /* UIKit+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIKit+AFNetworking.h"; sourceTree = "<group>"; };
+		508FA39120B9079100C47AA9 /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
+		508FA39220B9079100C47AA9 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+AFNetworking.m"; sourceTree = "<group>"; };
+		508FA39320B9079100C47AA9 /* UIActivityIndicatorView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityIndicatorView+AFNetworking.m"; sourceTree = "<group>"; };
+		508FA39420B9079100C47AA9 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		508FA39520B9079100C47AA9 /* AFAutoPurgingImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAutoPurgingImageCache.m; sourceTree = "<group>"; };
+		508FA39620B9079100C47AA9 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
+		508FA39720B9079100C47AA9 /* AFImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageDownloader.m; sourceTree = "<group>"; };
+		508FA39920B9079100C47AA9 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		508FA39A20B9079100C47AA9 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		508FA39B20B9079100C47AA9 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		508FA39C20B9079100C47AA9 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		508FA39D20B9079100C47AA9 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		508FA39E20B9079100C47AA9 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		508FA39F20B9079100C47AA9 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		508FA3A020B9079100C47AA9 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		508FA3A120B9079100C47AA9 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		508FA3A220B9079100C47AA9 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		508FA3A320B9079100C47AA9 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		508FA3A420B9079100C47AA9 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		508FA3A520B9079100C47AA9 /* AFCompatibilityMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFCompatibilityMacros.h; sourceTree = "<group>"; };
+		508FA3A620B9079100C47AA9 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		508FA3E120B907A900C47AA9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		508FA3E320B907A900C47AA9 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		508FA3E420B907A900C47AA9 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		508FA3E520B907A900C47AA9 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		508FA3E620B907A900C47AA9 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
+		508FA3E720B907A900C47AA9 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		508FA3E820B907A900C47AA9 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		508FA3E920B907A900C47AA9 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		508FA3EA20B907A900C47AA9 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		508FA3EB20B907A900C47AA9 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
+		508FA3EC20B907A900C47AA9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		50A272DB20C2786300669DA2 /* FaceViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceViewManager.h; sourceTree = "<group>"; };
+		50A272DC20C2786300669DA2 /* FaceViewManager.m */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = FaceViewManager.m; sourceTree = "<group>"; };
+		50A2732620C53A7F00669DA2 /* DetectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetectionViewController.h; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/ViewController/DetectionViewController.h"; sourceTree = "<group>"; };
+		50A2732720C53A7F00669DA2 /* DetectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetectionViewController.m; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/ViewController/DetectionViewController.m"; sourceTree = "<group>"; };
+		50A2732920C53AB100669DA2 /* CircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CircleView.h; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/ViewController/CircleView.h"; sourceTree = "<group>"; };
+		50A2732A20C53AB100669DA2 /* RemindView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemindView.m; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/ViewController/RemindView.m"; sourceTree = "<group>"; };
+		50A2732B20C53AB100669DA2 /* CircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CircleView.m; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/ViewController/CircleView.m"; sourceTree = "<group>"; };
+		50A2732C20C53AB100669DA2 /* RemindView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemindView.h; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/ViewController/RemindView.h"; sourceTree = "<group>"; };
+		50A2732F20C53B3300669DA2 /* ImageUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageUtils.h; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/Utils/ImageUtils.h"; sourceTree = "<group>"; };
+		50A2733020C53B3400669DA2 /* ImageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageUtils.m; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/Utils/ImageUtils.m"; sourceTree = "<group>"; };
+		50A2733220C60EA500669DA2 /* FaceParameterConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FaceParameterConfig.h; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/FaceParameterConfig.h"; sourceTree = "<group>"; };
+		50A2733320C60FC700669DA2 /* FaceBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceBaseViewController.h; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/ViewController/FaceBaseViewController.h"; sourceTree = "<group>"; };
+		50A2733420C60FC800669DA2 /* FaceBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FaceBaseViewController.m; path = "../../../../Downloads/IDLFaceSDKDemoOC 2/IDLFaceSDKDemoOC/ViewController/FaceBaseViewController.m"; sourceTree = "<group>"; };
+		50A2734120C7B24000669DA2 /* NextNativeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NextNativeViewController.h; path = "../../../work/React-Native-Test/RNJump/ios/NextNativeViewController.h"; sourceTree = "<group>"; };
+		50A2734220C7B24000669DA2 /* NextNativeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NextNativeViewController.m; path = "../../../work/React-Native-Test/RNJump/ios/NextNativeViewController.m"; sourceTree = "<group>"; };
 		5AB8EFBD3FF048828239C972 /* RCTBEEPickerManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTBEEPickerManager.xcodeproj; path = "../node_modules/react-native-picker/ios/RCTBEEPickerManager.xcodeproj"; sourceTree = "<group>"; };
 		5BA977BB161C4CA0B2EF69DC /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		5D9E1B78DFBB4D20B0C96214 /* libresolv.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		64056C70EAF341A0BB63E20C /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		7195D9C89697B75BAD9FB488 /* libPods-sportsApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sportsApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A578AACF24744B391C59C76 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		7AD73034F6174C109EA37AED /* UserNotifications.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -678,8 +817,10 @@
 		AFA9045B53ED4691B133E53A /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		B27BB71D43E445B297582F79 /* CoreFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B34FD1B1A5BA48C9AC878C5C /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
+		BBFCB9E1D30A47B0B78E1572 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
 		BD2EC0645B8C4522B05B4DEB /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		C35DABE6AD95411B8A055ACB /* CFNetwork.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		D44E3C1A4399485281AB376A /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		DDA8CFE9E4A64A9A95E522EF /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -696,7 +837,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A3E81E920205EB20021E882 /* PLPlayerKit.framework in Frameworks */,
+				502CAA5420B2AD7A000EDC49 /* IDLFaceSDK.framework in Frameworks */,
 				CF15D394EFB44F6685CC9CCF /* UIKit.framework in Frameworks */,
 				4A3E81E820205E4A0021E882 /* MediaPlayer.framework in Frameworks */,
 				4A3E81E620205E410021E882 /* CoreAudio.framework in Frameworks */,
@@ -715,9 +856,12 @@
 				2ACC62571F1366C500C91231 /* libz.tbd in Frameworks */,
 				2AED383E1F0F149200FD55DE /* BaiduMapAPI_Base.framework in Frameworks */,
 				2AED383F1F0F149200FD55DE /* BaiduMapAPI_Cloud.framework in Frameworks */,
+				502CA9BF20B29FBD000EDC49 /* PLMediaStreamingKit.framework in Frameworks */,
+				502CA9BA20B29F5A000EDC49 /* PLMediaStreamingKit.framework in Frameworks */,
 				2AED38401F0F149200FD55DE /* BaiduMapAPI_Location.framework in Frameworks */,
 				2AED38411F0F149200FD55DE /* BaiduMapAPI_Map.framework in Frameworks */,
 				2AED38421F0F149200FD55DE /* BaiduMapAPI_Radar.framework in Frameworks */,
+				502CA9BD20B29FB7000EDC49 /* HappyDNS.framework in Frameworks */,
 				2AED38431F0F149200FD55DE /* BaiduMapAPI_Search.framework in Frameworks */,
 				2AED38441F0F149200FD55DE /* BaiduMapAPI_Utils.framework in Frameworks */,
 				2AED383D1F0F141B00FD55DE /* libRCTBaiduMap.a in Frameworks */,
@@ -738,6 +882,7 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
+				502CA9BC20B29F64000EDC49 /* HappyDNS.framework in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				D0A3C6379BFF43D585FA6331 /* libRNVectorIcons.a in Frameworks */,
@@ -751,6 +896,7 @@
 				FD1428D32F984016AEC92727 /* CoreFoundation.framework in Frameworks */,
 				9BD81A6DB1F141ECA0E234EB /* Foundation.framework in Frameworks */,
 				BAD27E4E42094C498BA7E716 /* libresolv.tbd in Frameworks */,
+				1C45A8C1DC924A12BFD9112A /* libRNFS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +1005,21 @@
 		13B07FAE1A68108700A75B9A /* sportsApp */ = {
 			isa = PBXGroup;
 			children = (
+				50A2734120C7B24000669DA2 /* NextNativeViewController.h */,
+				50A2734220C7B24000669DA2 /* NextNativeViewController.m */,
+				50A2733320C60FC700669DA2 /* FaceBaseViewController.h */,
+				50A2733420C60FC800669DA2 /* FaceBaseViewController.m */,
+				50A2733220C60EA500669DA2 /* FaceParameterConfig.h */,
+				50A2732F20C53B3300669DA2 /* ImageUtils.h */,
+				50A2733020C53B3400669DA2 /* ImageUtils.m */,
+				50A2732920C53AB100669DA2 /* CircleView.h */,
+				50A2732B20C53AB100669DA2 /* CircleView.m */,
+				50A2732C20C53AB100669DA2 /* RemindView.h */,
+				50A2732A20C53AB100669DA2 /* RemindView.m */,
+				50A2732620C53A7F00669DA2 /* DetectionViewController.h */,
+				50A2732720C53A7F00669DA2 /* DetectionViewController.m */,
+				502CAA5B20B3EA6F000EDC49 /* LaunchScreen.storyboard */,
+				502CAA5920B3EA6F000EDC49 /* Main.storyboard */,
 				4A3E807A2020329B0021E882 /* RCTPushStreamViewManager.m */,
 				4A3E8079202032910021E882 /* RCTPushStreamViewManager.h */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -868,6 +1029,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				50A272DB20C2786300669DA2 /* FaceViewManager.h */,
+				50A272DC20C2786300669DA2 /* FaceViewManager.m */,
 			);
 			name = sportsApp;
 			sourceTree = "<group>";
@@ -898,6 +1061,7 @@
 		2A2834E41EE679B60049BED9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				502CAA5320B2AD7A000EDC49 /* IDLFaceSDK.framework */,
 				4A3E81E720205E4A0021E882 /* MediaPlayer.framework */,
 				4A3E81E520205E410021E882 /* CoreAudio.framework */,
 				4A3E81E320205E370021E882 /* AudioToolbox.framework */,
@@ -908,7 +1072,6 @@
 				4A3E81D920205D250021E882 /* CoreMedia.framework */,
 				4A3E81D720205D190021E882 /* VideoToolbox.framework */,
 				4A3E81D520205CFD0021E882 /* libbz2.tbd */,
-				4A3E80932020498C0021E882 /* PLPlayerKit.framework */,
 				2ACC62581F1366D300C91231 /* libc++.tbd */,
 				2ACC62561F1366C500C91231 /* libz.tbd */,
 				2A2835031EE682A70049BED9 /* libstdc++.6.0.9.tbd */,
@@ -933,6 +1096,7 @@
 				857059FE8EB045E09D957BBF /* Foundation.framework */,
 				A7CEC6A7E1904109919A3FBA /* UIKit.framework */,
 				5D9E1B78DFBB4D20B0C96214 /* libresolv.tbd */,
+				7195D9C89697B75BAD9FB488 /* libPods-sportsApp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -996,149 +1160,9 @@
 				B34FD1B1A5BA48C9AC878C5C /* libRNImagePicker.a */,
 				1C9D3CDED2B743D98DA6D3C7 /* libRNSVG.a */,
 				26F4285D036249419BC91047 /* libRCTJPushModule.a */,
+				BBFCB9E1D30A47B0B78E1572 /* libRNFS.a */,
 			);
 			name = "Recovered References";
-			sourceTree = "<group>";
-		};
-		4A3E80E620205B400021E882 /* happy-dns-objc */ = {
-			isa = PBXGroup;
-			children = (
-				4A3E80E720205B400021E882 /* .clang-format */,
-				4A3E80E820205B400021E882 /* .gitignore */,
-				4A3E80E920205B400021E882 /* .travis.yml */,
-				4A3E80EA20205B400021E882 /* CHANGELOG.md */,
-				4A3E80EB20205B400021E882 /* clang-format */,
-				4A3E80EC20205B400021E882 /* Contributing.md */,
-				4A3E80ED20205B400021E882 /* format.sh */,
-				4A3E80EE20205B400021E882 /* HappyDNS */,
-				4A3E811C20205B400021E882 /* HappyDNS.podspec */,
-				4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */,
-				4A3E812020205B400021E882 /* HappyDNS.xcworkspace */,
-				4A3E812120205B400021E882 /* HappyDNSTests */,
-				4A3E812F20205B400021E882 /* LICENSE */,
-				4A3E813020205B400021E882 /* Podfile */,
-				4A3E813120205B400021E882 /* README.md */,
-				4A3E813220205B400021E882 /* uncrustify.cfg */,
-			);
-			path = "happy-dns-objc";
-			sourceTree = "<group>";
-		};
-		4A3E80EE20205B400021E882 /* HappyDNS */ = {
-			isa = PBXGroup;
-			children = (
-				4A3E80EF20205B400021E882 /* Assessment */,
-				4A3E80F420205B400021E882 /* Common */,
-				4A3E810020205B400021E882 /* HappyDNS.h */,
-				4A3E810120205B400021E882 /* Http */,
-				4A3E810620205B400021E882 /* Local */,
-				4A3E811120205B400021E882 /* QNRefresher.h */,
-				4A3E811220205B400021E882 /* QNRefresher.m */,
-				4A3E811320205B400021E882 /* Util */,
-			);
-			path = HappyDNS;
-			sourceTree = "<group>";
-		};
-		4A3E80EF20205B400021E882 /* Assessment */ = {
-			isa = PBXGroup;
-			children = (
-				4A3E80F020205B400021E882 /* QNAssessment.h */,
-				4A3E80F120205B400021E882 /* QNAssessment.m */,
-				4A3E80F220205B400021E882 /* QNIpModel.h */,
-				4A3E80F320205B400021E882 /* QNIpModel.m */,
-			);
-			path = Assessment;
-			sourceTree = "<group>";
-		};
-		4A3E80F420205B400021E882 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				4A3E80F520205B400021E882 /* QNDnsManager.h */,
-				4A3E80F620205B400021E882 /* QNDnsManager.m */,
-				4A3E80F720205B400021E882 /* QNDomain.h */,
-				4A3E80F820205B400021E882 /* QNDomain.m */,
-				4A3E80F920205B400021E882 /* QNLruCache.h */,
-				4A3E80FA20205B400021E882 /* QNLruCache.m */,
-				4A3E80FB20205B400021E882 /* QNNetworkInfo.h */,
-				4A3E80FC20205B400021E882 /* QNNetworkInfo.m */,
-				4A3E80FD20205B400021E882 /* QNRecord.h */,
-				4A3E80FE20205B400021E882 /* QNRecord.m */,
-				4A3E80FF20205B400021E882 /* QNResolverDelegate.h */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		4A3E810120205B400021E882 /* Http */ = {
-			isa = PBXGroup;
-			children = (
-				4A3E810220205B400021E882 /* QNDnspodEnterprise.h */,
-				4A3E810320205B400021E882 /* QNDnspodEnterprise.m */,
-				4A3E810420205B400021E882 /* QNDnspodFree.h */,
-				4A3E810520205B400021E882 /* QNDnspodFree.m */,
-			);
-			path = Http;
-			sourceTree = "<group>";
-		};
-		4A3E810620205B400021E882 /* Local */ = {
-			isa = PBXGroup;
-			children = (
-				4A3E810720205B400021E882 /* QNHijackingDetectWrapper.h */,
-				4A3E810820205B400021E882 /* QNHijackingDetectWrapper.m */,
-				4A3E810920205B400021E882 /* QNHosts.h */,
-				4A3E810A20205B400021E882 /* QNHosts.m */,
-				4A3E810B20205B400021E882 /* QNResolver.h */,
-				4A3E810C20205B400021E882 /* QNResolver.m */,
-				4A3E810D20205B400021E882 /* QNResolvUtil.h */,
-				4A3E810E20205B400021E882 /* QNResolvUtil.m */,
-				4A3E810F20205B400021E882 /* QNTxtResolver.h */,
-				4A3E811020205B400021E882 /* QNTxtResolver.m */,
-			);
-			path = Local;
-			sourceTree = "<group>";
-		};
-		4A3E811320205B400021E882 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				4A3E811420205B400021E882 /* QNDes.h */,
-				4A3E811520205B400021E882 /* QNDes.m */,
-				4A3E811620205B400021E882 /* QNGetAddrInfo.h */,
-				4A3E811720205B400021E882 /* QNGetAddrInfo.m */,
-				4A3E811820205B400021E882 /* QNHex.h */,
-				4A3E811920205B400021E882 /* QNHex.m */,
-				4A3E811A20205B400021E882 /* QNIP.h */,
-				4A3E811B20205B400021E882 /* QNIP.m */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
-		4A3E811E20205B400021E882 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4A3E813820205B400021E882 /* libHappyDNS.dylib */,
-				4A3E813A20205B400021E882 /* HappyDNS_MacTests.xctest */,
-				4A3E813C20205B400021E882 /* libHappyDNS.a */,
-				4A3E813E20205B400021E882 /* HappyDNS_iOSTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		4A3E812120205B400021E882 /* HappyDNSTests */ = {
-			isa = PBXGroup;
-			children = (
-				4A3E812220205B400021E882 /* DesTest.m */,
-				4A3E812320205B400021E882 /* DnspodEnterpriseTest.m */,
-				4A3E812420205B400021E882 /* DnspodFreeTest.m */,
-				4A3E812520205B400021E882 /* DnsTest.m */,
-				4A3E812620205B400021E882 /* GetAddrInfoTest.m */,
-				4A3E812720205B400021E882 /* HexTest.m */,
-				4A3E812820205B400021E882 /* HostsTest.m */,
-				4A3E812920205B400021E882 /* Info.plist */,
-				4A3E812A20205B400021E882 /* IPTest.m */,
-				4A3E812B20205B400021E882 /* LruCacheTest.m */,
-				4A3E812C20205B400021E882 /* NetworkTest.m */,
-				4A3E812D20205B400021E882 /* ResolverTest.m */,
-				4A3E812E20205B400021E882 /* TxtResolverTest.m */,
-			);
-			path = HappyDNSTests;
 			sourceTree = "<group>";
 		};
 		4A3E816C20205B650021E882 /* iOS-netdiag */ = {
@@ -1331,6 +1355,270 @@
 			path = PLStreamingKit;
 			sourceTree = "<group>";
 		};
+		502CA8C720859057000EDC49 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				502CA8CC20859057000EDC49 /* libRNFS.a */,
+				502CA8CE20859057000EDC49 /* libRNFS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		502CA96E20ABC158000EDC49 /* FaceUI */ = {
+			isa = PBXGroup;
+			children = (
+				502CA96F20ABC158000EDC49 /* Core */,
+			);
+			name = FaceUI;
+			path = ../../../../Downloads/TurnstileDemo/TurnstileDemo/FaceUI;
+			sourceTree = "<group>";
+		};
+		502CA96F20ABC158000EDC49 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				502CA97020ABC158000EDC49 /* VideoCaptureDevice.h */,
+				502CA97120ABC158000EDC49 /* VideoCaptureDevice.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		502CA98020ABC17D000EDC49 /* FaceSDK */ = {
+			isa = PBXGroup;
+			children = (
+				502CAA4A20B2A59B000EDC49 /* com.baidu.idl.face.faceSDK.bundle */,
+				502CAA4920B2A59A000EDC49 /* com.baidu.idl.face.model.bundle */,
+				502CAA4C20B2A59B000EDC49 /* idl-license.face-ios */,
+				502CAA4B20B2A59B000EDC49 /* IDLFaceSDK.framework */,
+			);
+			name = FaceSDK;
+			path = ../../../../Downloads/TurnstileDemo/TurnstileDemo/Frameworks/FaceSDK;
+			sourceTree = "<group>";
+		};
+		502CA9C120B2A175000EDC49 /* happy-dns-objc */ = {
+			isa = PBXGroup;
+			children = (
+				502CA9C220B2A175000EDC49 /* uncrustify.cfg */,
+				502CA9C320B2A175000EDC49 /* LICENSE */,
+				502CA9C420B2A175000EDC49 /* CHANGELOG.md */,
+				502CA9C620B2A175000EDC49 /* HappyDNS.xcworkspace */,
+				502CA9C720B2A175000EDC49 /* README.md */,
+				502CA9C820B2A175000EDC49 /* .gitignore */,
+				502CA9C920B2A175000EDC49 /* Contributing.md */,
+				502CA9CA20B2A175000EDC49 /* .clang-format */,
+				502CA9CB20B2A175000EDC49 /* HappyDNS.xcodeproj */,
+				502CA9CE20B2A175000EDC49 /* HappyDNS */,
+				502CA9FC20B2A175000EDC49 /* Podfile */,
+				502CA9FD20B2A175000EDC49 /* HappyDNSTests */,
+				502CAA0B20B2A175000EDC49 /* HappyDNS.podspec */,
+				502CAA0C20B2A175000EDC49 /* .travis.yml */,
+				502CAA0D20B2A175000EDC49 /* format.sh */,
+			);
+			path = "happy-dns-objc";
+			sourceTree = "<group>";
+		};
+		502CA9CC20B2A175000EDC49 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				502CAA1320B2A175000EDC49 /* libHappyDNS.dylib */,
+				502CAA1520B2A175000EDC49 /* HappyDNS_MacTests.xctest */,
+				502CAA1720B2A175000EDC49 /* libHappyDNS.a */,
+				502CAA1920B2A175000EDC49 /* HappyDNS_iOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		502CA9CE20B2A175000EDC49 /* HappyDNS */ = {
+			isa = PBXGroup;
+			children = (
+				502CA9CF20B2A175000EDC49 /* Util */,
+				502CA9D820B2A175000EDC49 /* QNRefresher.h */,
+				502CA9D920B2A175000EDC49 /* Assessment */,
+				502CA9DE20B2A175000EDC49 /* Local */,
+				502CA9E920B2A175000EDC49 /* Common */,
+				502CA9F520B2A175000EDC49 /* HappyDNS.h */,
+				502CA9F620B2A175000EDC49 /* Http */,
+				502CA9FB20B2A175000EDC49 /* QNRefresher.m */,
+			);
+			path = HappyDNS;
+			sourceTree = "<group>";
+		};
+		502CA9CF20B2A175000EDC49 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				502CA9D020B2A175000EDC49 /* QNDes.m */,
+				502CA9D120B2A175000EDC49 /* QNHex.m */,
+				502CA9D220B2A175000EDC49 /* QNGetAddrInfo.m */,
+				502CA9D320B2A175000EDC49 /* QNIP.m */,
+				502CA9D420B2A175000EDC49 /* QNDes.h */,
+				502CA9D520B2A175000EDC49 /* QNHex.h */,
+				502CA9D620B2A175000EDC49 /* QNIP.h */,
+				502CA9D720B2A175000EDC49 /* QNGetAddrInfo.h */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		502CA9D920B2A175000EDC49 /* Assessment */ = {
+			isa = PBXGroup;
+			children = (
+				502CA9DA20B2A175000EDC49 /* QNIpModel.h */,
+				502CA9DB20B2A175000EDC49 /* QNAssessment.m */,
+				502CA9DC20B2A175000EDC49 /* QNIpModel.m */,
+				502CA9DD20B2A175000EDC49 /* QNAssessment.h */,
+			);
+			path = Assessment;
+			sourceTree = "<group>";
+		};
+		502CA9DE20B2A175000EDC49 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				502CA9DF20B2A175000EDC49 /* QNHijackingDetectWrapper.h */,
+				502CA9E020B2A175000EDC49 /* QNTxtResolver.m */,
+				502CA9E120B2A175000EDC49 /* QNResolvUtil.h */,
+				502CA9E220B2A175000EDC49 /* QNResolver.h */,
+				502CA9E320B2A175000EDC49 /* QNHosts.h */,
+				502CA9E420B2A175000EDC49 /* QNHijackingDetectWrapper.m */,
+				502CA9E520B2A175000EDC49 /* QNTxtResolver.h */,
+				502CA9E620B2A175000EDC49 /* QNResolver.m */,
+				502CA9E720B2A175000EDC49 /* QNResolvUtil.m */,
+				502CA9E820B2A175000EDC49 /* QNHosts.m */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		502CA9E920B2A175000EDC49 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				502CA9EA20B2A175000EDC49 /* QNNetworkInfo.h */,
+				502CA9EB20B2A175000EDC49 /* QNDnsManager.m */,
+				502CA9EC20B2A175000EDC49 /* QNDomain.h */,
+				502CA9ED20B2A175000EDC49 /* QNLruCache.m */,
+				502CA9EE20B2A175000EDC49 /* QNRecord.h */,
+				502CA9EF20B2A175000EDC49 /* QNResolverDelegate.h */,
+				502CA9F020B2A175000EDC49 /* QNNetworkInfo.m */,
+				502CA9F120B2A175000EDC49 /* QNLruCache.h */,
+				502CA9F220B2A175000EDC49 /* QNDomain.m */,
+				502CA9F320B2A175000EDC49 /* QNDnsManager.h */,
+				502CA9F420B2A175000EDC49 /* QNRecord.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		502CA9F620B2A175000EDC49 /* Http */ = {
+			isa = PBXGroup;
+			children = (
+				502CA9F720B2A175000EDC49 /* QNDnspodFree.m */,
+				502CA9F820B2A175000EDC49 /* QNDnspodEnterprise.h */,
+				502CA9F920B2A175000EDC49 /* QNDnspodFree.h */,
+				502CA9FA20B2A175000EDC49 /* QNDnspodEnterprise.m */,
+			);
+			path = Http;
+			sourceTree = "<group>";
+		};
+		502CA9FD20B2A175000EDC49 /* HappyDNSTests */ = {
+			isa = PBXGroup;
+			children = (
+				502CA9FE20B2A175000EDC49 /* IPTest.m */,
+				502CA9FF20B2A175000EDC49 /* DnspodFreeTest.m */,
+				502CAA0020B2A175000EDC49 /* HexTest.m */,
+				502CAA0120B2A175000EDC49 /* DesTest.m */,
+				502CAA0220B2A175000EDC49 /* TxtResolverTest.m */,
+				502CAA0320B2A175000EDC49 /* DnsTest.m */,
+				502CAA0420B2A175000EDC49 /* DnspodEnterpriseTest.m */,
+				502CAA0520B2A175000EDC49 /* HostsTest.m */,
+				502CAA0620B2A175000EDC49 /* NetworkTest.m */,
+				502CAA0720B2A175000EDC49 /* LruCacheTest.m */,
+				502CAA0820B2A175000EDC49 /* ResolverTest.m */,
+				502CAA0920B2A175000EDC49 /* Info.plist */,
+				502CAA0A20B2A175000EDC49 /* GetAddrInfoTest.m */,
+			);
+			path = HappyDNSTests;
+			sourceTree = "<group>";
+		};
+		508FA38020B9079100C47AA9 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				508FA38120B9079100C47AA9 /* LICENSE */,
+				508FA38220B9079100C47AA9 /* README.md */,
+				508FA38320B9079100C47AA9 /* UIKit+AFNetworking */,
+				508FA39820B9079100C47AA9 /* AFNetworking */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		508FA38320B9079100C47AA9 /* UIKit+AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				508FA38420B9079100C47AA9 /* UIProgressView+AFNetworking.m */,
+				508FA38520B9079100C47AA9 /* UIButton+AFNetworking.h */,
+				508FA38620B9079100C47AA9 /* UIRefreshControl+AFNetworking.m */,
+				508FA38720B9079100C47AA9 /* UIImageView+AFNetworking.h */,
+				508FA38820B9079100C47AA9 /* AFImageDownloader.h */,
+				508FA38920B9079100C47AA9 /* AFNetworkActivityIndicatorManager.m */,
+				508FA38A20B9079100C47AA9 /* AFAutoPurgingImageCache.h */,
+				508FA38B20B9079100C47AA9 /* UIWebView+AFNetworking.h */,
+				508FA38C20B9079100C47AA9 /* UIActivityIndicatorView+AFNetworking.h */,
+				508FA38D20B9079100C47AA9 /* UIImage+AFNetworking.h */,
+				508FA38E20B9079100C47AA9 /* UIProgressView+AFNetworking.h */,
+				508FA38F20B9079100C47AA9 /* UIImageView+AFNetworking.m */,
+				508FA39020B9079100C47AA9 /* UIKit+AFNetworking.h */,
+				508FA39120B9079100C47AA9 /* UIRefreshControl+AFNetworking.h */,
+				508FA39220B9079100C47AA9 /* UIButton+AFNetworking.m */,
+				508FA39320B9079100C47AA9 /* UIActivityIndicatorView+AFNetworking.m */,
+				508FA39420B9079100C47AA9 /* UIWebView+AFNetworking.m */,
+				508FA39520B9079100C47AA9 /* AFAutoPurgingImageCache.m */,
+				508FA39620B9079100C47AA9 /* AFNetworkActivityIndicatorManager.h */,
+				508FA39720B9079100C47AA9 /* AFImageDownloader.m */,
+			);
+			path = "UIKit+AFNetworking";
+			sourceTree = "<group>";
+		};
+		508FA39820B9079100C47AA9 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				508FA39920B9079100C47AA9 /* AFSecurityPolicy.h */,
+				508FA39A20B9079100C47AA9 /* AFNetworkReachabilityManager.h */,
+				508FA39B20B9079100C47AA9 /* AFURLSessionManager.h */,
+				508FA39C20B9079100C47AA9 /* AFURLRequestSerialization.h */,
+				508FA39D20B9079100C47AA9 /* AFURLResponseSerialization.m */,
+				508FA39E20B9079100C47AA9 /* AFHTTPSessionManager.m */,
+				508FA39F20B9079100C47AA9 /* AFURLResponseSerialization.h */,
+				508FA3A020B9079100C47AA9 /* AFURLSessionManager.m */,
+				508FA3A120B9079100C47AA9 /* AFURLRequestSerialization.m */,
+				508FA3A220B9079100C47AA9 /* AFNetworking.h */,
+				508FA3A320B9079100C47AA9 /* AFNetworkReachabilityManager.m */,
+				508FA3A420B9079100C47AA9 /* AFSecurityPolicy.m */,
+				508FA3A520B9079100C47AA9 /* AFCompatibilityMacros.h */,
+				508FA3A620B9079100C47AA9 /* AFHTTPSessionManager.h */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		508FA3E020B907A900C47AA9 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				508FA3E120B907A900C47AA9 /* LICENSE */,
+				508FA3E220B907A900C47AA9 /* SVProgressHUD */,
+				508FA3EC20B907A900C47AA9 /* README.md */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		508FA3E220B907A900C47AA9 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				508FA3E320B907A900C47AA9 /* SVRadialGradientLayer.m */,
+				508FA3E420B907A900C47AA9 /* SVIndefiniteAnimatedView.h */,
+				508FA3E520B907A900C47AA9 /* SVProgressHUD.h */,
+				508FA3E620B907A900C47AA9 /* SVProgressAnimatedView.m */,
+				508FA3E720B907A900C47AA9 /* SVRadialGradientLayer.h */,
+				508FA3E820B907A900C47AA9 /* SVProgressHUD.m */,
+				508FA3E920B907A900C47AA9 /* SVIndefiniteAnimatedView.m */,
+				508FA3EA20B907A900C47AA9 /* SVProgressHUD.bundle */,
+				508FA3EB20B907A900C47AA9 /* SVProgressAnimatedView.h */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1389,6 +1677,7 @@
 				1DE5A0183FE64DACA7D14668 /* RNSensitiveInfo.xcodeproj */,
 				0D4FF4A3814340E08D1E7E84 /* RCTCamera.xcodeproj */,
 				14C51D9C90D543EA8B44B863 /* RNImagePicker.xcodeproj */,
+				D44E3C1A4399485281AB376A /* RNFS.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1405,11 +1694,16 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				4A3E81D320205CA30021E882 /* PLPlayerKit.framework */,
+				508FA3E020B907A900C47AA9 /* SVProgressHUD */,
+				508FA38020B9079100C47AA9 /* AFNetworking */,
+				502CA9C120B2A175000EDC49 /* happy-dns-objc */,
+				502CA9BB20B29F64000EDC49 /* HappyDNS.framework */,
+				502CA9B920B29F59000EDC49 /* PLMediaStreamingKit.framework */,
+				502CA98020ABC17D000EDC49 /* FaceSDK */,
+				502CA96E20ABC158000EDC49 /* FaceUI */,
 				4A3E81A920205B8F0021E882 /* QNPushStream */,
 				4A3E818B20205B890021E882 /* pili-librtmp */,
 				4A3E816C20205B650021E882 /* iOS-netdiag */,
-				4A3E80E620205B400021E882 /* happy-dns-objc */,
 				2AED38451F0F150700FD55DE /* mapapi.bundle */,
 				AD35C9431ED959D500FCD913 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* sportsApp */,
@@ -1475,6 +1769,7 @@
 				4A3E803A202028BF0021E882 /* CopyFiles */,
 			);
 			buildRules = (
+				502CA9A320B24A72000EDC49 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -1563,8 +1858,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 4A3E811E20205B400021E882 /* Products */;
-					ProjectRef = 4A3E811D20205B400021E882 /* HappyDNS.xcodeproj */;
+					ProductGroup = 502CA9CC20B2A175000EDC49 /* Products */;
+					ProjectRef = 502CA9CB20B2A175000EDC49 /* HappyDNS.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -1625,6 +1920,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 502CA8C720859057000EDC49 /* Products */;
+					ProjectRef = D44E3C1A4399485281AB376A /* RNFS.xcodeproj */;
 				},
 				{
 					ProductGroup = 2A70A2331EE4E35200995DD3 /* Products */;
@@ -1857,32 +2156,46 @@
 			remoteRef = 4A3E8027202023AE0021E882 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4A3E813820205B400021E882 /* libHappyDNS.dylib */ = {
+		502CA8CC20859057000EDC49 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = 502CA8CB20859057000EDC49 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		502CA8CE20859057000EDC49 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = 502CA8CD20859057000EDC49 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		502CAA1320B2A175000EDC49 /* libHappyDNS.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
 			path = libHappyDNS.dylib;
-			remoteRef = 4A3E813720205B400021E882 /* PBXContainerItemProxy */;
+			remoteRef = 502CAA1220B2A175000EDC49 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4A3E813A20205B400021E882 /* HappyDNS_MacTests.xctest */ = {
+		502CAA1520B2A175000EDC49 /* HappyDNS_MacTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = HappyDNS_MacTests.xctest;
-			remoteRef = 4A3E813920205B400021E882 /* PBXContainerItemProxy */;
+			remoteRef = 502CAA1420B2A175000EDC49 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4A3E813C20205B400021E882 /* libHappyDNS.a */ = {
+		502CAA1720B2A175000EDC49 /* libHappyDNS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libHappyDNS.a;
-			remoteRef = 4A3E813B20205B400021E882 /* PBXContainerItemProxy */;
+			remoteRef = 502CAA1620B2A175000EDC49 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4A3E813E20205B400021E882 /* HappyDNS_iOSTests.xctest */ = {
+		502CAA1920B2A175000EDC49 /* HappyDNS_iOSTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = HappyDNS_iOSTests.xctest;
-			remoteRef = 4A3E813D20205B400021E882 /* PBXContainerItemProxy */;
+			remoteRef = 502CAA1820B2A175000EDC49 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
@@ -1935,37 +2248,45 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				502CAA2020B2A176000EDC49 /* .gitignore in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				4A3E816820205B400021E882 /* LICENSE in Resources */,
-				4A3E814220205B400021E882 /* CHANGELOG.md in Resources */,
-				4A3E815A20205B400021E882 /* HappyDNS.xcworkspace in Resources */,
+				502CAA4620B2A176000EDC49 /* format.sh in Resources */,
+				502CAA4420B2A176000EDC49 /* HappyDNS.podspec in Resources */,
+				502CAA4520B2A176000EDC49 /* .travis.yml in Resources */,
+				502CAA6820B3EA71000EDC49 /* Main.storyboard in Resources */,
+				508FA3F220B907A900C47AA9 /* SVProgressHUD.bundle in Resources */,
 				77E22C1060CF40098E9C5BF5 /* Entypo.ttf in Resources */,
 				0BB8186EB7E24F4D9A15152D /* EvilIcons.ttf in Resources */,
-				4A3E814020205B400021E882 /* .gitignore in Resources */,
 				0F79082F39814CFEAC1BD304 /* FontAwesome.ttf in Resources */,
+				502CAA4220B2A176000EDC49 /* Info.plist in Resources */,
+				502CAA4E20B2A59B000EDC49 /* com.baidu.idl.face.faceSDK.bundle in Resources */,
 				AD35C9441ED959D500FCD913 /* Fonts in Resources */,
-				4A3E816A20205B400021E882 /* README.md in Resources */,
-				4A3E813F20205B400021E882 /* .clang-format in Resources */,
 				BBE3B162A04446E1912DB626 /* Foundation.ttf in Resources */,
+				508FA3CF20B9079100C47AA9 /* LICENSE in Resources */,
+				502CAA5020B2A59B000EDC49 /* idl-license.face-ios in Resources */,
 				87A033E7C7F0465899D933D0 /* Ionicons.ttf in Resources */,
-				4A3E815920205B400021E882 /* HappyDNS.podspec in Resources */,
-				4A3E814520205B400021E882 /* format.sh in Resources */,
+				502CAA1F20B2A176000EDC49 /* README.md in Resources */,
+				502CAA2120B2A176000EDC49 /* Contributing.md in Resources */,
 				CF021B91AC67421E9DD6B3B8 /* MaterialCommunityIcons.ttf in Resources */,
+				508FA3F320B907A900C47AA9 /* README.md in Resources */,
+				508FA3D020B9079100C47AA9 /* README.md in Resources */,
+				502CAA4D20B2A59B000EDC49 /* com.baidu.idl.face.model.bundle in Resources */,
 				FF7D1A3C4D2D464A8CC2856E /* MaterialIcons.ttf in Resources */,
 				4A3E81A220205B890021E882 /* .gitkeep in Resources */,
-				4A3E814120205B400021E882 /* .travis.yml in Resources */,
 				4123F855953F40E88AEB2CCA /* Octicons.ttf in Resources */,
+				502CAA6920B3EA71000EDC49 /* LaunchScreen.storyboard in Resources */,
+				502CAA2220B2A176000EDC49 /* .clang-format in Resources */,
 				04125A96362B4E77B1E3F520 /* SimpleLineIcons.ttf in Resources */,
+				508FA3ED20B907A900C47AA9 /* LICENSE in Resources */,
 				B633305B885442F085C60483 /* Zocial.ttf in Resources */,
 				2AED38461F0F150800FD55DE /* mapapi.bundle in Resources */,
+				502CAA1E20B2A176000EDC49 /* HappyDNS.xcworkspace in Resources */,
 				4A3E81CF20205B8F0021E882 /* .gitkeep in Resources */,
-				4A3E814420205B400021E882 /* Contributing.md in Resources */,
+				502CAA1B20B2A176000EDC49 /* LICENSE in Resources */,
 				019A0AC0CFD7401DAE11151E /* Feather.ttf in Resources */,
-				4A3E816B20205B400021E882 /* uncrustify.cfg in Resources */,
-				4A3E816920205B400021E882 /* Podfile in Resources */,
+				502CAA1C20B2A176000EDC49 /* CHANGELOG.md in Resources */,
 				4A3E81A120205B890021E882 /* .gitkeep in Resources */,
-				4A3E816220205B400021E882 /* Info.plist in Resources */,
-				4A3E814320205B400021E882 /* clang-format in Resources */,
+				502CAA1A20B2A176000EDC49 /* uncrustify.cfg in Resources */,
 				4A3E81CE20205B8F0021E882 /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2031,55 +2352,82 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A3E814720205B400021E882 /* QNIpModel.m in Sources */,
+				508FA3D320B9079100C47AA9 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				502CAA3D20B2A176000EDC49 /* DnspodEnterpriseTest.m in Sources */,
+				50A2734320C7B24000669DA2 /* NextNativeViewController.m in Sources */,
+				508FA3D520B9079100C47AA9 /* UIButton+AFNetworking.m in Sources */,
+				50A272DD20C2786300669DA2 /* FaceViewManager.m in Sources */,
+				50A2732820C53A7F00669DA2 /* DetectionViewController.m in Sources */,
+				50A2733120C53B3400669DA2 /* ImageUtils.m in Sources */,
 				4A3E81A820205B890021E882 /* rtmp.c in Sources */,
-				4A3E815220205B400021E882 /* QNResolvUtil.m in Sources */,
-				4A3E815D20205B400021E882 /* DnspodFreeTest.m in Sources */,
+				508FA3D220B9079100C47AA9 /* UIRefreshControl+AFNetworking.m in Sources */,
+				502CAA3F20B2A176000EDC49 /* NetworkTest.m in Sources */,
 				4A3E818620205B650021E882 /* QNNQue.m in Sources */,
+				502CAA2420B2A176000EDC49 /* QNHex.m in Sources */,
+				502CAA4120B2A176000EDC49 /* ResolverTest.m in Sources */,
 				4A3E818220205B650021E882 /* QNNExternalIp.m in Sources */,
-				4A3E814D20205B400021E882 /* QNDnspodEnterprise.m in Sources */,
-				4A3E816320205B400021E882 /* IPTest.m in Sources */,
+				502CAA3720B2A176000EDC49 /* IPTest.m in Sources */,
+				508FA3EE20B907A900C47AA9 /* SVRadialGradientLayer.m in Sources */,
+				502CAA3C20B2A176000EDC49 /* DnsTest.m in Sources */,
+				502CAA2720B2A176000EDC49 /* QNAssessment.m in Sources */,
+				502CAA2320B2A176000EDC49 /* QNDes.m in Sources */,
+				502CAA2A20B2A176000EDC49 /* QNHijackingDetectWrapper.m in Sources */,
+				502CAA2B20B2A176000EDC49 /* QNResolver.m in Sources */,
+				502CAA2E20B2A176000EDC49 /* QNDnsManager.m in Sources */,
+				502CAA2920B2A176000EDC49 /* QNTxtResolver.m in Sources */,
+				502CAA3520B2A176000EDC49 /* QNRefresher.m in Sources */,
+				502CAA2520B2A176000EDC49 /* QNGetAddrInfo.m in Sources */,
+				502CAA3420B2A176000EDC49 /* QNDnspodEnterprise.m in Sources */,
+				508FA3D820B9079100C47AA9 /* AFAutoPurgingImageCache.m in Sources */,
 				4A3E818420205B650021E882 /* QNNNslookup.m in Sources */,
-				4A3E815720205B400021E882 /* QNHex.m in Sources */,
-				4A3E814F20205B400021E882 /* QNHijackingDetectWrapper.m in Sources */,
-				4A3E815320205B400021E882 /* QNTxtResolver.m in Sources */,
-				4A3E815520205B400021E882 /* QNDes.m in Sources */,
-				4A3E815F20205B400021E882 /* GetAddrInfoTest.m in Sources */,
-				4A3E814E20205B400021E882 /* QNDnspodFree.m in Sources */,
-				4A3E816420205B400021E882 /* LruCacheTest.m in Sources */,
-				4A3E815B20205B400021E882 /* DesTest.m in Sources */,
-				4A3E814C20205B400021E882 /* QNRecord.m in Sources */,
+				502CAA3A20B2A176000EDC49 /* DesTest.m in Sources */,
 				4A3E818920205B650021E882 /* QNNTraceRoute.m in Sources */,
-				4A3E816720205B400021E882 /* TxtResolverTest.m in Sources */,
-				4A3E815620205B400021E882 /* QNGetAddrInfo.m in Sources */,
+				508FA3EF20B907A900C47AA9 /* SVProgressAnimatedView.m in Sources */,
 				4A3E818320205B650021E882 /* QNNHttp.m in Sources */,
+				502CAA2F20B2A176000EDC49 /* QNLruCache.m in Sources */,
+				502CAA2C20B2A176000EDC49 /* QNResolvUtil.m in Sources */,
 				4A3E807B2020329B0021E882 /* RCTPushStreamViewManager.m in Sources */,
+				50A2732D20C53AB100669DA2 /* RemindView.m in Sources */,
+				502CAA4020B2A176000EDC49 /* LruCacheTest.m in Sources */,
+				502CAA3820B2A176000EDC49 /* DnspodFreeTest.m in Sources */,
+				502CAA3E20B2A176000EDC49 /* HostsTest.m in Sources */,
+				508FA3D420B9079100C47AA9 /* UIImageView+AFNetworking.m in Sources */,
+				508FA3DB20B9079100C47AA9 /* AFHTTPSessionManager.m in Sources */,
+				502CAA3920B2A176000EDC49 /* HexTest.m in Sources */,
+				502CAA3120B2A176000EDC49 /* QNDomain.m in Sources */,
+				502CAA2820B2A176000EDC49 /* QNIpModel.m in Sources */,
 				4A3E81A320205B890021E882 /* amf.c in Sources */,
-				4A3E815020205B400021E882 /* QNHosts.m in Sources */,
+				502CAA4320B2A176000EDC49 /* GetAddrInfoTest.m in Sources */,
+				508FA3F020B907A900C47AA9 /* SVProgressHUD.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				4A3E81A720205B890021E882 /* parseurl.c in Sources */,
-				4A3E816520205B400021E882 /* NetworkTest.m in Sources */,
+				508FA3DC20B9079100C47AA9 /* AFURLSessionManager.m in Sources */,
+				508FA3DE20B9079100C47AA9 /* AFNetworkReachabilityManager.m in Sources */,
+				50A2733520C60FC800669DA2 /* FaceBaseViewController.m in Sources */,
 				4A3E81A620205B890021E882 /* log.c in Sources */,
-				4A3E816120205B400021E882 /* HostsTest.m in Sources */,
-				4A3E815E20205B400021E882 /* DnsTest.m in Sources */,
-				4A3E814920205B400021E882 /* QNDomain.m in Sources */,
-				4A3E814620205B400021E882 /* QNAssessment.m in Sources */,
 				4A3E818720205B650021E882 /* QNNRtmp.m in Sources */,
-				4A3E815820205B400021E882 /* QNIP.m in Sources */,
+				508FA3DA20B9079100C47AA9 /* AFURLResponseSerialization.m in Sources */,
 				4A3E81A520205B890021E882 /* hashswf.c in Sources */,
 				4A3E818820205B650021E882 /* QNNTcpPing.m in Sources */,
-				4A3E814A20205B400021E882 /* QNLruCache.m in Sources */,
-				4A3E816020205B400021E882 /* HexTest.m in Sources */,
-				4A3E815C20205B400021E882 /* DnspodEnterpriseTest.m in Sources */,
-				4A3E816620205B400021E882 /* ResolverTest.m in Sources */,
-				4A3E815420205B400021E882 /* QNRefresher.m in Sources */,
-				4A3E814820205B400021E882 /* QNDnsManager.m in Sources */,
+				508FA3D720B9079100C47AA9 /* UIWebView+AFNetworking.m in Sources */,
+				502CAA2620B2A176000EDC49 /* QNIP.m in Sources */,
+				502CAA3020B2A176000EDC49 /* QNNetworkInfo.m in Sources */,
+				502CA97520ABC158000EDC49 /* VideoCaptureDevice.m in Sources */,
+				508FA3D120B9079100C47AA9 /* UIProgressView+AFNetworking.m in Sources */,
 				4A3E81A420205B890021E882 /* error.c in Sources */,
+				508FA3DD20B9079100C47AA9 /* AFURLRequestSerialization.m in Sources */,
+				50A2732E20C53AB100669DA2 /* CircleView.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				4A3E818520205B650021E882 /* QNNPing.m in Sources */,
-				4A3E814B20205B400021E882 /* QNNetworkInfo.m in Sources */,
+				502CAA3320B2A176000EDC49 /* QNDnspodFree.m in Sources */,
+				502CAA2D20B2A176000EDC49 /* QNHosts.m in Sources */,
+				508FA3DF20B9079100C47AA9 /* AFSecurityPolicy.m in Sources */,
+				508FA3D920B9079100C47AA9 /* AFImageDownloader.m in Sources */,
 				4A3E818A20205B650021E882 /* QNNUtil.m in Sources */,
-				4A3E815120205B400021E882 /* QNResolver.m in Sources */,
+				502CAA3B20B2A176000EDC49 /* TxtResolverTest.m in Sources */,
+				508FA3D620B9079100C47AA9 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				508FA3F120B907A900C47AA9 /* SVIndefiniteAnimatedView.m in Sources */,
+				502CAA3220B2A176000EDC49 /* QNRecord.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2126,6 +2474,22 @@
 			path = sportsApp;
 			sourceTree = "<group>";
 		};
+		502CAA5920B3EA6F000EDC49 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				502CAA5A20B3EA6F000EDC49 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		502CAA5B20B3EA6F000EDC49 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				502CAA5C20B3EA6F000EDC49 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -2147,12 +2511,14 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = sportsAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2185,12 +2551,14 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = sportsAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2221,8 +2589,9 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/lib",
-					"$(PROJECT_DIR)/PLPlayerKit\\ for\\ dylib\\ framework/PLPlayerKit",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(PROJECT_DIR)",
+					"$(PODS_ROOT)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2238,19 +2607,21 @@
 					"$(SRCROOT)/../ios/QNPushStream/Library/include/PLMediaStreamKit",
 					"$(SRCROOT)/../ios/PLPlayerKit.framework/Headers",
 					"$(SRCROOT)/../ios/happy-dns-objc",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = sportsApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib",
 					"$(SRCROOT)/../ios",
 					"$(PROJECT_DIR)/QNPushStream/Library",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-ObjC",
 					"-lc++",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.codery.sportsHot;
 				PRODUCT_NAME = sportsApp;
@@ -2272,8 +2643,9 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../node_modules/react-native-baidu-map/ios/lib",
-					"$(PROJECT_DIR)/PLPlayerKit\\ for\\ dylib\\ framework/PLPlayerKit",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(PROJECT_DIR)",
+					"$(PODS_ROOT)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2289,19 +2661,21 @@
 					"$(SRCROOT)/../ios/QNPushStream/Library/include/PLMediaStreamKit",
 					"$(SRCROOT)/../ios/PLPlayerKit.framework/Headers",
 					"$(SRCROOT)/../ios/happy-dns-objc",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = sportsApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../node_modules/react-native-baidu-map/ios/lib",
 					"$(SRCROOT)/../ios",
 					"$(PROJECT_DIR)/QNPushStream/Library",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-ObjC",
 					"-lc++",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.codery.sportsHot;
 				PRODUCT_NAME = sportsApp;
@@ -2333,11 +2707,13 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = "sportsApp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2380,11 +2756,13 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule",
+					"$(SRCROOT)/../node_modules/react-native-fs/**",
 				);
 				INFOPLIST_FILE = "sportsApp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2428,6 +2806,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.sportsApp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2453,6 +2832,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
