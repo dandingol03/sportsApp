@@ -20,4 +20,4 @@ export  default  class  GroupJPush extends  React.Component{
         );
     }
 }
-AppRegistry.registerComponent('GroupPushActivity',()=>GroupJPush)
+AppRegistry.registerComponent('GroupJPush',()=>GroupJPush)

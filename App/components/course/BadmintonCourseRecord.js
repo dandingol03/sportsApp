@@ -17,10 +17,16 @@ import {
     Alert,
     DeviceEventEmitter,
     NativeModules,
+    Platform,
+    findNodeHandle,
+    AppRegistry,
+    NativeEventEmitter,
 } from 'react-native';
 
 import PopupDialog,{ScaleAnimation,DefaultAnimation,SlideAnimation} from 'react-native-popup-dialog';
 
+var FaceViewManager = NativeModules.FaceViewManager;
+const NativeModule = new NativeEventEmitter(FaceViewManager);
 const slideAnimation = new SlideAnimation({ slideFrom: 'bottom' });
 const scaleAnimation = new ScaleAnimation();
 const defaultAnimation = new DefaultAnimation({ animationDuration: 150 });
@@ -125,6 +131,7 @@ class BadmintonCourseRecord extends Component {
             })
         }
     }
+
 
     //导航至定制（for 用户）
     navigate2BadmintonCourseForUser() {
@@ -658,10 +665,12 @@ class BadmintonCourseRecord extends Component {
                         <View style={{flex:1,flexDirection:"column",alignItems:"center"}}>
                             <TouchableOpacity style={{flex:1,alignItems:"center",justifyContent:"center"}}
                                               onPress={()=>{
-                                                  this.sharetoSomeone.dismiss();
+                                                  if(Platform.OS=== 'android'){
+                                                      this.sharetoSomeone.dismiss();
                                                       FaceDetect.faceDetect();
-
-
+                                                  }else{
+                                                      FaceViewManager.getFaceView("test");
+                                                  }
                                               }}
                             >
                                 <Icon name={'user-circle'} size={45} color='#00CD00'/>
@@ -695,9 +704,12 @@ class BadmintonCourseRecord extends Component {
     }
 
     componentWillMount(){
+
+        NativeModule.addListener('EventName',(data)=>{
+           // alert("asdadasd");
+        });
+
         DeviceEventEmitter.addListener('EventName',(img)=>{
-            //this.showState();
-            //alert("send success");
 
             proxy.postes({
                 url: Config.server + '/func/allow/aipface',
@@ -774,3 +786,38 @@ module.exports = connect(state=>({
         creatorId:state.user.personInfo.personId
     })
 )(BadmintonCourseRecord);
+
+
+
+export default class NextSecond extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
+    render() {
+        return (
+            <NavigatorIOS
+
+                initialRoute={{
+                    component: BadmintonCourseRecord,
+                    title: 'BadmintonCourseRecord',
+                    passProps:{text: this.props.text}
+
+                }}
+                barTintColor= 'cyan'
+                style={{flex: 1}}
+
+
+            />
+
+
+
+        );
+    }
+}
+
+
+
+AppRegistry.registerComponent('NextSecond', ()=> NextSecond);

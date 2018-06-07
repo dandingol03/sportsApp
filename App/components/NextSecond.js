@@ -58,6 +58,4 @@ export default class NextSecond extends Component {
     }
 }
 
-
-
 AppRegistry.registerComponent('NextSecond', ()=> NextSecond);

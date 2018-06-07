@@ -33,7 +33,7 @@ import PlayKit from './PlayKit';
 import PushStreaming from './PushStreaming';
 import {
     getRTMPPushUrl
-} from '../../action/LiveActions'
+} from '../../action/LiveActions';
 
 import PlayerView from './PlayerView';
 
