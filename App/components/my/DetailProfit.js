@@ -37,12 +37,10 @@ import {
 } from '../../action/UserActions';
 
 import CoachDetail from '../course/CoachDetail'
-import {PricingCard} from 'react-native-elements'
+import {List,ListItem} from 'react-native-elements'
 import {fetchCoursesByCreatorId, onCoursesOfCoachUpdate} from "../../action/CourseActions";
 import CompetitionSignUp from "../competition/CompetitionSignUp";
-import DetailProfit from './DetailProfit';
-
-class Myprofit extends Component {
+class DetailProfit extends Component {
 
     goBack(){
         const { navigator } = this.props;
@@ -53,19 +51,21 @@ class Myprofit extends Component {
     show(){
         alert("asd")
     }
-    navigateDetailProfit()
+
+    navigateCompetitionSignUp(rowData)
     {
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
-                name: 'DetailProfit',
-                component: DetailProfit,
+                name: 'CompetitionSignUp',
+                component: CompetitionSignUp,
                 params: {
-                    payments:this.state.payments,
+                    rowData:rowData,
                 }
             })
         }
     }
+
     _data=[{payername:'张三',paynum:'10',paytime:'2017-1-9 10:00',paymethod:'微信',paytype:'群活动'},
         {payername:'李思',paynum:'25',paytime:'2017-3-23 23:33',paymethod:'手机',paytype:'购物'},
         {payername:'王武',paynum:'90',paytime:'2017-4-13 12:34',paymethod:'手机',paytype:'群活动'},
@@ -75,11 +75,21 @@ class Myprofit extends Component {
         super(props);
         this.state={
             totals:0,
-            payments:0,
+            activitys:0,
             courses:0
         };
     }
-
+    renderRow (rowData, sectionID) {
+        return (
+            <ListItem
+                roundAvatar
+                key={sectionID}
+                title={rowData.name}
+                subtitle={rowData.subtitle}
+                avatar={{uri:rowData.avatar_url}}
+            />
+        )
+    }
 
     render()
     {
@@ -96,66 +106,48 @@ class Myprofit extends Component {
                     <View style={{marginLeft:90,justifyContent:'center',alignItems: 'center',}}>
                         <Text style={{color:'#fff',fontSize:18}}>我的收益</Text>
                     </View>
-                    {/*<TouchableOpacity style={{justifyContent:'center',alignItems: 'center',marginLeft:70}}*/}
-                                      {/*onPress={()=>{this.setState({huizongstate:true})}}>*/}
-                        {/*<Text style={{color:'#fff',fontSize:18}}>汇总</Text>*/}
-                    {/*</TouchableOpacity>*/}
-                    {/*<TouchableOpacity style={{justifyContent:'center',alignItems: 'center',marginLeft:20}}*/}
-                                      {/*onPress={()=>{this.setState({huizongstate:false})}}>*/}
-                        {/*<Text style={{color:'#fff',fontSize:18}}>详细</Text>*/}
-                    {/*</TouchableOpacity>*/}
+
                 </View>
                 <ScrollView>
-                    <PricingCard
-                        color='#4f9deb'
-                        title='总收益'
-                        price={this.state.total+'元'}
-                        info={['100条账单']}
-                        onButtonPress={this.goBack.bind(this)}
-                        button={{ title: '查看详细收益', icon: 'flight-takeoff'}}
-                    />
-                    <PricingCard
-                        color='#4f9deb'
-                        title='课程'
-                        price={this.state.total*0.4+'元'}
-                        info={['100条账单']}
-                        onButtonPress={this.navigateDetailProfit.bind(this)}
-                        button={{ title: '查看课程详细收益', icon: 'flight-takeoff'}}
-                    />
-                    <PricingCard
-                        color='#4f9deb'
-                        title='群活动'
-                        price={this.state.total*0.6+'元'}
-                        info={['100条账单']}
-                        onButtonPress={this.show.bind(this)}
-                        button={{ title: '查看群活动详细收益', icon: 'flight-takeoff'}}
-                    />
+                <List containerStyle={{marginBottom: 20}}>
+                    {
+                        this.props.payments.map((l, i) => (
+                            <ListItem
+                                roundAvatar
+                                avatar={{uri:"https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg"}}
+                                key={i}
+                                title={"订单号"+l.outTradeNo+"收款金额： "+l.payment}
+                            />
+                        ))
+                    }
+                </List>
                 </ScrollView>
-
+                {/*<List>*/}
+                    {/*<ListView*/}
+                        {/*renderRow={this.renderRow}*/}
+                        {/*dataSource={this.props.payments}*/}
+                    {/*/>*/}
+                {/*</List>*/}
             </View>
         )
 
     }
 
-componentDidMount(){
+    componentDidMount(){
 
-    this.props.dispatch(fetchPayment(this.props.clubId)).then((json)=>{
-        if(json.re==1)
-        {
-            var total=0;
-            var payments=json.data;
-            this.setState({payments:payments});
-            payments.map((payment,i)=>{
-                total+=payment.payment;
-            })
-            this.setState({total:total});
-        }else{
-            if(json.re==-100){
-                this.props.dispatch(getAccessToken(false));
+        this.props.dispatch(fetchPayment(this.props.clubId)).then((json)=>{
+            if(json.re==1)
+            {
+
+
+                this.setState({total:json.data});
+            }else{
+                if(json.re==-100){
+                    this.props.dispatch(getAccessToken(false));
+                }
             }
-        }
-    })
-}
+        })
+    }
 
 }
 
@@ -183,4 +175,4 @@ module.exports = connect(state=>({
         wx1:state.myprofit.wx1,
         wx2:state.myprofit.wx2,
     })
-)(Myprofit);
+)(DetailProfit);
