@@ -14,7 +14,7 @@
 
 #import "RCTBaiduMapViewManager.h"
 #import "../Libraries/LinkingIOS/RCTLinkingManager.h"
-#import "PLMediaStreamingKit.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #import "DetectionViewController.h"
 #import <IDLFaceSDK/IDLFaceSDK.h>
 #import "FaceParameterConfig.h"

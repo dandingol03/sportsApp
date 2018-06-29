@@ -7,7 +7,7 @@
 //
 
 #import <React/RCTViewManager.h>
-#import "PLMediaStreamingKit.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #import <React/RCTBridgeModule.h>
 
 @interface RCTPushStreamViewManager : RCTViewManager <RCTBridgeModule>
