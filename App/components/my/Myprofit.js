@@ -18,7 +18,8 @@ import {
     Animated,
     Easing,
     TextInput,
-    InteractionManager
+    InteractionManager,
+    Button
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -146,7 +147,10 @@ componentDidMount(){
             var payments=json.data;
             this.setState({payments:payments});
             payments.map((payment,i)=>{
-                total+=payment.payment;
+                if(payment.payment!==null){
+                    total+=payment.payment;
+                }
+
             })
             this.setState({total:total});
         }else{

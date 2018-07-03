@@ -18,7 +18,8 @@ import {
     Animated,
     Easing,
     TextInput,
-    InteractionManager
+    InteractionManager,
+    Button
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -31,7 +32,7 @@ import{
     fetchPayment,
     onPaymentUpdate,
 } from '../../action/MyProfitActions';
-
+import Calendar from 'react-native-calendar-select';
 import {
     getAccessToken,
 } from '../../action/UserActions';
@@ -76,8 +77,21 @@ class DetailProfit extends Component {
         this.state={
             totals:0,
             activitys:0,
-            courses:0
+            courses:0,
+            startDate: new Date(2017, 6, 12),
+            endDate: new Date(2017, 8, 2)
         };
+        this.confirmDate = this.confirmDate.bind(this);
+        this.openCalendar = this.openCalendar.bind(this);
+    }
+    confirmDate({startDate, endDate, startMoment, endMoment}) {
+        this.setState({
+            startDate,
+            endDate
+        });
+    }
+    openCalendar() {
+        this.calendar && this.calendar.open();
     }
     renderRow (rowData, sectionID) {
         return (
@@ -93,9 +107,41 @@ class DetailProfit extends Component {
 
     render()
     {
+        let customI18n = {
+            'w': ['', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
+            'weekday': ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            'text': {
+                'start': 'Check in',
+                'end': 'Check out',
+                'date': 'Date',
+                'save': 'Confirm',
+                'clear': 'Reset'
+            },
+            'date': 'DD / MM'  // date format
+        };
+        // optional property, too.
+        let color = {
+            subColor: '#f0f0f0'
+        };
 
         return (
-            <View style={styles.container}>
+       <View style={styles.container}>
+                <View>
+                    <Button title="Open Calendar" onPress={this.openCalendar}></Button>
+                        <Calendar
+                            i18n="en"
+                            ref={(calendar) => {this.calendar = calendar;}}
+                            customI18n={customI18n}
+                            color={color}
+                            format="YYYYMMDD"
+                            minDate="20170510"
+                            maxDate="20180312"
+                            startDate={this.state.startDate}
+                            endDate={this.state.endDate}
+                            onConfirm={this.confirmDate}
+                        />
+                </View>
+
 
                 <View style={{height:55,width:width,paddingTop:20,flexDirection:'row',
                     backgroundColor:'#66CDAA',borderBottomWidth:1,borderColor:'#66CDAA'}}>
@@ -132,14 +178,11 @@ class DetailProfit extends Component {
         )
 
     }
-
     componentDidMount(){
 
         this.props.dispatch(fetchPayment(this.props.clubId)).then((json)=>{
             if(json.re==1)
             {
-
-
                 this.setState({total:json.data});
             }else{
                 if(json.re==-100){
